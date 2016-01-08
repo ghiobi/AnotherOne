@@ -5,9 +5,9 @@ All web pages are related to the file structure in the www directory.
 ### Page Creation
 All pages start by correctly including the load.php, setting the site-title, and calling the get_header().
 
-The main content and custom scripts are written there.
+The main content and custom scripts are written in the middle.
 
-And in the end, calling the get_header().
+And in the end, calling the get_footer().
 
 ### Scripting Structure
 - load.php requires
