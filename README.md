@@ -59,6 +59,7 @@ Due Mar 27th.
     - https://www.codecademy.com/en/skills/make-an-interactive-website - Jquery
     - https://www.codecademy.com/en/skills/make-a-website - Bootstrap
 
-  + https://www.codecademy.com/learn/learn-git - Good source for learning git
-  + https://www.youtube.com/watch?v=cEGIFZDyszA&list=PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx - Video tutorials for git
-  + https://rogerdudler.github.io/git-guide/ - Simple guide useful to help remember syntax
+  + The following are good sources for learning git
+    - https://www.codecademy.com/learn/learn-git 
+    - https://www.youtube.com/watch?v=cEGIFZDyszA&list=PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx - Video Tutorials
+    - https://rogerdudler.github.io/git-guide/ - Simple guide useful to help remember syntax
