@@ -4,7 +4,7 @@ Welcome to Skitt. A simple web app for schedule making and course sequence plann
 ## Important Tasks
 
 #### Team Members Introduction
-Submit a text file of yourself with the following details to @ lamlaurendy@gmail.com with subject "SEON 341". Due Jan 10th.
+Submit a text file of yourself with the following details to @ lamlaurendy@gmail.com with subject "SOEN 341". Due Jan 10th.
   + Name
   + Programming Languages - With level of experience on 10 being the highest.
   + Phone Number & Email & Winter Sechdule
