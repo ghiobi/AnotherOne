@@ -18,9 +18,9 @@ And in the end, calling the get_footer().
 	- utlities.php -> Free functions
 	- session.php -> Session handling
 	- theme.php -> Theme Handling
-		-get_header() -> Includes header.php
-		-get_nagivation() -> Includes navigation.php
-		-get_footer() -> Includes footer.php
+		- get_header() -> Includes header.php
+		- get_nagivation() -> Includes navigation.php
+		- get_footer() -> Includes footer.php
 
 
 
