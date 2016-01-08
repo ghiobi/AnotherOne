@@ -1,5 +1,5 @@
-# Skitt
-Welcome to Skitt. A simple web app for schedule making and course sequence planning.
+# myiternary
+Welcome to myiternary. A simple web app for schedule making and course sequence planning.
 
 ## Important Tasks
 
