@@ -3,29 +3,24 @@ Welcome to Skitt. A simple web app for schedule making and course sequence plann
 
 ## Important Tasks
 
-#### Team Members Introduction
-Submit a text file of yourself with the following details to @ lamlaurendy@gmail.com with subject "SOEN 341". Due Jan 10th.
+#### Team Member Formation
+Submit a text file of yourself with the following details to me on slack. Due Jan 10th.
   + Name
-  + Programming Languages - With level of experience on 10 being the highest.
-  + Phone Number & Email & Winter Sechdule
+  + Programming Languages - With level of experience on 10 being the expert level.
+  + Winter Schedule
   + What would you like to do?
   + Tell me about yourself.
   + Additional Details - Comments etc...
+
+There will be small team members of 3 or 4. And Task will be assigned to them
   
 #### Project Brainstorm & Design
-A full report of tasks will be generated once we have a meeting about this and agreed on the features of the application and its implementation. Due Jan 17th.
-  + Tools
-    - Notepad++
-    - Sublime Text 3
-    - WAMP
-  + Platform
-    - WEB
+A full report of tasks and uml diagrams will be generated once we have a meeting about this and agreed on the features of the application and its implementation. Each TeamDue Jan 17th.
   + Programming Languages
-    - A lot of PHP
-    - HTML, CSS, JavaScript - FrontEnd
-    - Ajax with JQuery - FrontEnd Handler
+    - A lot of PHP, and Javascript.
+    - HTML and CSS
   + Frameworks
-    - Bootstrap, JQuery
+    - Bootstrap, JQuery, JQuery UI?
     - PhpMyAdmin
   + Features
   + Clients
