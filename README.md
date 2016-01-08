@@ -1,5 +1,5 @@
-# myiternary
-Welcome to myiternary. A simple web app for schedule making and course sequence planning.
+# mytiernary
+Welcome to mytiernary. A simple web app for schedule making and course sequence planning.
 
 ## Important Tasks
 
