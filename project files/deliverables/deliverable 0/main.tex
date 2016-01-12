@@ -2,7 +2,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\documentclass[paper=a4, fontsize=11pt, oneside]{scrartcl} % A4 paper and 11pt font size
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
@@ -13,6 +13,8 @@
 
 \usepackage{sectsty} % Allows customizing section commands
 \allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{rotating} % Used for sidewaysfigure and other rotation options.
 
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -27,9 +29,9 @@
 \usepackage{graphicx} % Allows the use of images in the document
 \graphicspath{ {images/} } % Instructs LaTeX to search the 'images' directory for images.
 
-\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
-\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
-\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
 
@@ -43,7 +45,7 @@
 \normalfont \normalsize 
 \textsc{Concordia University} \\
 \textsc{Department of Computer Science and Software Engineering} \\
-\textsc{SOEN 341/4 S \quad Software Process \quad Winter 2016} \\ [25pt] % Your university, school and/or department name(s)
+\textsc{SOEN 341/4 S \quad Software Process \quad Winter 2016} \\ [25pt] % UTniversity, school and/or department name(s)
 \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
 \huge Mytinerary: \\ System Overview and Team Members \\ % The assignment title
 \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
@@ -62,15 +64,22 @@
 %----------------------------------------------------------------------------------------
 
 \section*{System Overview}
+The name of our system is Mytinerary.
 
-\includegraphics{domain_model}
+The system will be used as a multi-year scheduler by Concordia students.
+
+The system allows users to set preferences for their schedule, for example: preferred course load, times available and desired graduation date.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.4\textwidth, angle=-90]{domain_model}
+\caption{Domain Model for Mytinerary}
+\label{fig:DM}
+\end{figure}
 
 %----------------------------------------------------------------------------------------
 %	TEAM MEMBERS
 %----------------------------------------------------------------------------------------
-
+\newpage
 \section*{Team Members}
-
-
-
 \end{document}
