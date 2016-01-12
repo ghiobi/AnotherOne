@@ -18,9 +18,9 @@ class App extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index($name)
+	public function index()
 	{
-		$data['name'] = '$name';
+		$data['name'] = 'John Smith';
 		$this->load->view('layouts/header.php');
 		$this->load->view('users/student.php', $data);
 		$this->load->view('layouts/footer.php');
