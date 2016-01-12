@@ -1,5 +1,5 @@
-# mytiernary
-Welcome to mytiernary. A simple web app for schedule making and course sequence planning.
+# mytinerary
+Welcome to mytinerary. A simple web app for schedule making and course sequence planning.
 
 ## Important Tasks
 
