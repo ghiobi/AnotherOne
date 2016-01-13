@@ -1,14 +1,10 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-*  The Users class is designed to work with the users database.
+*  Works with the login controller, and authenticates users.
 */
-class User_model extends CI_Model
+class User extends CI_Model
 {
-
-	private $first_name;
-	private $last_name;
-	private $admin = FALSE;
 	
 	function __construct()
 	{
@@ -31,11 +27,17 @@ class User_model extends CI_Model
 		return FALSE;
 	}
 
-	function getFullName($user_id)
+	function get_full_name($user_id)
 	{
 		$query = $this->db->query("SELECT * FROM users WHERE id='$user_id'");
 		$row = $query->row();
 		return $row->firstname.' '.$row->lastname;
+	}
+
+	function is_administrator($user_id)
+	{
+		$this->db->where('name', $user_id);
+		return $this->db->query("SELECT * FROM users WHERE id='$user_id'")->row()->admin == 1;
 	}
 
 }

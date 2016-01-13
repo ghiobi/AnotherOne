@@ -19,7 +19,7 @@
 
 <header class="container">
 	<div class="row">
-		<div class="col-sm-6 col-md-4">
+		<div class="col-sm-6 col-md-5">
 			<a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>resources/img/logo.png"></a>
 		</div>
 	</div>

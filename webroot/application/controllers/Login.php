@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 /**
-* 
+* Controls Login Process
 */
 class Login extends CI_Controller
 {
@@ -25,9 +25,9 @@ class Login extends CI_Controller
 		$this->load->view('layouts/footer.php');
 	}
 
-	function login()
+	function authenticate()
 	{
-		$this->load->model('user_model');
+		$this->load->model('user');
 
 		$login_id = $this->input->post('login_id');
 		$password = $this->input->post('password');
@@ -42,11 +42,16 @@ class Login extends CI_Controller
 			return;
 		}
 
-		$result = $this->user_model->authenticate($login_id, $password);
+		$result = $this->user->authenticate($login_id, $password);
 
 		if($result === FALSE)
 		{
-			$this->index();
+			$data['title'] = 'Login';
+			$data['invalid_record'] = 'Did not match any records. Try again';
+
+			$this->load->view('layouts/header.php', $data);
+			$this->load->view('login/index.php');
+			$this->load->view('layouts/footer.php');
 			return;
 		}
 

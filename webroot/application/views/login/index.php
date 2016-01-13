@@ -10,22 +10,22 @@
 
 		<div class="col-md-6">
 
-			<?php echo form_open('login/login'); ?>
+			<?php echo form_open('login/authenticate'); ?>
 
-			<?php if(validation_errors()){
-				echo '
-				<div class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<strong>Warning!</strong> '.validation_errors().'
-				</div>';
-			}
-
-
-			; ?>
-
+			<?php 
+				if(validation_errors() || isset($invalid_record)){
+					echo '<div class="alert alert-danger" role="alert">
+						<p><strong>Warning!</strong></p>';
+					if(validation_errors())
+						echo validation_errors();
+					if(isset($invalid_record))
+						echo $invalid_record;
+					echo '</div>';
+				}
+			?>
 				<div class="form-group">
 					<label for="login_id">Login ID: </label>
-					<input type="text" class="form-control" name="login_id" placeholder="Login ID">
+					<input type="text" class="form-control" name="login_id" placeholder="Login ID" value="<?php echo set_value('login_id'); ?>">
 				</div>
 
 				<div class="form-group">
