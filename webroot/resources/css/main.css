@@ -1,0 +1,61 @@
+/******************************
+			Globals
+*******************************/
+*{
+	font-family: 'Montserrat', sans-serif;
+}
+
+/******************************
+			Header
+*******************************/
+header{
+	margin: 20px 0;
+}
+.brand{
+	display: block;
+	margin-bottom: 20px;
+}
+.brand img{
+	width: 100%;
+}
+#login-welcome{
+	background-color: #f5f5f5;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+#login-welcome p{
+	padding: 8px 15px;
+	margin: 0;
+}
+/******************************
+			Home Page
+*******************************/
+.front-menu > a{
+	display: block;
+	background-color: #33CCFF;
+	border-radius: 5px;
+	color: white;
+	font-size: 18px;
+	text-transform: uppercase;
+	padding: 10px 10px;
+}
+.front-menu > a + a{
+	margin-top: 10px;
+}
+.front-menu > a:hover{
+	text-decoration: none;
+	background-color: white;
+	color: #33CCFF;
+}
+
+/******************************
+			Footer
+*******************************/
+footer{
+	margin-top: 20px;
+}
+.copyright{
+	border-top: solid 1px #eee;
+	text-align: center;
+	padding: 15px 0;
+}
