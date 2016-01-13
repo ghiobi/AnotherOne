@@ -35,7 +35,7 @@
 %\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 %\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
 
-\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
@@ -47,13 +47,13 @@
 \normalfont \normalsize 
 \textsc{Concordia University} \\
 \textsc{Department of Computer Science and Software Engineering} \\
-\textsc{SOEN 341/4 S \qquad Software Process \qquad Winter 2016} \\ [25pt] % University, school and/or department name(s)
+\textsc{SOEN 341/4 S \qquad Software Process \qquad Winter 2016} % University, school and/or department name(s)
 \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
 \huge Mytinerary: \\ System Overview and Team Members \\ % The assignment title
 \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
 }
 
-\author{Group Member Names} % Names
+\author{Team AnotherOne} % Names
 
 \date{\normalsize January 13, 2016} % Date
 
@@ -66,29 +66,26 @@
 %----------------------------------------------------------------------------------------
 
 \section*{System Overview}
-The name of our system is Mytinerary.
+This document presents an initial outline of Mytinerary, a web application designed to adjust and optimize the schedules of Concordia Software Engineering students.
 
-The system will be used to generate all possible multi-year schedules for a Concordia student.
-The number of possible schedules are determined based on three criteria: the student's preferences, courses taken, and academic record.
+The system will be used to generate a list of possible multi-semester schedules for a Concordia student. Each schedule will be constrained by the requirements that 1) it satisfies the preferences the user selected; 2) the schedule meets the user's program requirements; and 3) every course is taken after any prerequisites or concurrently with any co-requisites. Examples of possible user preferences include (but are not limited to) preferred course load, available times, and desired graduation date.
 
-The system can then use a student's academic record to determine the program requirements for the student.
-The system then uses a list of courses completed by the student to determine which prerequisites the student has, and which courses they must take.
-Finally, the user can set preferences for their schedule, for example: preferred course load, times available and desired graduation date.
+Mytinerary contains only two user classes: the student, who can set their preferences and request schedules; and the program director, who can view and edit the academic record of any student in their respective program, and can modify course section details.
 
-Based off these three criteria, Mytinerary will output all possible  multi-year schedules for the student.
-
-Mytinerary only contains two user classes: the student, who can set their preferences and request schedules; and the program director, who can view and edit the academic record of any student in their respective program, and can modify course section details.
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.4\textwidth, angle=-90]{domain_model}
-\caption{Domain Model for Mytinerary}
-\label{fig:DM}
+\caption{Domain Model for the Mytinerary scheduling system}
+\label{fig:domain_model}
 \end{figure}
+
+Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify a student's academic record and manage course details.
 
 %----------------------------------------------------------------------------------------
 %	TEAM MEMBERS
 %----------------------------------------------------------------------------------------
-\newpage
 \section*{Team Members}
+
+
 
 \end{document}
