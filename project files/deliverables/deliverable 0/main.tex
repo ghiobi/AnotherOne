@@ -15,6 +15,7 @@
 \allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
 
 \usepackage{rotating} % Used for sidewaysfigure and other rotation options.
+\usepackage{enumitem} % For special enumerate
 
 \usepackage[parfill]{parskip}
 
@@ -53,7 +54,7 @@
 \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
 }
 
-\author{Team AnotherOne} % Names
+\author{Team AnotherOne\\https://github.com/AnotherOrganization/AnotherOne} % Names
 
 \date{\normalsize January 13, 2016} % Date
 
@@ -66,18 +67,17 @@
 %----------------------------------------------------------------------------------------
 
 \section*{System Overview}
-This document presents an initial outline of Mytinerary, a web application designed to adjust and optimize the schedules of
-Concordia Software Engineering students.
+This document presents an initial outline of Mytinerary, a web application designed to adjust and optimize the schedules of Concordia Software Engineering students.
 
-The system will be used to generate a list of possible multi-semester schedules for a Concordia student. Each schedule will be
-constrained by the requirements that 1) it satisfies the preferences the user selected; 2) the schedule meets the user's
-program requirements; and 3) every course is taken after any prerequisites or concurrently with any co-requisites. Examples of
-possible user preferences include (but are not limited to) preferred course load, available times, and desired graduation date.
+The system will be used to generate a list of possible multi-semester schedules for a Concordia student. Each schedule will be constrained by the requirements that:
+\begin{enumerate}[label={\arabic*)}]
+\item it satisfies the preferences the user selected;
+\item the schedule meets the user's program requirements; 
+\item every course is taken after any prerequisites or concurrently with any co-requisites. 
+\end{enumerate}
+Examples of possible user preferences include (but are not limited to) preferred course load, available times, and desired graduation date.
 
-
-Mytinerary contains only two user classes: the student, who can set their preferences and request schedules; and the program
-director, who can view and edit the academic record of any student in their respective program, and can modify course section
-details.
+Mytinerary contains only two user classes: the student, who can set their preferences and request schedules; and the program director, who can view and edit the academic record of any student in their respective program, and can modify course section details.
 
 \begin{figure}[H]
 \centering
@@ -86,13 +86,29 @@ details.
 \label{fig:domain_model}
 \end{figure}
 
-Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify a student's academic record and manage course details.
+Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
 
 %----------------------------------------------------------------------------------------
 %	TEAM MEMBERS
 %----------------------------------------------------------------------------------------
 \section*{Team Members}
+The names of the members of AnotherOne are shown below, along with their respective preferred and optional roles. 
 
+\begin{tabular} { l l l }
+Name & Proposed Role & Optional Role \\ \hline \hline
+Annamalai, Piratheeban  & Testing &    \\
+Lam, Laurendy  & Programming: Everything & Anything   \\
+Luo, Jacqueline  & Testing & Documentation   \\
+Mescheder, Michael & Programming: Full-Stack &    \\
+Nguyen, Andy  & Documentation &    \\
+Nguyen, Kenny  & Documentation &    \\
+Pang, Ronn  & Programming: Implementation & Programming: Database   \\
+Payette, Eric  & Programming: Back-End & Programming: Front-End   \\
+Power, Alessandro  & Documentation &    \\
+Talarico, James  & Documentation &   \\
+Velauthapillai, Pragas   & Documentation  & Programming: Testing   \\
+Vu-Nguyen, Anhkhoi  & Programming: Back-End & Anything  
+\end{tabular}
 
 
 \end{document}
