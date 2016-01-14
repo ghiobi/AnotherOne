@@ -9,14 +9,15 @@ class Home extends App_Base_Controller
 	{
 		parent::__construct();
 	}
-
 	function index()
 	{
 		$this->load->model('user');
 
 		$data['name'] = $this->user->get_full_name($this->session->userdata('user_id'));
-
-		$this->load->view('layouts/header.php');
+		$data['title'] = 'Homepage';
+		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select a option!';
+		
+		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/home.php', $data);
 		$this->load->view('layouts/footer.php');
 	}

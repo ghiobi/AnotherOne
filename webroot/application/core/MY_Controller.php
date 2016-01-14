@@ -11,7 +11,7 @@ class App_Base_Controller extends CI_Controller
 		parent::__construct();
 		if(!$this->session->userdata('user_id'))
 		{
-			redirect(base_url().'login');
+			redirect(base_url().'login', 'refresh');
 		}
 	}
 }

@@ -1,16 +1,13 @@
-
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 <main class="container">
-
-	<div id="login-welcome">
-		<p>Welcome to mytinerary. A simple web app for schedule making and course sequence planning.</p>
-	</div>
 
 	<div class="row">
 
 		<div class="col-md-6">
 
-			<?php echo form_open('login/authenticate'); ?>
+			<?php echo form_open('login'); ?>
 
 			<?php 
 				if(validation_errors() || isset($invalid_record)){
@@ -19,7 +16,7 @@
 					if(validation_errors())
 						echo validation_errors();
 					if(isset($invalid_record))
-						echo $invalid_record;
+						echo '<p>'.$invalid_record.'</p>';
 					echo '</div>';
 				}
 			?>
@@ -33,7 +30,7 @@
 					<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 				</div>
 
-				<button name="login-btn" type="submit" class="btn btn-block btn-default">Log In</button>
+				<input type="submit" value="Sign In" name="signin_btn" class="btn btn-block btn-default">
 			
 			</form>
 
