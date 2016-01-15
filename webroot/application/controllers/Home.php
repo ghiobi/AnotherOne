@@ -13,7 +13,7 @@ class Home extends App_Base_Controller
 	{
 		$this->load->model('user');
 
-		$data['name'] = $this->user->get_full_name($this->session->userdata('user_id'));
+		$data['name'] = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');
 		$data['title'] = 'Homepage';
 		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select a option!';
 		

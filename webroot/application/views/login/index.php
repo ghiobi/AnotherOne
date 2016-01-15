@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 				}
 			?>
 				<div class="form-group">
-					<label for="login_id">Login ID: </label>
-					<input type="text" class="form-control" name="login_id" placeholder="Login ID" value="<?php echo set_value('login_id'); ?>">
+					<label for="login_name">Login Name: </label>
+					<input type="text" class="form-control" name="login_name" placeholder="Login Name: " value="<?php echo set_value('login_name'); ?>">
 				</div>
 
 				<div class="form-group">

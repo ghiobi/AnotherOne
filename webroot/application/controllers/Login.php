@@ -27,10 +27,10 @@ class Login extends CI_Controller
 		{
 			$this->load->model('user');
 
-			$login_id = $this->input->post('login_id');
-			$password = $this->input->post('password');
+			$login_name = $this->input->post('login_name', TRUE); //Enabled XSS Filtering
+			$password = $this->input->post('password', TRUE);
 			
-			$this->form_validation->set_rules('login_id', 'Login ID', 'trim|required');
+			$this->form_validation->set_rules('login_name', 'Login ID', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 
@@ -39,7 +39,7 @@ class Login extends CI_Controller
 				goto view;
 			}
 
-			$result = $this->user->authenticate($login_id, $password);
+			$result = $this->user->authenticate($login_name, $password);
 
 			if($result === FALSE)
 			{
@@ -48,8 +48,9 @@ class Login extends CI_Controller
 			}
 
 			$this->session->set_userdata('user_id', $result->id);
-			$this->session->set_userdata('is_admin', $result->admin);
-
+			$this->session->set_userdata('firstname', $result->firstname);
+			$this->session->set_userdata('lastname', $result->lastname);
+			
 			redirect(base_url());
 			return;
 		}

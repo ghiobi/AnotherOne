@@ -31,8 +31,8 @@
 		<?php 
 		if(!$is_login)
 			echo '
-			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#collapse"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
-			<div class="signout-collapse-container" id="collapse">'.
+			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
+			<div class="signout-collapse-container" id="signout-container">'.
 				form_open("login/signout").'
 					<button class="infobar-signout-btn" type="submit">Sign Out</button>
 				</form>

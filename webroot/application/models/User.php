@@ -11,11 +11,11 @@ class User extends CI_Model
 		parent::__construct();
 	}
 
-	function authenticate($login_id, $password)
+	function authenticate($login_name, $password)
 	{
-		$this->db->select('*');
+		$this->db->select('id, firstname, lastname');
 		$this->db->from('users');
-		$this->db->where('login_id', $login_id);
+		$this->db->where('login_name', $login_name);
 		$this->db->where('password', MD5($password));
 		$this->db->limit(1);
 		$query = $this->db->get();
@@ -27,17 +27,16 @@ class User extends CI_Model
 		return FALSE;
 	}
 
-	function get_full_name($user_id)
+	function is_admin($user_id)
 	{
-		$query = $this->db->query("SELECT * FROM users WHERE id='$user_id'");
-		$row = $query->row();
-		return $row->firstname.' '.$row->lastname;
-	}
-
-	function is_administrator($user_id)
-	{
-		$this->db->where('name', $user_id);
-		return $this->db->query("SELECT * FROM users WHERE id='$user_id'")->row()->admin == 1;
+		$query = $this->db->query(
+			"SELECT
+			  COUNT(admins.id) AS is_admin
+			FROM users
+			  INNER JOIN admins
+			    ON users.id = admins.user_id
+			WHERE users.id = '$user_id'");
+		return $query->row()->is_admin == 1;
 	}
 
 }
