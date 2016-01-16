@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2016 at 03:12 PM
--- Server version: 10.1.9-MariaDB
--- PHP Version: 5.6.15
+-- Generation Time: Jan 16, 2016 at 11:44 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,14 +14,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `mytiernary`
+-- Database: `mytinerary`
 --
-DROP DATABASE `mytiernary`;
-CREATE DATABASE IF NOT EXISTS `mytiernary` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `mytiernary`;
+CREATE DATABASE IF NOT EXISTS `mytinerary` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `mytinerary`;
 
 -- --------------------------------------------------------
 
@@ -30,10 +29,12 @@ USE `mytiernary`;
 --
 
 DROP TABLE IF EXISTS `admins`;
-CREATE TABLE `admins` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `admins` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `admins`
@@ -49,11 +50,14 @@ INSERT INTO `admins` (`id`, `user_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `courseprequisites`;
-CREATE TABLE `courseprequisites` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `course_id` int(11) UNSIGNED NOT NULL,
-  `prerequisite_couse_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `courseprequisites` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) unsigned NOT NULL,
+  `prerequisite_course_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`),
+  KEY `prerequisite_course_id` (`prerequisite_course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -62,13 +66,15 @@ CREATE TABLE `courseprequisites` (
 --
 
 DROP TABLE IF EXISTS `courses`;
-CREATE TABLE `courses` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(11) NOT NULL,
-  `number` int(11) UNSIGNED NOT NULL,
+  `number` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
-  `credit` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `credit` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `courses` (`code`,`number`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=94 ;
 
 --
 -- Dumping data for table `courses`
@@ -176,15 +182,17 @@ INSERT INTO `courses` (`id`, `code`, `number`, `name`, `credit`) VALUES
 --
 
 DROP TABLE IF EXISTS `laboratories`;
-CREATE TABLE `laboratories` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `section_id` int(11) UNSIGNED NOT NULL,
-  `capacity` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `laboratories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `section_id` int(11) unsigned NOT NULL,
+  `capacity` int(11) unsigned NOT NULL,
   `instructor` varchar(255) NOT NULL,
   `room` varchar(11) NOT NULL,
   `start` datetime NOT NULL,
-  `end` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `end` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `section_id` (`section_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -193,13 +201,15 @@ CREATE TABLE `laboratories` (
 --
 
 DROP TABLE IF EXISTS `lectures`;
-CREATE TABLE `lectures` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `section_id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `lectures` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `section_id` int(11) unsigned NOT NULL,
   `room` varchar(11) NOT NULL,
   `start` datetime NOT NULL,
-  `end` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `end` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `section_id` (`section_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -208,10 +218,11 @@ CREATE TABLE `lectures` (
 --
 
 DROP TABLE IF EXISTS `program`;
-CREATE TABLE `program` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `program` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `program`
@@ -228,11 +239,14 @@ INSERT INTO `program` (`id`, `name`) VALUES
 --
 
 DROP TABLE IF EXISTS `programsequence`;
-CREATE TABLE `programsequence` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `program_id` int(11) UNSIGNED NOT NULL,
-  `course_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `programsequence` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `program_id` int(11) unsigned NOT NULL,
+  `course_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `program_id` (`program_id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `programsequence`
@@ -252,14 +266,19 @@ INSERT INTO `programsequence` (`id`, `program_id`, `course_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `registered`;
-CREATE TABLE `registered` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `student_id` int(11) UNSIGNED NOT NULL,
-  `section_id` int(11) UNSIGNED NOT NULL,
-  `tutorial_id` int(11) UNSIGNED NOT NULL,
-  `laboratory_id` int(11) UNSIGNED NOT NULL,
-  `grade` varchar(255) DEFAULT '0.00'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `registered` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) unsigned NOT NULL,
+  `section_id` int(11) unsigned NOT NULL,
+  `tutorial_id` int(11) unsigned NOT NULL,
+  `laboratory_id` int(11) unsigned NOT NULL,
+  `grade` varchar(255) DEFAULT '0.00',
+  PRIMARY KEY (`id`),
+  KEY `student_id` (`student_id`),
+  KEY `section_id` (`section_id`),
+  KEY `tutorial_id` (`tutorial_id`),
+  KEY `laboratory_id` (`laboratory_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -268,13 +287,16 @@ CREATE TABLE `registered` (
 --
 
 DROP TABLE IF EXISTS `sections`;
-CREATE TABLE `sections` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `semester_id` int(11) UNSIGNED NOT NULL,
-  `course_id` int(11) UNSIGNED NOT NULL,
-  `capacity` smallint(6) UNSIGNED NOT NULL,
-  `professor` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `sections` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `semester_id` int(11) unsigned NOT NULL,
+  `course_id` int(11) unsigned NOT NULL,
+  `capacity` smallint(6) unsigned NOT NULL,
+  `professor` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `semester_id` (`semester_id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -283,12 +305,13 @@ CREATE TABLE `sections` (
 --
 
 DROP TABLE IF EXISTS `semesters`;
-CREATE TABLE `semesters` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `semesters` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `start` date NOT NULL,
-  `end` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `end` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `semesters`
@@ -304,11 +327,14 @@ INSERT INTO `semesters` (`id`, `name`, `start`, `end`) VALUES
 --
 
 DROP TABLE IF EXISTS `students`;
-CREATE TABLE `students` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `program_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `students` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `program_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  KEY `program_id` (`program_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `students`
@@ -326,15 +352,17 @@ INSERT INTO `students` (`id`, `user_id`, `program_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `tutorials`;
-CREATE TABLE `tutorials` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `section_id` int(11) UNSIGNED NOT NULL,
-  `capacity` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `tutorials` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `section_id` int(11) unsigned NOT NULL,
+  `capacity` int(11) unsigned NOT NULL,
   `instructor` varchar(255) NOT NULL,
   `room` varchar(255) NOT NULL,
   `start` datetime NOT NULL,
-  `end` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `end` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `section_id` (`section_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -343,14 +371,16 @@ CREATE TABLE `tutorials` (
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `login_name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login_name` (`login_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
@@ -363,161 +393,6 @@ INSERT INTO `users` (`id`, `login_name`, `password`, `firstname`, `lastname`, `e
 (4, 'mrs_smith', '5f4dcc3b5aa765d61d8327deb882cf99', 'Mrs', 'Smith', 'mrs_smith@email.com');
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- Indexes for table `courseprequisites`
---
-ALTER TABLE `courseprequisites`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `courses` (`code`,`number`);
-
---
--- Indexes for table `laboratories`
---
-ALTER TABLE `laboratories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `lectures`
---
-ALTER TABLE `lectures`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `program`
---
-ALTER TABLE `program`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `programsequence`
---
-ALTER TABLE `programsequence`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `registered`
---
-ALTER TABLE `registered`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `sections`
---
-ALTER TABLE `sections`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `semesters`
---
-ALTER TABLE `semesters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- Indexes for table `tutorials`
---
-ALTER TABLE `tutorials`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login_name` (`login_name`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `courseprequisites`
---
-ALTER TABLE `courseprequisites`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
---
--- AUTO_INCREMENT for table `laboratories`
---
-ALTER TABLE `laboratories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `lectures`
---
-ALTER TABLE `lectures`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `program`
---
-ALTER TABLE `program`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `programsequence`
---
-ALTER TABLE `programsequence`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `registered`
---
-ALTER TABLE `registered`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `sections`
---
-ALTER TABLE `sections`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `semesters`
---
-ALTER TABLE `semesters`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `students`
---
-ALTER TABLE `students`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `tutorials`
---
-ALTER TABLE `tutorials`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
 -- Constraints for dumped tables
 --
 
@@ -525,13 +400,62 @@ ALTER TABLE `users`
 -- Constraints for table `admins`
 --
 ALTER TABLE `admins`
-  ADD CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `courseprequisites`
+--
+ALTER TABLE `courseprequisites`
+  ADD CONSTRAINT `courseprequisites_ibfk_2` FOREIGN KEY (`prerequisite_course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `courseprequisites_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
+
+--
+-- Constraints for table `laboratories`
+--
+ALTER TABLE `laboratories`
+  ADD CONSTRAINT `laboratories_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`);
+
+--
+-- Constraints for table `lectures`
+--
+ALTER TABLE `lectures`
+  ADD CONSTRAINT `lectures_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`);
+
+--
+-- Constraints for table `programsequence`
+--
+ALTER TABLE `programsequence`
+  ADD CONSTRAINT `programsequence_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `programsequence_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `program` (`id`);
+
+--
+-- Constraints for table `registered`
+--
+ALTER TABLE `registered`
+  ADD CONSTRAINT `registered_ibfk_4` FOREIGN KEY (`laboratory_id`) REFERENCES `laboratories` (`id`),
+  ADD CONSTRAINT `registered_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `registered_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`),
+  ADD CONSTRAINT `registered_ibfk_3` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`);
+
+--
+-- Constraints for table `sections`
+--
+ALTER TABLE `sections`
+  ADD CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`id`);
 
 --
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `program` (`id`),
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tutorials`
+--
+ALTER TABLE `tutorials`
+  ADD CONSTRAINT `tutorials_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
