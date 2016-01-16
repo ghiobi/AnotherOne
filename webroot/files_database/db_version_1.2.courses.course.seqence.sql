@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2016 at 03:39 AM
+-- Generation Time: Jan 16, 2016 at 03:12 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -383,7 +383,8 @@ ALTER TABLE `courseprequisites`
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `courses` (`code`,`number`);
 
 --
 -- Indexes for table `laboratories`
