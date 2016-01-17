@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico" />
+
+	<title>mytinerary | scheduler</title>
+
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/css/normalize.css" rel="stylesheet">
+	<link href="resources/css/main.css" rel="stylesheet">
+
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		.student-profile-table{
+			width: 100%;
+		}
+		.student-profile-table > tr{
+			width: 100%;
+		}
+		.student-profile-table > tbody > tr > td{
+			padding: 3px 0;
+		}
+	</style>
+</head>
+<body>
+
+	<header class="container">
+
+		<div class="row">
+			<div class="col-sm-6 col-md-5">
+				<a class="brand" href="#"><img src="resources/img/logo.png"></a>
+			</div>
+		</div>
+
+		<div class="infobar">
+			<p>Scheduler</p>
+			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
+			<div class="signout-collapse-container" id="signout-container">
+				<form></form>
+				<button class="infobar-signout-btn" type="submit">Sign Out</button>
+			</form>
+		</div>
+	</div>
+
+</header>
+<main class="container">
+	<div class = "row">
+		<div class = "col-md-6">
+			<h2 style="margin-bottom: 20px"><i class="glyphicon glyphicon-user"></i> Student Profile</h2>
+		</div>
+		<div class = "col-md-6">
+			<h2 style="margin-bottom: 20px"><i class="glyphicon glyphicon-user"></i> Registered Courses</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<table class="student-profile-table">
+				<tr><td>Student ID:</td><td>431141</td></tr>
+				<tr><td>First Name:</td><td>Bob</td></tr>
+				<tr><td>Last Name:</td><td>Smith</td></tr>
+				<tr><td>Login Name:</td><td>bob_smith</td></tr>
+				<tr><td>Password:</td><td>*****</td></tr>
+			</table>
+			<h4 style="margin-top: 20px">Change Password</h4>
+			<form>
+				<div class="form-group">
+					<label for="old_password">Old Password</label>
+					<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password">
+				</div>
+				<div class="form-group">
+					<label for="new_password">New Password</label>
+					<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password">
+				</div>
+				<div class="form-group">
+					<label for="confirm_password">Confirm Password</label>
+					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+				</div>
+				<input type="submit" class="btn btn-default" name="change_pwd_btn"value="Edit Changes">
+			</form>
+		</div>
+		<div class = "col-md-2">
+		</div>
+		<div class="col-md-6">
+			<table class ="student-profile-table">
+				<tr><td>Course ID</td> <td>Course Name</td><td>Term</td><td>Grade</td><td>Credits</td></tr>
+				<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>Fall 2015</td><td>S+</td><td>3.5</td></tr>
+				<tr><td>SOEN 341</td><td>Sofware Process</td><td>Fall 2019</td><td>D-</td><td>3</td></tr>
+				<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td>Fall 1989</td><td>B-</td><td>3.14</td></tr>
+			</table>
+		</div>
+	</div>
+</main>
+<footer>
+	<div class="container">
+		<p class="copyright">&copy; Copyright 2016 | mytinerary</p>
+	</div>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+
+</body>
