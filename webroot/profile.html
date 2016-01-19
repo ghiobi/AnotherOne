@@ -7,13 +7,13 @@
 	<link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico" />
 	
 	<title>mytinerary | Scheduler</title>
-
+​
 	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
 	<link href="resources/css/normalize.css" rel="stylesheet">
 	<link href="resources/css/main.css" rel="stylesheet">
-
+​
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-
+​
 	<style type="text/css">
 		.student-profile-table{
 			width: 100%;
@@ -24,73 +24,104 @@
 		.student-profile-table > tbody > tr > td{
 			padding: 3px 0;
 		}
+		.student-edit-btn{
+			position: absolute;
+			left: 020px;
+			top: 5px;
+			opacity: .3;
+			border: none;
+			border-radius: 5px;
+			font-size: 12px;
+			padding: 1px 4px;
+		}
 	</style>
-
+​
 </head>
 <body>
-
+​
 	<header class="container">
-
+​
 		<div class="row">
 			<div class="col-sm-6 col-md-5">
 				<a class="brand" href="#"><img src="resources/img/logo.png"></a>
 			</div>
 		</div>
-
+​
 		<div class="infobar">
-			<p>Scheduler</p>
+			<p><i class="glyphicon glyphicon-user"></i> Student Profile: Hello World!</p>
 			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
 			<div class="signout-collapse-container" id="signout-container">
-				<form></form>
-				<button class="infobar-signout-btn" type="submit">Sign Out</button>
-			</form>
+				<form>
+					<button class="infobar-signout-btn" type="submit">Sign Out</button>
+				</form>
+			</div>
 		</div>
-	</div>
-
-</header>
-<main class="container">
-	<div class = "row">
-		<div class = "col-md-4">
-			<h2 style="margin-bottom: 20px"><i class="glyphicon glyphicon-user"></i> Student Profile</h2>
+		
+	</header>
+	
+	
+	<main class="container">
+		<!-- attach alert-fail. For wrong password or no identical -->
+		<div class="alert alert-success" role="alert">
+		
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<p><strong>Succes!</strong> Password Changed</p>
+			
 		</div>
-			<div class = "col-md-1"></div>
-		<div class = "col-md-7">
-			<h2 style="margin-bottom: 20px"><i class="glyphicon glyphicon-user"></i> Registered Courses</h2>
-		</div>
-	</div>
-	<div class="row">
-
-		<div class="col-md-4">
-			<table class="student-profile-table">
-				<tr><td>Student ID:</td><td>431141</td></tr>
-				<tr><td>First Name:</td><td>Bob</td></tr>
-				<tr><td>Last Name:</td><td>Smith</td></tr>
-				<tr><td>Login Name:</td><td>bob_smith</td></tr>
-				<tr><td>Password:</td><td>*****</td></tr>
-			</table>
-			<h4 style="margin-top: 20px">Change Password</h4>
-			<form>
-				<div class="form-group">
-					<label for="old_password">Old Password</label>
-					<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password">
+		
+		<div class="row">
+		
+			<div class="col-md-4">
+				<div>
+					<img class="img-responsive img-rounded" src="data:image/jpeg;base64,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" alt="">
+					<button class="student-edit-btn">
+						edit
+					</button>
 				</div>
-				<div class="form-group">
-					<label for="new_password">New Password</label>
-					<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password">
+				<h4>Details:</h4>
+				
+				<table class="student-profile-table">
+				
+					<tr><td>Student ID:</td><td>431141</td></tr>
+					<tr><td>First Name:</td><td>Bob</td></tr>
+					<tr><td>Last Name:</td><td>Smith</td></tr>
+					<tr><td>Login Name:</td><td>bob_smith</td></tr>
+					<tr><td>Password:</td><td>
+					<button class="btn btn-xs" data-toggle="collapse" data-target="#profile-changepwd-div" aria-expanded="false" aria-controls="profile-changepwd-div">
+					  Edit <i class="glyphicon glyphicon-pencil"></i>
+					</button>
+					</td></tr>
+					
+				</table>
+				<div id="profile-changepwd-div" class="collapse">
+				
+					<h4 style="margin-top: 20px">Change Password</h4>
+					<form>
+						<div class="form-group">
+							<label for="old_password">Old Password</label>
+							<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password">
+						</div>
+						<div class="form-group">
+							<label for="new_password">New Password</label>
+							<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password">
+						</div>
+						<div class="form-group">
+							<label for="confirm_password">Confirm Password</label>
+							<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+						</div>
+						<input type="submit" class="btn btn-default btn-block" name="change_pwd_btn" value="Commit Changes">
+					</form>
+					
 				</div>
-				<div class="form-group">
-					<label for="confirm_password">Confirm Password</label>
-					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
-				</div>
-				<input type="submit" class="btn btn-default" name="change_pwd_btn"value="Edit Changes">
-			</form>
-		</div>
-
-		<div class = "col-md-1"></div>
-		<div class="col-md-7">
-			<table class ="student-profile-table tablesorter table">
-				<thead>
-					<tr class><td class = "blob">Course ID</td> <td class = "blob">Course Name</td><td class = "blob">Term</td><td class = "blob">Grade</td><td class = "blob">Credits</td></tr>
+				
+			</div>
+​
+			<div class="col-md-8">
+			
+				<h4>Registered Courses</h4>
+				<table class ="table student-profile-table tablesorter">
+					<thead>
+						<tr class><td class = "blob">Course ID</td> <td class = "blob">Course Name</td><td class = "blob">Term</td><td class = "blob">Grade</td><td class = "blob">Credits</td></tr>
 					</thead>
 					<tbody>
 						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
@@ -102,12 +133,17 @@
 						<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>D-</td><td>3</td></tr>
 						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
 						<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
-						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Winter</td><td>B+</td><td>4.20</td></tr>
+						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Fall</td><td>B+</td><td>4.20</td></tr>
 					</tbody>
 				</table>
+				
 			</div>
+			
 		</div>
+		
 	</main>
+	
+	
 	<footer>
 		<div class="container">
 			<p class="copyright">&copy; Copyright 2016 | mytinerary</p>
@@ -115,9 +151,9 @@
 	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
-
+​
 	<!-- For table Sorting -->
 	<script src="resources/js/tablesorting/jquery-1.2.6.min.js"></script>
 	<script src="resources/js/tablesorting/jquery.tablesorter.min.js"></script>
-
+​
 </body>
