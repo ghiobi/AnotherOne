@@ -14,31 +14,33 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	
-	</head>
+</head>
+
 <body>
 
-<header class="container">
+	<header class="container">
 
-	<div class="row">
-		<div class="col-sm-6 col-md-5">
-			<a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>resources/img/logo.png"></a>
-		</div>
-	</div>
-
-	<div class="infobar">
-		<?php $is_login = $this->uri->segment(1) == 'login' ?>
-		<p <?php echo ($is_login)? 'style="width:100%"':'' ?>><?php echo (isset($info_bar))? $info_bar : ' '; ?></p>
-		<?php 
-		if(!$is_login)
-			echo '
-			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
-			<div class="signout-collapse-container" id="signout-container">'.
-				form_open("login/signout").'
-					<button class="infobar-signout-btn" type="submit">Sign Out</button>
-				</form>
+		<div class="row">
+			<div class="col-sm-6 col-md-5">
+				<a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>resources/img/logo.png"></a>
 			</div>
-			';	
-		?>
-	</div>
+		</div>
+
+		<div class="infobar">
+			<?php //$is_login determines if this a login page to eith show or hide the Sign Out button ?>
+			<?php $is_login = $this->uri->segment(1) == 'login' ?>
+
+			<p <?php echo ($is_login)? 'style="width:100%"':'' ?>><?php echo (isset($info_bar))? $info_bar : ' '; ?></p>
+
+			<?php if(!$is_login): ?>
+				<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
+				<div class="signout-collapse-container" id="signout-container">
+					<?php echo form_open("login/signout") ;?>
+						<button class="infobar-signout-btn" type="submit">Sign Out</button>
+					</form>
+				</div>
+			<?php endif; ?>
+
+		</div>
 		
-</header>
+	</header>
