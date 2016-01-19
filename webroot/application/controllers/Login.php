@@ -13,6 +13,7 @@ class Login extends CI_Controller
 
 	function index()
 	{
+		//Redirects user to homepage if logged in
 		if($this->session->userdata('user_id'))
 		{
 			redirect(base_url());
@@ -23,22 +24,26 @@ class Login extends CI_Controller
 
 		$this->load->view('layouts/header.php', $data);
 
+		//Validates login if sign in button was submitted/pressed
 		if($this->input->post('signin_btn'))
 		{
 			$this->load->model('user');
 
+			//Extracting post data from input forms
 			$login_name = $this->input->post('login_name', TRUE); //Enabled XSS Filtering
 			$password = $this->input->post('password', TRUE);
 			
+			//Validating and cleaning data
 			$this->form_validation->set_rules('login_name', 'Login ID', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
 
-
+			//Checking for empty input forms
 			if($this->form_validation->run() === FALSE)
 			{
 				goto view;
 			}
 
+			//Checking with database if valid user
 			$result = $this->user->authenticate($login_name, $password);
 
 			if($result === FALSE)
@@ -47,10 +52,12 @@ class Login extends CI_Controller
 				goto view;
 			}
 
+			//Sets the following data to session cookies
 			$this->session->set_userdata('user_id', $result->id);
 			$this->session->set_userdata('firstname', $result->firstname);
 			$this->session->set_userdata('lastname', $result->lastname);
 			
+			//Redirects user to home page if everything is successful
 			redirect(base_url());
 			return;
 		}
