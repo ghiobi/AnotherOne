@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico" />
+
+	<title>mytinerary | schler</title>
+
+	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/css/normalize.css" rel="stylesheet">
+	<link href="resources/css/main.css" rel="stylesheet">
+
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		div{
+			display: block;
+		}
+		.scheduler-app{
+			background-color: #2c3e50;
+			border: solid 1px #7f8c8d;
+			border: 5px;
+			color: white;
+		}
+		.app-row{
+			clear: both;
+		}
+		.app-half, .app-half{
+			float: left;
+		}
+		.app-full {
+			width: 100%;
+		}
+		.app-half{
+			width: 50%;
+		}
+		.app-container{
+			padding: 0 15px;
+		}
+		.app-container h3, h4{
+			margin: 0;
+			padding: 15px 0;
+		}
+		.app-pref{
+			background-color: #16a085;
+		}
+		#app-student-pref{
+			background-color: #2bd1b1;
+		}
+		.app-search{
+		}
+		.app-section{
+		}
+		.app-register{
+
+		}
+		.app-schedule{
+			bottom-top: 2px solid #95a5a6;
+		}
+		@media (max-width: 768px) {
+			.app-half{
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<header class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-5">
+				<a class="brand" href="#"><img src="resources/img/logo.png"></a>
+			</div>
+		</div>
+		<div class="infobar">
+			<p>schler</p>
+			<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
+			<div class="signout-collapse-container" id="signout-container">
+				<form></form>
+					<button class="infobar-signout-btn" type="submit">Sign Out</button>
+				</form>
+			</div>
+		</div>
+
+	</header>
+
+	<main class="container">
+		<div class="scheduler-app">
+			<div class="app-row">
+				<div class="app-full">
+					<div class="app-pref app-container">
+						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="false" aria-controls="app-student-pref">PREFERENCES <span style="font-size: .75em" class="glyphicon glyphicon-chevron-down"></span></h3>
+
+					</div>
+					<div class="collapse app-container" id="app-student-pref">
+						<h4>ello</h4>
+					</div>
+				</div>
+			</div>
+			<div class="app-row">
+				<div class="app-half">
+					<div  class="app-search app-container">
+						<h3>SEARCH</h3>
+					</div>
+					<div  class="app-section app-container">
+						<h3>SECTIONS</h3>
+					</div>
+				</div>
+				<div class="app-half">
+					<div  class="app-register app-container">
+						<h3>REGISTER</h3>
+					</div>
+				</div>
+			</div>
+			<div class="app-row">
+				<div class="app-full">
+					<div class="app-commit app-container">
+						<h3>COMMIT</h3>
+					</div>
+				</div>
+			</div>
+			<div class="app-row">
+				<div class="app-full">
+					<div class="app-schedule app-container">
+						<h3>SCHEDULE</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="container">
+			<p class="copyright">&copy; Copyright 2016 | mytinerary</p>
+		</div>
+	</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+
+</body>
+</html>
