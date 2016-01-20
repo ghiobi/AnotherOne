@@ -20,7 +20,7 @@ header{
 }
 .infobar{
 	overflow: auto;
-	background-color: #F5F5F5;
+	background-color: #ecf0f1;
 	border-radius: 4px;
 }
 .infobar > p{
@@ -63,8 +63,8 @@ header{
 *******************************/
 .front-menu > a{
 	display: block;
-	background-color: #33CCFF;
-	border-radius: 5px;
+	background-color: #34495e;
+	border-radius: 4px;
 	color: white;
 	font-size: 18px;
 	text-transform: uppercase;
@@ -76,7 +76,7 @@ header{
 .front-menu > a:hover{
 	text-decoration: none;
 	background-color: white;
-	color: #33CCFF;
+	color: #34495e;
 }
 
 /******************************

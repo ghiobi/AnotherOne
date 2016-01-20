@@ -18,6 +18,9 @@
 			display: block;
 		}
 		.scheduler-app{
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
 			background-color: #2c3e50;
 			border: solid 1px #7f8c8d;
 			border: 5px;
@@ -43,12 +46,88 @@
 			padding: 15px 0;
 		}
 		.app-pref{
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 			background-color: #16a085;
+			overflow: hidden;
+		}
+		.app-pref h3{
+			float: left;
+			width: calc(100% - 40px);
+		}
+		.app-pref button{
+			float: left;
+			width: 40px;
+			font-size: 18px;
+			padding: 15px 0 15px 15px;
+			color: white;
+			background-color: transparent;
+			border: none;
+			border-left: 1px solid white;
+
+		}
+		.app-pref button:focus{
+			outline:none;
 		}
 		#app-student-pref{
-			background-color: #2bd1b1;
+			display: block;
+			color: #2c3e50;
+			background-color: #ecf0f1;
+			overflow: hidden;
+		}
+		.app-time-pref p{
+			margin: 0;
+			padding: 15px 0;
+			text-transform: uppercase;
 		}
 		.app-search{
+			height: 55.454px;
+			overflow: hidden;
+		}
+		.app-search h3{
+			padding-left: 15px;
+		}
+		.app-search input{
+			color: #2c3e50;
+			font-size: 24px;
+			height: 56px;
+			width: 100%;
+			border: none;
+			padding: 10px 15px;
+			box-sizing: border-box;
+			text-transform: uppercase;
+		}
+		#blink_underscore{
+			color: white;
+			-webkit-animation: 1s blink step-end infinite;
+			-moz-animation: 1s blink step-end infinite;
+			-ms-animation: 1s blink step-end infinite;
+			-o-animation: 1s blink step-end infinite;
+			animation: 1s blink step-end infinite;
+		}
+		@keyframes "blink" {
+			from, to { color: transparent;  }
+			50% { color: white;  }
+		}
+		@keyframes "blink" {
+			from, to {  color: transparent;  }
+			50% { color: white;  }
+		}
+		@-moz-keyframes blink {
+			from, to { color: transparent;  }
+			50% { color: white;  }
+		}
+		@-webkit-keyframes "blink" {
+			from, to {  color: transparent;  }
+			50% {  color: white; }
+		}
+		@-ms-keyframes "blink" {
+			from, to {  color: transparent;  }
+			50% {  color: white;  }
+		}
+		@-o-keyframes "blink" {
+			from, to {  color: transparent;  }
+			50% {  color: white;  }
 		}
 		.app-section{
 		}
@@ -56,7 +135,9 @@
 
 		}
 		.app-schedule{
-			bottom-top: 2px solid #95a5a6;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+			background-color: #7f8c8d;
 		}
 		@media (max-width: 768px) {
 			.app-half{
@@ -90,18 +171,24 @@
 			<div class="app-row">
 				<div class="app-full">
 					<div class="app-pref app-container">
-						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="false" aria-controls="app-student-pref">PREFERENCES <span style="font-size: .75em" class="glyphicon glyphicon-chevron-down"></span></h3>
-
+						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="true" aria-controls="app-student-pref">PREFERENCES <span style="font-size: .75em" class="glyphicon glyphicon-chevron-down"></span></h3>
+						<button><i style="font-size: .75em" class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></i></button>
 					</div>
-					<div class="collapse app-container" id="app-student-pref">
-						<h4>ello</h4>
+					<div class="collapsing app-container" id="app-student-pref">
+						<div class="app-time-pref">
+							<p><i style="font-size:.75em" class="glyphicon glyphicon-ban-circle"></i> Monday: 9:00am to 10:00am</p>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="app-row">
 				<div class="app-half">
-					<div  class="app-search app-container">
-						<h3>SEARCH</h3>
+					<div class="app-search">
+						<h3 id="search-bar">SEARCH <span id="blink_underscore">_</span></h3>
+						<div id="input-search-bar" style="display: none"><input type="text" placeholder="SEARCH"></div>
+					</div>
+					<div  class="app-section app-container">
+						<h3>COURSES</h3>
 					</div>
 					<div  class="app-section app-container">
 						<h3>SECTIONS</h3>
@@ -129,6 +216,25 @@
 			</div>
 		</div>
 	</main>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<footer>
 		<div class="container">
 			<p class="copyright">&copy; Copyright 2016 | mytinerary</p>
@@ -136,6 +242,20 @@
 	</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
-
+	<script>
+		$(function(){
+			var $searchbox = $('.app-search');
+			var $searchdiv = $('#search-bar');
+			var $searchinput = $('#input-search-bar');
+			$searchbox.mouseenter(function(){
+				$searchdiv.slideUp(100);
+				$searchinput.slideDown(100).select();
+			});
+			$searchbox.mouseleave(function(){
+				$searchdiv.slideDown(100);
+				$searchinput.slideUp(100);
+			});
+		});
+	</script>
 </body>
 </html>
