@@ -4,27 +4,38 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" type="image/ico" href="resources/img/favicon.ico" />
+	<link rel="shortcut icon" type="image/ico" href="../../webroot/resources/img/favicon.ico" />
 
-	<title>mytinerary | schler</title>
+	<title>mytinerary | scheduler</title>
 
-	<link href="resources/css/bootstrap.min.css" rel="stylesheet">
-	<link href="resources/css/normalize.css" rel="stylesheet">
-	<link href="resources/css/main.css" rel="stylesheet">
+	<link href="../../webroot/resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../webroot/resources/css/normalize.css" rel="stylesheet">
+	<link href="../../webroot/resources/css/main.css" rel="stylesheet">
 
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 		div{
 			display: block;
 		}
+		.app-fix-gicon{
+			font-size: .78em;
+		}
 		.scheduler-app{
 			-webkit-border-radius: 5px;
 			-moz-border-radius: 5px;
 			border-radius: 5px;
-			background-color: #2c3e50;
+			background-color: #ecf0f1;
 			border: solid 1px #7f8c8d;
 			border: 5px;
 			color: white;
+		}
+		.app-title{
+			text-align: center;
+			color: #2c3e50;
+		}
+		.app-title h3{
+			padding: 15px 15px;
+			margin: 0;
 		}
 		.app-row{
 			clear: both;
@@ -39,11 +50,10 @@
 			width: 50%;
 		}
 		.app-container{
-			padding: 0 15px;
 		}
 		.app-container h3, h4{
 			margin: 0;
-			padding: 15px 0;
+			padding: 15px 15px;
 		}
 		.app-pref{
 			border-top-left-radius: 5px;
@@ -52,19 +62,20 @@
 			overflow: hidden;
 		}
 		.app-pref h3{
+			cursor: pointer;
 			float: left;
-			width: calc(100% - 40px);
+			width: calc(100% - 60px);
 		}
 		.app-pref button{
 			float: left;
-			width: 40px;
+			width: 60px;
 			font-size: 18px;
-			padding: 15px 0 15px 15px;
+			padding: 15px;
 			color: white;
 			background-color: transparent;
 			border: none;
 			border-left: 1px solid white;
-
+			z-index: 2;
 		}
 		.app-pref button:focus{
 			outline:none;
@@ -76,16 +87,22 @@
 			overflow: hidden;
 		}
 		.app-time-pref p{
-			margin: 0;
-			padding: 15px 0;
+			padding: 0;
+			margin: 15px 15px;
 			text-transform: uppercase;
 		}
+		.app-time-pref p:hover{
+			cursor: pointer;
+			text-decoration:line-through;
+		}
 		.app-search{
-			height: 55.454px;
+			background-color: #bdc3c7;
+			height: 56px;
 			overflow: hidden;
 		}
 		.app-search h3{
-			padding-left: 15px;
+			margin: 0;
+			padding: 15px;
 		}
 		.app-search input{
 			color: #2c3e50;
@@ -96,6 +113,9 @@
 			padding: 10px 15px;
 			box-sizing: border-box;
 			text-transform: uppercase;
+		}
+		.app-search input:focus{
+			outline: none;
 		}
 		#blink_underscore{
 			color: white;
@@ -129,10 +149,80 @@
 			from, to {  color: transparent;  }
 			50% {  color: white;  }
 		}
+
+		.app-courses h3{
+			background-color: #2c3e50;
+			margin: 0;
+			padding: 15px 15px;
+		}
+		.app-courses ul{
+			margin: 0;
+			list-style-type: square;
+			padding: 15px 0;
+			background-color: whitesmoke;
+			color: #2c3e50;
+			font-size: 14px;
+		}
+		.app-courses ul > li{
+			padding: 0 15px;
+			text-transform: uppercase;
+			display: block;
+		}
+		.app-courses li + li{
+			padding-top: 15px;
+		}
 		.app-section{
 		}
+		.app-section{
+			background-color: #2c3e50;
+		}
+		.app-section ul{
+			margin: 0;
+			list-style-type: square;
+			padding: 15px 0;
+			background-color: whitesmoke;
+			color: #2c3e50;
+			font-size: 14px;
+		}
+		.app-section ul > li{
+			padding: 0 15px;
+			text-transform: uppercase;
+			display: block;
+		}
+		.app-section li + li{
+			padding-top: 15px;
+		}
 		.app-register{
-
+		}
+		.app-register h3{
+			background-color: #95a5a6;
+		}
+		.registered-course-list{
+			display: block;
+			margin: 15px auto;
+			width: 400px;
+		}
+		.registered-course{
+			display: block;
+			overflow: hidden;
+		}
+		.registered-state{
+			float: left;
+			width: 25px;
+		}
+		.course-description{
+			float: left;
+			height:100px;
+			background-color: white;
+			padding: 7px 7px;
+			width: 375px;
+		}
+		.registered-ok{
+			height:100px;
+			background-color: #2ecc71;
+		}
+		.app-commit{
+			background-color: #e74c3c;
 		}
 		.app-schedule{
 			border-bottom-left-radius: 5px;
@@ -169,14 +259,19 @@
 	<main class="container">
 		<div class="scheduler-app">
 			<div class="app-row">
+				<div class="app-full app-title">
+					<h3><i class="glyphicon glyphicon-triangle-right app-fix-gicon"></i> WINTER 2016</h3>
+				</div>
+			</div>
+			<div class="app-row">
 				<div class="app-full">
 					<div class="app-pref app-container">
-						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="true" aria-controls="app-student-pref">PREFERENCES <span style="font-size: .75em" class="glyphicon glyphicon-chevron-down"></span></h3>
-						<button><i style="font-size: .75em" class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#myModal"></i></button>
+						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="true" aria-controls="app-student-pref">PREFERENCES <span class="glyphicon glyphicon-chevron-down app-fix-gicon"></span></h3>
+						<button><i class="glyphicon glyphicon-plus app-fix-gicon" data-toggle="modal" data-target="#myModal"></i></button>
 					</div>
 					<div class="collapsing app-container" id="app-student-pref">
 						<div class="app-time-pref">
-							<p><i style="font-size:.75em" class="glyphicon glyphicon-ban-circle"></i> Monday: 9:00am to 10:00am</p>
+							<p><i class="glyphicon glyphicon-ban-circle app-fix-gicon"></i> Monday: 9:00am to 10:00am</p>
 						</div>
 					</div>
 				</div>
@@ -184,25 +279,54 @@
 			<div class="app-row">
 				<div class="app-half">
 					<div class="app-search">
-						<h3 id="search-bar">SEARCH <span id="blink_underscore">_</span></h3>
+						<h3 id="search-bar"><i class="glyphicon glyphicon-search app-fix-gicon"></i> SEARCH <span id="blink_underscore">_</span></h3>
 						<div id="input-search-bar" style="display: none"><input type="text" placeholder="SEARCH"></div>
 					</div>
-					<div  class="app-section app-container">
+					<div  class="app-courses">
 						<h3>COURSES</h3>
+						<ul>
+							<li>COMP 411 System Hardware Lab</li>
+							<li>COMP 123 Software Process</li>
+							<li>COMP 384 Introduction to Game Development</li>
+							<li>COMP 232 Probability and Statistics in Engineering</li>
+							<li>COMP 384 Optics</li>
+						</ul>
 					</div>
-					<div  class="app-section app-container">
+					<div class="app-section app-container">
 						<h3>SECTIONS</h3>
+						<ul>
+							<li>COMP 411 System Hardware Lab</li>
+							<li>COMP 123 Software Process</li>
+							<li>COMP 384 Introduction to Game Development</li>
+							<li>COMP 232 Probability and Statistics in Engineering</li>
+							<li>COMP 384 Optics</li>
+						</ul>
 					</div>
 				</div>
 				<div class="app-half">
 					<div  class="app-register app-container">
 						<h3>REGISTER</h3>
+						<div>
+							<div class="registered-course-list" style="color: black">
+								<div class="registered-course">
+									<div class="registered-state registered-ok">
+										<i class="glyphicon glyphicon-thumbs-up"></i>
+									</div>
+									<div class="course-description">
+										<p>
+											Course name and descriptiong.
+											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet asperiores aspernatur assumenda, delectus ex, impedit iure maiores minima molestias mollitia nobis officia possimus qui quibusdam tenetur ut velit voluptatum.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="app-row">
 				<div class="app-full">
-					<div class="app-commit app-container">
+					<div class="app-commit app-container text-center">
 						<h3>COMMIT</h3>
 					</div>
 				</div>
@@ -241,7 +365,7 @@
 		</div>
 	</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
+<script src="../../webroot/resources/js/bootstrap.min.js"></script>
 	<script>
 		$(function(){
 			var $searchbox = $('.app-search');
