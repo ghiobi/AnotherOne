@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2016 at 07:41 PM
+-- Generation Time: Jan 20, 2016 at 08:11 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `mytinerary`
+-- Database: `phpmyadmin`
 --
-CREATE DATABASE IF NOT EXISTS `mytinerary` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `mytinerary`;
+CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `phpmyadmin`;
 
 -- --------------------------------------------------------
 
@@ -30,9 +30,11 @@ USE `mytinerary`;
 
 DROP TABLE IF EXISTS `admins`;
 CREATE TABLE IF NOT EXISTS `admins` (
-  `id` int(11) unsigned NOT NULL,
-  `user_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `admins`
@@ -49,10 +51,13 @@ INSERT INTO `admins` (`id`, `user_id`) VALUES
 
 DROP TABLE IF EXISTS `courseprequisites`;
 CREATE TABLE IF NOT EXISTS `courseprequisites` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `course_id` int(11) unsigned NOT NULL,
-  `prerequisite_course_id` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `prerequisite_course_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`),
+  KEY `prerequisite_course_id` (`prerequisite_course_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=86 ;
 
 --
 -- Dumping data for table `courseprequisites`
@@ -283,6 +288,7 @@ CREATE TABLE IF NOT EXISTS `laboratories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `section_id` int(11) unsigned NOT NULL,
   `capacity` int(11) unsigned NOT NULL,
+  `letter` varchar(1) NOT NULL,
   `instructor` varchar(255) NOT NULL,
   `room` varchar(11) NOT NULL,
   `start` time NOT NULL,
@@ -290,7 +296,31 @@ CREATE TABLE IF NOT EXISTS `laboratories` (
   `weekday` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `section_id` (`section_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Dumping data for table `laboratories`
+--
+
+INSERT INTO `laboratories` (`id`, `section_id`, `capacity`, `letter`, `instructor`, `room`, `start`, `end`, `weekday`) VALUES
+(1, 1, 15, 'I', 'Tadeusz Obuchowicz', '', '10:00:00', '12:00:00', 2),
+(2, 1, 15, 'J', 'Tadeusz Obuchowicz', '', '10:00:00', '12:00:00', 1),
+(3, 1, 15, 'K', 'Tadeusz Obuchowicz', '', '10:00:00', '12:00:00', 3),
+(4, 1, 18, 'L', 'Tadeusz Obuchowicz', '', '10:00:00', '12:00:00', 1),
+(5, 1, 19, 'M', 'Tadeusz Obuchowicz', '', '18:00:00', '20:00:00', 3),
+(6, 2, 15, 'I', 'Donald Peter Davis', '', '10:00:00', '12:00:00', 2),
+(7, 2, 21, 'J', 'Donald Peter Davis', '', '10:00:00', '12:00:00', 3),
+(8, 2, 19, 'K', 'Donald Peter Davis', '', '18:00:00', '20:00:00', 3),
+(9, 2, 30, 'L', 'Donald Peter Davis', '', '16:15:00', '18:15:00', 1),
+(10, 2, 15, 'M', 'Donald Peter Davis', '', '10:00:00', '12:00:00', 2),
+(11, 13, 35, 'I', 'Nikolaos Tsantalis', '', '15:45:00', '18:25:00', 4),
+(12, 13, 35, 'K', 'Nikolaos Tsantalis', '', '15:45:00', '18:25:00', 2),
+(13, 14, 25, 'I', 'Yuhong Yan', 'H 967', '20:30:00', '22:20:00', 3),
+(14, 14, 25, 'J', 'Yuhong Yan', 'H 917', '20:30:00', '22:20:00', 3),
+(15, 15, 30, 'I', 'Peter Rigby', '', '08:45:00', '10:45:00', 2),
+(16, 15, 30, 'I', 'Peter Rigby', '', '08:45:00', '10:45:00', 4),
+(17, 15, 30, 'J', 'Peter Rigby', '', '08:45:00', '10:45:00', 2),
+(18, 15, 30, 'J', 'Peter Rigby', '', '08:45:00', '10:45:00', 4);
 
 -- --------------------------------------------------------
 
@@ -308,7 +338,39 @@ CREATE TABLE IF NOT EXISTS `lectures` (
   `weekday` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `section_id` (`section_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+
+--
+-- Dumping data for table `lectures`
+--
+
+INSERT INTO `lectures` (`id`, `section_id`, `room`, `start`, `end`, `weekday`) VALUES
+(1, 1, 'MB S2.330 ', '17:45:00', '20:15:00', 2),
+(2, 2, 'MB S2.210 ', '14:45:00', '16:00:00', 1),
+(3, 2, 'MB S2.210 ', '14:45:00', '16:00:00', 3),
+(4, 3, 'H 967', '08:45:00', '10:00:00', 2),
+(5, 3, 'H 967', '08:45:00', '10:00:00', 4),
+(6, 4, 'H 920', '14:45:00', '16:00:00', 2),
+(7, 4, 'H 920', '14:45:00', '16:00:00', 4),
+(8, 5, 'FG B040', '14:45:00', '16:00:00', 2),
+(9, 5, 'FG B040', '14:45:00', '16:00:00', 4),
+(10, 6, 'FG C080', '16:15:00', '17:30:00', 2),
+(11, 6, 'FG C080', '16:15:00', '17:30:00', 4),
+(12, 7, 'H 420', '16:15:00', '17:30:00', 2),
+(13, 7, 'H 420', '16:15:00', '17:30:00', 4),
+(14, 8, 'MB S2.210', '08:45:00', '10:00:00', 3),
+(15, 8, 'MB S2.210', '08:45:00', '10:00:00', 5),
+(16, 9, 'H 407', '13:15:00', '14:30:00', 2),
+(17, 9, 'H 407', '13:15:00', '14:30:00', 4),
+(18, 10, 'H 620', '14:45:00', '16:00:00', 1),
+(19, 10, 'H 620', '14:45:00', '16:00:00', 3),
+(20, 11, 'FG C070', '10:15:00', '11:30:00', 3),
+(21, 11, 'FG C070', '10:15:00', '11:30:00', 5),
+(22, 12, 'FG B050', '11:45:00', '13:00:00', 2),
+(23, 12, 'FG B050', '11:45:00', '13:00:00', 4),
+(24, 13, 'H 431', '16:15:00', '17:55:00', 1),
+(25, 14, 'FG B055', '17:45:00', '20:15:00', 3),
+(26, 15, 'H 521', '18:25:00', '19:25:00', 5);
 
 -- --------------------------------------------------------
 
@@ -428,12 +490,48 @@ CREATE TABLE IF NOT EXISTS `sections` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `semester_id` int(11) unsigned NOT NULL,
   `course_id` int(11) unsigned NOT NULL,
+  `letter` varchar(1) NOT NULL,
   `capacity` smallint(6) unsigned NOT NULL,
   `professor` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `semester_id` (`semester_id`),
   KEY `course_id` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+
+--
+-- Dumping data for table `sections`
+--
+
+INSERT INTO `sections` (`id`, `semester_id`, `course_id`, `letter`, `capacity`, `professor`) VALUES
+(1, 2, 1, '', 82, 'Tadeusz Obuchowicz'),
+(2, 2, 1, '', 100, 'Donald Peter Davis'),
+(3, 2, 2, '', 50, 'Nancy Acemian'),
+(4, 2, 2, '', 90, 'Javad Sadri'),
+(5, 2, 2, '', 80, 'Yuhong Yan'),
+(6, 2, 5, '', 60, 'Constantinos Constantinides'),
+(7, 2, 5, '', 60, 'Olga Ormandjieva'),
+(8, 2, 6, '', 125, 'Weiyi Shang'),
+(9, 2, 9, '', 90, 'Constantinos Constantinides'),
+(10, 2, 10, '', 75, 'Daniel Sinnig'),
+(11, 2, 11, '', 80, 'Rajagopalan Jayakumar'),
+(12, 2, 13, '', 75, 'Javad Sadri'),
+(13, 2, 15, '', 70, 'Nikolaos Tsantalis'),
+(14, 2, 20, '', 50, 'Yuhong Yan'),
+(15, 2, 21, '', 60, 'Peter Rigby'),
+(16, 2, 22, '', 2, 'Terrill Fancott'),
+(17, 2, 25, '', 30, 'Stanislas Klasa'),
+(18, 2, 27, '', 120, 'Nancy Acemian'),
+(19, 2, 28, '', 90, 'David K Probst'),
+(20, 2, 28, '', 95, 'David K Probst'),
+(21, 2, 29, '', 65, 'Gosta Grahne'),
+(22, 2, 29, '', 90, 'Sabine Bergler'),
+(23, 2, 29, '', 52, 'Troy Jason Taillefer'),
+(24, 2, 30, '', 80, 'Adam Krzyzak'),
+(25, 2, 30, '', 90, 'Eusebius Doedel'),
+(26, 2, 31, '', 90, 'Aiman Latif Hanna'),
+(27, 2, 31, '', 110, 'Aiman Latif Hanna'),
+(28, 2, 32, '', 0, ''),
+(29, 2, 32, '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -472,16 +570,16 @@ CREATE TABLE IF NOT EXISTS `students` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`),
   KEY `program_id` (`program_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1004 ;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`id`, `user_id`, `program_id`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 1);
+(1001, 1, 1),
+(1002, 2, 2),
+(1003, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -524,6 +622,7 @@ CREATE TABLE IF NOT EXISTS `tutorials` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `section_id` int(11) unsigned NOT NULL,
   `capacity` int(11) unsigned NOT NULL,
+  `letter` varchar(1) NOT NULL,
   `instructor` varchar(255) NOT NULL,
   `room` varchar(255) NOT NULL,
   `start` time NOT NULL,
@@ -531,7 +630,44 @@ CREATE TABLE IF NOT EXISTS `tutorials` (
   `weekday` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `section_id` (`section_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+
+--
+-- Dumping data for table `tutorials`
+--
+
+INSERT INTO `tutorials` (`id`, `section_id`, `capacity`, `letter`, `instructor`, `room`, `start`, `end`, `weekday`) VALUES
+(1, 1, 42, 'A', 'Tadeusz Obuchowicz', 'H 849', '20:30:00', '22:10:00', 2),
+(2, 1, 40, 'B', 'Tadeusz Obuchowicz', 'H 917', '20:30:00', '22:10:00', 2),
+(3, 2, 31, 'A', 'Donald Peter Davis', 'H 821', '16:15:00', '17:55:00', 3),
+(4, 2, 33, 'B', 'Donald Peter Davis', 'H 817', '16:15:00', '17:55:00', 3),
+(5, 2, 36, 'C', 'Donald Peter Davis', 'H 825', '16:15:00', '17:55:00', 3),
+(6, 3, 25, 'A', 'Nancy Acemian', 'H 917', '10:15:00', '11:55:00', 2),
+(7, 3, 25, 'B', 'Nancy Acemian', 'H 917', '10:15:00', '11:55:00', 4),
+(8, 4, 45, 'A', 'Javad Sadri', 'H 929', '16:15:00', '17:55:00', 2),
+(9, 4, 45, 'B', 'Javad Sadri', 'H 905', '16:15:00', '17:55:00', 4),
+(10, 5, 45, 'A', 'Yuhong Yan', 'H 905', '15:15:00', '16:55:00', 5),
+(11, 5, 35, 'B', 'Yuhong Yan', 'H 905', '16:15:00', '17:55:00', 2),
+(12, 6, 30, 'A', 'Constantinos Constantinides', 'H 605', '14:15:00', '16:05:00', 5),
+(13, 6, 30, 'B', 'Constantinos Constantinides', 'H 513', '14:15:00', '16:05:00', 5),
+(14, 7, 30, 'A', 'Olga Ormandjieva', 'H 521', '14:15:00', '16:05:00', 5),
+(15, 7, 30, 'B', 'Olga Ormandjieva', 'H 611', '14:15:00', '16:05:00', 5),
+(16, 8, 50, 'A', 'Weiyi Shang', 'H 929', '12:15:00', '13:05:00', 5),
+(17, 8, 45, 'B', 'Weiyi Shang', 'H 929', '13:15:00', '14:05:00', 5),
+(18, 8, 30, 'C', 'Weiyi Shang', 'H 929', '14:15:00', '15:05:00', 5),
+(19, 9, 50, 'A', 'Constantinos Constantinides', 'H 435', '14:45:00', '15:35:00', 4),
+(20, 9, 40, 'B', 'Constantinos Constantinides', 'H 544', '14:45:00', '15:35:00', 4),
+(21, 10, 40, 'A', 'Daniel Sinnig', 'H 905', '16:15:00', '17:05:00', 3),
+(22, 10, 35, 'B', 'Daniel Sinnig', 'H 905', '17:45:00', '18:35:00', 3),
+(23, 11, 40, 'A', 'Rajagopalan Jayakumar', 'H 627', '11:45:00', '12:35:00', 5),
+(24, 11, 40, 'B', 'Rajagopalan Jayakumar', 'H 619', '11:45:00', '12:35:00', 5),
+(25, 12, 25, 'A', 'Javad Sadri', 'H 831', '10:45:00', '11:35:00', 2),
+(26, 12, 25, 'B', 'Javad Sadri', 'H 831', '10:45:00', '11:35:00', 4),
+(27, 12, 25, 'C', 'Javad Sadri', 'H 817', '10:45:00', '11:35:00', 1),
+(28, 13, 35, 'A', 'Nikolaos Tsantalis', '', '18:15:00', '19:05:00', 1),
+(29, 13, 35, 'B', 'Nikolaos Tsantalis', '', '18:15:00', '19:05:00', 1),
+(30, 14, 30, 'A', 'Yuhong Yan', 'H 831', '16:15:00', '17:05:00', 3),
+(31, 14, 20, 'B', 'Yuhong Yan', 'H 843', '16:15:00', '17:05:00', 3);
 
 -- --------------------------------------------------------
 
@@ -564,6 +700,19 @@ INSERT INTO `users` (`id`, `login_name`, `password`, `firstname`, `lastname`, `e
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admins`
+--
+ALTER TABLE `admins`
+  ADD CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `courseprequisites`
+--
+ALTER TABLE `courseprequisites`
+  ADD CONSTRAINT `courseprequisites_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `courseprequisites_ibfk_2` FOREIGN KEY (`prerequisite_course_id`) REFERENCES `courses` (`id`);
 
 --
 -- Constraints for table `courses`
