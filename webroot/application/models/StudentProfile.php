@@ -1,18 +1,54 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-*  Works with the login controller, and authenticates users.
+*  The Student Profile retrieves necessary data to construct a profile.
 */
 class StudentProfile extends CI_Model
 {
-	
+
+	private $user_id;
+
 	function __construct()
 	{
 		parent::__construct();
+		$user_id = $this->session->user_id;
 	}
 
+	function get_program(){
+		$result = $this->db->query(
+		"SELECT
+		  program.name
+		FROM students
+		  INNER JOIN users
+			ON students.user_id = users.id
+		  INNER JOIN program
+			ON students.program_id = program.id
+		WHERE users.id = '$this->user_id' LIMIT 1");
+		return $result->row()->name;
+	}
 
-	//CREATE functions to retrieve nessessary data for a student profile.
+	function get_studentID(){
+		$result = $this->db->query(
+		"SELECT
+		  students.id
+		FROM students
+		  INNER JOIN users
+			ON students.user_id = users.id
+		  INNER JOIN program
+			ON students.program_id = program.id
+		WHERE users.id = '$this->user_id' LIMIT 1");
+		return $result->row()->id;
+	}
+
+	function get_semesters(){
+
+	}
+
+	function get_course_by_semester(){
+
+	}
+
+	
 
 }
 ?>
