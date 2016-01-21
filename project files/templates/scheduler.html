@@ -14,10 +14,7 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<style type="text/css">
-		div{
-			display: block;
-		}
-		.app-fix-gicon{
+		.fix-icon {
 			font-size: .78em;
 		}
 		.scheduler-app{
@@ -29,84 +26,78 @@
 			border: 5px;
 			color: white;
 		}
-		.app-title{
+		.scheduler-title {
 			text-align: center;
 			color: #2c3e50;
 		}
-		.app-title h3{
+		.scheduler-title h3{
 			padding: 15px 15px;
 			margin: 0;
 		}
-		.app-row{
+		.scheduler-row {
 			clear: both;
 		}
-		.app-half, .app-half{
+		.scheduler-half {
+			width: 50%;
 			float: left;
 		}
-		.app-full {
+		.scheduler-full {
 			width: 100%;
 		}
-		.app-half{
-			width: 50%;
-		}
-		.app-container{
-		}
-		.app-container h3, h4{
+		.scheduler-group h3, h4{
 			margin: 0;
 			padding: 15px 15px;
 		}
-		.app-pref{
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
+		.scheduler-pref {
 			background-color: #16a085;
 			overflow: hidden;
 		}
-		.app-pref h3{
+		.scheduler-pref h3{
 			cursor: pointer;
 			float: left;
 			width: calc(100% - 60px);
 		}
-		.app-pref button{
+		.scheduler-pref button{
 			float: left;
 			width: 60px;
 			font-size: 18px;
-			padding: 15px;
+			padding: 0 15px;
 			color: white;
 			background-color: transparent;
 			border: none;
 			border-left: 1px solid white;
-			z-index: 2;
+			height: 56px;
+			line-height: 56px;
 		}
-		.app-pref button:focus{
+		.scheduler-pref button:focus{
 			outline:none;
 		}
-		#app-student-pref{
-			display: block;
+		#scheduler-pref {
 			color: #2c3e50;
 			background-color: #ecf0f1;
 			overflow: hidden;
 		}
-		.app-time-pref p{
+		.scheduler-pref-time p{
 			padding: 0;
 			margin: 15px 15px;
 			text-transform: uppercase;
 		}
-		.app-time-pref p:hover{
+		.scheduler-pref-time p:hover{
 			cursor: pointer;
 			text-decoration:line-through;
 		}
-		.app-search{
+		.scheduler-search {
 			background-color: #bdc3c7;
 			height: 56px;
 			overflow: hidden;
 		}
-		.app-search h3{
+		.scheduler-search h3{
 			margin: 0;
 			padding: 15px;
 		}
-		.app-search input{
+		.scheduler-search input{
 			color: #2c3e50;
-			font-size: 24px;
+			font-size: 20px;
 			height: 56px;
 			width: 100%;
 			border: none;
@@ -114,7 +105,7 @@
 			box-sizing: border-box;
 			text-transform: uppercase;
 		}
-		.app-search input:focus{
+		.scheduler-search input:focus{
 			outline: none;
 		}
 		#blink_underscore{
@@ -149,89 +140,67 @@
 			from, to {  color: transparent;  }
 			50% {  color: white;  }
 		}
-
-		.app-courses h3{
+		.scheduler-courses h3{
 			background-color: #2c3e50;
 			margin: 0;
 			padding: 15px 15px;
 		}
-		.app-courses ul{
-			margin: 0;
-			list-style-type: square;
-			padding: 15px 0;
-			background-color: whitesmoke;
-			color: #2c3e50;
-			font-size: 14px;
-		}
-		.app-courses ul > li{
-			padding: 0 15px;
-			text-transform: uppercase;
-			display: block;
-		}
-		.app-courses li + li{
-			padding-top: 15px;
-		}
-		.app-section{
-		}
-		.app-section{
-			background-color: #2c3e50;
-		}
-		.app-section ul{
-			margin: 0;
-			list-style-type: square;
-			padding: 15px 0;
-			background-color: whitesmoke;
-			color: #2c3e50;
-			font-size: 14px;
-		}
-		.app-section ul > li{
-			padding: 0 15px;
-			text-transform: uppercase;
-			display: block;
-		}
-		.app-section li + li{
-			padding-top: 15px;
-		}
-		.app-register{
-		}
-		.app-register h3{
-			background-color: #95a5a6;
-		}
-		.registered-course-list{
-			display: block;
-			margin: 15px auto;
-			width: 400px;
-		}
-		.registered-course{
-			display: block;
+		.scheduler-results > div:first-child{
 			overflow: hidden;
 		}
-		.registered-state{
-			float: left;
-			width: 25px;
+		.scheduler-results h3{
+			background-color: #2c3e50;
+			margin: 0;
+			padding: 15px 15px;
 		}
-		.course-description{
-			float: left;
-			height:100px;
-			background-color: white;
-			padding: 7px 7px;
-			width: 375px;
+		.list-group-item{
+			color:#2c3e50;
 		}
-		.registered-ok{
-			height:100px;
-			background-color: #2ecc71;
+		.list-group-item:first-child{
+			border-radius: 0;
 		}
-		.app-commit{
+		.list-group-item:last-child{
+			overflow: hidden;
+			border-radius: 0;
+		}
+		.list-group{
+			margin: 0;
+		}
+		.scheduler-registered h3{
+			background-color: #2980b9;
+		}
+		.scheduler-commit {
 			background-color: #e74c3c;
 		}
-		.app-schedule{
+		.scheduler-schedule {
 			border-bottom-left-radius: 5px;
 			border-bottom-right-radius: 5px;
-			background-color: #7f8c8d;
+			background-color: #95a5a6;
+		}
+		.scheduler-modal{
+			border-radius: 5px;
+			box-shadow: none;
 		}
 		@media (max-width: 768px) {
-			.app-half{
+			.scheduler-app h3{
+				font-size:1.25em;
+			}
+			.list-group-item{
+				font-size: .95em;
+			}
+			.scheduler-half {
 				width: 100%;
+			}
+			.scheduler-search {
+				height: 49px;
+			}
+			.scheduler-search input{
+				height: 49px;
+				font-size: 16px;
+			}
+			.scheduler-pref button{
+				height: 49px;
+				line-height: 49px;
 			}
 		}
 	</style>
@@ -241,7 +210,7 @@
 	<header class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-5">
-				<a class="brand" href="#"><img src="resources/img/logo.png"></a>
+				<a class="brand" href="#"><img src="../../webroot/resources/img/logo.png"></a>
 			</div>
 		</div>
 		<div class="infobar">
@@ -258,82 +227,111 @@
 
 	<main class="container">
 		<div class="scheduler-app">
-			<div class="app-row">
-				<div class="app-full app-title">
-					<h3><i class="glyphicon glyphicon-triangle-right app-fix-gicon"></i> WINTER 2016</h3>
+			<div class="scheduler-row">
+				<div class="scheduler-full scheduler-title">
+					<h3><i class="glyphicon glyphicon-triangle-right fix-icon"></i> WINTER 2016</h3>
 				</div>
 			</div>
-			<div class="app-row">
-				<div class="app-full">
-					<div class="app-pref app-container">
-						<h3 data-toggle="collapse" data-target="#app-student-pref" aria-expanded="true" aria-controls="app-student-pref">PREFERENCES <span class="glyphicon glyphicon-chevron-down app-fix-gicon"></span></h3>
-						<button><i class="glyphicon glyphicon-plus app-fix-gicon" data-toggle="modal" data-target="#myModal"></i></button>
+			<div class="scheduler-row">
+				<div class="scheduler-full">
+					<div class="scheduler-pref scheduler-group">
+						<h3 data-toggle="collapse" data-target="#scheduler-pref" aria-expanded="true" aria-controls="scheduler-pref">PREFERENCES <span class="glyphicon glyphicon-chevron-down fix-icon"></span></h3>
+						<button data-toggle="modal" data-target="#scheduler-pref-modal"><i class="glyphicon glyphicon-plus fix-icon"></i></button>
 					</div>
-					<div class="collapsing app-container" id="app-student-pref">
-						<div class="app-time-pref">
-							<p><i class="glyphicon glyphicon-ban-circle app-fix-gicon"></i> Monday: 9:00am to 10:00am</p>
+					<div class="collapsing app-container" id="scheduler-pref">
+						<div class="scheduler-pref-time">
+							<p><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="app-row">
-				<div class="app-half">
-					<div class="app-search">
-						<h3 id="search-bar"><i class="glyphicon glyphicon-search app-fix-gicon"></i> SEARCH <span id="blink_underscore">_</span></h3>
-						<div id="input-search-bar" style="display: none"><input type="text" placeholder="SEARCH"></div>
+			<div class="scheduler-row">
+				<div class="scheduler-half">
+					<div class="scheduler-search">
+						<h3 id="scheduler-search-cover"><i class="glyphicon glyphicon-search fix-icon"></i> SEARCH <span id="blink_underscore">_</span></h3>
+						<div id="scheduler-search-input" style="display: none"><input type="text" placeholder="SEARCH"></div>
 					</div>
-					<div  class="app-courses">
+					<div class="scheduler-courses scheduler-group">
 						<h3>COURSES</h3>
-						<ul>
-							<li>COMP 411 System Hardware Lab</li>
-							<li>COMP 123 Software Process</li>
-							<li>COMP 384 Introduction to Game Development</li>
-							<li>COMP 232 Probability and Statistics in Engineering</li>
-							<li>COMP 384 Optics</li>
-						</ul>
+						<div class="list-group">
+							<div class="list-group-item">
+								<span class="badge">2</span>
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								<span class="badge">3</span>
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								<span class="badge">4</span>
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								<span class="badge">5</span>
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								<span class="badge">6</span>
+								Cras justo odio
+							</div>
+						</div>
 					</div>
-					<div class="app-section app-container">
-						<h3>SECTIONS</h3>
-						<ul>
-							<li>COMP 411 System Hardware Lab</li>
-							<li>COMP 123 Software Process</li>
-							<li>COMP 384 Introduction to Game Development</li>
-							<li>COMP 232 Probability and Statistics in Engineering</li>
-							<li>COMP 384 Optics</li>
-						</ul>
+					<div class="scheduler-results scheduler-group">
+						<div>
+							<h3>SECTIONS</h3>
+						</div>
+						<div class="list-group">
+							<div class="list-group-item">
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								Cras justo odio
+							</div>
+							<div class="list-group-item">
+								Cras justo odio
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="app-half">
-					<div  class="app-register app-container">
+				<div class="scheduler-half">
+					<div  class="scheduler-registered scheduler-group">
 						<h3>REGISTER</h3>
-						<div>
-							<div class="registered-course-list" style="color: black">
-								<div class="registered-course">
-									<div class="registered-state registered-ok">
-										<i class="glyphicon glyphicon-thumbs-up"></i>
-									</div>
-									<div class="course-description">
-										<p>
-											Course name and descriptiong.
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet asperiores aspernatur assumenda, delectus ex, impedit iure maiores minima molestias mollitia nobis officia possimus qui quibusdam tenetur ut velit voluptatum.
-										</p>
-									</div>
-								</div>
+						<div class="list-group">
+							<div class="list-group-item list-group-item-success">
+								Cras justo odio
+							</div>
+							<div class="list-group-item list-group-item-success">
+								Cras justo odio
+							</div>
+							<div class="list-group-item list-group-item-warning">
+								Cras justo odio
+							</div>
+							<div class="list-group-item list-group-item-warning">
+								Cras justo odio
+							</div>
+							<div class="list-group-item list-group-item-danger">
+								Cras justo odio
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="app-row">
-				<div class="app-full">
-					<div class="app-commit app-container text-center">
+			<div class="scheduler-row">
+				<div class="scheduler-full">
+					<div class="scheduler-commit scheduler-group text-center">
 						<h3>COMMIT</h3>
 					</div>
 				</div>
 			</div>
-			<div class="app-row">
-				<div class="app-full">
-					<div class="app-schedule app-container">
+			<div class="scheduler-row">
+				<div class="scheduler-full">
+					<div class="scheduler-schedule scheduler-group">
 						<h3>SCHEDULE</h3>
 					</div>
 				</div>
@@ -341,9 +339,9 @@
 		</div>
 	</main>
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="scheduler-pref-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content scheduler-modal">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
@@ -353,7 +351,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
 				</div>
 			</div>
 		</div>
@@ -368,9 +366,9 @@
 <script src="../../webroot/resources/js/bootstrap.min.js"></script>
 	<script>
 		$(function(){
-			var $searchbox = $('.app-search');
-			var $searchdiv = $('#search-bar');
-			var $searchinput = $('#input-search-bar');
+			var $searchbox = $('.scheduler-search');
+			var $searchdiv = $('#scheduler-search-cover');
+			var $searchinput = $('#scheduler-search-input');
 			$searchbox.mouseenter(function(){
 				$searchdiv.slideUp(100);
 				$searchinput.slideDown(100).select();
