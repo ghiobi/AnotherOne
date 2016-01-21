@@ -1,12 +1,12 @@
 
 <main class="container">
 	<!-- attach alert-fail. For wrong password or no identical -->
-	<div class="alert alert-success" role="alert">
+	<!--<div class="alert alert-success" role="alert">
 	
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<p><strong>Success!</strong> Password Changed</p>
 		
-	</div>
+	</div>-->
 	
 	<div class="row">
 	
@@ -61,7 +61,7 @@
 				</thead>
 				<tbody>
 					<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
-					<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>D-</td><td>3</td></tr>
+					<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>A-</td><td>3</td></tr>
 					<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
 					<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
 					<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Winter</td><td>B+</td><td>4.20</td></tr>

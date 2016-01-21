@@ -23,7 +23,7 @@ class Student extends App_Base_Controller
 			//TODO: check password. etc...
 		//}
 
-		$data['info_bar'] = 'WAAAAZZZUUP';
+		$data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
 		$this->load->view('layouts/header.php', $data);
 		//TODO edit profile php. Make it dynamic to the content it should be displaying.
 		$this->load->view('student/profile.php');
