@@ -4,7 +4,7 @@
 	<div class="alert alert-success" role="alert">
 	
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<p><strong>Succes!</strong> Password Changed</p>
+		<p><strong>Success!</strong> Password Changed</p>
 		
 	</div>
 	
