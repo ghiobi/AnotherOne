@@ -38,6 +38,26 @@ class StudentProfile extends CI_Model
 		return $result->row()->id;
 	}
 
+	function get_studentInfo(){
+		$result = $this->db->query("
+		SELECT
+		  students.id,
+		  users.login_name,
+		  users.firstname,
+		  users.lastname,
+		  users.email,
+		  program.name
+		FROM students
+		  INNER JOIN users
+			ON students.user_id = users.id
+		  INNER JOIN program
+			ON students.program_id = program.id
+		WHERE users.id = 1
+		  LIMIT 1
+		");
+		return $result->row();
+	}
+
 	function get_semesters(){
 
 	}
