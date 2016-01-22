@@ -30,6 +30,10 @@ class Student extends App_Base_Controller
 
 		$data['add_js'] = ['profile.js'];
 		$this->load->view('layouts/footer.php', $data);
+		$this->load->model('StudentProfile');
+		$data['userinfo']=$this->StudentProfile->get_studentInfo(); 
+		$this->load->view('student/profile.php',$data);
+		
 	}
 
 	function register(){
