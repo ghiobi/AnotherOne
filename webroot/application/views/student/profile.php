@@ -60,6 +60,12 @@
 				padding: 3px 0;
 				width: 50%;
 			}
+			.student-profile-table > tbody > tr > td:first-child {
+				width: 30%;
+			}
+			.student-profile-table > tbody > tr > td:last-child {
+				width: 70%;
+			}
 			.custom-well-profile{
 				border-radius: 0;
 				border: none;
@@ -87,8 +93,8 @@
 			.semester-data > tbody{
 				width: 100%;
 			}
-			.semester-data > tbody > tr{
-				border-bottom: solid 1px #eee;
+			.semester-data > tbody > tr + tr{
+				border-top: solid 1px #eee;
 			}
 			.semester-data > tbody > tr > td{
 				padding: 3px 3px;
