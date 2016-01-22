@@ -16,7 +16,7 @@
 				<table class="student-profile-table">
 				
 					<tr><td>Student ID:</td><td>431141</td></tr>
-					<tr><td>Program:</td><td>Bachelor of Random</td></tr>
+					<tr><td>Program:</td><td><?php echo $userinfo['login_name'] ?></td></tr>
 					<tr><td>First Name:</td><td>Bob</td></tr>
 					<tr><td>Last Name:</td><td>Smith</td></tr>
 					<tr><td>Login Name:</td><td>bob_smith</td></tr>
@@ -60,7 +60,7 @@
 					<tr class><td class = "blob">Course ID</td> <td class = "blob">Course Name</td><td class = "blob">Term</td><td class = "blob">Grade</td><td class = "blob">Credits</td></tr>
 				</thead>
 				<tbody>
-					<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
+					<tr><td>COMP 248</td><td></td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
 					<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>A-</td><td>3</td></tr>
 					<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
 					<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>

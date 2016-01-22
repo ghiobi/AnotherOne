@@ -11,7 +11,7 @@ class StudentProfile extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-		$user_id = $this->session->user_id;
+		$this->user_id = $this->session->user_id;
 	}
 
 	function get_program(){
@@ -23,7 +23,7 @@ class StudentProfile extends CI_Model
 			ON students.user_id = users.id
 		  INNER JOIN program
 			ON students.program_id = program.id
-		WHERE users.id = '$this->user_id' LIMIT 1");
+		WHERE users.id = '$this->user_id'");
 		return $result->row()->name;
 	}
 
