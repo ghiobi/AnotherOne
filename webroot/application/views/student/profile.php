@@ -16,7 +16,7 @@
 				<table class="student-profile-table">
 				
 					<tr><td>Student ID:</td><td><?php echo $userinfo->id ?></td></tr>
-					<tr><td>Program:</td><td></td></tr>
+					<tr><td>Program:</td><td><?php echo $userinfo->name ?></td></tr>
 					<tr><td>First Name:</td><td><?php echo $userinfo->firstname ?></td></tr>
 					<tr><td>Last Name:</td><td><?php echo $userinfo->lastname ?></td></tr>
 					<tr><td>Login Name:</td><td><?php echo $userinfo->login_name ?></td></tr>
