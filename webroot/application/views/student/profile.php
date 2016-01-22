@@ -79,3 +79,25 @@
 	
 </main>
 
+<style type="text/css">
+		.student-profile-table{
+			width: 100%;
+		}
+		.student-profile-table > tr{
+			width: 100%;
+		}
+		.student-profile-table > tbody > tr > td{
+			padding: 3px 0;
+		}
+		.student-edit-btn{
+			position: absolute;
+			left: 020px;
+			top: 5px;
+			opacity: .3;
+			border: none;
+			border-radius: 5px;
+			font-size: 12px;
+			padding: 1px 4px;
+		}
+	</style>
+
