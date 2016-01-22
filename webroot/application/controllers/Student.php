@@ -28,7 +28,7 @@ class Student extends App_Base_Controller
 		//TODO edit profile php. Make it dynamic to the content it should be displaying.
 		$this->load->view('student/profile.php');
 
-		$data['add_js'] = ['jquery.tablesorter.min.js'];
+		$data['add_js'] = ['profile.js'];
 		$this->load->view('layouts/footer.php', $data);
 	}
 

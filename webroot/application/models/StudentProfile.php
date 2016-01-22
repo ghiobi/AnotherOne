@@ -58,8 +58,23 @@ class StudentProfile extends CI_Model
 		return $result->row();
 	}
 
+	/**
+	 * @return associative array.
+	 */
 	function get_semesters(){
-
+		$result = $this->db->query("
+		SELECT DISTINCT
+		  semesters.id,
+		  semesters.name
+		FROM registered
+		  INNER JOIN students
+			ON registered.student_id = students.id
+		  INNER JOIN sections
+			ON registered.section_id = sections.id
+		  INNER JOIN semesters
+			ON sections.semester_id = semesters.id
+		WHERE students.user_id = 1");
+		return $result->result();
 	}
 
 	function get_course_by_semester(){
