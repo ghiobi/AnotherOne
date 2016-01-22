@@ -17,12 +17,9 @@ For the project to run properly on your computer, there will be a few steps befo
   - Google how to (https://www.google.ca/search?q=how+to+install+program+to+path&gws_rd=ssl)
   - To see if php was installed properly type in the command prompt "php v-"
   - If you have problems with php. Install the latest version of Visual C++ Redistributable Packages
-3. Import database tables according to the latest version in dir AnotherOne\webroot\files_database
-4. Configure database login in AnotherOne\webroot\config\database. If the user is root and pass '' then skip this step.
-  - Please ignore this file when uploading to the git repository if your login is different. Or change your login details of your database.
 5. If you have followed these instructions correctly, run the server.bat file in AnotherOne\webroot and the website is located at localhost:8000
 
-In summary: install wamp, add php to PATH, config database, and run server.bat
+In summary: install wamp, add php to PATH, and run server.bat
 
 ##### Note
 
