@@ -48,9 +48,18 @@
 				</form>
 				
 			</div>
-			
 		</div>
-​		<style>
+		<style>
+			.student-profile-table{
+				width: 100%;
+			}
+			.student-profile-table > tr{
+				width: 100%;
+			}
+			.student-profile-table > tbody > tr > td {
+				padding: 3px 0;
+				width: 50%;
+			}
 			.custom-well-profile{
 				border-radius: 0;
 				border: none;

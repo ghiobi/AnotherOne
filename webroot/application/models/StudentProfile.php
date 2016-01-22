@@ -52,7 +52,7 @@ class StudentProfile extends CI_Model
 			ON students.user_id = users.id
 		  INNER JOIN program
 			ON students.program_id = program.id
-			WHERE '$this->user_id' LIMIT 1");
+		WHERE students.user_id ='$this->user_id' LIMIT 1");
 		return $result->row();
 	}
 
