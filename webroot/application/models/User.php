@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-*  Works with the login controller, and authenticates users.
+*  Works with the login controller to authenticates users and retrieve user data
 */
 class User extends CI_Model
 {
@@ -11,6 +11,11 @@ class User extends CI_Model
 		parent::__construct();
 	}
 
+	/**
+	 * @param $login_name
+	 * @param $password
+	 * @return bool - Returns bool false if failed to authenticate else an object
+	 */
 	function authenticate($login_name, $password)
 	{
 		$this->db->select('id, firstname, lastname');
@@ -27,6 +32,10 @@ class User extends CI_Model
 		return FALSE;
 	}
 
+	/**
+	 * @param $user_id
+	 * @return bool - True if user is an admin
+	 */
 	function is_admin($user_id)
 	{
 		$query = $this->db->query(
@@ -39,5 +48,22 @@ class User extends CI_Model
 		return $query->row()->is_admin == 1;
 	}
 
+	/**
+	 * @param $user_id
+	 * @return object - Returns the following variables login_name, firstname, lastname, email
+	 */
+	function get_user_info($user_id)
+	{
+		$query = $this->db->query(
+		"SELECT
+		  users.login_name,
+		  users.firstname,
+		  users.lastname,
+		  users.email
+		FROM users
+		WHERE users.id = 1 LIMIT 1
+		");
+		return $query->row();
+	}
 }
 ?>
