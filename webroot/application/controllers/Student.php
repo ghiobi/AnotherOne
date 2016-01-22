@@ -26,7 +26,7 @@ class Student extends App_Base_Controller
 		$data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
 		$this->load->view('layouts/header.php', $data);
 		//TODO edit profile php. Make it dynamic to the content it should be displaying.
-
+		//load studentprofile controller and access student info
 		$data['add_js'] = ['profile.js'];
 		$this->load->model('StudentProfile');
 		$data['userinfo']=$this->StudentProfile->get_studentInfo(); 
