@@ -51,32 +51,54 @@
 			</div>
 			
 		</div>
-​
+​		<style>
+			.semester-data{
+				width: 100%;
+				display: none;
+			}
+			.semester-data-active {
+				display: block;
+			}
+			.semester-data > tbody > tr > td:nth-child(2){
+				width: 55%;
+			}
+			.semester-data > tbody > tr > td:first-child(1){
+				width: 30%;
+			}
+
+		</style>
 		<div class="col-md-8">
-		
-			<h4>Registered Courses</h4>
-			<table class ="table student-profile-table tablesorter">
-				<thead>
-					<tr class><td class = "blob">Course ID</td> <td class = "blob">Course Name</td><td class = "blob">Term</td><td class = "blob">Grade</td><td class = "blob">Credits</td></tr>
-				</thead>
-				<tbody>
-					<tr><td>COMP 248</td><td></td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
-					<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>A-</td><td>3</td></tr>
-					<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
-					<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
-					<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Winter</td><td>B+</td><td>4.20</td></tr>
-					<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
-					<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>D-</td><td>3</td></tr>
-					<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
-					<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
-					<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Fall</td><td>B+</td><td>4.20</td></tr>
-				</tbody>
-			</table>
-			
+			<h4>Semester</h4>
+			<div class="list-group">
+				<div class="list-group-item">
+					<div class="semester-title">Summer 2016</div>
+					<table  class="semester-data semester-data-active">
+						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
+						<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>A-</td><td>3</td></tr>
+						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
+						<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
+						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Winter</td><td>B+</td><td>4.20</td></tr>
+						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
+					</table>
+				</div>
+				<div class="list-group-item">
+					<div class="semester-title">Summer 2015</div>
+					<table class="semester-data">
+						<tr><td>COMP 248</td><td>O'bject Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
+						<tr><td>SOEN 341</td><td>Sofware Process</td><td> 2019 Fall</td><td>A-</td><td>3</td></tr>
+						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td> 1989 Summer</td><td>B+</td><td>3.14</td></tr>
+						<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td> 1990 Winter</td><td>B-</td><td>4.20</td></tr>
+						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td> 2012 Winter</td><td>B+</td><td>4.20</td></tr>
+						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td> 2015 Fall</td><td>A+</td><td>3.5</td></tr>
+					</table>
+				</div>
+			</div>
 		</div>
 		
 	</div>
-	
+	<script>
+
+	</script>
 </main>
 
 <style type="text/css">

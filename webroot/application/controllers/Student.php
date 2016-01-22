@@ -25,8 +25,10 @@ class Student extends App_Base_Controller
 		//TODO: Display the name of the person signed in ,from database, instead of dank meme
 		$data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
 		$this->load->view('layouts/header.php', $data);
-		//TODO edit profile php. Make it dynamic to the content it should be displaying.	
-		$data['add_js'] = ['jquery.tablesorter.min.js']; 
+		//TODO edit profile php. Make it dynamic to the content it should be displaying.
+		$this->load->view('student/profile.php');
+
+		$data['add_js'] = ['profile.js'];
 		$this->load->view('layouts/footer.php', $data);
 		$this->load->model('StudentProfile');
 		$data['userinfo']=$this->StudentProfile->get_studentInfo(); 
