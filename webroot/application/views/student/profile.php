@@ -14,7 +14,6 @@
 			<h4>Details:</h4>
 			<div class="well">
 				<table class="student-profile-table">
-				
 					<tr><td>Student ID:</td><td>431141</td></tr>
 					<tr><td>Program:</td><td><?php echo $userinfo['login_name'] ?></td></tr>
 					<tr><td>First Name:</td><td>Bob</td></tr>
@@ -65,7 +64,14 @@
 			.semester-data > tbody > tr > td:first-child(1){
 				width: 30%;
 			}
-
+			.semester-title{
+				border-style:solid;
+				background-color:gray;
+				font-size:15px;
+			}
+			table td{
+				border-style:solid;
+			}
 		</style>
 		<div class="col-md-8">
 			<h4>Semester</h4>
