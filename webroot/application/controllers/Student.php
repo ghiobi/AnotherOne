@@ -32,8 +32,16 @@ class Student extends App_Base_Controller
 
 	function enroll(){
 		$this->load->view('layouts/header.php');
+
 		$this->load->view('student/scheduler.php');
-		$this->load->view('layouts/footer.php');
+
+		$data['add_js'] = ['jquery.schedule.js', 'enroll.js'];
+		$this->load->view('layouts/footer.php', $data);
+	}
+
+	function ajax_search_course(){
+		$input = $this->input->post('input', TRUE);
+		echo $input;
 	}
 
 	function schedule($semester){

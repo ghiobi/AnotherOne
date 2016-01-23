@@ -23,7 +23,7 @@
 				<div class="scheduler-half">
 					<div class="scheduler-search">
 						<h3 id="scheduler-search-cover"><i class="glyphicon glyphicon-search fix-icon"></i> SEARCH <span id="blink_underscore">_</span></h3>
-						<div id="scheduler-search-input" style="display: none"><input type="text" placeholder="SEARCH"></div>
+						<input id="scheduler-search-input" style="display: none" type="text" placeholder="SEARCH">
 					</div>
 					<div class="scheduler-courses">
 						<h3 class="scheduler-header">COURSES</h3>
@@ -128,3 +128,5 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="info-controller" style="display: none" data-controller-url="<?php echo dirname(current_url()); ?>"></div>
