@@ -10,8 +10,24 @@ class Student extends App_Base_Controller
 		parent::__construct();
 	}
 
-	function profile(){
+    /**
+     * loads the student profile page
+     */
+	function profile()
+    {
+        $this->load->model('StudentProfile');
 
+        //Loading header
+        $data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
+		$this->load->view('layouts/header.php', $data);
+
+        //Loading content
+		$data['userinfo'] = $this->StudentProfile->get_studentInfo();
+		$this->load->view('student/profile.php',$data);
+
+        //Loading footer
+        $data['add_js'] = ['profile.js'];
+        $this->load->view('layouts/footer.php', $data);
 	}
 
 	function enroll(){
@@ -20,7 +36,7 @@ class Student extends App_Base_Controller
 		$this->load->view('layouts/footer.php');
 	}
 
-	function view($semester){
+	function schedule($semester){
 
 	}
 
