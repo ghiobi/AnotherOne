@@ -4,7 +4,9 @@
 *{
 	font-family: 'Montserrat', sans-serif;
 }
-
+.fix-icon {
+	font-size: .78em;
+}
 /******************************
 			Header
 *******************************/
@@ -56,6 +58,189 @@ header{
 	}
 	.signout-collapse-container{
 		display: block !important;
+	}
+}
+/******************************
+			Scheduler
+*******************************/
+.scheduler-app{
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #ecf0f1;
+	border: solid 1px #7f8c8d;
+	border: 5px;
+	color: white;
+}
+.scheduler-title {
+	text-align: center;
+	color: #2c3e50;
+}
+.scheduler-row {
+	clear: both;
+}
+.scheduler-half {
+	width: 50%;
+	float: left;
+}
+.scheduler-full {
+	width: 100%;
+}
+.scheduler-header{
+	margin: 0;
+	padding: 15px 15px;
+}
+.scheduler-pref {
+	background-color: #16a085;
+	overflow: hidden;
+}
+.scheduler-pref h3{
+	cursor: pointer;
+	float: left;
+	width: calc(100% - 60px);
+}
+.scheduler-pref button{
+	float: left;
+	width: 60px;
+	font-size: 18px;
+	padding: 0 15px;
+	color: white;
+	background-color: transparent;
+	border: none;
+	border-left: 1px solid white;
+	height: 56px;
+	line-height: 56px;
+}
+.scheduler-pref button:focus{
+	outline:none;
+}
+#scheduler-pref {
+	color: #2c3e50;
+	background-color: #ecf0f1;
+	overflow: hidden;
+}
+.scheduler-pref-time p{
+	padding: 0;
+	margin: 15px 15px;
+	text-transform: uppercase;
+}
+.scheduler-pref-time p:hover{
+	cursor: pointer;
+	text-decoration:line-through;
+}
+.scheduler-search {
+	background-color: #bdc3c7;
+	height: 56px;
+	overflow: hidden;
+}
+.scheduler-search h3{
+	margin: 0;
+	padding: 15px;
+}
+.scheduler-search input{
+	color: #2c3e50;
+	font-size: 20px;
+	height: 56px;
+	width: 100%;
+	border: none;
+	padding: 10px 15px;
+	box-sizing: border-box;
+	text-transform: uppercase;
+}
+.scheduler-search input:focus{
+	outline: none;
+}
+#blink_underscore{
+	color: white;
+	-webkit-animation: 1s blink step-end infinite;
+	-moz-animation: 1s blink step-end infinite;
+	-ms-animation: 1s blink step-end infinite;
+	-o-animation: 1s blink step-end infinite;
+	animation: 1s blink step-end infinite;
+}
+@keyframes "blink" {
+	from, to { color: transparent;  }
+	50% { color: white;  }
+}
+@keyframes "blink" {
+	from, to {  color: transparent;  }
+	50% { color: white;  }
+}
+@-moz-keyframes blink {
+	from, to { color: transparent;  }
+	50% { color: white;  }
+}
+@-webkit-keyframes "blink" {
+	from, to {  color: transparent;  }
+	50% {  color: white; }
+}
+@-ms-keyframes "blink" {
+	from, to {  color: transparent;  }
+	50% {  color: white;  }
+}
+@-o-keyframes "blink" {
+	from, to {  color: transparent;  }
+	50% {  color: white;  }
+}
+.scheduler-courses h3{
+	background-color: #2c3e50;
+	margin: 0;
+	padding: 15px 15px;
+}
+.scheduler-results > div:first-child{
+	overflow: hidden;
+}
+.scheduler-results h3{
+	background-color: #2c3e50;
+	margin: 0;
+	padding: 15px 15px;
+}
+.scheduler-list-group{
+	margin: 0;
+	color:#2c3e50;
+}
+.scheduler-list-item:first-child{
+	border-radius: 0;
+}
+.scheduler-list-item:last-child{
+	overflow: hidden;
+	border-radius: 0;
+}
+.scheduler-registered h3{
+	background-color: #2980b9;
+}
+.scheduler-commit {
+	background-color: #e74c3c;
+}
+.scheduler-schedule {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: #95a5a6;
+}
+.scheduler-modal{
+	border-radius: 5px;
+	box-shadow: none;
+}
+@media (max-width: 768px) {
+	.scheduler-app h3{
+		font-size:1.25em;
+	}
+	.scheduler-list-item{
+		font-size: .95em;
+	}
+	.scheduler-half {
+		width: 100%;
+	}
+	.scheduler-search {
+		height: 49px;
+	}
+	.scheduler-search input{
+		height: 49px;
+		font-size: 16px;
+	}
+	.scheduler-pref button{
+		height: 49px;
+		line-height: 49px;
 	}
 }
 /******************************

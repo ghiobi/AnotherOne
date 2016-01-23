@@ -30,10 +30,6 @@
 			text-align: center;
 			color: #2c3e50;
 		}
-		.scheduler-title h3{
-			padding: 15px 15px;
-			margin: 0;
-		}
 		.scheduler-row {
 			clear: both;
 		}
@@ -44,7 +40,7 @@
 		.scheduler-full {
 			width: 100%;
 		}
-		.scheduler-group h3, h4{
+		.scheduler-header{
 			margin: 0;
 			padding: 15px 15px;
 		}
@@ -153,18 +149,16 @@
 			margin: 0;
 			padding: 15px 15px;
 		}
-		.list-group-item{
+		.scheduler-list-group{
+			margin: 0;
 			color:#2c3e50;
 		}
-		.list-group-item:first-child{
+		.scheduler-list-item:first-child{
 			border-radius: 0;
 		}
-		.list-group-item:last-child{
+		.scheduler-list-item:last-child{
 			overflow: hidden;
 			border-radius: 0;
-		}
-		.list-group{
-			margin: 0;
 		}
 		.scheduler-registered h3{
 			background-color: #2980b9;
@@ -185,7 +179,7 @@
 			.scheduler-app h3{
 				font-size:1.25em;
 			}
-			.list-group-item{
+			.scheduler-list-item{
 				font-size: .95em;
 			}
 			.scheduler-half {
@@ -229,13 +223,13 @@
 		<div class="scheduler-app">
 			<div class="scheduler-row">
 				<div class="scheduler-full scheduler-title">
-					<h3><i class="glyphicon glyphicon-triangle-right fix-icon"></i> WINTER 2016</h3>
+					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> WINTER 2016</h3>
 				</div>
 			</div>
 			<div class="scheduler-row">
 				<div class="scheduler-full">
-					<div class="scheduler-pref scheduler-group">
-						<h3 data-toggle="collapse" data-target="#scheduler-pref" aria-expanded="true" aria-controls="scheduler-pref">PREFERENCES <span class="glyphicon glyphicon-chevron-down fix-icon"></span></h3>
+					<div class="scheduler-pref">
+						<h3 class="scheduler-header" data-toggle="collapse" data-target="#scheduler-pref" aria-expanded="true" aria-controls="scheduler-pref">PREFERENCES <span class="glyphicon glyphicon-chevron-down fix-icon"></span></h3>
 						<button data-toggle="modal" data-target="#scheduler-pref-modal"><i class="glyphicon glyphicon-plus fix-icon"></i></button>
 					</div>
 					<div class="collapsing app-container" id="scheduler-pref">
@@ -251,71 +245,69 @@
 						<h3 id="scheduler-search-cover"><i class="glyphicon glyphicon-search fix-icon"></i> SEARCH <span id="blink_underscore">_</span></h3>
 						<div id="scheduler-search-input" style="display: none"><input type="text" placeholder="SEARCH"></div>
 					</div>
-					<div class="scheduler-courses scheduler-group">
-						<h3>COURSES</h3>
-						<div class="list-group">
-							<div class="list-group-item">
+					<div class="scheduler-courses">
+						<h3 class="scheduler-header">COURSES</h3>
+						<div class="list-group scheduler-list-group">
+							<div class="list-group-item scheduler-list-item">
 								<span class="badge">2</span>
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								<span class="badge">3</span>
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								<span class="badge">4</span>
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								<span class="badge">5</span>
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								<span class="badge">6</span>
 								Cras justo odio
 							</div>
 						</div>
 					</div>
-					<div class="scheduler-results scheduler-group">
-						<div>
-							<h3>SECTIONS</h3>
-						</div>
-						<div class="list-group">
-							<div class="list-group-item">
+					<div class="scheduler-results">
+						<h3 class="scheduler-header">SECTIONS</h3>
+						<div class="list-group scheduler-list-group">
+							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
 							</div>
-							<div class="list-group-item">
+							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="scheduler-half">
-					<div  class="scheduler-registered scheduler-group">
-						<h3>REGISTER</h3>
-						<div class="list-group">
-							<div class="list-group-item list-group-item-success">
+					<div  class="scheduler-registered">
+						<h3 class="scheduler-header">REGISTER</h3>
+						<div class="list-group scheduler-list-group">
+							<div class="list-group-item scheduler-list-item list-group-item-success">
 								Cras justo odio
 							</div>
-							<div class="list-group-item list-group-item-success">
+							<div class="list-group-item scheduler-list-item list-group-item-success">
 								Cras justo odio
 							</div>
-							<div class="list-group-item list-group-item-warning">
+							<div class="list-group-item scheduler-list-item list-group-item-warning">
 								Cras justo odio
 							</div>
-							<div class="list-group-item list-group-item-warning">
+							<div class="list-group-item scheduler-list-item list-group-item-warning">
 								Cras justo odio
 							</div>
-							<div class="list-group-item list-group-item-danger">
+							<div class="list-group-item scheduler-list-item list-group-item-danger">
 								Cras justo odio
 							</div>
 						</div>
@@ -324,15 +316,15 @@
 			</div>
 			<div class="scheduler-row">
 				<div class="scheduler-full">
-					<div class="scheduler-commit scheduler-group text-center">
-						<h3>COMMIT</h3>
+					<div class="scheduler-commit text-center">
+						<h3 class="scheduler-header">COMMIT</h3>
 					</div>
 				</div>
 			</div>
 			<div class="scheduler-row">
 				<div class="scheduler-full">
-					<div class="scheduler-schedule scheduler-group">
-						<h3>SCHEDULE</h3>
+					<div class="scheduler-schedule">
+						<h3 class="scheduler-header">SCHEDULE</h3>
 					</div>
 				</div>
 			</div>

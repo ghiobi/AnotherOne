@@ -14,8 +14,10 @@ class Student extends App_Base_Controller
 
 	}
 
-	function register(){
-
+	function enroll(){
+		$this->load->view('layouts/header.php');
+		$this->load->view('student/scheduler.php');
+		$this->load->view('layouts/footer.php');
 	}
 
 	function view($semester){
