@@ -31,7 +31,8 @@ class Student extends App_Base_Controller
 	}
 
 	function enroll(){
-		$this->load->view('layouts/header.php');
+        $data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
+		$this->load->view('layouts/header.php', $data);
 
 		$this->load->view('student/scheduler.php');
 

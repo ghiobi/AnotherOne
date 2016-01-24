@@ -14,7 +14,7 @@
 					</div>
 					<div class="collapsing app-container" id="scheduler-pref">
 						<div class="scheduler-pref-time">
-							<p><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>
+							<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>
 						</div>
 					</div>
 				</div>
@@ -26,7 +26,9 @@
 						<input id="scheduler-search-input" style="display: none" type="text" placeholder="SEARCH">
 					</div>
 					<div class="scheduler-courses">
-						<h3 class="scheduler-header">COURSES</h3>
+						<h3 class="scheduler-header">COURSES
+							<button class="scheduler-auto-btn">Auto-Pick</button>
+						</h3>
 						<div class="list-group scheduler-list-group">
 							<div class="list-group-item scheduler-list-item">
 								<span class="badge">2</span>
@@ -51,7 +53,9 @@
 						</div>
 					</div>
 					<div class="scheduler-results">
-						<h3 class="scheduler-header">SECTIONS</h3>
+						<h3 class="scheduler-header">SECTIONS
+							<button class="scheduler-auto-btn">Generate</button>
+						</h3>
 						<div class="list-group scheduler-list-group">
 							<div class="list-group-item scheduler-list-item">
 								Cras justo odio
@@ -116,14 +120,48 @@
 			<div class="modal-content scheduler-modal">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title">Add a Restricting Time</h4>
 				</div>
 				<div class="modal-body">
-					...
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Weekday:</label>
+							<div class="col-sm-10">
+								<select class="form-control">
+									<option>Select a Weekday</option>
+									<option value="1">Monday</option>
+									<option value="2">Tuesday</option>
+									<option value="3">Wednesday</option>
+									<option value="4">Thursday</option>
+									<option value="5">Friday</option>
+									<option value="6">Saturday</option>
+									<option value="0">Sunday</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<div class="checkbox" style="padding: 0">
+									<label>
+										<input type="checkbox"> Restrict the whole day
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Interval:</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-sm-5">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default">Close</button>
+					<button type="button" class="btn btn-primary pref_tb_add" data-dismiss="modal">Save</button>
 				</div>
 			</div>
 		</div>
