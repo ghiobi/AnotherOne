@@ -22,7 +22,8 @@ class Student extends App_Base_Controller
 		$this->load->view('layouts/header.php', $data);
 
         //Loading content
-		$data['userinfo'] = $this->StudentProfile->get_studentInfo();
+		$data['userinfo'] = $this->StudentProfile->get_student_info();
+		$data['student_record'] = $this->StudentProfile->get_student_record();
 		$this->load->view('student/profile.php',$data);
 
         //Loading footer
