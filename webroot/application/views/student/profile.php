@@ -66,6 +66,7 @@
 					foreach ($semesterinfo as $row1)
 						{
 								echo $row1->name;
+								
 						
 					foreach ($courseinfo as $row2)
 					{
