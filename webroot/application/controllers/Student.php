@@ -31,8 +31,19 @@ class Student extends App_Base_Controller
         $this->load->view('layouts/footer.php', $data);
 	}
 
-	function register(){
+	function enroll(){
+        $data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
+		$this->load->view('layouts/header.php', $data);
 
+		$this->load->view('student/scheduler.php');
+
+		$data['add_js'] = ['jquery.schedule.js', 'enroll.js'];
+		$this->load->view('layouts/footer.php', $data);
+	}
+
+	function ajax_search_course(){
+		$input = $this->input->post('input', TRUE);
+		echo $input;
 	}
 
 	function schedule($semester){
