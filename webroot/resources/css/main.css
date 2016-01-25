@@ -80,6 +80,56 @@ header{
 }
 
 /******************************
+			Student Profile
+*******************************/
+.profile-details-table {
+	width: 100%;
+}
+.profile-details-table > tr{
+	width: 100%;
+}
+.profile-details-table > tbody > tr > td {
+	padding: 3px 0;
+}
+.profile-details-table > tbody > tr > td:first-child {
+	width: 100px;
+}
+.profile-details-table > tbody > tr > td:last-child {
+	width: calc(100% - 100px);
+}
+.profile-custom-well {
+	padding: 15px;
+	border-radius: 4px;
+	border: none;
+	box-shadow: none;
+	background-color: #ecf0f1;
+}
+.profile-list {
+	padding: 0;
+}
+.profile-list > h4{
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 15px;
+	background-color: #16a085;
+	margin: 0;
+	color: white;
+}
+.profile-semester-data {
+	width: 100%;
+	margin-bottom: 0;
+	display: none;
+}
+.profile-semester-active{
+	display: block !important;
+}
+.profile-semester-data > tbody > tr > td:first-child{
+	width: 15%;
+}
+.profile-semester-data > tbody > tr > td:nth-child(2){
+	width: 75%;
+}
+/******************************
 			Footer
 *******************************/
 footer{
