@@ -76,8 +76,34 @@ class StudentProfile extends CI_Model
 	}
 
 	function get_course_by_semester(){
+		
+			$result = $this->db->query("
+		SELECT 
+		  courses.number,
+		  courses.name,
+		  sections.semester_id,
+		  sections.course_id
+		FROM students
+		  INNER JOIN users
+			ON students.user_id = users.id
+		  INNER JOIN registered
+			ON students.id = registered.student_id
+		  INNER JOIN sections
+			ON sections.id = registered.section_id
+		  INNER JOIN courses
+			ON courses.id = sections.course_id
+			WHERE students.user_id = 1");
+		return $result->result();
+		
+		
+
 
 	}
+	
+	
+	
+	
+	
 
 
 }

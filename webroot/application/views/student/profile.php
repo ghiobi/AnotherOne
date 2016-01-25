@@ -53,8 +53,36 @@
 			<h4>Registered Courses and Grades</h4>
 			<div class="list-group">
 				<div class="list-group-item profile-list">
-					<h4 class="profile-semes-title">SUMMER 2015</h4>
+				
+				
+					
+					<h4 class="profile-semes-title">echo $row->name;</h4>
 					<table class="table profile-semester-data profile-semester-active">
+					
+					
+					<?php
+							
+							
+					foreach ($semesterinfo as $row1)
+						{
+								echo $row1->name;
+						
+					foreach ($courseinfo as $row2)
+					{
+							if($row2->semester_id == $row1->id )
+								echo $row2->name;
+								
+						}
+						}
+					
+					
+					
+
+							
+							
+							?>
+							
+							
 						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>3.5</td><td>A+</td></tr>
 						<tr><td>SOEN 341</td><td>Sofware Process</td><td>3</td><td>A-</td></tr>
 						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td>3.14</td><td>B+</td></tr>
