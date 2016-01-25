@@ -22,11 +22,9 @@ class Student extends App_Base_Controller
 		$this->load->view('layouts/header.php', $data);
 
         //Loading content
-		$data['userinfo'] = $this->StudentProfile->get_studentInfo();		
-		$data['semesterinfo'] = $this->StudentProfile->get_semesters();
-		$data['courseinfo'] = $this->StudentProfile->get_course_by_semester();
+		$data['userinfo'] = $this->StudentProfile->get_student_info();
+		$data['student_record'] = $this->StudentProfile->get_student_record();
 		$this->load->view('student/profile.php',$data);
-
 
         //Loading footer
         $data['add_js'] = ['profile.js'];
@@ -43,9 +41,8 @@ class Student extends App_Base_Controller
 		$this->load->view('layouts/header.php', $data);
 
         //Loading content
-		$data['userinfo'] = $this->StudentProfile->get_studentInfo();
+		$data['userinfo'] = $this->StudentProfile->get_student_info();
 		$this->load->view('student/studentprofile.php',$data);
-		
 		
         //Loading footer
         $data['add_js'] = ['profile.js'];

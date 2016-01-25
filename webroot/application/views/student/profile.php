@@ -51,60 +51,37 @@
 		</div>
 		<div class="col-md-8">
 			<h4>Registered Courses and Grades</h4>
-			<div class="list-group">
-				<div class="list-group-item profile-list">
-				
-				
-					
-					<h4 class="profile-semes-title">echo $row->name;</h4>
-					<table class="table profile-semester-data profile-semester-active">
-					
-					
-					<?php
-							
-							
-					foreach ($semesterinfo as $row1)
-						{
-								echo $row1->name;
-								
-						
-					foreach ($courseinfo as $row2)
-					{
-							if($row2->semester_id == $row1->id )
-								echo $row2->name;
-								
-						}
-						}
-					
-					
-					
 
-							
-							
+			<?php if($student_record == FALSE): ?>
+
+				<p>Sorry no records found ):</p>
+
+			<?php else: ?>
+
+			<div class="list-group">
+
+				<?php $i = 0;
+					foreach($student_record as $semester => $data): ?>
+
+					<div class="list-group-item profile-list">
+						<h4 class="profile-semes-title"><?php echo $semester ?></h4>
+						<table class="table profile-semester-data <?php if(!$i) echo 'profile-semester-active'; ?>">
+
+							<?php foreach($data as $record)
+								echo '<tr><td>'.$record->code.' '.$record->number.'</td><td>'.$record->name.'</td><td>'.$record->credit.'</td><td>'.(($record->grade)? $record->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
 							?>
-							
-							
-						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>3.5</td><td>A+</td></tr>
-						<tr><td>SOEN 341</td><td>Sofware Process</td><td>3</td><td>A-</td></tr>
-						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td>3.14</td><td>B+</td></tr>
-						<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td>4.20</td><td>B-</td></tr>
-						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td>4.20</td><td>B+</td></tr>
-						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>3.5</td><td>A+</td></tr>
-					</table>
-				</div>
-				<div class="list-group-item profile-list">
-					<h4 class="profile-semes-title">SUMMER 2018</h4>
-					<table class="table profile-semester-data">
-						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>3.5</td><td>A+</td></tr>
-						<tr><td>SOEN 341</td><td>Sofware Process</td><td>3</td><td>A-</td></tr>
-						<tr><td>COMP 232</td><td>Mathematics for Computer Science</td><td>3.14</td><td>B+</td></tr>
-						<tr><td>COMP 335</td><td>Mathematics for Computer Science</td><td>4.20</td><td>B-</td></tr>
-						<tr><td>SOEN 228</td><td>Mathematics for Computer Science</td><td>4.20</td><td>B+</td></tr>
-						<tr><td>COMP 248</td><td>Object Oriented programming I</td><td>3.5</td><td>A+</td></tr>
-					</table>
-				</div>
+
+						</table>
+					</div>
+
+					<?php $i++; ?>
+
+				<?php endforeach; ?>
 
 			</div>
+
+			<?php endif; ?>
+
 		</div>
 		
 	</div>
