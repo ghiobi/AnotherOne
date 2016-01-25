@@ -29,6 +29,26 @@ class Student extends App_Base_Controller
         $data['add_js'] = ['profile.js'];
         $this->load->view('layouts/footer.php', $data);
 	}
+	
+	
+		function studentprofile()
+    {
+        $this->load->model('StudentProfile');
+
+        //Loading header
+        $data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
+		$this->load->view('layouts/header.php', $data);
+
+        //Loading content
+		$data['userinfo'] = $this->StudentProfile->get_studentInfo();
+		$this->load->view('student/studentprofile.php',$data);
+
+        //Loading footer
+        $data['add_js'] = ['profile.js'];
+        $this->load->view('layouts/footer.php', $data);
+	}
+
+
 
 	function register(){
 
