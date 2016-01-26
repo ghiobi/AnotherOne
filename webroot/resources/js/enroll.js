@@ -13,29 +13,35 @@ $(function()
 
     $srch_ctnr.mouseenter(function(){
         $srch_cover.slideUp(100);
-        $srch_input.slideDown(100).select();
+        $srch_input.slideDown(100);
     });
     $srch_ctnr.mouseleave(function(){
         $srch_cover.slideDown(100);
         $srch_input.slideUp(100);
     });
 
-    //Time Preferences
-    $('.pref_tb_add').click(function(){
+    //Time Preferences and Modal
+    $('.time_add').click(function(){
         var is_complete = true;
 
-
-        if (is_complete) {
+        if (!is_complete) {
             $('#scheduler-pref-modal').modal({show: false});
             return;
         }
-        var temp = new TimeBlock(1, 10, 18);
-        console.log('Added time preference: ' + temp.toString());
     });
 
-    $('.pref_tb_remove').click(function(){
-
+    $('.time_interval').first().keyup(function(){
     });
+
+    $('.time_remove').click(function(){
+    });
+
+    $('#time_all_day').change(function()
+    {
+        $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
+    });
+
+
 
     //Scheduler
     var controllerURL = $('#info-controller').data('controllerUrl');

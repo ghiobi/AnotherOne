@@ -143,7 +143,7 @@
 							<div class="col-sm-offset-2 col-sm-10">
 								<div class="checkbox" style="padding: 0">
 									<label>
-										<input type="checkbox"> Restrict the whole day
+										<input type="checkbox" id="time_all_day"> Restrict the whole day
 									</label>
 								</div>
 							</div>
@@ -151,17 +151,19 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Interval:</label>
 							<div class="col-sm-5">
-								<input type="text" class="form-control">
+								<input type="time" class="form-control time_interval"/>
+								<div class="help-block">Starting time.</div>
 							</div>
 							<div class="col-sm-5">
-								<input type="text" class="form-control">
+								<input type="time" class="form-control time_interval"/>
+								<div class="help-block">Ending time.</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default">Close</button>
-					<button type="button" class="btn btn-primary pref_tb_add" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary time_add">Save</button>
 				</div>
 			</div>
 		</div>
