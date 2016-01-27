@@ -10,7 +10,7 @@ class Courses extends CI_Controller
     {
         parent::__construct();
     }
-    function index($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
+    function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
         //Loading header
         $data['info_bar'] = 'Page description';
@@ -18,7 +18,7 @@ class Courses extends CI_Controller
 
         $this->load->model('Course');
 
-        if($SEMESTER = NULL || $COURSECODE = NULL || $NUMBER = NULL){
+        if($SEMESTER == NULL || $COURSECODE == NULL || $NUMBER == NULL){
             //Home page, load form.
             $this->load->view('course/search.php');
 
@@ -28,7 +28,9 @@ class Courses extends CI_Controller
         }
         else{
             //if there are no results to the parameters inputted load search.php with error messages
-
+            if(true){
+                die('No Results Found');
+            }
             $this->load->view('course/search.php');
 
             //else load another view with the results.
