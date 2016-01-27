@@ -28,11 +28,11 @@
 
 		<div class="infobar">
 			<?php //$is_login determines if this a login page to eith show or hide the Sign Out button ?>
-			<?php $is_login = $this->uri->segment(1) == 'login' ?>
+			<?php $is_login = $this->session->userdata('user_id') !== NULL ?>
 
-			<p <?php echo ($is_login)? 'style="width:100%"':'' ?>><?php echo (isset($info_bar))? $info_bar : ' '; ?></p>
+			<p <?php echo ($is_login)? '':'style="width:100%"' ?>><?php echo (isset($info_bar))? $info_bar : ' '; ?></p>
 
-			<?php if(!$is_login): ?>
+			<?php if($is_login): ?>
 				<button class="btn visible-xs-block pull-right signout-collapse-btn" type="button" data-toggle="collapse" aria-expanded="false" data-target="#signout-container"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
 				<div class="signout-collapse-container" id="signout-container">
 					<?php echo form_open("login/signout") ;?>
