@@ -1,1 +1,115 @@
 Resource Evaluation
+4.1 
+
+Member Name :	Laurendy Lam
+Role :	Programing: Full-Stack, Programming Leader, Co-Team Leader
+Strengths :	-Web Design 
+-User interface
+-Algorithm
+-Team Work / Organization
+-Data base Design
+-OOP
+Knowledge :	Java, C/C++/, PHP, HTML5, CSS3, Javascript (jQuery), MySQL
+Experience :	-Personal website developer
+-Design/Developed a restaurant website 
+
+Member Name :	Alessandro Power
+Role :	Documentation Leader , Team Leader
+Strengths :	
+Knowledge :	Python
+Experience :	
+
+
+
+
+
+
+Member Name :	Anhkhoi Vu-Nguyen
+Role :	Programming: Back-End
+Strengths :	Object-oriented Programming
+Knowledge :	Java, C++, HTML5, Prolog, PHP, Lisp, CSS3, Assembly , AspectJ
+Experience :	
+
+
+
+
+
+Member Name :	Jacqueline Luo
+Role :	Testing
+Strengths :	-OOP with Java
+-App development for Android devices
+Knowledge :	Java, C#, HTML , CSS3, PHP, JavaScript
+Experience :	Developed an app on Google Play Store
+
+
+Member Name :	James Talarico
+Role :	Documentation
+Strengths :	
+Knowledge :	
+Experience :	
+
+
+Member Name :	Kenny Nguyen
+Role :	Documentation
+Strengths :	
+Knowledge :	
+Experience :	-Programmer at Industry Canada
+
+Member Name :	Michael Mescheder
+Role :	Programming: Full- Stack
+Strengths :	
+Knowledge :	
+Experience :	
+
+
+Member Name :	Piratheeban Annamalai
+Role :	Programming:
+Strengths :	
+Knowledge :	
+Experience :	
+
+
+
+Member Name :	Pragas Velauthapillai
+Role :	Testing
+Strengths :	
+Knowledge :	
+Experience :	
+
+
+Member Name :	Ronn Pang
+Role :	Programming: Full Stack
+Strengths :	
+Knowledge :	
+Experience :	
+
+
+Member Name :	Eric Payette
+Role :	Programming Full-Stack
+Strengths :	-Object- oriented programming
+-Functional programming 
+-Logic programing
+Knowledge :	Java, PHP , HTML , CSS3, MySQL , JavaScript, Lisp, Prolog, AspectJ
+Experience :	Programming for various class assignment.
+
+
+
+
+
+
+
+
+
+
+
+Member Name :	Andy Nguyen
+Role :	Documentation
+Strengths :	-Object- oriented Programming 
+Knowledge :	Java, HTML5 , CSS3, JavaScript , PHP
+Experience :	-Programming in Java for class assignments
+-Developed a Real-Estate website for a class project
+
+
+4.2 Technical Resources 
+Present here the computer resources available for the project. That includes computers, software resources (tools, libraries, etc.) available on these computers
+The web server used to host the developingproject is the PHPbuilt in web server provided by wamp which come with a bundle of different tools suchas phpmy admin apache and sql buddy. the hosting service for the database on a remote server is heroku. to manage the database we are using dbforge studio for mysql or phpmyadmin version 4.5.3 used with wamp to run the app to access the database remotely. The average computer to host the working project is an intel i5 or smiliar. 2 GB of ram and uses around 30 mb of storage space. ***The operating system used to operate the program as very portable as long as it has php, apache and a mysql server install installed.  Version and course contrl is handled by a private git repository. The framework used to develop the app is Codeigniter 3.03* along with other user interface frameworks such as 3.03 .JQuery, Bootstrap  4****, Normalize v3.0.2 ** and google fonts. The editors to develop the project are with notepad++ or phpStorm by JetBrains. We are using slask to commuicate, google drive to share files and documents. and github to upload finished documents. bug reproting ongit hub. 
