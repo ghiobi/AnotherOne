@@ -16,33 +16,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-bullhorn fa-lg"></i> 
-					Recent Notices
+					Breaking News
 				</div>
 				<div class="panel-body">
 					<div id="notice-slider" class="carousel slide sidebar-slider" data-interval="10000" data-ride="carousel">
 						<!-- Carousel indicators -->
-						<ol class="carousel-indicators">
-							<li data-target="#notice-slider" data-slide-to="0" class="active"></li>
-							<li data-target="#notice-slider" data-slide-to="1"></li>
-							<li data-target="#notice-slider" data-slide-to="2"></li>
-						</ol>
 						<!-- Carousel items -->
 						<div class="carousel-inner">
-							<div class="active item">
-								<h4>Notice 1</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, veritatis nulla eum laudantium totam tempore optio doloremque laboriosam quas, quos eaque molestias odio aut eius animi. Impedit temporibus nisi accusamus.</p>
-								<p>SSG</p>
+							<?php for($i = 0; $i < 10; $i++): ?>
+							<div class="<?php if($i == 0) echo 'active' ;?> item">
+								<h4><a target="_blank" href="<?php echo $news[$i]['url'] ?>" ><?php echo $news[$i]['title'] ?></a></h4>
+								<p><?php echo $news[$i]['abstract'] ?></p>
 							</div>
-							<div class="item">
-								<h4>Notice 2</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, veritatis nulla eum laudantium totam tempore optio doloremque laboriosam quas, quos eaque molestias odio aut eius animi. Impedit temporibus nisi accusamus.</p>
-								<p>SMU</p>
-							</div>
-							<div class="item">
-								<h4>Notice 3</h4>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, veritatis nulla eum laudantium totam tempore optio doloremque laboriosam quas, quos eaque molestias odio aut eius animi. Impedit temporibus nisi accusamus.</p>
-								<p>NDR</p>
-							</div>
+							<?php endfor; ?>
 						</div>
 					</div>
 				</div>
