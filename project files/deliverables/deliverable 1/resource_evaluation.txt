@@ -99,7 +99,7 @@ Time for Project:	5 hours/ week
 
 4.2 Technical Resources 
 
-4.2.1 
+4.2.1 Server
 
 The web server used to host the developing project is the PHP built in web server provided by wamp which come with a bundle of different tools such as php myAdmin apache and SQL buddy.
 4.2.2 Database 
