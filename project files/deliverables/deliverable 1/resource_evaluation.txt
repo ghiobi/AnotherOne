@@ -7,12 +7,12 @@ Strengths :	-Web Design
             -User interface
             -Algorithm
             -Team Work / Organization
-            -Data base Design
+            -Database Design
             -OOP
-Knowledge :	Java, C/C++/, PHP, HTML5, CSS3, Javascript (jQuery), MySQL
-Experience :	-Personal website developer
+Knowledge :	Java, C, C++, PHP, HTML5, CSS3, Javascript, SQL, Python, Ruby, Prolog, Lisp
+Experience :  -Personal website developer
               -Design/Developed a restaurant website 
-Time for Project:	10 hours/ week
+Time for Project:	24 / 7
 
 Member Name :	Alessandro Power
 Role :	Documentation Leader , Team Leader
@@ -102,7 +102,7 @@ Time for Project:	5 hours/ week
 
 4.2.1 Server
 
-The web server used to host the developing project is the PHP built in web server provided by wamp which come with a bundle of different tools such as php myAdmin apache and SQL buddy.
+The web server used to host the developing project is the PHP built in web server provided by PHP which come with Wamp. It comes bundle of different other tools such as phpmyAdmin, Apache and SQL buddy for local hosting.
 4.2.2 Database 
 
  The hosting service for the database on a remote server is Heroku. to manage the database we are using dbForge studio for MySQL or phpMyAdmin version 4.5.3 used with wamp to run the app to access the database remotely.
