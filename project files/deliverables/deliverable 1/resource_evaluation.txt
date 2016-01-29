@@ -23,7 +23,9 @@ Time for Project:	7 hours/ week
 
 Member Name :	Anhkhoi Vu-Nguyen
 Role :	Programming: Back-End
-Strengths :	Object-oriented Programming
+Strengths :	-Object-oriented Programming
+		-Team Work
+		-Communication
 Knowledge :	Java, C++, HTML5, Prolog, PHP, Lisp, CSS3, Assembly , AspectJ
 Experience : 	-Programming in Java for various class assignments 
 Time for Project:	6 hours/ week
@@ -59,9 +61,12 @@ Time for Project:	6 hours/ week
 
 Member Name :	Michael Mescheder
 Role :	Programming: Full- Stack
-Strengths :	
-Knowledge :	
-Experience :	
+Strengths :	-
+		-
+		-
+Knowledge :	Java, PHP, HTML5, CSS3, JavaScript
+Experience :	-Programming in Java for various class assignments.
+
 Time for Project:	6 hours/ week
 
 
@@ -70,7 +75,7 @@ Role :	Programming:
 Strengths :	-Server side 
 		-Object-Oriented Programming
 		-Organization
-Knowledge :	Java, PHP, HTML5, CSS3
+Knowledge :	Java, PHP, HTML5, CSS3, JavaScript
 Experience :	-Various programming assignments for class assignments involving Java, and Php.
 Time for Project:	6 hours/ week
 
