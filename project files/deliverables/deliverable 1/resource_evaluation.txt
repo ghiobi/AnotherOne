@@ -80,11 +80,12 @@ Knowledge :	Java, PHP, HTML, CSS, Javascript
 Experience :	-Programming in Java for various class assignments.
 Time for Project:	6 hours/ week
 
-Member Name :	Ronn Pang
+Member Name :	Ronnie Pang
 Role :	Programming: Full Stack
-Strengths :	
-Knowledge :	
-Experience :	
+Strengths :	-OOP
+		-Team Work
+Knowledge :	Java, PHP, HTML, CSS, Javascript
+Experience :	-Programming in Java for various class assignments.
 Time for Project:	6 hours/ week
 
 Member Name :	Eric Payette
