@@ -13,7 +13,7 @@ class Courses extends CI_Controller
     function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
         //Loading header
-        $data['info_bar'] = 'Page description';
+        $data['info_bar'] = 'Something';
         $this->load->view('layouts/header.php', $data);
 
         $this->load->model('Course');
@@ -28,10 +28,8 @@ class Courses extends CI_Controller
         }
         else{
             //if there are no results to the parameters inputted load search.php with error messages
-            if(true){
-                die('No Results Found');
-            }
-            $this->load->view('course/search.php');
+           
+            $this->load->view('course/result.php');
 
             //else load another view with the results.
         }
