@@ -60,7 +60,6 @@ Knowledge :	Java, PHP, HTML5, CSS3, MySQL, JavaScript
 Experience :	-Programmer at Industry Canada
 Time for Project:	6 hours/ week
 
-
 Member Name :	Michael Mescheder
 Role :	Programming: Full- Stack
 Strengths :	-Client side
@@ -71,7 +70,6 @@ Knowledge :	Java, PHP, HTML5, CSS3, JavaScript
 Experience :	-Programming in Java for various class assignments.
 
 Time for Project:	6 hours/ week
-
 
 Member Name :	Piratheeban Annamalai
 Role :	Programming:
@@ -101,8 +99,9 @@ Time for Project:	6 hours/ week
 Member Name :	Eric Payette
 Role :	Programming Full-Stack
 Strengths :	-Object- oriented programming
--Functional programming 
--Logic programing
+		-Functional programming 
+		-Logic programing
+		-Team Work
 Knowledge :	Java, PHP , HTML , CSS3, MySQL , JavaScript, Lisp, Prolog, AspectJ
 Experience :	 -Programming for various class assignment.
 Time for Project:	6 hours/ week
@@ -110,6 +109,7 @@ Time for Project:	6 hours/ week
 Member Name :	Andy Nguyen
 Role :	Documentation
 Strengths :	-Object-oriented Programming 
+		-Team Work
 Knowledge :	Java, HTML5 , CSS3, JavaScript , PHP
 Experience :  -Programming in Java for class assignments
               -Developed a Real-Estate website for a class project
