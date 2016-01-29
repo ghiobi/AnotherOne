@@ -49,8 +49,10 @@ Time for Project:	6 hours/ week
 
 Member Name :	Kenny Nguyen
 Role :	Documentation
-Strengths :	
-Knowledge :	
+Strengths :	-Object-oriented Programming
+		-Team Work
+		-Communication
+Knowledge :	Java, PHP, HTML5, CSS3, MySQL, JavaScript 
 Experience :	-Programmer at Industry Canada
 Time for Project:	6 hours/ week
 
