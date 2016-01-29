@@ -65,9 +65,11 @@ Time for Project:	6 hours/ week
 
 Member Name :	Piratheeban Annamalai
 Role :	Programming:
-Strengths :	
-Knowledge :	
-Experience :	
+Strengths :	-Server side 
+		-Object-Oriented Programming
+		-Organization
+Knowledge :	Java, PHP, HTML5, CSS3
+Experience :	-Various programming assignments for class assignments involving Java, and Php.
 Time for Project:	6 hours/ week
 
 Member Name :	Pragas Velauthapillai
