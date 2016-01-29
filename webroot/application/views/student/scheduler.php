@@ -151,11 +151,11 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Interval:</label>
 							<div class="col-sm-5">
-								<input type="time" class="form-control time_interval"/>
+								<input type="time" class="form-control time_interval" step="300"/>
 								<div class="help-block">Starting time.</div>
 							</div>
 							<div class="col-sm-5">
-								<input type="time" class="form-control time_interval"/>
+								<input type="time" class="form-control time_interval" step="300"/>
 								<div class="help-block">Ending time.</div>
 							</div>
 						</div>
