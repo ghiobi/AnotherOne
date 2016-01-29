@@ -16,9 +16,11 @@ Time for Project:	24 / 7
 
 Member Name :	Alessandro Power
 Role :	Documentation Leader , Team Leader
-Strengths :	
-Knowledge :	Java, Python
-Experience :	
+Strengths :	-Communication
+		-Team Work
+		-Object-oriented Programming
+Knowledge :	C++, Java, Python
+Experience :	Programming in Java for various class assignments.
 Time for Project:	7 hours/ week
 
 Member Name :	Anhkhoi Vu-Nguyen
@@ -61,9 +63,10 @@ Time for Project:	6 hours/ week
 
 Member Name :	Michael Mescheder
 Role :	Programming: Full- Stack
-Strengths :	-
-		-
-		-
+Strengths :	-Client side
+		-Object-Oriented Programming
+		-Teamwork
+		
 Knowledge :	Java, PHP, HTML5, CSS3, JavaScript
 Experience :	-Programming in Java for various class assignments.
 
