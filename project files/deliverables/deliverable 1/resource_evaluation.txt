@@ -12,7 +12,7 @@ Strengths :	-Web Design
 Knowledge :	Java, C, C++, PHP, HTML5, CSS3, Javascript, SQL, Python, Ruby, Prolog, Lisp
 Experience :  -Personal website developer
               -Design/Developed a restaurant website 
-Time for Project:	24 / 7
+Time for Project:	10-12 hours / week
 
 Member Name :	Alessandro Power
 Role :	Documentation Leader , Team Leader
