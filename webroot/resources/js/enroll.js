@@ -3,6 +3,7 @@ var restricted_times = new Array();
 
 $(function()
 {
+
     $('#scheduler-pref-modal').modal({show:true});
     //Load cookies;
 
@@ -21,6 +22,15 @@ $(function()
     });
 
     //Time Preferences and Modal
+    $('.scheduler-pref-time').append(
+        '<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>'
+    );
+    $('.remove-time-block').click(function(){
+        $parent = $('.remove-time-block').parent();
+        if($parent.length == 0){
+            $parent.append('<p class="no-blocks"></p>');
+        }
+    });
     $('.time_add').click(function(){
         var is_complete = true;
 
