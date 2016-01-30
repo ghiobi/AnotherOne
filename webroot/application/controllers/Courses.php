@@ -16,26 +16,58 @@ class Courses extends CI_Controller
         $data['info_bar'] = 'Something';
         $this->load->view('layouts/header.php', $data);
 
-        $this->load->model('Course');
+        $this->load->model('course');
 
         if($SEMESTER == NULL || $COURSECODE == NULL || $NUMBER == NULL){
-            //Home page, load form.
-            $this->load->view('course/search.php');
 
-            //1. Get form input info, semester, course code, and course number
+            //Get form input info, semester, course code, and course number
+            if($this->input->post('search', TRUE)){
 
-            //2. if the parameters are filled refresh to redirect('courses/$semester/$coursecode/$number', 'refresh');
+                $semester = $this->input->post('semester', TRUE);
+                $course_code = $this->input->post('course_code', TRUE);
+                $course_number = $this->input->post('course_number', TRUE);
+
+                $this->form_validation->set_rules('semester', 'Semester', 'trim|required');
+                $this->form_validation->set_rules('course_code', 'Course Code', 'trim|required');
+                $this->form_validation->set_rules('course_number', 'Course Number', 'trim|required');
+
+                if($this->form_validation->run() === FALSE)
+                {
+                    goto search;
+                }
+
+                //If the parameters are filled refresh to ;
+                redirect("courses/sections/$semester/$course_code/$course_number", 'refresh');
+
+            }
+
         }
         else{
             //if there are no results to the parameters inputted load search.php with error messages
-           
-            $this->load->view('course/result.php');
+            $semester_name = str_replace('-', ' ', $SEMESTER);
 
-            //else load another view with the results.
+            $results = $this->course->section_data($semester_name, $COURSECODE, $NUMBER);
+
+            if($results == FALSE) {
+                $data['error_message'] = '<p>No results were found!</p>';
+                goto search;
+            }
+
+            $data['results'] = $results;
+            $this->load->view('course/result.php', $data);
+
+            goto footer;
         }
 
+        search:
+        $data['available_semesters'] = $this->course->get_available_semesters();
+        $this->load->view('course/search.php', $data);
+
+        footer:
         //Loading footer
         $this->load->view('layouts/footer.php');
+
+        $this->output->enable_profiler(TRUE);
     }
 
 }
