@@ -30,13 +30,13 @@
                 <div class="form-group">
                     <label for="course_code" class="col-sm-2 control-label">Code</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Code">
+                        <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Code" value="<?php echo set_value('course_code') ?>">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="course_number" class="col-sm-2 control-label">Number</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" id="course_number" name="course_number" placeholder="Course Number">
+                        <input type="number" class="form-control" id="course_number" name="course_number" placeholder="Course Number" value="<?php echo set_value('course_number') ?>">
                     </div>
                 </div>
                 <input type="submit" class="btn btn-info pull-right" name="search" value="Search!">

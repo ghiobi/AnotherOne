@@ -16,7 +16,9 @@ class Courses extends CI_Controller
         $data['info_bar'] = 'Something';
         $this->load->view('layouts/header.php', $data);
 
-        $this->load->model('course');
+        $this->load->model('section');
+
+        $this->db->cache_on();
 
         if($SEMESTER == NULL || $COURSECODE == NULL || $NUMBER == NULL){
 
@@ -39,6 +41,7 @@ class Courses extends CI_Controller
                 //If the parameters are filled refresh to ;
                 redirect("courses/sections/$semester/$course_code/$course_number", 'refresh');
 
+                return;
             }
 
         }
@@ -46,7 +49,7 @@ class Courses extends CI_Controller
             //if there are no results to the parameters inputted load search.php with error messages
             $semester_name = str_replace('-', ' ', $SEMESTER);
 
-            $results = $this->course->section_data($semester_name, $COURSECODE, $NUMBER);
+            $results = $this->section->get_sections($semester_name, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';
@@ -60,14 +63,15 @@ class Courses extends CI_Controller
         }
 
         search:
-        $data['available_semesters'] = $this->course->get_available_semesters();
+        $data['available_semesters'] = $this->section->get_semesters();
         $this->load->view('course/search.php', $data);
 
         footer:
-        //Loading footer
         $this->load->view('layouts/footer.php');
 
         $this->output->enable_profiler(TRUE);
+
+        $this->db->cache_off();
     }
 
 }
