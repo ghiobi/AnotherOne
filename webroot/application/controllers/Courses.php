@@ -1,7 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- * Since this extends CI_Controller and not App_Base_Controller. This search can be made available.
- * TODO: reconstruct the class description formally.
+ *
  */
 class Courses extends CI_Controller
 {
@@ -10,6 +9,12 @@ class Courses extends CI_Controller
     {
         parent::__construct();
     }
+
+    /**
+     * @param null $SEMESTER
+     * @param null $COURSECODE
+     * @param null $NUMBER
+     */
     function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
         //Loading header
@@ -17,8 +22,7 @@ class Courses extends CI_Controller
         $this->load->view('layouts/header.php', $data);
 
         $this->load->model('section');
-
-        $this->db->cache_on();
+        $this->load->model('semester');
 
         if($SEMESTER == NULL || $COURSECODE == NULL || $NUMBER == NULL){
 
@@ -49,7 +53,7 @@ class Courses extends CI_Controller
             //if there are no results to the parameters inputted load search.php with error messages
             $semester_name = str_replace('-', ' ', $SEMESTER);
 
-            $results = $this->section->get_sections($semester_name, $COURSECODE, $NUMBER);
+            $results = $this->section->getSectionsBySemesCodeNum($semester_name, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';
@@ -63,15 +67,13 @@ class Courses extends CI_Controller
         }
 
         search:
-        $data['available_semesters'] = $this->section->get_semesters();
+        $data['available_semesters'] = $this->semester->getSemesters();
         $this->load->view('course/search.php', $data);
 
         footer:
         $this->load->view('layouts/footer.php');
 
         $this->output->enable_profiler(TRUE);
-
-        $this->db->cache_off();
     }
 
 }
