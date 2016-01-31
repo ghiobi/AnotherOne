@@ -23,7 +23,10 @@ class Section extends CI_Model
 
         $query = $this->db->query("
             SELECT
-              *
+              sections.letter,
+              sections.professor,
+              sections.capacity,
+              sections.id
             FROM sections
               INNER JOIN courses
                 ON sections.course_id = courses.id
