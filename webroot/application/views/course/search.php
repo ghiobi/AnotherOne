@@ -28,9 +28,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="course_code" class="col-sm-2 control-label">Code</label>
+                    <label for="course_code" class="col-sm-2 control-label">Subject</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Code" value="<?php echo set_value('course_code') ?>">
+                        <input type="text" class="form-control" id="course_code" name="course_code" placeholder="Course Subject" value="<?php echo set_value('course_code') ?>">
                     </div>
                 </div>
                 <div class="form-group">
