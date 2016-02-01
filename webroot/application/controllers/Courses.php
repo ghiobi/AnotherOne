@@ -43,7 +43,7 @@ class Courses extends CI_Controller
                 }
 
                 //If the parameters are filled refresh to ;
-                redirect("courses/sections/$semester/$course_code/$course_number", 'refresh');
+                redirect("courses/sections/".strtolower($semester)."/$course_code/$course_number", 'refresh');
 
                 return;
             }
@@ -59,7 +59,6 @@ class Courses extends CI_Controller
                 $data['error_message'] = '<p>No results were found!</p>';
                 goto search;
             }
-
             $data['results'] = $results;
             $this->load->view('course/result.php', $data);
 
