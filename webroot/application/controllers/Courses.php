@@ -26,7 +26,7 @@ class Courses extends CI_Controller
             $data['info_bar'] = '<a href="'.site_url('courses/sections').'"><i class="glyphicon glyphicon-info-sign"></i> New Search</a>';
         }
         else
-            $data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Search for sections!';
+            $data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Tip! Enter the subject and click search!';
         $this->load->view('layouts/header.php', $data);
 
         $this->load->model('section');
@@ -124,8 +124,6 @@ class Courses extends CI_Controller
 
         footer:
         $this->load->view('layouts/footer.php');
-
-        $this->output->enable_profiler(TRUE);
     }
 
 }

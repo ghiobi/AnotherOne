@@ -1,9 +1,13 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<main class="container">
+<main class="container" style="margin-top: 20px; margin-bottom: 40px">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <div style="margin-bottom: 35px">
+                <h2>Search away!</h2>
+                <p style="opacity:.6; ">Click search for all sections in a semester.</p>
+            </div>
             <?php if(validation_errors() || isset($error_message)): ?>
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
