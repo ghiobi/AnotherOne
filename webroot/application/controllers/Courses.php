@@ -17,15 +17,26 @@ class Courses extends CI_Controller
      */
     function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
+        if($SEMESTER != NULL)
+            $SEMESTER = str_replace('-', ' ', $SEMESTER);
+
         //Loading header
-        $data['info_bar'] = 'Something';
+        if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)
+        {
+            $data['info_bar'] = '<a href="'.site_url('courses/sections').'"><i class="glyphicon glyphicon-info-sign"></i> New Search</a>';
+        }
+        else
+            $data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Search for sections!';
         $this->load->view('layouts/header.php', $data);
 
         $this->load->model('section');
+        $this->load->model('course');
         $this->load->model('semester');
 
-        if($SEMESTER == NULL || $COURSECODE == NULL || $NUMBER == NULL){
 
+
+        if($SEMESTER == NULL && $COURSECODE == NULL && $NUMBER == NULL)
+        {
             //Get form input info, semester, course code, and course number
             if($this->input->post('search', TRUE)){
 
@@ -34,8 +45,8 @@ class Courses extends CI_Controller
                 $course_number = $this->input->post('course_number', TRUE);
 
                 $this->form_validation->set_rules('semester', 'Semester', 'trim|required');
-                $this->form_validation->set_rules('course_code', 'Course Code', 'trim|required');
-                $this->form_validation->set_rules('course_number', 'Course Number', 'trim|required');
+                $this->form_validation->set_rules('course_code', 'Course Code', ($course_number)?'trim|required':'trim');
+                $this->form_validation->set_rules('course_number', 'Course Number', 'trim');
 
                 if($this->form_validation->run() === FALSE)
                 {
@@ -49,17 +60,59 @@ class Courses extends CI_Controller
             }
 
         }
+        elseif ($SEMESTER != NULL && $COURSECODE == NULL && $NUMBER == NULL)
+        {
+            $courses = $this->course->getCoursesBySemesterName($SEMESTER);
+
+            if($courses == FALSE){
+                $data['error_message'] = '<p>No results were found!</p>';
+                goto search;
+            }
+
+            $results = [];
+
+            foreach($courses as $course){
+                array_push($results, $this->section->getSectionsBySemesCodeNum($SEMESTER, $course['code'], $course['number']));
+            }
+
+            $data['results'] = $results;
+            $this->load->view('course/result.php', $data);
+
+            goto footer;
+        }
+        elseif($SEMESTER != NULL && $COURSECODE != NULL && $NUMBER == NULL)
+        {
+
+
+            $courses = $this->course->getCoursesBySemesterSubject($SEMESTER, $COURSECODE);
+
+            if($courses == FALSE) {
+                $data['error_message'] = '<p>No results were found!</p>';
+                goto search;
+            }
+
+            $results = [];
+            foreach($courses as $course){
+                array_push($results, $this->section->getSectionsBySemesCodeNum($SEMESTER, $course['code'], $course['number']));
+            }
+
+            $data['results'] = $results;
+            $this->load->view('course/result.php', $data);
+
+            goto footer;
+
+        }
         else{
             //if there are no results to the parameters inputted load search.php with error messages
-            $semester_name = str_replace('-', ' ', $SEMESTER);
 
-            $results = $this->section->getSectionsBySemesCodeNum($semester_name, $COURSECODE, $NUMBER);
+            $results = $this->section->getSectionsBySemesCodeNum($SEMESTER, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';
                 goto search;
             }
-            $data['results'] = $results;
+
+            $data['results'] = [$results];
             $this->load->view('course/result.php', $data);
 
             goto footer;
