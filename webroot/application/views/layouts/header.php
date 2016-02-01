@@ -18,17 +18,17 @@
 
 <body>
 
+	<?php $is_login = $this->session->userdata('user_id') !== NULL ?>
+
 	<header class="container">
 
 		<div class="row">
 			<div class="col-sm-6 col-md-5">
-				<a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>resources/img/logo.png"></a>
+				<a class="brand" href="<?=base_url()?>" <?=((!$is_login)?'data-no-instant':'')?>><img src="<?=base_url()?>resources/img/logo.png"></a>
 			</div>
 		</div>
 
 		<div class="infobar">
-			<?php //$is_login determines if this a login page to eith show or hide the Sign Out button ?>
-			<?php $is_login = $this->session->userdata('user_id') !== NULL ?>
 
 			<p <?php echo ($is_login)? '':'style="width:100%"' ?>><?php echo (isset($info_bar))? $info_bar : ' '; ?></p>
 
