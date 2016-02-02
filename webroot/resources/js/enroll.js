@@ -4,7 +4,6 @@ var restricted_times = new Array();
 $(function()
 {
 
-    $('#scheduler-pref-modal').modal({show:true});
     //Load cookies;
 
     //User Interface
