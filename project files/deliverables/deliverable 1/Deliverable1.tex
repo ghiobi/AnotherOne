@@ -97,21 +97,33 @@ Anhkhoi \textsc{Vu-Nguyen}    \\
 
 \end{titlepage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %---------------------------%
-        %   Project Description     %
-        %---------------------------%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Project Description     %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Project Description}
 Mytinerary is a web application designed to create, adjust and optimize the schedules of Concordia students. The schedule is created by the students who add courses offered by their respective program. Prior to the creation of the schedule, the user must select the according school term. In addition, the program will check whether or not the students have the correct pre or co-requisites prior to adding the class to the schedule. What this program differs from the current Concordia schedule making, is the friendly user interface. One major example is that it displays what the current schedule looks like while the student adds courses. The reason behind this is that the student can add courses while viewing their available schedule times rather than going back and forth viewing what time space is free. The application will also prohibit students from adding courses that is out of their course sequence or do not possess the correct pre/co-requisite.
 This application is also usable by teachers alike. Teachers can post their term schedule which includes the courses being taught or their free hours. This is viewed by the students who then join the course.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Goals and Constraints   %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Goals and Constraints}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Resource Requirements   %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Resource Requirements}
 
@@ -337,11 +349,11 @@ We are using slack to communicate, Google drive to share files and documents. an
 
 \section{Scoping}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %---------------------------%       
-        %     Solution Sketch       %
-        %---------------------------%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%       
+                                            %     Solution Sketch       %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Solution Sketch}
 
@@ -351,86 +363,111 @@ We are using slack to communicate, Google drive to share files and documents. an
 \subsection{Technologies in Use} \label{techInUse}
 %
 %
-\subsubsection{Programming Languages}
+\subsubsection{Programming Languages} \label{languages}
 \textbf{PHP}\\
-We decided to use PHP as the code base for mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have pre-existing solutions. We decided to use an older version, PHP 5.5, because the most recent version, PHP 7, was not working properly with the Code Igniter framework we were using (described in section \ref{codeIgniter}). Another important advantage is that PHP is part of the development platform WAMP, which is described in section \ref{webanddata}, which made installation easy.
+We decided to use PHP as the code base for Mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have preexisting solutions. We decided to use an older version, PHP 5.5, because the most recent version, PHP 7, was not working properly with the CodeIgniter framework we were using (described in section \ref{framworks}). Another important advantage is that PHP is part of the development platform WAMP, which is described in section \ref{webanddata}, which made installation easy.
 \\
 %
-\textbf{Javascript}\\
-JavaScript is a high-level, dynamic and untyped programming language. Since Javascipt is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (Javascript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML.\\
+\textbf{JavaScript}\\
+JavaScript is a high-level, dynamic and untyped programming language. Since JavaScript is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (JavaScript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML. We used the stable release version ECMAScript 6.\\
 %
 \textbf{HTML}\\
 HTML (Hyper Text Markup Language) is a markup language used for creating web pages. It is by far the most commonly used markup language, and therefore has the most cross-platform support. We used the most recent version HTML5, which is quickly rising in popularity. 
 \\
 %
 \textbf{CSS}\\
-CSS (Cascading Style Sheets) is a style sheet language used for creating a layout and styling a web page. Like Javascipt and HTML, CSS is one of the more common languages used in web development. CSS is used primarily to allow the separation of a web page's content from it's presentation; this makes code cleaner and more reusable. We will be ussing CSS3, the most recent version.
+CSS (Cascading Style Sheets) is a style sheet language used for creating a layout and styling a web page. Like JavaScript and HTML, CSS is one of the more common languages used in web development. CSS is used primarily to allow the separation of a web page's content from it's presentation; this makes code cleaner and more reusable. We are using CSS3, the most recent version.
 %
 \\
 \textbf{SQL}\\
-SQL (Structured Query Language) is a special-purpose programming language used to access and manipulate databases. We will be using it to manage our MySQL database (described in section \ref{MySQL}). We chose SQL since it makes retrieving large amounts of records from databases quick and efficient it is the standard language for this task. We will be using the most recent version, SQL:2011.
+SQL (Structured Query Language) is a special-purpose programming language used to access and manipulate databases. We will be using it to manage our MySQL database (described in section \ref{webanddata}, under MySQL). We chose SQL since it makes retrieving large amounts of records from databases quick and efficient it is the standard language for this task. We are using the most recent version, SQL:2011.
 %
 %
 %
-\subsubsection{Libraries and Frameworks} 
+\subsubsection{Libraries and Frameworks} \label{framworks}
 \textbf{Bootstrap}\\
-Bootstrap is a HTML, CSS, and JavaScript framework used for developing web pages. We chose Bootstrap as it is easy to use and has a large community with extensive documentation. Furthermore, Bootstrap supports the most popular browsers and as well as fixes some compatibility issues with CSS. We will be using the most recent stable release, Bootstrap 3.3.6.
+Bootstrap is a HTML, CSS, and JavaScript framework used for developing web pages. We chose Bootstrap as it is easy to use and has a large community with extensive documentation. Furthermore, Bootstrap supports the most popular browsers and as well as fixes some compatibility issues with CSS. We are using the most recent stable release, Bootstrap 3.3.6.
 \\
 %
-\textbf{CodeIgniter} \label{codeIgniter} \\
-CodeIgniter is an open source PHP framework used in web development. It is loosely based on the Model-View-Controller pattern. We will be using the most recent stable release, 3.0.4.
-\todo[inline]{Why CodeIgniter and not Laravel?}
+\textbf{CodeIgniter} \\
+CodeIgniter is an open source PHP framework used in web development. It is loosely based on the Model-View-Controller pattern. We chose CodeIgniter as it is easy to use compared to other PHP frameworks and was the framework that our developers were most familiar with. We are using the most recent stable release, 3.0.4.
+\\
 %
-\textbf{Ajax}\\
-\todo[inline]{Why Ajax?}
+\textbf{AJAJ}\\
+AJAJ (Asynchronous JavaScript and JSON) is a set of client-side web development techniques used to create asynchronous Web applications. We chose AJAJ over the more popular AJAX because we used JSONs to pass data, and not XML. The reasoning behind choosing JSON is discussed in section \ref{languages}, under JavaScript.
+\\
 %
 \textbf{jQuery}\\
+jQuery is a JavaScript library which is designed to simplify client-side HTML. We chose jQuery as it is easy to use, especially compared to other JavaScript libraries. It is an extensive library that effortlessly supports AJAJ. We are using jQuery 1.12.0.
 \\
 %
-\textbf{Normalize.css}
-\\
+\textbf{Normalize.css}\\
+Normalize.css is used to make built-in browser styling consistent across browsers. It also has a very extensive documentation and excellent support, which was very helpful for some of the members which were not familiar with the tool. We are using version 3.0.3.
 %
 %
 %
-\subsubsection{Webserver and Databases} \label{webanddata} 
+\subsubsection{Web server and Databases} \label{webanddata} 
 \textbf{Apache}\\
-\\
-
-\textbf{MySQL} \label{MySQL} \\
-
-\textbf{PHPmMyAdmin}\\
+Apache is an open-source web server software. We chose it because it is currently the most popular web server software and is the one we were most familiar with. We will be using the stable release, 2.4.18, which is the most recent version.
 \\
 %
-\textbf{dbForge}\\
+\textbf{MySQL}\\
+MySQL is a Database Management system which uses relational databases. We chose MySQL as it is easy to use, very popular and has excellent support. We also chose it because our programming team was very familiar with it. We will be using the most recent stable release, 5.7.10.
 \\
 %
-\textbf{WampServer}
+\textbf{PHPMyAdmin}\\
+PHPMyAdmin is a web based tool that works to help the user handle the administration of MySQL. We chose it because of it's simplicity and our familiarity with software. We are using the most recent stable release version, 4.5.4.1.
+\\
+%
+\textbf{dbForge Studio}\\
+dbForge Studio is a windows tool that is made for management and development of an SQL server. We chose this tool because are our familiarity with it. We are using the most recent version, 5.1.178.
+\\
+%
+\textbf{WampServer}\\
+WampServer is a windows development environment which uses Apache, MySQL, and PHP. Since we had already decided on using PHP, Apache and MySQL for our project, using this tool to simplify the setup of our server was the obvious choice. We are using the most recent stable release version, 4.5.4.1.
 \\
 %
 \subsubsection{IDEs}
 \textbf{Notepad++}\\
+Notepad++ is a simple, lightweight text editor that has support for a large range of languages. We chose it because it is a very popular cross-platform text editor and our programming team was very familiar with it. We are using Notepad++ v6.8.8.
 \\
 %
-\textbf{PHPStorm}
+\textbf{PHPStorm}\\
+PHPStorm is an IDE which handles PHP, HTML and JavaScript. We chose it because it is cross-platform and was the IDE our programming team was the most familiar with it. We are using version 10.0.3.
 \\
 %
 %
 %
 \subsubsection{Documentation and Collaboration Software}
 \textbf{Slack}\\
+Slack is an online messaging application that can be used on mobile or PC. We chose to use Slack since it made communication and collaboration more convenient and organized.
 \\
 %
 \textbf{GitHub}\\
+GitHub is an online Git repository service. It is currently the most popular Git based system, and it virtually essential for version control in large programming project. GitHub is an excellent tool for organizing and collaborating, and is an industry standard.
 \\
 %
 \textbf{ShareLaTeX}\\
+ShareLaTeX is an online LaTeX editor and compiler. We chose to use LaTeX because it's capability of producing high typographical quality documentation. We chose ShareLaTeX since it allowed the documentation team to collaborate easily and it they were already quite familiar with it. 
 \\
 %
 \textbf{Gliffy}\\
+Gliffy is an online web diagram editor with was used to make all UMLs and Domain Models in during the project. We chose it because it is easy to use and can produce high-quality diagrams.
 \\
 %
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                             %---------------------------%       
+                                             %           Plan            %
+                                             %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Plan}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                             %---------------------------%       
+                                             %       Prototyping         %
+                                             %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Prototyping}
 \end{document}
