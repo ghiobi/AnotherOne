@@ -14,11 +14,11 @@
 			<h4>Student Details</h4>
 			<div class="well profile-custom-well">
 				<table class="profile-details-table">
-					<tr><td>Student ID:</td><td><?php echo $userinfo->id ?></td></tr>
-					<tr><td>Program:</td><td><?php echo $userinfo->name ?></td></tr>
-					<tr><td>First Name:</td><td><?php echo $userinfo->firstname ?></td></tr>
-					<tr><td>Last Name:</td><td><?php echo $userinfo->lastname ?></td></tr>
-					<tr><td>Login Name:</td><td><?php echo $userinfo->login_name ?></td></tr>
+					<tr><td>Student ID:</td><td><?php echo $info->id ?></td></tr>
+					<tr><td>Program:</td><td><?php echo $info->name ?></td></tr>
+					<tr><td>First Name:</td><td><?php echo $info->firstname ?></td></tr>
+					<tr><td>Last Name:</td><td><?php echo $info->lastname ?></td></tr>
+					<tr><td>Login Name:</td><td><?php echo $info->login_name ?></td></tr>
 
 					<tr><td>Password:</td><td>
 					<button class="btn btn-xs" data-toggle="collapse" data-target="#profile-changepwd-div" aria-expanded="false" aria-controls="profile-changepwd-div">
@@ -52,7 +52,7 @@
 		<div class="col-md-8">
 			<h4>Registered Courses and Grades</h4>
 
-			<?php if($student_record == FALSE): ?>
+			<?php if($record == FALSE): ?>
 
 				<p>Sorry no records found ):</p>
 
@@ -61,14 +61,14 @@
 			<div class="list-group">
 
 				<?php $i = 0;
-					foreach($student_record as $semester => $data): ?>
+					foreach($record as $semester => $data): ?>
 
 					<div class="list-group-item profile-list">
 						<h4 class="profile-semes-title"><?php echo $semester ?></h4>
 						<table class="table profile-semester-data <?php if(!$i) echo 'profile-semester-active'; ?>">
 
-							<?php foreach($data as $record)
-								echo '<tr><td>'.$record->code.' '.$record->number.'</td><td>'.$record->name.'</td><td>'.$record->credit.'</td><td>'.(($record->grade)? $record->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
+							<?php foreach($data as $course)
+								echo '<tr><td>'.$course->code.' '.$record->number.'</td><td>'.$course->name.'</td><td>'.$course->credit.'</td><td>'.(($record->grade)? $course->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
 							?>
 
 						</table>

@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-*  Works with the login controller to authenticates users and retrieve user data
+*
 */
 class Scheduler extends CI_Model
 {
@@ -15,8 +15,7 @@ class Scheduler extends CI_Model
 	
 	function enroll_courses()
 	{
-		
-		
+
 		
 	}
 	
@@ -24,8 +23,4 @@ class Scheduler extends CI_Model
 	{
 		
 		
-		
-		
-		
 	}
-	?>

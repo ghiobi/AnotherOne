@@ -230,7 +230,7 @@ header{
 	border-radius: 5px;
 	box-shadow: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 992px) {
 	.scheduler-app h3{
 		font-size:1.25em;
 	}

@@ -6,10 +6,10 @@
 		<div class="col-md-6">
 			<h4>Welcome Back, <?php echo $name ?>.</h4>
 			<div class="front-menu">
-				<a href="<?php echo site_url('student/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
-				<a href="<?php echo site_url('student/enroll') ?>"><i class="glyphicon glyphicon-pencil"></i> Register Now</a>
+				<a href="<?php echo site_url('students/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
+				<a href="<?php echo site_url('students/enroll') ?>"><i class="glyphicon glyphicon-pencil"></i> Register Now</a>
 				<a href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
-				<a href="<?php echo site_url('student/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
+				<a href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
 			</div>
 		</div>
 		<div class="col-md-6" style="margin-top: 39px">

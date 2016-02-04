@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
- *
+ *  The courses controller deals with viewing courses/sections and courses.
  */
 class Courses extends CI_Controller
 {
@@ -22,18 +22,14 @@ class Courses extends CI_Controller
 
         //Loading header
         if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)
-        {
             $data['info_bar'] = '<a href="'.site_url('courses/sections').'"><i class="glyphicon glyphicon-info-sign"></i> New Search</a>';
-        }
         else
             $data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Tip! Enter the subject and click search!';
+
         $this->load->view('layouts/header.php', $data);
 
         $this->load->model('section');
-        $this->load->model('course');
         $this->load->model('semester');
-
-
 
         if($SEMESTER == NULL && $COURSECODE == NULL && $NUMBER == NULL)
         {
@@ -60,59 +56,15 @@ class Courses extends CI_Controller
             }
 
         }
-        elseif ($SEMESTER != NULL && $COURSECODE == NULL && $NUMBER == NULL)
-        {
-            $courses = $this->course->getCoursesBySemesterName($SEMESTER);
-
-            if($courses == FALSE){
-                $data['error_message'] = '<p>No results were found!</p>';
-                goto search;
-            }
-
-            $results = [];
-
-            foreach($courses as $course){
-                array_push($results, $this->section->getSectionsBySemesCodeNum($SEMESTER, $course['code'], $course['number']));
-            }
-
-            $data['results'] = $results;
-            $this->load->view('course/result.php', $data);
-
-            goto footer;
-        }
-        elseif($SEMESTER != NULL && $COURSECODE != NULL && $NUMBER == NULL)
-        {
-
-
-            $courses = $this->course->getCoursesBySemesterSubject($SEMESTER, $COURSECODE);
-
-            if($courses == FALSE) {
-                $data['error_message'] = '<p>No results were found!</p>';
-                goto search;
-            }
-
-            $results = [];
-            foreach($courses as $course){
-                array_push($results, $this->section->getSectionsBySemesCodeNum($SEMESTER, $course['code'], $course['number']));
-            }
-
-            $data['results'] = $results;
-            $this->load->view('course/result.php', $data);
-
-            goto footer;
-
-        }
         else{
-            //if there are no results to the parameters inputted load search.php with error messages
-
-            $results = $this->section->getSectionsBySemesCodeNum($SEMESTER, $COURSECODE, $NUMBER);
+            $results = $this->section->getAllSections($this->semester->getIDByName($SEMESTER), $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';
                 goto search;
             }
 
-            $data['results'] = [$results];
+            $data['results'] = $results;
             $this->load->view('course/result.php', $data);
 
             goto footer;
@@ -126,5 +78,12 @@ class Courses extends CI_Controller
         $this->load->view('layouts/footer.php');
     }
 
+    function test()
+    {
+        $this->load->view('layouts/header.php');
+        $this->load->model('semester');
+        $v = $this->semester->getActiveSemesters();
+        var_dump($v);
+        $this->load->view('layouts/footer.php');
+    }
 }
-?>
