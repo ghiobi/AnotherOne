@@ -3,6 +3,8 @@ var restricted_times = new Array();
 
 $(function()
 {
+    //Scheduler config
+    var controllerURL = $('#info-controller').data('controllerUrl');
 
     //Load cookies;
 
@@ -52,9 +54,6 @@ $(function()
 
 
 
-    //Scheduler
-    var controllerURL = $('#info-controller').data('controllerUrl');
-
     //Search
     $srch_input.keyup(function()
     {
@@ -68,13 +67,16 @@ $(function()
         });
     });
 
-});
+    //My schedule
+    var MySchedule = new WeeklySchedule($('#mySchedule'));
 
-function TimeBlock(weekday, start, end){
-    this.weekday = weekday;
-    this.start = start;
-    this.end = end;
-    this.toString = function(){
-        return "Weekday: " + this.weekday + " Start: " + this.start + " End: " + this.end;
-    }
-}
+    $('.scheduler-commit').click(function()
+    {
+        MySchedule.emptyTimeBlocks();
+        MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
+        MySchedule.addBlock({start : '8:45', end : '10:00', weekday : 1});
+        MySchedule.render();
+    });
+
+
+});

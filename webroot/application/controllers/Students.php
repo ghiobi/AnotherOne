@@ -38,7 +38,7 @@ class Students extends App_Base_Controller
 
 		$this->load->view('student/scheduler.php');
 
-		$data['add_js'] = ['jquery.schedule.js', 'enroll.js'];
+		$data['add_js'] = ['moment.js', 'jquery.schedule.js', 'enroll.js'];
 		$this->load->view('layouts/footer.php', $data);
 	}
 

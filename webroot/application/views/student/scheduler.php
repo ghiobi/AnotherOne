@@ -53,7 +53,7 @@
 						</div>
 					</div>
 					<div class="scheduler-results">
-						<h3 class="scheduler-header">SECTIONS
+						<h3 class="scheduler-header">SCHEDULES
 							<button class="scheduler-auto-btn">Generate</button>
 						</h3>
 						<div class="list-group scheduler-list-group">
@@ -109,6 +109,9 @@
 				<div class="scheduler-full">
 					<div class="scheduler-schedule">
 						<h3 class="scheduler-header">SCHEDULE</h3>
+					</div>
+					<div id="mySchedule">
+
 					</div>
 				</div>
 			</div>
