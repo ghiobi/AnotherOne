@@ -1,5 +1,6 @@
 
 <main class="container">
+
 	<!-- attach alert-fail. For wrong password or no identical -->
 	<!--<div class="alert alert-success" role="alert">
 	
@@ -7,11 +8,12 @@
 		<p><strong>Success!</strong> Password Changed</p>
 		
 	</div>-->
-	
+	<div>
+		<h2>Profile</h2>
+	</div>
 	<div class="row">
 	
-		<div class="col-md-4">
-			<h4>Student Details</h4>
+		<div class="col-md-5">
 			<div class="well profile-custom-well">
 				<table class="profile-details-table">
 					<tr><td>Student ID:</td><td><?php echo $info->id ?></td></tr>
@@ -49,8 +51,7 @@
 				
 			</div>
 		</div>
-		<div class="col-md-8">
-			<h4>Registered Courses and Grades</h4>
+		<div class="col-md-7">
 
 			<?php if($record == FALSE): ?>
 
@@ -62,13 +63,12 @@
 
 				<?php $i = 0;
 					foreach($record as $semester => $data): ?>
-
 					<div class="list-group-item profile-list">
-						<h4 class="profile-semes-title"><?php echo $semester ?></h4>
-						<table class="table profile-semester-data <?php if(!$i) echo 'profile-semester-active'; ?>">
+						<h4 class="profile-semes-title"><?= $semester ?></h4>
+						<table class="profile-table table table-bordered table-condensed>">
 
 							<?php foreach($data as $course)
-								echo '<tr><td>'.$course->code.' '.$record->number.'</td><td>'.$course->name.'</td><td>'.$course->credit.'</td><td>'.(($record->grade)? $course->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
+								echo '<tr><td>'.$course->code.' '.$course->number.'</td><td>'.$course->name.'</td><td>'.$course->credit.'</td><td>'.(($course->grade)? $course->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
 							?>
 
 						</table>
@@ -85,7 +85,7 @@
 		</div>
 		
 	</div>
-	<script>
+	<div class="row">
 
-	</script>
+	</div>
 </main>

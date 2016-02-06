@@ -68,15 +68,14 @@ $(function()
     });
 
     //My schedule
-    var MySchedule = new WeeklySchedule($('#mySchedule'));
+    var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
 
-    $('.scheduler-commit').click(function()
-    {
-        MySchedule.emptyTimeBlocks();
-        MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
-        MySchedule.addBlock({start : '8:45', end : '10:00', weekday : 1});
-        MySchedule.render();
-    });
+    MySchedule.emptyTimeBlocks();
+    MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
+    MySchedule.addBlock('HEhe', '8:45', '10:00', 1);
+    MySchedule.addBlock('HEhe', '8:45', '10:00', 3);
+    MySchedule.addBlock('What block is this', '9:00', '10:00', 2);
+    MySchedule.render();
 
 
 });

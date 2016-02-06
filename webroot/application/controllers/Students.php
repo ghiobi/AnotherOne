@@ -26,8 +26,6 @@ class Students extends App_Base_Controller
 		$data['record'] = $this->student->getRecord();
 		$this->load->view('student/profile.php',$data);
 
-        //Loading footer
-        $data['add_js'] = ['profile.js'];
         $this->load->view('layouts/footer.php', $data);
 	}
 
@@ -38,7 +36,7 @@ class Students extends App_Base_Controller
 
 		$this->load->view('student/scheduler.php');
 
-		$data['add_js'] = ['moment.js', 'jquery.schedule.js', 'enroll.js'];
+		$data['add_js'] = ['moment.js', 'schedule.js', 'enroll.js'];
 		$this->load->view('layouts/footer.php', $data);
 	}
 

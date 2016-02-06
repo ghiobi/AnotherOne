@@ -301,26 +301,13 @@ header{
 	padding: 0;
 }
 .profile-list > h4{
-	cursor: pointer;
 	text-transform: uppercase;
-	padding: 15px;
-	background-color: #16a085;
+	padding: 8px 15px;
 	margin: 0;
-	color: white;
+	background-color: #ecf0f1;
 }
-.profile-semester-data {
-	width: 100%;
+.profile-table {
 	margin-bottom: 0;
-	display: none;
-}
-.profile-semester-active{
-	display: block !important;
-}
-.profile-semester-data > tbody > tr > td:first-child{
-	width: 15%;
-}
-.profile-semester-data > tbody > tr > td:nth-child(2){
-	width: 75%;
 }
 /******************************
 			Footer

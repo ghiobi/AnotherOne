@@ -155,4 +155,12 @@ class Course extends CI_Model
             WHERE courseprequisites.course_id = 32")->result();
     }
 
+    function getCourseSequence($program_id){
+        $this->db->query("
+            SELECT
+              programsequence.course_id
+            FROM programsequence
+            WHERE programsequence.program_id = '$program_id'")->result();
+    }
+
 }

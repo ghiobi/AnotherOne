@@ -13,12 +13,13 @@ class Student extends CI_Model
     /**
      * Returns the name of the program the student is enrolled in.
      *
-     * @return string
+     * @return object
      */
     function getProgram()
     {
         $result = $this->db->query(
             "SELECT
+              program.id,
               program.name
             FROM students
               INNER JOIN users
@@ -26,7 +27,7 @@ class Student extends CI_Model
               INNER JOIN program
                 ON students.program_id = program.id
             WHERE users.id = '$this->user_id'");
-        return $result->row()->name;
+        return $result->row();
     }
 
     /**
@@ -96,7 +97,7 @@ class Student extends CI_Model
         $record = [];
 
         foreach($result->result() as $row){
-            $record[$row->name] = $this->getCoursebySemester($row->id);
+            $record[$row->name] = $this->getRecordbySemester($row->id);
         }
         return $record;
     }
@@ -127,4 +128,19 @@ class Student extends CI_Model
             WHERE sections.semester_id = '$semester_id' AND students.user_id = '$this->user_id'")->result();
     }
 
+    function isRegistered($course_id)
+    {
+        $this->db->query("
+
+        ");
+    }
+
+    function getProgramProgress()
+    {
+        $this->load('course');
+
+        $this->course->getCourseSequence($this->getProgram()->id);
+
+        //TODO
+    }
 }

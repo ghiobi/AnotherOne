@@ -78,12 +78,4 @@ class Courses extends CI_Controller
         $this->load->view('layouts/footer.php');
     }
 
-    function test()
-    {
-        $this->load->view('layouts/header.php');
-        $this->load->model('semester');
-        $v = $this->semester->getActiveSemesters();
-        var_dump($v);
-        $this->load->view('layouts/footer.php');
-    }
 }
