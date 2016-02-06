@@ -72,9 +72,12 @@ $(function()
 
     MySchedule.emptyTimeBlocks();
     MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
-    MySchedule.addBlock('HEhe', '8:45', '10:00', 1);
-    MySchedule.addBlock('HEhe', '8:45', '10:00', 3);
-    MySchedule.addBlock('What block is this', '9:00', '10:00', 2);
+    MySchedule.addBlock('SOEN 341', '8:45', '10:00', 3);
+    MySchedule.addBlock('SOEN 341', '8:45', '10:00', 5);
+    MySchedule.addBlock('ENGR 242', '11:45', '13:00', 2);
+    MySchedule.addBlock('ENGR 242', '11:45', '13:00', 4);
+    MySchedule.addBlock('SOEN 341', '12:15', '13:05', 5);
+    MySchedule.addBlock('ENGR 371', '10:15', '11:05', 5);
     MySchedule.render();
 
 
