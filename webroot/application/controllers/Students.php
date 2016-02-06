@@ -2,7 +2,7 @@
 /**
 * 	TODO: complete description
 */
-class Student extends App_Base_Controller
+class Students extends App_Base_Controller
 {
 	
 	function __construct()
@@ -15,29 +15,28 @@ class Student extends App_Base_Controller
      */
 	function profile()
     {
-        $this->load->model('StudentProfile');
+        $this->load->model('student');
 
         //Loading header
         $data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
 		$this->load->view('layouts/header.php', $data);
 
         //Loading content
-		$data['userinfo'] = $this->StudentProfile->get_student_info();
-		$data['student_record'] = $this->StudentProfile->get_student_record();
+		$data['info'] = $this->student->getInfo();
+		$data['record'] = $this->student->getRecord();
 		$this->load->view('student/profile.php',$data);
 
-        //Loading footer
-        $data['add_js'] = ['profile.js'];
         $this->load->view('layouts/footer.php', $data);
 	}
 
-	function enroll(){
+	function enroll()
+	{
         $data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
 		$this->load->view('layouts/header.php', $data);
 
 		$this->load->view('student/scheduler.php');
 
-		$data['add_js'] = ['jquery.schedule.js', 'enroll.js'];
+		$data['add_js'] = ['moment.js', 'schedule.js', 'enroll.js'];
 		$this->load->view('layouts/footer.php', $data);
 	}
 

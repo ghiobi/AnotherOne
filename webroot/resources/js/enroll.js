@@ -3,7 +3,9 @@ var restricted_times = new Array();
 
 $(function()
 {
-    $('#scheduler-pref-modal').modal({show:true});
+    //Scheduler config
+    var controllerURL = $('#info-controller').data('controllerUrl');
+
     //Load cookies;
 
     //User Interface
@@ -13,32 +15,44 @@ $(function()
 
     $srch_ctnr.mouseenter(function(){
         $srch_cover.slideUp(100);
-        $srch_input.slideDown(100).select();
+        $srch_input.slideDown(100);
     });
     $srch_ctnr.mouseleave(function(){
         $srch_cover.slideDown(100);
         $srch_input.slideUp(100);
     });
 
-    //Time Preferences
-    $('.pref_tb_add').click(function(){
+    //Time Preferences and Modal
+    $('.scheduler-pref-time').append(
+        '<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>'
+    );
+    $('.remove-time-block').click(function(){
+        $parent = $('.remove-time-block').parent();
+        if($parent.length == 0){
+            $parent.append('<p class="no-blocks"></p>');
+        }
+    });
+    $('.time_add').click(function(){
         var is_complete = true;
 
-
-        if (is_complete) {
+        if (!is_complete) {
             $('#scheduler-pref-modal').modal({show: false});
             return;
         }
-        var temp = new TimeBlock(1, 10, 18);
-        console.log('Added time preference: ' + temp.toString());
     });
 
-    $('.pref_tb_remove').click(function(){
-
+    $('.time_interval').first().keyup(function(){
     });
 
-    //Scheduler
-    var controllerURL = $('#info-controller').data('controllerUrl');
+    $('.time_remove').click(function(){
+    });
+
+    $('#time_all_day').change(function()
+    {
+        $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
+    });
+
+
 
     //Search
     $srch_input.keyup(function()
@@ -53,13 +67,15 @@ $(function()
         });
     });
 
-});
+    //My schedule
+    var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
 
-function TimeBlock(weekday, start, end){
-    this.weekday = weekday;
-    this.start = start;
-    this.end = end;
-    this.toString = function(){
-        return "Weekday: " + this.weekday + " Start: " + this.start + " End: " + this.end;
-    }
-}
+    MySchedule.emptyTimeBlocks();
+    MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
+    MySchedule.addBlock('HEhe', '8:45', '10:00', 1);
+    MySchedule.addBlock('HEhe', '8:45', '10:00', 3);
+    MySchedule.addBlock('What block is this', '9:00', '10:00', 2);
+    MySchedule.render();
+
+
+});

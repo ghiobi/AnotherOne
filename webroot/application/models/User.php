@@ -12,6 +12,8 @@ class User extends CI_Model
 	}
 
 	/**
+	 * Authenticates the user upon signing in. Returns the firstname, lastname, hash
+	 *
 	 * @param $login_name
 	 * @param $password
 	 * @return bool - Returns bool false if failed to authenticate else an object
@@ -65,4 +67,3 @@ class User extends CI_Model
 		return $query->row();
 	}
 }
-?>
