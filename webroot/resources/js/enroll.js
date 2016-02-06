@@ -70,8 +70,8 @@ $(function()
     //My schedule
     var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
 
-    MySchedule.emptyTimeBlocks();
-    MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
+    MySchedule.emptyBlocks();
+    MySchedule.setTableAttr({class: 'table table-bordered table-condensed', style: 'color: black'});
     MySchedule.addBlock('SOEN 341', '8:45', '10:00', 3);
     MySchedule.addBlock('SOEN 341', '8:45', '10:00', 5);
     MySchedule.addBlock('ENGR 242', '11:45', '13:00', 2);

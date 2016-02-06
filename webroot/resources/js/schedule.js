@@ -6,30 +6,33 @@
  |____/ \___|_| |_|\___|\__,_|\__,_|_|\___|_|
 
  */
-function WeeklySchedule(elm){
+function WeeklySchedule(elm) {
 
     this.elm = elm;
 
-    this.tableAttr = [];
+    this.tattr = [];
 
-    this.timeBlocks = [];
+    this.tblocks = [];
+    this.tblocksattr = [];
 
-    this.increment = 15; //15 minutes
+    this.inc = 15; //minutes
 
-    this.startWeekday = 2; //Monday
-    this.endWeekday = 5; //Friday
+    this.sweek = 1; //weekday
+    this.eweek = 5;
 
-    this.startTime = '8:15'; //startime
-    this.endTime = '13:15'; //endtime
+    this.stime = moment('8:15', 'HH:mm');
+    this.etime = moment('18:00', 'HH:mm');
 
-    this.setTableProperties = function(property)
-    {
-        this.tableAttr = property;
+    this.setTableAttr = function (prop) {
+        this.tattr = prop;
     }
 
-    this.addBlock = function(title, start, end, weekday)
-    {
-        this.timeBlocks[weekday + ' ' + start] = {
+    this.setBlockAttr = function (prop) {
+        this.tblockattr = prop;
+    }
+
+    this.addBlock = function (title, start, end, weekday) {
+        this.tblocks[weekday + '-' + start] = {
             title: title,
             start: moment(start, 'HH:mm'),
             end: moment(end, 'HH:mm'),
@@ -37,89 +40,92 @@ function WeeklySchedule(elm){
         }
     }
 
-    this.emptyTimeBlocks = function ()
-    {
-        this.timeBlocks = null;
-        this.timeBlocks = [];
+    this.emptyBlocks = function () {
+        this.tblocks = null;
+        this.tblocks = [];
     }
 
-    this.render = function()
-    {
+    this.render = function () {
+
         this.elm.innerHTML = '';
 
         /***************************************************************************
-                        TABLE ATTRIBUTES
+         TABLE ATTRIBUTES
          ***************************************************************************/
-        var tbl = '<table';
+        var table = '<table';
 
-        for (var attr in this.tableAttr){
-            tbl += ' ' + attr + '="' + this.tableAttr[attr] + '"';
+        for (var attr in this.tattr) {
+
+            table += ' ' + attr + '="' + this.tattr[attr] + '"';
+
         }
 
-        tbl += '>';
+        table += '>';
 
         /***************************************************************************
-                        WEEKDAYS
-        ***************************************************************************/
-        tbl += '<tr><td>Time</td>';
-        for(var i = this.startWeekday; i < this.endWeekday + 1; i++){ //
-            tbl += '<td>' + moment(i, 'd').format('dddd') + '</td>'
+         WEEKDAYS
+         ***************************************************************************/
+        table += '<tr><td>Time</td>';
+
+        for (var i = this.sweek; i < this.eweek + 1; i++) {
+
+            table += '<td>' + moment(i, 'd').format('dddd') + '</td>';
+
         }
-        tbl += '</tr>';
+        table += '</tr>';
 
         /***************************************************************************
-                        THE SCHEDULE
+         THE SCHEDULE
          ***************************************************************************/
 
-        var start = moment(this.startTime, 'HH:mm');
-        var end = moment(this.endTime, 'HH:mm');
+        var fill = [];
+        for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
 
-        var fill = []; //fill is the number of filling <td></tb> blocks on ever row
-        for(var row = start.clone(); row.diff(end) != 0; row.add(this.increment, 'm'))
-        {
-            fill[row.format('H:mm')] = [];
-            for (var col = this.startWeekday; col <= this.endWeekday; col++)
-            {
-                fill[row.format('H:mm')][col.toString()] = 0
+            fill[r_time.format('H:mm')] = [];
+
+            for (var week = this.sweek; week <= this.eweek; week++) {
+                fill[r_time.format('H:mm')][week.toString()] = false;
             }
+
         }
 
-        // starts at 8:45 to 14:00 increments by 15 mins
-        for(var row = start.clone(); row.diff(end) != 0; row.add(this.increment, 'm'))
-        {
-            tbl += '<tr>';
+        for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
 
-            var time = row.format('H:mm');
+            table += '<tr>';
 
-            tbl += '<td>'+time+'</td>';
+            var time = r_time.format('H:mm');
 
-            for (var col = this.startWeekday; col <= this.endWeekday; col++)
-            { //starts on sunday to saturday
-                if(this.timeBlocks[col + ' ' + time] != null){
-                    var block = this.timeBlocks[col + ' ' + time];
-                    var diff = block['end'].diff(block['start'], 'minute');
+            table += '<td>' + time + '</td>';
 
-                    var rowspan = Math.floor(diff/this.increment);
+            for (var week = this.sweek; week <= this.eweek; week++) {
 
-                    tbl += '<td style="background-color:lightseagreen" rowspan="'+rowspan+'">'+block['title']+'</td>';
+                var block = this.tblocks[week + '-' + time];
 
-                    var re_start = row.clone().add(this.increment, 'm');
-                    var re_stop = row.clone().add((rowspan-1) * this.increment, 'm');
+                if (block != null) {
 
-                    for(re_start; re_start.diff(re_stop) <= 0; re_start.add(this.increment, 'm')){
-                        fill[re_start.format('H:mm')][col.toString()] = 1;
+                    var diff = block['end'].diff(block['start'], 'm');
+
+                    var rowsp = Math.ceil(diff / this.inc);
+
+                    table += '<td style="background-color:lightseagreen" rowspan="' + rowsp + '">' + block['title'] + '</td>';
+
+                    var f_art = r_time.clone().add(this.inc, 'm');
+                    var f_top = r_time.clone().add((rowsp - 1) * this.inc, 'm');
+
+                    for (f_art; f_art.diff(f_top) <= 0; f_art.add(this.inc, 'm')) {
+                        fill[f_art.format('H:mm')][week.toString()] = true;
                     }
                     continue;
                 }
-                if(fill[time][col.toString()] == 0) {
-                    tbl += '<td></td>';
+                if (!fill[time][week.toString()]) {
+                    table += '<td></td>';
                 }
             }
-            tbl += '</tr>';
+            table += '</tr>';
         }
 
-        tbl += '</table>';
+        table += '</table>';
 
-        elm.insertAdjacentHTML('beforeend', tbl);
+        elm.insertAdjacentHTML('beforeend', table);
     }
 }
