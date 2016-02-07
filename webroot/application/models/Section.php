@@ -6,6 +6,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Section extends CI_Model
 {
 
+    /**
+     * Section constructor.
+     */
     function __construct()
     {
         parent::__construct();
@@ -34,7 +37,7 @@ class Section extends CI_Model
                 return FALSE;
 
             foreach ($courses as $course){
-                array_push($result, ['course' => $course, 'section' => $this->getSection($semester_id, $course->code, $course->number)]);
+                array_push($result, ['course' => $course, 'section' => $this->getSection($semester_id, $course->id)]);
             }
 
         }
@@ -46,15 +49,16 @@ class Section extends CI_Model
                 return FALSE;
 
             foreach ($courses as $course){
-                array_push($result, ['course' => $course, 'section' => $this->getSection($semester_id, $course->code, $course->number)]);
+                array_push($result, ['course' => $course, 'section' => $this->getSection($semester_id, $course->id)]);
             }
         }
         else
         {
-            if(!$section = $this->getSection($semester_id, $course_code, $course_number))
+            if(!$course = $this->course->getByCodeNumber($course_code, $course_number))
                 return FALSE;
 
-            $course = $this->course->getByCodeNumber($course_code, $course_number);
+            if(!$section = $this->getSection($semester_id, $course->id))
+                return FALSE;
 
             array_push($result,['course' => $course, 'section' => $section]);
         }
@@ -65,42 +69,38 @@ class Section extends CI_Model
     }
 
     /**
-     *  Gets full detail information of an individual section in a particular semester and course.
+     *  Gets all sections of a course in a particular semester.
      *  Includes all the lectures, all labs and/or tutorials.
      *  Returns false if no data was found.
      *
      * @param $semester_id
-     * @param $course_code
-     * @param $course_number
+     * @param $course_id
      * @return array|bool
      */
-    function getSection($semester_id, $course_code, $course_number)
+    function getSection($semester_id, $course_id)
     {
         $query = $this->db->query("
-            SELECT
-              sections.id,
-              sections.letter,
-              sections.professor,
-              sections.capacity
-            FROM sections
-              INNER JOIN courses
-                ON sections.course_id = courses.id
-              INNER JOIN semesters
-                ON sections.semester_id = semesters.id
-            WHERE semesters.id = '$semester_id' AND courses.code = '$course_code' AND courses.number = '$course_number'");
+        SELECT
+          *
+        FROM sections
+        WHERE semester_id = '$semester_id' AND course_id = '$course_id'");
 
         if($query->num_rows() == 0)
             return FALSE;
 
         $sections = [];
 
+        $this->load->model('lecture');
+        $this->load->model('tutorial');
+        $this->load->model('laboratory');
+
         foreach ($query->result() as $row)
         {
             array_push($sections, [
                 'sect' => $row,
-                'lect' => $this->getLecturesBySectID($row->id),
-                'tuts' => $this->getTutorialsBySectID($row->id),
-                'labs' => $this->getLabsBySectID($row->id)
+                'lect' => $this->lecture->getLecturesBySectID($row->id),
+                'tuts' => $this->tutorial->getTutorialsBySectID($row->id),
+                'labs' => $this->laboratory->getLabsBySectID($row->id)
             ]);
         }
 
@@ -108,48 +108,16 @@ class Section extends CI_Model
     }
 
     /**
-     * Gets lectures of a section by id.
-     *
      * @param $section_id
      * @return mixed
      */
-    function getLecturesBySectID($section_id)
+    function getBySectID($section_id)
     {
         return $this->db->query("
             SELECT
               *
-            FROM lectures
-            WHERE section_id = '$section_id'")->result();
-    }
-
-    /**
-     * Gets tutorials of section by id.
-     *
-     * @param $section_id
-     * @return mixed
-     */
-    function getTutorialsBySectID($section_id)
-    {
-        return $this->db->query("
-            SELECT
-              *
-            FROM tutorials
-            WHERE section_id = '$section_id'")->result();
-    }
-
-    /**
-     * Gets laboratories of a section by id.
-     *
-     * @param $section_id
-     * @return mixed
-     */
-    function getLabsBySectID($section_id)
-    {
-        return $this->db->query("
-            SELECT
-              *
-            FROM laboratories
-            WHERE section_id = '$section_id'")->result();
+            FROM sections
+            WHERE id = '$section_id'")->result();
     }
 
 }

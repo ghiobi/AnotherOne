@@ -77,7 +77,33 @@ class Student extends CI_Model
      */
     function getRecord()
     {
-        $result = $this->db->query("
+        $result = $this->getRegisteredSemesters();
+
+        if(!$result)
+            return FALSE;
+
+        $record = [];
+
+        $this->load->model('course');
+
+        foreach($result as $row){
+            $courses = [];
+            foreach($this->getRecordBySemester($row->id) as $course){
+                array_push($courses, [
+                    'detail' => $this->course->getByID($course->course_id),
+                    'grade' => $course->grade
+                ]);
+            }
+            $record[$row->name] = $courses;
+        }
+        return $record;
+    }
+
+    /**
+     * @return array of semester objects
+     */
+    function getRegisteredSemesters(){
+        return $this->db->query("
             SELECT DISTINCT
               semesters.id,
               semesters.name
@@ -89,52 +115,36 @@ class Student extends CI_Model
               INNER JOIN students
                 ON registered.student_id = students.id
             WHERE students.user_id = '$this->user_id'
-            ORDER BY sections.semester_id DESC");
-
-        if($result->num_rows() == 0)
-            return FALSE;
-
-        $record = [];
-
-        foreach($result->result() as $row){
-            $record[$row->name] = $this->getRecordbySemester($row->id);
-        }
-        return $record;
+            ORDER BY sections.semester_id DESC")->result();
     }
 
     /**
-     * Gets the registered courses in a particular semesters
+     * Gets the registered sections in a particular semesters
      *
      * @param $semester_id - The semester to get
      * @return mixed
      */
-    function getRecordbySemester($semester_id)
+    function getRecordBySemester($semester_id)
     {
         return $this->db->query("
             SELECT
-              courses.id,
-              courses.code,
-              courses.number,
-              courses.name,
-              courses.credit,
+              sections.course_id,
+              sections.semester_id,
+              registered.section_id,
+              registered.tutorial_id,
+              registered.laboratory_id,
               registered.grade
             FROM registered
               INNER JOIN students
                 ON registered.student_id = students.id
               INNER JOIN sections
                 ON registered.section_id = sections.id
-              INNER JOIN courses
-                ON sections.course_id = courses.id
             WHERE sections.semester_id = '$semester_id' AND students.user_id = '$this->user_id'")->result();
     }
 
-    function isRegistered($course_id)
-    {
-        $this->db->query("
-
-        ");
-    }
-
+    /**
+     *
+     */
     function getProgramProgress()
     {
         $this->load('course');

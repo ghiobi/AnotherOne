@@ -61,20 +61,17 @@
 
 			<div class="list-group">
 
-				<?php $i = 0;
-					foreach($record as $semester => $data): ?>
+				<?php foreach($record as $semester => $data): ?>
 					<div class="list-group-item profile-list">
 						<h4 class="profile-semes-title"><?= $semester ?></h4>
 						<table class="profile-table table table-bordered table-condensed>">
 
 							<?php foreach($data as $course)
-								echo '<tr><td>'.$course->code.' '.$course->number.'</td><td>'.$course->name.'</td><td>'.$course->credit.'</td><td>'.(($course->grade)? $course->grade:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
+								echo '<tr><td>'.$course['detail']->code.' '.$course['detail']->number.'</td><td>'.$course['detail']->name.'</td><td>'.$course['detail']->credit.'</td><td>'.(($course['grade'])? $course['grade']:'<i class="glyphicon glyphicon-minus"></i>').'</td></tr>';
 							?>
 
 						</table>
 					</div>
-
-					<?php $i++; ?>
 
 				<?php endforeach; ?>
 
