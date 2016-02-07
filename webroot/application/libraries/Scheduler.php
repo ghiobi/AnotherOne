@@ -1,17 +1,21 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: TheChosenOne
- * Date: 2016-02-06
- * Time: 7:51 PM
- */
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-namespace Scheduler;
-
+require_once('Schedule.php');
 
 class Scheduler
 {
-    private $semester;
-    private $schedule;
+    private $semester_id;
+    private $registered_courses;
+    private $unregistered_courses;
+
+    /**
+     * Scheduler constructor.
+     * @param $semester
+     * @param $registered
+     */
+    public function __construct()
+    {
+    }
+
 
 }

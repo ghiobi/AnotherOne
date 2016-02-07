@@ -15,17 +15,21 @@ namespace Scheduler;
  */
 class LaboratoryBlock extends TimeBlock
 {
+    private $id;
     private $instructor;
     private $letter;
     private $capacity;
     private $room;
 
     /**
-     * Laboratory constructor.
+     * LaboratoryBlock constructor.
      * @param $instructor
      * @param $letter
      * @param $capacity
      * @param $room
+     * @param $start_time
+     * @param $end_time
+     * @param $weekday
      */
     public function __construct($instructor, $letter, $capacity, $room, $start_time, $end_time, $weekday)
     {

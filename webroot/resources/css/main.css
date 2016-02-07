@@ -254,7 +254,7 @@ header{
 /******************************
 			Home Page
 *******************************/
-.front-menu > a{
+.front-menu{
 	display: block;
 	background-color: #34495e;
 	border-radius: 4px;
@@ -263,15 +263,30 @@ header{
 	text-transform: uppercase;
 	padding: 10px 10px;
 }
-.front-menu > a + a{
+.front-menu + .front-menu{
 	margin-top: 10px;
 }
-.front-menu > a:hover{
+.front-menu:hover{
 	text-decoration: none;
 	background-color: white;
 	color: #34495e;
 }
-
+.front-dropdown{
+	border: 0;
+	margin: 0;
+	padding: 5px 5px;
+	width: 100%;
+	background-color: #16a085;
+}
+.front-dropdown > li > a{
+	color: white;
+}
+.front-dropdown > li > a:hover{
+	background-color: transparent;
+}
+.front-menu:hover .front-dropdown{
+	display: block;
+}
 /******************************
 			Student Profile
 *******************************/

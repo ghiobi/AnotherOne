@@ -10,17 +10,6 @@ class Scheduler extends CI_Model
 	{
 		parent::__construct();
 	}
-	
-	}
-	
-	function enroll_courses()
-	{
 
-		
-	}
-	
-	function generate_schedule()
-	{
-		
-		
-	}
+	function
+}

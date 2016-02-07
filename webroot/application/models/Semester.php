@@ -56,7 +56,7 @@ class Semester extends CI_Model{
     }
 
     /**
-     *  Returns a list of active semester where the ending semester is greater then now.
+     * Returns a list of active semester where the ending semester is greater then now.
      *
      * @return array of objects
      */

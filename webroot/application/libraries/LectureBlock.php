@@ -14,6 +14,10 @@ class LectureBlock extends TimeBlock
     /**
      * LectureBlock constructor.
      * @param $room
+     * @param $time
+     * @param $start_time
+     * @param $end_time
+     * @param $weekday
      */
     public function __construct($room, $time, $start_time, $end_time, $weekday)
     {

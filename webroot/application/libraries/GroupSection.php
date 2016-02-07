@@ -6,6 +6,7 @@ namespace Scheduler;
 class GroupSection
 {
     private $course_id;
+    private $section_id;
 
     private $instructor;
     private $capacity;
@@ -16,18 +17,20 @@ class GroupSection
     private $laboratory;
 
     /**
-     * SectionGroup constructor.
+     * GroupSection constructor.
      * @param $course_id
+     * @param $section_id
      * @param $instructor
      * @param $capacity
      * @param $letter
-     * @param $lecture
-     * @param $tutorial
-     * @param $laboratory
+     * @param Lecture $lecture
+     * @param Tutorial|NULL $tutorial
+     * @param Laboratory|NULL $laboratory
      */
-    public function __construct($course_id, $instructor, $capacity, $letter, Lecture $lecture, Tutorial $tutorial = NULL, Laboratory $laboratory = NULL)
+    public function __construct($course_id, $section_id, $instructor, $capacity, $letter, Lecture $lecture, Tutorial $tutorial = NULL, Laboratory $laboratory = NULL)
     {
         $this->course_id = $course_id;
+        $this->section_id = $section_id;
         $this->instructor = $instructor;
         $this->capacity = $capacity;
         $this->letter = $letter;
@@ -50,6 +53,22 @@ class GroupSection
     public function setCourseId($course_id)
     {
         $this->course_id = $course_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSectionId()
+    {
+        return $this->section_id;
+    }
+
+    /**
+     * @param mixed $section_id
+     */
+    public function setSectionId($section_id)
+    {
+        $this->section_id = $section_id;
     }
 
     /**
@@ -140,6 +159,17 @@ class GroupSection
         return $this->laboratory;
     }
 
+    public function getTimeBlocks()
+    {
+        $array = [];
+        array_push($array, $this->lecture);
+        if(!$this->tutorial)
+            array_push($array, $this->tutorial);
+        if(!$this->laboratory)
+            array_push($array, $this->laboratory);
+        return $array;
+    }
+
     /**
      * @param mixed $laboratory
      */
@@ -154,6 +184,17 @@ class GroupSection
      * @return bool
      */
     public function overlaps(GroupSection $sectionGroup){
+        $thisGroup = $this->getTimeBlocks();
+        $thatGroup = $sectionGroup->getTimeBlocks();
+
+        foreach($thisGroup as $thisG)
+        {
+            foreach($thatGroup as $thatG)
+            {
+                if($thisG.overlaps($thatG))
+                    return TRUE;
+            }
+        }
 
     }
 
