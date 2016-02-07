@@ -13,7 +13,7 @@ function WeeklySchedule(elm) {
     this.tattr = [];
 
     this.tblocks = [];
-    this.tblocksattr = [];
+    this.tblockattr = [];
 
     this.inc = 15; //minutes
 
@@ -21,7 +21,7 @@ function WeeklySchedule(elm) {
     this.eweek = 5;
 
     this.stime = moment('8:15', 'HH:mm');
-    this.etime = moment('18:00', 'HH:mm');
+    this.etime = moment('20:00', 'HH:mm');
 
     this.setTableAttr = function (prop) {
         this.tattr = prop;
@@ -103,11 +103,24 @@ function WeeklySchedule(elm) {
 
                 if (block != null) {
 
+                    if(fill[time][week.toString()])
+                        throw new DOMException();
+
+                    fill[time][week.toString()] = true;
+
                     var diff = block['end'].diff(block['start'], 'm');
 
                     var rowsp = Math.ceil(diff / this.inc);
 
-                    table += '<td style="background-color:lightseagreen" rowspan="' + rowsp + '">' + block['title'] + '</td>';
+                    table += '<td';
+
+                    for (var attr in this.tblockattr) {
+
+                        table += ' ' + attr + '="' + this.tblockattr[attr] + '"';
+
+                    }
+
+                    table += '" rowspan="' + rowsp + '">' + block['title'] + '</td>';
 
                     var f_art = r_time.clone().add(this.inc, 'm');
                     var f_top = r_time.clone().add((rowsp - 1) * this.inc, 'm');
@@ -115,6 +128,7 @@ function WeeklySchedule(elm) {
                     for (f_art; f_art.diff(f_top) <= 0; f_art.add(this.inc, 'm')) {
                         fill[f_art.format('H:mm')][week.toString()] = true;
                     }
+
                     continue;
                 }
                 if (!fill[time][week.toString()]) {

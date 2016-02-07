@@ -71,13 +71,23 @@ $(function()
     var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
 
     MySchedule.emptyBlocks();
-    MySchedule.setTableAttr({class: 'table table-bordered table-condensed', style: 'color: black'});
+    MySchedule.setTableAttr({
+        class: 'table table-bordered table-condensed',
+        style: 'color: black'
+    });
+    MySchedule.setBlockAttr({
+        style: 'background-color: #00cc99; text-align:center; vertical-align:middle'
+    });
     MySchedule.addBlock('SOEN 341', '8:45', '10:00', 3);
     MySchedule.addBlock('SOEN 341', '8:45', '10:00', 5);
     MySchedule.addBlock('ENGR 242', '11:45', '13:00', 2);
     MySchedule.addBlock('ENGR 242', '11:45', '13:00', 4);
     MySchedule.addBlock('SOEN 341', '12:15', '13:05', 5);
     MySchedule.addBlock('ENGR 371', '10:15', '11:05', 5);
+    MySchedule.addBlock('ENGR 371', '14:45', '16:00', 2);
+    MySchedule.addBlock('ENGR 371', '14:45', '16:00', 4);
+    MySchedule.addBlock('ENGR 242', '17:45', '19:25', 5);
+
     MySchedule.render();
 
 

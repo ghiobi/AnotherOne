@@ -1,17 +1,25 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+namespace Scheduler;
+
 
 /**
- * Created by PhpStorm.
- * User: TheChosenOne
- * Date: 2016-02-04
- * Time: 2:46 PM
+ * Class TimeBlock
+ * @package Scheduler
  */
-class sch_TimeBlock
+class TimeBlock
 {
-    public $start_time;
-    public $end_time;
-    public $weekday;
 
+    private $start_time;
+    private $end_time;
+    private $weekday;
+
+    /**
+     * TimeBlock constructor.
+     * @param $start_time
+     * @param $end_time
+     * @param $weekday
+     */
     function __construct($start_time, $end_time, $weekday)
     {
         $this->start_time = new DateTime($start_time);
@@ -19,22 +27,6 @@ class sch_TimeBlock
         if($this->end_time < $this->start_time)
             throw new Exception('TimeBlock: Start time greater than end time.');
         $this->weekday = $weekday;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getEndTime()
-    {
-        return $this->end_time;
-    }
-
-    /**
-     * @param DateTime $end_time
-     */
-    public function setEndTime($end_time)
-    {
-        $this->end_time = $end_time;
     }
 
     /**
@@ -51,6 +43,22 @@ class sch_TimeBlock
     public function setStartTime($start_time)
     {
         $this->start_time = $start_time;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndTime()
+    {
+        return $this->end_time;
+    }
+
+    /**
+     * @param DateTime $end_time
+     */
+    public function setEndTime($end_time)
+    {
+        $this->end_time = $end_time;
     }
 
     /**
