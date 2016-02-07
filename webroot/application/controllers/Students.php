@@ -35,16 +35,14 @@ class Students extends App_Base_Controller
 		$data['title'] = 'Enrollement';
 		$data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
 
-		$this->load->library('Scheduler');
 
 		if(!$this->session->$SEMESTER)
 		{
-			$schedule = new Scheduler/Schedule();
-			$this->session->set_userdata('$SEMESTER', $schedule);
+			$this->session->set_userdata('$SEMESTER', $SEMESTER);
 		}
 		else
 		{
-			die();
+
 		}
 
 
