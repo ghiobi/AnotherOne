@@ -11,6 +11,14 @@ function WeeklySchedule(elm) {
     this.elm = elm;
 
     this.tattr = [];
+	
+	this.maxtime=moment('8:15', 'HH:mm');
+	
+	this.mintime=moment('20:00', 'HH:mm');
+	
+	this.sweek2 = 1; //weekday
+    this.eweek2	= 5;
+	
 
     this.tblocks = [];
     this.tblockattr = [];
@@ -44,6 +52,98 @@ function WeeklySchedule(elm) {
         this.tblocks = null;
         this.tblocks = [];
     }
+	
+	this.setStartTime()=function()
+	{
+		//i have no idea what im doing
+	 for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
+				var time = r_time.format('H:mm');
+
+		             for (var week = this.sweek; week <= this.eweek; week++) { 
+						 
+						var block1 = this.tblocks[week + '-' + time];
+						 if(block1 != null)
+						if(mintime > block1['start'])
+							mintime = block1['start'];
+
+					
+	 }
+	 
+	 
+	 }
+	 
+	 return mintime;
+		
+		
+	}
+	
+	
+	this.setEndTime()=function()
+	{
+		
+		
+		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
+				var time = r_time.format('H:mm');
+
+		             for (var week = this.sweek; week <= this.eweek; week++) { 
+						 
+						var block1 = this.tblocks[week + '-' + time];
+						 if(block1 != null)
+						if(maxtime < block1['end'])
+							maxtime = block1['end'];
+
+					
+	 }
+	 
+	 
+	 }
+	 
+	 return maxtime;
+		
+		
+	}
+	this.setStartWeekday()=function()
+	{
+		
+		
+			
+		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
+				var time = r_time.format('H:mm');
+
+		             for (var week = this.sweek; week <= this.eweek; week++) { 
+						 
+						var block1 = this.tblocks[week + '-' + time];
+						 if(block1 != null)
+						if( sweek2 > block1['weekday'])
+							sweek2 = block1['weekday'];
+		
+		
+	}
+	}
+	return sweek2;
+	}
+	this.setEndWeekday()=function()
+	{
+		
+		
+			
+		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
+				var time = r_time.format('H:mm');
+
+		             for (var week = this.sweek; week <= this.eweek; week++) { 
+						 
+						var block1 = this.tblocks[week + '-' + time];
+						 if(block1 != null)
+						if( eweek2 < block1['weekday'])
+							eweek2 = block1['weekday'];
+		
+		
+	}
+	}
+	return eweek2;
+		
+		
+	}
 
     this.render = function () {
 
