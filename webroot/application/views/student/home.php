@@ -5,11 +5,21 @@
 	<div class="row">
 		<div class="col-md-6">
 			<h4>Welcome Back, <?php echo $name ?>.</h4>
-			<div class="front-menu">
-				<a href="<?php echo site_url('students/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
-				<a href="<?php echo site_url('students/enroll') ?>"><i class="glyphicon glyphicon-pencil"></i> Register Now</a>
-				<a href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
-				<a href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
+			<div>
+				<a class="front-menu" href="<?php echo site_url('students/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
+				<div class="dropdown front-menu">
+					<div class="dropdown-toggle" type="button" id="enroll-semester" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<i class="glyphicon glyphicon-pencil"></i> Register Now
+					</div>
+					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
+						<?php foreach($semesters as $semester):
+							$name =  url_title($semester->name); ?>
+							<li><a href="<?= site_url('students/enroll/'.strtolower($name)) ?>">Winter 2016</a></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<a class="front-menu" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
+				<a class="front-menu" href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
 			</div>
 		</div>
 		<div class="col-md-6" style="margin-top: 39px">

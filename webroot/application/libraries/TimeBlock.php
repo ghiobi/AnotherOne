@@ -19,13 +19,16 @@ class TimeBlock
      * @param $start_time
      * @param $end_time
      * @param $weekday
+     * @throws Exception If start time is greater than end time.
      */
     function __construct($start_time, $end_time, $weekday)
     {
         $this->start_time = new DateTime($start_time);
         $this->end_time = new DateTime($end_time);
         if($this->end_time < $this->start_time)
-            throw new Exception('TimeBlock: Start time greater than end time.');
+            throw new \InvalidArgumentException('TimeBlock: Start time is greater than end time.');
+        if($weekday < 0 || $weekday > 6)
+            throw new \InvalidArgumentException('TimeBlock: Invalid Weekday');
         $this->weekday = $weekday;
     }
 

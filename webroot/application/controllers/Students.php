@@ -1,4 +1,5 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
+
 /**
 * 	TODO: complete description
 */
@@ -29,14 +30,26 @@ class Students extends App_Base_Controller
         $this->load->view('layouts/footer.php', $data);
 	}
 
-	function enroll()
+	function enroll($SEMESTER)
 	{
-        $data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
-		$this->load->view('layouts/header.php', $data);
+		$data['title'] = 'Enrollement';
+		$data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
 
-		$this->load->view('student/scheduler.php');
+
+		if(!$this->session->$SEMESTER)
+		{
+			$this->session->set_userdata('$SEMESTER', $SEMESTER);
+		}
+		else
+		{
+
+		}
+
 
 		$data['add_js'] = ['moment.js', 'schedule.js', 'enroll.js'];
+
+		$this->load->view('layouts/header.php', $data);
+		$this->load->view('student/scheduler.php');
 		$this->load->view('layouts/footer.php', $data);
 	}
 

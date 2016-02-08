@@ -16,11 +16,14 @@ class TutorialBlock extends TimeBlock
     private $time;
 
     /**
-     * Tutorial constructor.
+     * TutorialBlock constructor.
      * @param $instructor
      * @param $letter
      * @param $capacity
      * @param $room
+     * @param $start_time
+     * @param $end_time
+     * @param $weekday
      */
     public function __construct($instructor, $letter, $capacity, $room, $start_time, $end_time, $weekday)
     {
