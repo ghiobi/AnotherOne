@@ -496,7 +496,7 @@ This application is also usable by teachers alike. Teachers can post their term 
 					&	-- Document Writing	\\ \hline
 \textbf{Knowledge}	&	Java, C, C++ , Python , OCaml, HTML5, CSS3, MATLAB, Bash	\\ \hline
 \textbf{Experience}	&	-- Developed a cluster search algorithm to parse Fermi-LAT data for un-catalogued VHE sources.	\\
-					&	-- Configured the Mcgill Planar Hydrogen Atmosphere Code (McPHAC) to run on Calcul Quebec's super computers.	\\ \hline
+					&	-- Configured McPHAC to run on Calcul Quebec's super computers.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
 \end{tabular}
 \end{center}
@@ -677,7 +677,7 @@ Myitinerary is based off of the Model View Controller (MVC) architecture.
 %
 \subsubsection{Programming Languages} \label{languages}
 \paragraph*{PHP}~\\
-We decided to use PHP as the code base for Mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have preexisting solutions. We decided to use an older version, PHP 5.5, because the most recent version, PHP 7, was not working properly with the CodeIgniter framework we were using (described in section \ref{framworks}). Another important advantage is that PHP is part of the development platform WAMP, which is described in section \ref{webanddata}, which made installation easy.
+We decided to use PHP as the code base for Mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have preexisting solutions. Another important advantage is that PHP is part of the development platform WAMP, as described in section \ref{webanddata}, which made installation easy. We decided to use the most recent version, PHP 7.02.
 %
 \paragraph*{JavaScript}~\\
 JavaScript is a high-level, dynamic and untyped programming language. Since JavaScript is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (JavaScript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML. We used the stable release version ECMAScript 6.
@@ -700,8 +700,8 @@ Bootstrap is a HTML, CSS, and JavaScript framework used for developing web pages
 \paragraph*{CodeIgniter}~\\
 CodeIgniter is an open source PHP framework used in web development. It is loosely based on the Model-View-Controller pattern. We chose CodeIgniter as it is easy to use compared to other PHP frameworks and was the framework that our developers were most familiar with. We are using the most recent stable release, 3.0.4.
 %
-\paragraph*{AJAJ}~\\
-AJAJ (Asynchronous JavaScript and JSON) is a set of client-side web development techniques used to create asynchronous Web applications. We chose AJAJ over the more popular AJAX because we used JSONs to pass data, and not XML. The reasoning behind choosing JSON is discussed in section \ref{languages}, under JavaScript.
+\paragraph*{AJAX}~\\
+AJAX (Asynchronous JavaScript and XML) is a set of client-side web development techniques used to create asynchronous Web applications. We chose AJAX over AJAJ (which uses JSON) for several reasons, the first being our programing team was more familiar with it. AJAJ also has a lack of documentation and is not able to perform two-way data transmission, so AJAX was the clear choice.
 %
 \paragraph*{jQuery}~\\
 jQuery is a JavaScript library which is designed to simplify client-side HTML. We chose jQuery as it is easy to use, especially compared to other JavaScript libraries. It is an extensive library that effortlessly supports AJAJ. We are using jQuery 1.12.0.
@@ -710,7 +710,7 @@ jQuery is a JavaScript library which is designed to simplify client-side HTML. W
 Normalize.css is used to make built-in browser styling consistent across browsers. It also has a very extensive documentation and excellent support, which was very helpful for some of the members which were not familiar with the tool. We are using version 3.0.3.
 %
 \paragraph*{Moment.js}~\\
-\todo[inline]{Add this!}
+Moment.js is a simple date and time library that enables us manipulate time and dates very easily. It comes with extensive documentation and a variety of features, unlike JavaScript's native date library.
 %
 %
 %
@@ -760,7 +760,6 @@ Gliffy is an online web diagram editor with was used to make all UMLs and Domain
 \vfill
 \newpage
 \section{Plan}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
