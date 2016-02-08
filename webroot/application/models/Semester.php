@@ -25,7 +25,7 @@ class Semester extends CI_Model{
     }
 
     /**
-     * Returns the semester if by the semester name
+     * Returns the semester id by the semester name
      *
      * @param $semester_name not case sensitive
      * @return string
@@ -40,7 +40,7 @@ class Semester extends CI_Model{
     }
 
     /**
-     * Returns the complete semester detail of a semester.
+     * Returns information of a semester by id
      *
      * @param $semester_id
      * @return object
@@ -56,7 +56,7 @@ class Semester extends CI_Model{
     }
 
     /**
-     *  Returns a list of active semester where the ending semester is greater then now.
+     *  Returns a list of active semester where the ending semester is later than now.
      *
      * @return array of objects
      */

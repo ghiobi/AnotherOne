@@ -11,7 +11,7 @@ class Student extends CI_Model
     }
 
     /**
-     * Returns the name of the program the student is enrolled in.
+     * Gets the program the student is enrolled in.
      *
      * @return object
      */
@@ -103,7 +103,7 @@ class Student extends CI_Model
     }
 
     /**
-     * Gets the registered courses in a particular semesters
+     * Gets the record of a student's semester by the semester's id
      *
      * @param $semester_id - The semester to get
      * @return mixed
@@ -128,6 +128,11 @@ class Student extends CI_Model
             WHERE sections.semester_id = '$semester_id' AND students.user_id = '$this->user_id'")->result();
     }
 
+    /**
+     * Returns true if the student is registered to the course
+     *
+     * @param $course_id
+     */
     function isRegistered($course_id)
     {
         $this->db->query("
@@ -135,6 +140,9 @@ class Student extends CI_Model
         ");
     }
 
+    /**
+     * Gets the progress to completing his program
+     */
     function getProgramProgress()
     {
         $this->load('course');
