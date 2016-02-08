@@ -11,6 +11,292 @@
 \usepackage{afterpage}
 \usepackage{todonotes}
 \usepackage[margin=1.2in]{geometry}
+\usepackage{listings}
+
+% Mark's packages...trust in MOW
+\usepackage{float}		% this is to place figures where requested!
+\usepackage{times}		% this uses fonts which will look nice in PDF format
+\usepackage{graphicx}		% needed for the figures
+\usepackage{url}
+
+%This does NOT specify language
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{mypurp}{rgb}{0.5,0,0.5}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+ \lstdefinelanguage{CSS}{
+      keywords={accelerator,azimuth,background,background-attachment,
+            background-color,background-image,background-position,
+            background-position-x,background-position-y,background-repeat,
+            behavior,border,border-bottom,border-bottom-color,
+            border-bottom-style,border-bottom-width,border-collapse,
+            border-color,border-left,border-left-color,border-left-style,
+            border-left-width,border-right,border-right-color,
+            border-right-style,border-right-width,border-spacing,
+            border-style,border-top,border-top-color,border-top-style,
+            border-top-width,border-width,bottom,caption-side,clear,
+            clip,color,content,counter-increment,counter-reset,cue,
+            cue-after,cue-before,cursor,direction,display,elevation,
+            empty-cells,filter,float,font,font-family,font-size,
+            font-size-adjust,font-stretch,font-style,font-variant,
+            font-weight,height,ime-mode,include-source,
+            layer-background-color,layer-background-image,layout-flow,
+            layout-grid,layout-grid-char,layout-grid-char-spacing,
+            layout-grid-line,layout-grid-mode,layout-grid-type,left,
+            letter-spacing,line-break,line-height,list-style,
+            list-style-image,list-style-position,list-style-type,margin,
+            margin-bottom,margin-left,margin-right,margin-top,
+            marker-offset,marks,max-height,max-width,min-height,
+            min-width,-moz-binding,-moz-border-radius,
+            -moz-border-radius-topleft,-moz-border-radius-topright,
+            -moz-border-radius-bottomright,-moz-border-radius-bottomleft,
+            -moz-border-top-colors,-moz-border-right-colors,
+            -moz-border-bottom-colors,-moz-border-left-colors,-moz-opacity,
+            -moz-outline,-moz-outline-color,-moz-outline-style,
+            -moz-outline-width,-moz-user-focus,-moz-user-input,
+            -moz-user-modify,-moz-user-select,orphans,outline,
+            outline-color,outline-style,outline-width,overflow,
+            overflow-X,overflow-Y,padding,padding-bottom,padding-left,
+            padding-right,padding-top,page,page-break-after,
+            page-break-before,page-break-inside,pause,pause-after,
+            pause-before,pitch,pitch-range,play-during,position,quotes,
+            -replace,richness,right,ruby-align,ruby-overhang,
+            ruby-position,-set-link-source,size,speak,speak-header,
+            speak-numeral,speak-punctuation,speech-rate,stress,
+            scrollbar-arrow-color,scrollbar-base-color,
+            scrollbar-dark-shadow-color,scrollbar-face-color,
+            scrollbar-highlight-color,scrollbar-shadow-color,
+            scrollbar-3d-light-color,scrollbar-track-color,table-layout,
+            text-align,text-align-last,text-decoration,text-indent,
+            text-justify,text-overflow,text-shadow,text-transform,
+            text-autospace,text-kashida-space,text-underline-position,top,
+            unicode-bidi,-use-link-source,vertical-align,visibility,
+            voice-family,volume,white-space,widows,width,word-break,
+            word-spacing,word-wrap,writing-mode,z-index,zoom},  
+      sensitive=true,
+      morecomment=[l]{//},
+      morecomment=[s]{/*}{*/},
+      morestring=[b]',
+      morestring=[b]",
+      alsoletter={:},
+      alsodigit={-}
+    }
+    \lstdefinelanguage{HTML5}{
+            language=html,
+            sensitive=true, 
+            alsoletter={<>=-},
+            otherkeywords={
+            % HTML tags
+            <, </, >,
+            </a, <a, </a>,
+            </abbr, <abbr, </abbr>,
+            </address, <address, </address>,
+            </area, <area, </area>,
+            </area, <area, </area>,
+            </article, <article, </article>,
+            </aside, <aside, </aside>,
+            </audio, <audio, </audio>,
+            </audio, <audio, </audio>,
+            </b, <b, </b>,
+            </base, <base, </base>,
+            </bdi, <bdi, </bdi>,
+            </bdo, <bdo, </bdo>,
+            </blockquote, <blockquote, </blockquote>,
+            </body, <body, </body>,
+            </br, <br, </br>,
+            </button, <button, </button>,
+            </canvas, <canvas, </canvas>,
+            </caption, <caption, </caption>,
+            </cite, <cite, </cite>,
+            </code, <code, </code>,
+            </col, <col, </col>,
+            </colgroup, <colgroup, </colgroup>,
+            </data, <data, </data>,
+            </datalist, <datalist, </datalist>,
+            </dd, <dd, </dd>,
+            </del, <del, </del>,
+            </details, <details, </details>,
+            </dfn, <dfn, </dfn>,
+            </div, <div, </div>,
+            </dl, <dl, </dl>,
+            </dt, <dt, </dt>,
+            </em, <em, </em>,
+            </embed, <embed, </embed>,
+            </fieldset, <fieldset, </fieldset>,
+            </figcaption, <figcaption, </figcaption>,
+            </figure, <figure, </figure>,
+            </footer, <footer, </footer>,
+            </form, <form, </form>,
+            </h1, <h1, </h1>,
+            </h2, <h2, </h2>,
+            </h3, <h3, </h3>,
+            </h4, <h4, </h4>,
+            </h5, <h5, </h5>,
+            </h6, <h6, </h6>,
+            </head, <head, </head>,
+            </header, <header, </header>,
+            </hr, <hr, </hr>,
+            </html, <html, </html>,
+            </i, <i, </i>,
+            </iframe, <iframe, </iframe>,
+            </img, <img, </img>,
+            </input, <input, </input>,
+            </ins, <ins, </ins>,
+            </kbd, <kbd, </kbd>,
+            </keygen, <keygen, </keygen>,
+            </label, <label, </label>,
+            </legend, <legend, </legend>,
+            </li, <li, </li>,
+            </link, <link, </link>,
+            </main, <main, </main>,
+            </map, <map, </map>,
+            </mark, <mark, </mark>,
+            </math, <math, </math>,
+            </menu, <menu, </menu>,
+            </menuitem, <menuitem, </menuitem>,
+            </meta, <meta, </meta>,
+            </meter, <meter, </meter>,
+            </nav, <nav, </nav>,
+            </noscript, <noscript, </noscript>,
+            </object, <object, </object>,
+            </ol, <ol, </ol>,
+            </optgroup, <optgroup, </optgroup>,
+            </option, <option, </option>,
+            </output, <output, </output>,
+            </p, <p, </p>,
+            </param, <param, </param>,
+            </pre, <pre, </pre>,
+            </progress, <progress, </progress>,
+            </q, <q, </q>,
+            </rp, <rp, </rp>,
+            </rt, <rt, </rt>,
+            </ruby, <ruby, </ruby>,
+            </s, <s, </s>,
+            </samp, <samp, </samp>,
+            </script, <script, </script>,
+            </section, <section, </section>,
+            </select, <select, </select>,
+            </small, <small, </small>,
+            </source, <source, </source>,
+            </span, <span, </span>,
+            </strong, <strong, </strong>,
+            </style, <style, </style>,
+            </summary, <summary, </summary>,
+            </sup, <sup, </sup>,
+            </svg, <svg, </svg>,
+            </table, <table, </table>,
+            </tbody, <tbody, </tbody>,
+            </td, <td, </td>,
+            </template, <template, </template>,
+            </textarea, <textarea, </textarea>,
+            </tfoot, <tfoot, </tfoot>,
+            </th, <th, </th>,
+            </thead, <thead, </thead>,
+            </time, <time, </time>,
+            </title, <title, </title>,
+            </tr, <tr, </tr>,
+            </track, <track, </track>,
+            </u, <u, </u>,
+            </ul, <ul, </ul>,
+            </var, <var, </var>,
+            </video, <video, </video>,
+            </wbr, <wbr, </wbr>,
+            />, <!
+            },  
+            ndkeywords={
+            % General
+            =,
+            % HTML attributes
+            accept=, accept-charset=, accesskey=, action=, align=, alt=, async=, autocomplete=, autofocus=, autoplay=, autosave=, bgcolor=, border=, buffered=, challenge=, charset=, checked=, cite=, class=, code=, codebase=, color=, cols=, colspan=, content=, contenteditable=, contextmenu=, controls=, coords=, data=, datetime=, default=, defer=, dir=, dirname=, disabled=, download=, draggable=, dropzone=, enctype=, for=, form=, formaction=, headers=, height=, hidden=, high=, href=, hreflang=, http-equiv=, icon=, id=, ismap=, itemprop=, keytype=, kind=, label=, lang=, language=, list=, loop=, low=, manifest=, max=, maxlength=, media=, method=, min=, multiple=, name=, novalidate=, open=, optimum=, pattern=, ping=, placeholder=, poster=, preload=, pubdate=, radiogroup=, readonly=, rel=, required=, reversed=, rows=, rowspan=, sandbox=, scope=, scoped=, seamless=, selected=, shape=, size=, sizes=, span=, spellcheck=, src=, srcdoc=, srclang=, start=, step=, style=, summary=, tabindex=, target=, title=, type=, usemap=, value=, width=, wrap=,
+            % CSS properties
+            accelerator:,azimuth:,background:,background-attachment:,
+            background-color:,background-image:,background-position:,
+            background-position-x:,background-position-y:,background-repeat:,
+            behavior:,border:,border-bottom:,border-bottom-color:,
+            border-bottom-style:,border-bottom-width:,border-collapse:,
+            border-color:,border-left:,border-left-color:,border-left-style:,
+            border-left-width:,border-right:,border-right-color:,
+            border-right-style:,border-right-width:,border-spacing:,
+            border-style:,border-top:,border-top-color:,border-top-style:,
+            border-top-width:,border-width:,bottom:,caption-side:,clear:,
+            clip:,color:,content:,counter-increment:,counter-reset:,cue:,
+            cue-after:,cue-before:,cursor:,direction:,display:,elevation:,
+            empty-cells:,filter:,float:,font:,font-family:,font-size:,
+            font-size-adjust:,font-stretch:,font-style:,font-variant:,
+            font-weight:,height:,ime-mode:,include-source:,
+            layer-background-color:,layer-background-image:,layout-flow:,
+            layout-grid:,layout-grid-char:,layout-grid-char-spacing:,
+            layout-grid-line:,layout-grid-mode:,layout-grid-type:,left:,
+            letter-spacing:,line-break:,line-height:,list-style:,
+            list-style-image:,list-style-position:,list-style-type:,margin:,
+            margin-bottom:,margin-left:,margin-right:,margin-top:,
+            marker-offset:,marks:,max-height:,max-width:,min-height:,
+            min-width:,transition-duration:,transition-property:,
+            transition-timing-function:,transform:,
+            -moz-transform:,-moz-binding:,-moz-border-radius:,
+            -moz-border-radius-topleft:,-moz-border-radius-topright:,
+            -moz-border-radius-bottomright:,-moz-border-radius-bottomleft:,
+            -moz-border-top-colors:,-moz-border-right-colors:,
+            -moz-border-bottom-colors:,-moz-border-left-colors:,-moz-opacity:,
+            -moz-outline:,-moz-outline-color:,-moz-outline-style:,
+            -moz-outline-width:,-moz-user-focus:,-moz-user-input:,
+            -moz-user-modify:,-moz-user-select:,orphans:,outline:,
+            outline-color:,outline-style:,outline-width:,overflow:,
+            overflow-X:,overflow-Y:,padding:,padding-bottom:,padding-left:,
+            padding-right:,padding-top:,page:,page-break-after:,
+            page-break-before:,page-break-inside:,pause:,pause-after:,
+            pause-before:,pitch:,pitch-range:,play-during:,position:,quotes:,
+            -replace:,richness:,right:,ruby-align:,ruby-overhang:,
+            ruby-position:,-set-link-source:,size:,speak:,speak-header:,
+            speak-numeral:,speak-punctuation:,speech-rate:,stress:,
+            scrollbar-arrow-color:,scrollbar-base-color:,
+            scrollbar-dark-shadow-color:,scrollbar-face-color:,
+            scrollbar-highlight-color:,scrollbar-shadow-color:,
+            scrollbar-3d-light-color:,scrollbar-track-color:,table-layout:,
+            text-align:,text-align-last:,text-decoration:,text-indent:,
+            text-justify:,text-overflow:,text-shadow:,text-transform:,
+            text-autospace:,text-kashida-space:,text-underline-position:,top:,
+            unicode-bidi:,-use-link-source:,vertical-align:,visibility:,
+            voice-family:,volume:,white-space:,widows:,width:,word-break:,
+            word-spacing:,word-wrap:,writing-mode:,z-index:,zoom:
+            },  
+            morecomment=[s]{<!--}{-->},
+            tag=[s]
+    }
+
+\lstset{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=single,
+    xleftmargin=\parindent,
+    showstringspaces=false,
+    basicstyle=\scriptsize\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color{mygreen},
+    stringstyle=\color{mypurp},
+    %
+    %
+    otherkeywords={...},           % add keywords
+    deletekeywords={...},            % delete keywords
+%
+    keepspaces=true,                 % keeps spaces, usefull for indentation using spaces (might need columns=flexible)    breaklines=true,
+    caption=\lstname,                % Makes the caption the filename
+    breakautoindent=true,   % get the red arrows
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+
+
 
 \begin{document}
 
@@ -107,6 +393,8 @@ Anhkhoi \textsc{Vu-Nguyen}    \\
                                             %   Project Description     %
                                             %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
 \section{Project Description}
 Mytinerary is a web application designed to create, adjust and optimize the schedules of Concordia students. The schedule is created by the students who add courses offered by their respective program. Prior to the creation of the schedule, the user must select the according school term. In addition, the program will check whether or not the students have the correct pre or co-requisites prior to adding the class to the schedule. What this program differs from the current Concordia schedule making, is the friendly user interface. One major example is that it displays what the current schedule looks like while the student adds courses. The reason behind this is that the student can add courses while viewing their available schedule times rather than going back and forth viewing what time space is free. The application will also prohibit students from adding courses that is out of their course sequence or do not possess the correct pre/co-requisite.
 This application is also usable by teachers alike. Teachers can post their term schedule which includes the courses being taught or their free hours. This is viewed by the students who then join the course.
@@ -116,6 +404,8 @@ This application is also usable by teachers alike. Teachers can post their term 
                                             %   Goals and Constraints   %
                                             %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
 \section{Goals and Constraints}
 
 
@@ -124,7 +414,8 @@ This application is also usable by teachers alike. Teachers can post their term 
                                             %   Resource Requirements   %
                                             %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\vfill
+\newpage
 \section{Resource Requirements}
 
 \subsection{Resource Evaluation}
@@ -134,14 +425,14 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Laurendy Lam}}	\\ \hline \hline
 \textbf{Role}		&	Programing Full-Stack, Programming Leader, Co-Team Leader	\\ \hline
 \textbf{Strengths}	&	-- Web Design	\\
-			&	-- User interface	\\
-			&	-- Algorithm	\\
-			&	-- Team Work / Organization	\\
-			&	-- Database Design	\\
-			&	-- OOP	\\ \hline
+			        &	-- User interface	\\
+			        &	-- Algorithm	\\
+					&	-- Team Work / Organization	\\
+					&	-- Database Design	\\
+					&	-- OOP	\\ \hline
 \textbf{Knowledge}	&	Java, C, C++, PHP, HTML5, CSS3, Javascript, SQL, Python, Ruby, Prolog, Lisp	\\ \hline
 \textbf{Experience}	&	-- Personal website developer	\\
-			&	-- Design/Developed a restaurant website 	\\ \hline
+					&	-- Design/Developed a restaurant website 	\\ \hline
 \textbf{Availability}	&	10-12 hours /week	\\ \hline
 \end{tabular}
 \end{center}
@@ -154,8 +445,8 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Alessandro Power}}	\\ \hline \hline
 \textbf{Role}		&	Documentation Leader , Team Leader	\\ \hline
 \textbf{Strengths}	&	-- Communication	\\
-			&	-- Team Work	\\
-			&	-- Object-oriented Programming	\\ \hline
+					&	-- Team Work	\\
+					&	-- Object-oriented Programming	\\ \hline
 \textbf{Knowledge}	&	C++, Java, Python	\\ \hline
 \textbf{Experience}	&	Programming in Java for various class assignments.	\\ \hline
 \textbf{Availability}	&	7 hours/week	\\ \hline
@@ -170,8 +461,8 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Anhkhoi Vu-Nguyen}}	\\ \hline \hline
 \textbf{Role}		&	Programming Back-End	\\ \hline
 \textbf{Strengths}	&	-- Object-oriented Programming	\\
-			&	-- Team Work	\\
-			&	-- Communication	\\ \hline
+					&	-- Team Work	\\
+					&	-- Communication	\\ \hline
 \textbf{Knowledge}	&	Java, C++, HTML5, Prolog, PHP, Lisp, CSS3, Assembly , AspectJ	\\ \hline
 \textbf{Experience}	&	-- Programming in Java for various class assignments 	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -186,7 +477,7 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Jacqueline Luo}}	\\ \hline \hline
 \textbf{Role}		&	Testing	\\ \hline
 \textbf{Strengths}	&	-- OOP with Java	\\
-			&	-- App development for Android devices	\\ \hline
+					&	-- App development for Android devices	\\ \hline
 \textbf{Knowledge}	&	Java, C\#, HTML , CSS3, PHP, JavaScript	\\ \hline
 \textbf{Experience}	&	Developed an app on Google Play Store	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -201,11 +492,11 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{James Talarico}}	\\ \hline \hline
 \textbf{Role}		&	Documentation	\\ \hline
 \textbf{Strengths}	&	-- Object-Oriented Design	\\
-			&	-- Communication and teamwork	\\
-			&	-- Document Writing	\\ \hline
+					&	-- Communication and teamwork	\\
+					&	-- Document Writing	\\ \hline
 \textbf{Knowledge}	&	Java, C, C++ , Python , OCaml, HTML5, CSS3, MATLAB, Bash	\\ \hline
 \textbf{Experience}	&	-- Developed a cluster search algorithm to parse Fermi-LAT data for un-catalogued VHE sources.	\\
-			&	-- Configured the Mcgill Planar Hydrogen Atmosphere Code (McPHAC) to run on Calcul Quebec's super computers.	\\ \hline
+					&	-- Configured the Mcgill Planar Hydrogen Atmosphere Code (McPHAC) to run on Calcul Quebec's super computers.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
 \end{tabular}
 \end{center}
@@ -218,8 +509,8 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Kenny Nguyen}}	\\ \hline \hline
 \textbf{Role}		&	Documentation	\\ \hline
 \textbf{Strengths}	&	-- Object-oriented Programming	\\
-			&	-- Team Work	\\
-			&	-- Communication	\\ \hline
+					&	-- Team Work	\\
+					&	-- Communication	\\ \hline
 \textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, MySQL, JavaScript 	\\ \hline
 \textbf{Experience}	&	-- Programmer at Industry Canada	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -234,8 +525,8 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Michael Mescheder}}	\\ \hline \hline
 \textbf{Role}		&	Programming Full-Stack	\\ \hline
 \textbf{Strengths}	&	-- Client side	\\
-			&	-- Object-Oriented Programming	\\
-			&	-- Teamwork	\\ \hline
+					&	-- Object-Oriented Programming	\\
+					&	-- Teamwork	\\ \hline
 \textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, JavaScript	\\ \hline
 \textbf{Experience}	&	-- Programming in Java for various class assignments.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -250,8 +541,8 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Piratheeban Annamalai}}	\\ \hline \hline
 \textbf{Role}		&	Programming	\\ \hline
 \textbf{Strengths}	&	-- Server side	\\
-			&	-- Object-Oriented Programming	\\
-			&	-- Organization	\\ \hline
+					&	-- Object-Oriented Programming	\\
+					&	-- Organization	\\ \hline
 \textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, JavaScript	\\ \hline
 \textbf{Experience}	&	-- Various programming assignments for class assignments involving Java, and Php.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -266,7 +557,7 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Pragas Velauthapillai}}	\\ \hline \hline
 \textbf{Role}		&	Testing	\\ \hline
 \textbf{Strengths}	&	-- OOP	\\
-			&	-- Team Work	\\ \hline
+					&	-- Team Work	\\ \hline
 \textbf{Knowledge}	&	Java, PHP, HTML, CSS, Javascript	\\ \hline
 \textbf{Experience}	&	-Programming in Java for various class assignments.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -281,7 +572,7 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Ronnie Pang}}	\\ \hline \hline
 \textbf{Role}		&	Programming Full Stack	\\ \hline
 \textbf{Strengths}	&	-- OOP	\\
-			&	-- Team Work	\\ \hline
+					&	-- Team Work	\\ \hline
 \textbf{Knowledge}	&	Java, PHP, HTML, CSS, Javascript	\\ \hline
 \textbf{Experience}	&	-- Programming in Java for various class assignments.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -296,9 +587,9 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Eric Payette}}	\\ \hline \hline
 \textbf{Role}		&	Programming Full-Stack	\\ \hline
 \textbf{Strengths}	&	-- Object-oriented programming	\\
-			&	-- Functional programming	\\
-			&	-- Logic programing	\\
-			&	-- Team Work	\\ \hline
+					&	-- Functional programming	\\
+					&	-- Logic programing	\\
+					&	-- Team Work	\\ \hline
 \textbf{Knowledge}	&	Java, PHP , HTML , CSS3, MySQL , JavaScript, Lisp, Prolog, AspectJ	\\ \hline
 \textbf{Experience}	&	-- Programming for various class assignment.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
@@ -313,10 +604,10 @@ This application is also usable by teachers alike. Teachers can post their term 
 \textbf{Member Name}	&	\textit{\textbf{Andy Nguyen}}	\\ \hline \hline
 \textbf{Role}		&	Documentation	\\ \hline
 \textbf{Strengths}	&	-- Object-oriented Programming	\\
-			&	-- Team Work	\\ \hline
+					&	-- Team Work	\\ \hline
 \textbf{Knowledge}	&	Java, HTML5 , CSS3, JavaScript , PHP	\\ \hline
 \textbf{Experience}	&	-- Programming in Java for class assignments	\\
-			&	-- Developed a Real-Estate website for a class project	\\ \hline
+					&	-- Developed a Real-Estate website for a class project	\\ \hline
 \textbf{Availability}	&	5 hours/week	\\ \hline
 \end{tabular}
 \end{center}
@@ -327,10 +618,10 @@ This application is also usable by teachers alike. Teachers can post their term 
 
 \subsubsection{Server}
 
-The web server used to host the developing project is the PHP built in web server provided by PHP which come with Wamp. It comes bundle of different other tools such as phpmyAdmin, Apache and SQL buddy for local hosting.
+The web server used to host the developing project is the PHP built in web server provided by PHP which come with WAMP. It comes bundle of different other tools such as PHPmyAdmin, Apache and SQL buddy for local hosting.
 \subsubsection{Database}
 
- The hosting service for the database on a remote server is Heroku. to manage the database we are using dbForge studio for MySQL or phpMyAdmin version 4.5.3 used with wamp to run the app to access the database remotely.
+ The hosting service for the database on a remote server is Heroku. to manage the database we are using dbForge studio for MySQL or PHPMyAdmin version 4.5.3 used with WAMP to run the app to access the database remotely.
 
 \subsubsection{Hardware}
 
@@ -338,15 +629,17 @@ The web server used to host the developing project is the PHP built in web serve
 
 \subsubsection{System}
 
-The operating system used to operate the program as very portable as long as it has php, apache and a MySQL server install installed.  Version and course control is handled by a private git repository. 
+The operating system used to operate the program as very portable as long as it has PHP, Apache and a MySQL server install installed.  Version and course control is handled by a private git repository. 
 
 \subsubsection{Programming Languages}
-The language used to develop this project is PHP, JavaScript, and CSS. The framework used to develop the project is Code igniter v3.03 along with other user interface frameworks such as JQuery v3.03, Bootstrap  4, Normalize v3.0.2  and Google Fonts. The editors to develop the project are: notepad++ or phpStorm by JetBrains. Refer to section \ref{techInUse} for a more extensive list of the technologies in use.
+The language used to develop this project is PHP, JavaScript, and CSS. The framework used to develop the project is CodeIgniter v3.03 along with other user interface frameworks such as JQuery v3.03, Bootstrap  4, Normalize v3.0.2  and Google Fonts. The editors to develop the project are: notepad++ or PHPStorm by JetBrains. Refer to section \ref{techInUse} for a more extensive list of the technologies in use.
 
 \subsubsection{Communication}
 
 We are using slack to communicate, Google drive to share files and documents. and GitHub to upload finished documents. bug reporting on git hub. For the documentation we are using LaTeX. We use this to produce a nice compilation of all the documents collected throughout the project.  
 
+\vfill
+\newpage
 \section{Scoping}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -354,112 +647,118 @@ We are using slack to communicate, Google drive to share files and documents. an
                                             %     Solution Sketch       %
                                             %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\vfill
+\newpage
 \section{Solution Sketch}
 
 \subsection{Architecture}
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.7\columnwidth]{MVCDiagram.png}
+\caption{Diagram of the Model View Controller which Mytinerary is based on. \label{MVC}}
+\end{figure}
 
+Myitinerary is based off of the Model View Controller (MVC) architecture.
+
+\begin{itemize}
+    \item What is MVC?
+    \item Explain Model.
+    \item Explain Controller.
+    \item Explain View.
+    \item Why are you using it?
+    \begin{itemize}
+        \item Well suited since it is "used to separate the layers of the application used to interact with the user. These layers isolate our data definition from our user interface design and the control logic used to handle the interaction."
+        \item " a well-developed MVC system should allow a front-end developer and a back-end developer to work on the same system without interfering, sharing, or editing files either party is working on."
+    \end{itemize}
+\end{itemize}
 \subsection{Technologies in Use} \label{techInUse}
 %
 %
 \subsubsection{Programming Languages} \label{languages}
-\textbf{PHP}\\
+\paragraph*{PHP}~\\
 We decided to use PHP as the code base for Mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have preexisting solutions. We decided to use an older version, PHP 5.5, because the most recent version, PHP 7, was not working properly with the CodeIgniter framework we were using (described in section \ref{framworks}). Another important advantage is that PHP is part of the development platform WAMP, which is described in section \ref{webanddata}, which made installation easy.
-\\
 %
-\textbf{JavaScript}\\
-JavaScript is a high-level, dynamic and untyped programming language. Since JavaScript is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (JavaScript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML. We used the stable release version ECMAScript 6.\\
+\paragraph*{JavaScript}~\\
+JavaScript is a high-level, dynamic and untyped programming language. Since JavaScript is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (JavaScript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML. We used the stable release version ECMAScript 6.
 %
-\textbf{HTML}\\
+\paragraph*{HTML}~\\
 HTML (Hyper Text Markup Language) is a markup language used for creating web pages. It is by far the most commonly used markup language, and therefore has the most cross-platform support. We used the most recent version HTML5, which is quickly rising in popularity. 
-\\
 %
-\textbf{CSS}\\
+\paragraph*{CSS}~\\
 CSS (Cascading Style Sheets) is a style sheet language used for creating a layout and styling a web page. Like JavaScript and HTML, CSS is one of the more common languages used in web development. CSS is used primarily to allow the separation of a web page's content from it's presentation; this makes code cleaner and more reusable. We are using CSS3, the most recent version.
 %
-\\
-\textbf{SQL}\\
+\paragraph*{SQL}~\\
 SQL (Structured Query Language) is a special-purpose programming language used to access and manipulate databases. We will be using it to manage our MySQL database (described in section \ref{webanddata}, under MySQL). We chose SQL since it makes retrieving large amounts of records from databases quick and efficient it is the standard language for this task. We are using the most recent version, SQL:2011.
 %
 %
 %
-\subsubsection{Libraries and Frameworks} \label{framworks}
-\textbf{Bootstrap}\\
+\subsubsection{Libraries and Frameworks}\label{framworks}
+\paragraph*{Bootstrap}~\\
 Bootstrap is a HTML, CSS, and JavaScript framework used for developing web pages. We chose Bootstrap as it is easy to use and has a large community with extensive documentation. Furthermore, Bootstrap supports the most popular browsers and as well as fixes some compatibility issues with CSS. We are using the most recent stable release, Bootstrap 3.3.6.
-\\
 %
-\textbf{CodeIgniter} \\
+\paragraph*{CodeIgniter}~\\
 CodeIgniter is an open source PHP framework used in web development. It is loosely based on the Model-View-Controller pattern. We chose CodeIgniter as it is easy to use compared to other PHP frameworks and was the framework that our developers were most familiar with. We are using the most recent stable release, 3.0.4.
-\\
 %
-\textbf{AJAJ}\\
+\paragraph*{AJAJ}~\\
 AJAJ (Asynchronous JavaScript and JSON) is a set of client-side web development techniques used to create asynchronous Web applications. We chose AJAJ over the more popular AJAX because we used JSONs to pass data, and not XML. The reasoning behind choosing JSON is discussed in section \ref{languages}, under JavaScript.
-\\
 %
-\textbf{jQuery}\\
+\paragraph*{jQuery}~\\
 jQuery is a JavaScript library which is designed to simplify client-side HTML. We chose jQuery as it is easy to use, especially compared to other JavaScript libraries. It is an extensive library that effortlessly supports AJAJ. We are using jQuery 1.12.0.
-\\
 %
-\textbf{Normalize.css}\\
+\paragraph*{Normalize.css}~\\
 Normalize.css is used to make built-in browser styling consistent across browsers. It also has a very extensive documentation and excellent support, which was very helpful for some of the members which were not familiar with the tool. We are using version 3.0.3.
 %
+\paragraph*{Moment.js}~\\
+\todo[inline]{Add this!}
 %
 %
-\subsubsection{Web server and Databases} \label{webanddata} 
-\textbf{Apache}\\
+%
+\subsubsection{Web server and Databases} \label{webanddata}
+\paragraph*{Apache}~\\
 Apache is an open-source web server software. We chose it because it is currently the most popular web server software and is the one we were most familiar with. We will be using the stable release, 2.4.18, which is the most recent version.
-\\
 %
-\textbf{MySQL}\\
+\paragraph*{MySQL}~\\
 MySQL is a Database Management system which uses relational databases. We chose MySQL as it is easy to use, very popular and has excellent support. We also chose it because our programming team was very familiar with it. We will be using the most recent stable release, 5.7.10.
-\\
 %
-\textbf{PHPMyAdmin}\\
+\paragraph*{PHPMyAdmin}~\\
 PHPMyAdmin is a web based tool that works to help the user handle the administration of MySQL. We chose it because of it's simplicity and our familiarity with software. We are using the most recent stable release version, 4.5.4.1.
-\\
 %
-\textbf{dbForge Studio}\\
+\paragraph*{dbForge Studio}~\\
 dbForge Studio is a windows tool that is made for management and development of an SQL server. We chose this tool because are our familiarity with it. We are using the most recent version, 5.1.178.
-\\
 %
-\textbf{WampServer}\\
-WampServer is a windows development environment which uses Apache, MySQL, and PHP. Since we had already decided on using PHP, Apache and MySQL for our project, using this tool to simplify the setup of our server was the obvious choice. We are using the most recent stable release version, 4.5.4.1.
-\\
+\paragraph*{WAMPServer}~\\
+WAMPServer is a windows development environment which uses Apache, MySQL, and PHP. Since we had already decided on using PHP, Apache and MySQL for our project, using this tool to simplify the setup of our server was the obvious choice. We are using the most recent stable release version, 4.5.4.1.
 %
 \subsubsection{IDEs}
-\textbf{Notepad++}\\
+\paragraph*{Notepad++}~\\
 Notepad++ is a simple, lightweight text editor that has support for a large range of languages. We chose it because it is a very popular cross-platform text editor and our programming team was very familiar with it. We are using Notepad++ v6.8.8.
-\\
 %
-\textbf{PHPStorm}\\
+\paragraph*{PHPStorm}~\\
 PHPStorm is an IDE which handles PHP, HTML and JavaScript. We chose it because it is cross-platform and was the IDE our programming team was the most familiar with it. We are using version 10.0.3.
-\\
 %
 %
 %
 \subsubsection{Documentation and Collaboration Software}
-\textbf{Slack}\\
+\paragraph*{Slack}~\\
 Slack is an online messaging application that can be used on mobile or PC. We chose to use Slack since it made communication and collaboration more convenient and organized.
-\\
 %
-\textbf{GitHub}\\
+\paragraph*{GitHub}~\\
 GitHub is an online Git repository service. It is currently the most popular Git based system, and it virtually essential for version control in large programming project. GitHub is an excellent tool for organizing and collaborating, and is an industry standard.
-\\
 %
-\textbf{ShareLaTeX}\\
+\paragraph*{ShareLaTeX}~\\
 ShareLaTeX is an online LaTeX editor and compiler. We chose to use LaTeX because it's capability of producing high typographical quality documentation. We chose ShareLaTeX since it allowed the documentation team to collaborate easily and it they were already quite familiar with it. 
-\\
 %
-\textbf{Gliffy}\\
+\paragraph*{Gliffy}~\\
 Gliffy is an online web diagram editor with was used to make all UMLs and Domain Models in during the project. We chose it because it is easy to use and can produce high-quality diagrams.
-\\
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                              %---------------------------%       
                                              %           Plan            %
                                              %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
 \section{Plan}
 
 
@@ -469,5 +768,50 @@ Gliffy is an online web diagram editor with was used to make all UMLs and Domain
                                              %       Prototyping         %
                                              %---------------------------%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+
 \section{Prototyping}
+
+Upon entering the website’s URL the user is presented with a login page. The login page features a brief description of the current situation. For instance, any course issues or service downtime would be displayed here. The users also have the ability to view courses in any given semester without needing to log in. The login system security is handled by hashing the entered username and password using the Blowfish algorithm and sent to the database for server side validation. 
+Once logged in, the users are sent to the default page with various options presented to them.  Additionally, there is also a section containing relevant news that will updated on a regular interval. This section is currently created by using JSON and the New York Times API (may be modified later on). 
+
+The first selectable option is the student profile. This page shows a record of the student. It indicates which courses have been completed and the GPA. Also, this page is used to determine which prerequisites and co-requisites have been completed before a student can register for a class that has those specific prerequisites and co-requisites.
+
+The second selectable option leads to the registration page. Here, students can search for courses in a selected semester in order to generate schedules. There is also an option to auto-generate schedules that is currently in development. Students can apply time preferences to generate their ideal schedule.  Up to five different schedules can be displayed on the same page using client side JavaScript and jQuery to dynamically generate the schedules as the user selects or edits information. The students can then select which schedule they would prefer to have by comparing all of them. Students can add courses to the courses tab. However, in the event that they lack the necessary prerequisites or co-requisites, they will not be able to add the course onto the registered tab. This validation is handled by dynamically checking the students registered courses within the database. The courses shown on the right-hand side represent what the students are involved with. If the course name is within a green rectangle, then the student will be currently registered for that class. If the course name is within a yellow rectangle, then the student will be on a waiting list for that class. Finally, if the course name is within a red rectangle, then it indicates that the student has removed that class from the current semester.
+
+At any time, users can click on the Mytinerary logo on the top left corner to be redirected to the home page. At the home page students can also view available courses as well as their current schedule. Mytinerary is cross-platform compatible in addition to featuring a responsive layout and automatic scaling. This is achieved using HTML5 and Bootstrap as the front-end framework. Any APIs to be used will also avoid being platform specific to ensure usability across all devices.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vfill
+\newpage
+\appendix
+\section{Source Code}
+
+\lstinputlisting[language=php]{webroot/application/controllers/Courses.php}
+\lstinputlisting[language=php]{webroot/application/controllers/Home.php}
+\lstinputlisting[language=html]{webroot/application/controllers/index.html}
+\lstinputlisting[language=php]{webroot/application/controllers/Login.php}
+\lstinputlisting[language=php]{webroot/application/controllers/Students.php}
+\lstinputlisting[language=php]{webroot/application/models/Course.php}
+\lstinputlisting[language=html]{webroot/application/models/index.html}
+\lstinputlisting[language=php]{webroot/application/models/Scheduler.php}
+\lstinputlisting[language=php]{webroot/application/models/Section.php}
+\lstinputlisting[language=php]{webroot/application/models/Semester.php}
+\lstinputlisting[language=php]{webroot/application/models/Student.php}
+\lstinputlisting[language=php]{webroot/application/models/User.php}
+\lstinputlisting[language=html]{webroot/application/views/index.html}
+\lstinputlisting[language=php]{webroot/application/views/course/result.php}
+\lstinputlisting[language=php]{webroot/application/views/course/search.php}
+%\lstinputlisting[language=php]{webroot/application/views/layouts/footer.php}
+%\lstinputlisting[language=php]{webroot/application/views/layouts/header.php}
+\lstinputlisting[language=php]{webroot/application/views/login/index.php}
+\lstinputlisting[language=php]{webroot/application/views/student/home.php}
+\lstinputlisting[language=php]{webroot/application/views/student/profile.php}
+\lstinputlisting[language=php]{webroot/application/views/student/scheduler.php}
+
 \end{document}
