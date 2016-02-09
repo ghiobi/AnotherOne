@@ -1,1 +1,130 @@
-Goals and Constraints
+### Goals and Constraints ###
+The project goals can be divided into two categories. The first consists of
+mandatory goals which must be implemented in order to meet the minimum project
+requirements. The second category includes goals which, while not absolutely necessary, would
+enhance the quality of the project and set Mytinerary apart from other program planners.
+These secondary goals were set by asking ourselves what features \emph{we} would look for
+in a program planner. Additionally, a survey targeting Concordia software engineering
+students was conducted to gauge interest in proposed features, including multilingual
+support and integration with Rate-My-Professor. The data from this survey are
+presented in Appendix A.
+
+# Functional Requirements #
+The following use cases summarize Mytinerary's functional requirements. Each
+use case will deal with two possible actors: a student, who will use the
+system to generate course schedules, and a program director, who can modify
+course and section information.
+
+Difficult and importance are scored on a scale of 1 to 10, with 10 denoting
+extremely high difficulty/importance.
+
+
+Use case: Log in
+Actors: Student, program director
+Goal: Gain access to website services.
+Preconditions: User must be a registered user.
+Summary: User logs into the website by providing their username and password.
+Trigger: User enters their username and password into the respective fields.
+Basic course of events:
+1. System prompts the user to log in when the user accesses the website.
+2. User enters their username and password.
+3. System verifies the login information.
+4. User is logged in.
+Exception paths:
+1. System prompts the user to log in when the user accesses the website.
+2. User enters their username and password.
+3. System determines that either the username or password were entered incorrectly.
+4. User is informed of the failed login attempt and is asked to re-enter their
+user credentials.
+Postconditions: User is logged in, meaning that they have access to restricted content,
+including the user's private data.
+Difficult: 3
+Importance: 10
+
+
+Use case: Log out
+Actors: Student, program director
+Goal: Prevent future users of the browser section to have access to user's credentials.
+Preconditions: User must be logged in.
+Summary: User logs out of the system, preventing anyone who uses their browser
+afterwards from having access to the site under the user's name.
+Trigger: User indicates intention to log off.
+Basic course of action:
+1. User indicates intention to log off.
+2. User if logged off of the system.
+3. User is directed to the website's login page.
+Postconditions: User is logged off, meaning that they no longer have access
+to restricted content such as the user's private data.
+Difficulty: 2
+Importance: 10
+
+
+Use case: Return to home page
+Actors: Student, program director
+Goal: Return to the website's home page.
+Precondition: User must be logged in.
+Summary: User indicates their intention to return to the home page in order to
+access all of the site's facilities.
+Trigger: User indicates intention to return to the home page.
+Basic course of events:
+1. User indicates intention to return to home page.
+2. User is brought to home page.
+Postconditions: User has been brought to website's homepage.
+Difficulty: 2
+Importance: 8
+
+
+Use case: View academic record
+Actors: Student
+Goal: View personal academic record.
+Preconditions: User must be logged in and in the home page.
+Summary: User indicates that they wish to view their academic record, at which
+point the system retrieves and displays their academic record.
+Trigger: User indicates that they wish to view their academic record.
+Basic course of events:
+1. User indicates intention to view academic record.
+2. Academic record is presented to user.
+Postconditions: Academic record is displayed.
+Difficulty: 2
+Importance: 7
+
+
+Use case: View student's academic record
+Actors: Program director
+Goal: View the academic record of a selected student.
+Precondition: User must be a program director. Student must exist.
+Summary: Program director requests access to academic record of selected student,
+which is then displayed.
+Trigger: Program director indicates intention to view a student's academic record.
+Basic course of events:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System verifies that user is a program director.
+4. System verifies that specified student exists.
+5. System retrieves student's academic record and displays it to the user.
+Exception paths:
+Student does not exist:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System verifies that user is a program director.
+4. System determines that specified student does not exist.
+5. User is informed that specified student does not exist, and is prompted to re-enter
+the student's identifying information.
+User is not a program director:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System determines that the user is not a program director. This shouldn't happen, as
+non-program directors will not be given the opportunity to even attempt to view
+a student's academic record other than their own; however, for extra security the
+system will perform this check.
+4. User presented with an error message and is immediately logged off.
+Postconditions: Specified student's academic record is displayed.
+Difficulty: 3
+Importance: 6
+
+
+Use case: 
+
+
+# Domain Model #
+Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
