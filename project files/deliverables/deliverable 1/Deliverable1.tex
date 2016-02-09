@@ -407,6 +407,135 @@ This application is also usable by teachers alike. Teachers can post their term 
 \vfill
 \newpage
 \section{Goals and Constraints}
+The project goals can be divided into two categories. The first consists of
+mandatory goals which must be implemented in order to meet the minimum project
+requirements. The second category includes goals which, while not absolutely necessary, would
+enhance the quality of the project and set Mytinerary apart from other program planners.
+These secondary goals were set by asking ourselves what features \emph{we} would look for
+in a program planner. Additionally, a survey targeting Concordia software engineering
+students was conducted to gauge interest in proposed features, including multilingual
+support and integration with Rate-My-Professor. The data from this survey are
+presented in Appendix A.
+
+\subsection{Functional Requirements}
+The following use cases summarize Mytinerary's functional requirements. Each
+use case will deal with two possible actors: a student, who will use the
+system to generate course schedules, and a program director, who can modify
+course and section information.
+
+Difficult and importance are scored on a scale of 1 to 10, with 10 denoting
+extremely high difficulty/importance.
+
+
+\textbf{Use case:} Log in
+Actors: Student, program director
+Goal: Gain access to website services.
+Preconditions: User must be a registered user.
+Summary: User logs into the website by providing their username and password.
+Trigger: User enters their username and password into the respective fields.
+Basic course of events:
+1. System prompts the user to log in when the user accesses the website.
+2. User enters their username and password.
+3. System verifies the login information.
+4. User is logged in.
+Exception paths:
+1. System prompts the user to log in when the user accesses the website.
+2. User enters their username and password.
+3. System determines that either the username or password were entered incorrectly.
+4. User is informed of the failed login attempt and is asked to re-enter their
+user credentials.
+Postconditions: User is logged in, meaning that they have access to restricted content,
+including the user's private data.
+Difficult: 3
+Importance: 10
+
+
+Use case: Log out
+Actors: Student, program director
+Goal: Prevent future users of the browser section to have access to user's credentials.
+Preconditions: User must be logged in.
+Summary: User logs out of the system, preventing anyone who uses their browser
+afterwards from having access to the site under the user's name.
+Trigger: User indicates intention to log off.
+Basic course of action:
+1. User indicates intention to log off.
+2. User if logged off of the system.
+3. User is directed to the website's login page.
+Postconditions: User is logged off, meaning that they no longer have access
+to restricted content such as the user's private data.
+Difficulty: 2
+Importance: 10
+
+
+Use case: Return to home page
+Actors: Student, program director
+Goal: Return to the website's home page.
+Precondition: User must be logged in.
+Summary: User indicates their intention to return to the home page in order to
+access all of the site's facilities.
+Trigger: User indicates intention to return to the home page.
+Basic course of events:
+1. User indicates intention to return to home page.
+2. User is brought to home page.
+Postconditions: User has been brought to website's homepage.
+Difficulty: 2
+Importance: 8
+
+
+Use case: View academic record
+Actors: Student
+Goal: View personal academic record.
+Preconditions: User must be logged in and in the home page.
+Summary: User indicates that they wish to view their academic record, at which
+point the system retrieves and displays their academic record.
+Trigger: User indicates that they wish to view their academic record.
+Basic course of events:
+1. User indicates intention to view academic record.
+2. Academic record is presented to user.
+Postconditions: Academic record is displayed.
+Difficulty: 2
+Importance: 7
+
+
+Use case: View student's academic record
+Actors: Program director
+Goal: View the academic record of a selected student.
+Precondition: User must be a program director. Student must exist.
+Summary: Program director requests access to academic record of selected student,
+which is then displayed.
+Trigger: Program director indicates intention to view a student's academic record.
+Basic course of events:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System verifies that user is a program director.
+4. System verifies that specified student exists.
+5. System retrieves student's academic record and displays it to the user.
+Exception paths:
+Student does not exist:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System verifies that user is a program director.
+4. System determines that specified student does not exist.
+5. User is informed that specified student does not exist, and is prompted to re-enter
+the student's identifying information.
+User is not a program director:
+1. User indicates intention to view academic record.
+2. System prompts user to enter either the name of the student or the student's Concordia ID number.
+3. System determines that the user is not a program director. This shouldn't happen, as
+non-program directors will not be given the opportunity to even attempt to view
+a student's academic record other than their own; however, for extra security the
+system will perform this check.
+4. User presented with an error message and is immediately logged off.
+Postconditions: Specified student's academic record is displayed.
+Difficulty: 3
+Importance: 6
+
+
+Use case: 
+
+
+\subsection{Domain Model}
+Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -495,7 +624,7 @@ This application is also usable by teachers alike. Teachers can post their term 
 					&	-- Communication and teamwork	\\
 					&	-- Document Writing	\\ \hline
 \textbf{Knowledge}	&	Java, C, C++ , Python , OCaml, HTML5, CSS3, MATLAB, Bash	\\ \hline
-\textbf{Experience}	&	-- Developed a cluster search algorithm to parse Fermi-LAT data for un-catalogued VHE sources.	\\
+\textbf{Experience}	&	-- Developed a cluster search algorithm to parse Fermi LAT data for uncatalogued VHE sources.	\\
 					&	-- Configured McPHAC to run on Calcul Quebec's super computers.	\\ \hline
 \textbf{Availability}	&	6 hours/week	\\ \hline
 \end{tabular}
@@ -652,26 +781,25 @@ We are using slack to communicate, Google drive to share files and documents. an
 \section{Solution Sketch}
 
 \subsection{Architecture}
-
+%
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.7\columnwidth]{MVCDiagram.png}
 \caption{Diagram of the Model View Controller which Mytinerary is based on. \label{MVC}}
 \end{figure}
+%
+Myitinerary is based off of the Model-View-Controller (MVC) architecture. We are using MVC because it encourages a clear separation between the data and the methods that manipulate the data. The gives our program the advantage of allowing a front-end and back-end developer to work on the project at the same time, which out having to worry about their respective code interfering with one another.
 
-Myitinerary is based off of the Model View Controller (MVC) architecture.
-
-\begin{itemize}
-    \item What is MVC?
-    \item Explain Model.
-    \item Explain Controller.
-    \item Explain View.
-    \item Why are you using it?
-    \begin{itemize}
-        \item Well suited since it is "used to separate the layers of the application used to interact with the user. These layers isolate our data definition from our user interface design and the control logic used to handle the interaction."
-        \item " a well-developed MVC system should allow a front-end developer and a back-end developer to work on the same system without interfering, sharing, or editing files either party is working on."
-    \end{itemize}
-\end{itemize}
+As the name suggests, the Model-View-Controller pattern can be broken down into three layers: Model, View and Controller. These layers are what create an abstraction between components of the system as well as a layer of abstraction between the system and the user. A diagram of the interactions of the MVC can be seen in Figure \ref{MVC}. The three layers are described below.
+%
+\paragraph*{Model}~\\
+The Model is where the data used in the program is permanently stored. The model acts as a sort of bridge between the view and controller component. It updates the View on pertinent changes that have been made, and allows the Controller to manipulate it's data content. 
+\paragraph*{View}~\\
+The View is where the information requested from the Model layer can be viewed. In our system, this would correspond to Mytinerary's HTML page. The View does not recieve any information from the Controller whatsoever. All data received by the View is given upon requesting it from the Model. This happens when a method from the Controller changes data in the Model. The Model then informs the View of these changes.
+%
+\paragraph*{Controller}~\\
+The job of the Controller is to take in any information that is passed by the user, and update the Model accordingly. The Controller does not interact with the View directly, but instead changes the data held by the Model. It is important to note that changes made by the Controller are initiated by user interactions.
+%
 \subsection{Technologies in Use} \label{techInUse}
 %
 %
@@ -717,6 +845,9 @@ Moment.js is a simple date and time library that enables us manipulate time and 
 \subsubsection{Web server and Databases} \label{webanddata}
 \paragraph*{Apache}~\\
 Apache is an open-source web server software. We chose it because it is currently the most popular web server software and is the one we were most familiar with. We will be using the stable release, 2.4.18, which is the most recent version.
+%
+\paragraph*{Heroku}~\\
+\todo[inline] {Add this!}
 %
 \paragraph*{MySQL}~\\
 MySQL is a Database Management system which uses relational databases. We chose MySQL as it is easy to use, very popular and has excellent support. We also chose it because our programming team was very familiar with it. We will be using the most recent stable release, 5.7.10.
@@ -790,7 +921,8 @@ At any time, users can click on the Mytinerary logo on the top left corner to be
 \newpage
 \appendix
 \section{Source Code}
-
+% The important Source Code
+% the ones commented out give errors for some reason
 \lstinputlisting[language=php]{webroot/application/controllers/Courses.php}
 \lstinputlisting[language=php]{webroot/application/controllers/Home.php}
 \lstinputlisting[language=html]{webroot/application/controllers/index.html}
@@ -809,7 +941,7 @@ At any time, users can click on the Mytinerary logo on the top left corner to be
 %\lstinputlisting[language=php]{webroot/application/views/layouts/footer.php}
 %\lstinputlisting[language=php]{webroot/application/views/layouts/header.php}
 \lstinputlisting[language=php]{webroot/application/views/login/index.php}
-\lstinputlisting[language=php]{webroot/application/views/student/home.php}
+%\lstinputlisting[language=php]{webroot/application/views/student/home.php}
 \lstinputlisting[language=php]{webroot/application/views/student/profile.php}
 \lstinputlisting[language=php]{webroot/application/views/student/scheduler.php}
 
