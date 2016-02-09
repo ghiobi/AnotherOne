@@ -1,6 +1,6 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 /**
-* 	TODO: complete description
+* 	Controls the profile page, the enroll page and the schedule page
 */
 class Students extends App_Base_Controller
 {
@@ -11,7 +11,7 @@ class Students extends App_Base_Controller
 	}
 
     /**
-     * loads the student profile page
+     * Loads the student profile page
      */
 	function profile()
     {
@@ -29,6 +29,9 @@ class Students extends App_Base_Controller
         $this->load->view('layouts/footer.php', $data);
 	}
 
+	/**
+	 * Loads the student enroll page
+	 */
 	function enroll()
 	{
         $data['info_bar'] = 'AND HIS NAME IS BOB SMITH';
@@ -45,6 +48,10 @@ class Students extends App_Base_Controller
 		echo $input;
 	}
 
+	/**
+	 * Loads the schedule of a semester by id
+	 * @param $semester
+	 */
 	function schedule($semester){
 
 	}

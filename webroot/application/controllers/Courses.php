@@ -10,11 +10,6 @@ class Courses extends CI_Controller
         parent::__construct();
     }
 
-    /**
-     * @param null $SEMESTER
-     * @param null $COURSECODE
-     * @param null $NUMBER
-     */
     function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
         if($SEMESTER != NULL)
