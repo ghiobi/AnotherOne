@@ -269,8 +269,11 @@ Security is an important requirement, the Mytinerary website shall ensure that d
 
 Speed
 
+All pages within the website should be accessible in under one second? 
+
 Usability 
 
-Performance 
+The web application should be cross-platform compatible usable through various mobile,tablet OS such as android and iOS in addition to full desktop support?
 
-Platform Compatibility
+
+
