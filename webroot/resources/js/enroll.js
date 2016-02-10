@@ -57,14 +57,16 @@ $(function()
     //Search
     $srch_input.keyup(function()
     {
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/ajax_search_course',
-            data: {input: $srch_input.val()},
-            success: function(output){
-                console.log(output);
-            }
-        });
+        var srch_val = $srch_input.val();
+        if(srch_val.length > 1)
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/ajax_search_course',
+                data: {input: $srch_input.val()},
+                success: function(output){
+                    console.log(output);
+                }
+            });
     });
 
     //My schedule

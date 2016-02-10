@@ -172,4 +172,4 @@
 		</div>
 	</div>
 
-	<div id="info-controller" style="display: none" data-controller-url="<?php echo dirname(current_url()); ?>"></div>
+	<div id="info-controller" style="display: none" data-controller-url="<?php echo dirname(dirname(current_url())); ?>"></div>
