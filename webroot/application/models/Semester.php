@@ -32,11 +32,16 @@ class Semester extends CI_Model{
      */
     function getIDByName($semester_name)
     {
-        return $this->db->query("
+        $result = $this->db->query("
             SELECT
               semesters.id
             FROM semesters
-            WHERE semesters.name = '$semester_name'")->row()->id;
+            WHERE semesters.name = '$semester_name'")->row();
+
+        if(!$result)
+            return FALSE;
+
+        return $result->id;
     }
 
     /**

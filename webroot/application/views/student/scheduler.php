@@ -3,7 +3,7 @@
 		<div class="scheduler-app">
 			<div class="scheduler-row">
 				<div class="scheduler-full scheduler-title">
-					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> WINTER 2016</h3>
+					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> <?= $semester_name ?></h3>
 				</div>
 			</div>
 			<div class="scheduler-row">
@@ -172,4 +172,4 @@
 		</div>
 	</div>
 
-	<div id="info-controller" style="display: none" data-controller-url="<?php echo dirname(dirname(current_url())); ?>"></div>
+	<div id="info-controller" style="display: none" data-controller-url="<?= $ajax_route ?>"></div>

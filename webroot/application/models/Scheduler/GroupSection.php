@@ -1,7 +1,6 @@
 <?php
-
 namespace Scheduler;
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class GroupSection
 {

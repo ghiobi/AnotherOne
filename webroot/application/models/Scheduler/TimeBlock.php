@@ -1,7 +1,6 @@
 <?php
-
 namespace Scheduler;
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class TimeBlock
@@ -23,8 +22,8 @@ class TimeBlock
      */
     function __construct($start_time, $end_time, $weekday)
     {
-        $this->start_time = new DateTime($start_time);
-        $this->end_time = new DateTime($end_time);
+        $this->start_time = new \DateTime($start_time);
+        $this->end_time = new \DateTime($end_time);
         if($this->end_time < $this->start_time)
             throw new \InvalidArgumentException('TimeBlock: Start time is greater than end time.');
         if($weekday < 0 || $weekday > 6)

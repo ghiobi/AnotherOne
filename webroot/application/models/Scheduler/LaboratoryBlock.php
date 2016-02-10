@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: TheChosenOne
- * Date: 2016-02-06
- * Time: 7:52 PM
- */
-
 namespace Scheduler;
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class Laboratory
