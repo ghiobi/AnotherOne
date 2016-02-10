@@ -265,17 +265,20 @@ Figure \ref{fig:domain_model} illustrates a domain model for our system. The pri
 
 # Constraints and Qualities #
 Security
-Security is an important requirement, the Mytinerary website shall ensure that data is protected. The datas are protected by unauthorized access by a hashing algorithm, called blowfish encryption algorithm. Input forms are proted by xss filtering. 
+Mytinerary shall ensure that login is protected a strong hashing algorithm. The blowfish hashing function is provided by PHP’s hashing function ‘password_hash()’ which generate a unique hash of a password. Unlike traditional md5 hash, hashing would produce two identical hashes if the same passwords was used. Using md5 would be valuable if a dictionary attack is performed.
+ 
+Mytinerary shall ensure that data transactions between the application and server are secure by the blowfish encrypting algorithm. The scheduler is one page user interface which means that when passing serialized data of PHP objects they are vulnerable to changes if the client decides to alter the string. Thus encrypting the string would prevent any alternation and stay consistent.  
+ 
+Forms are validated automatically through CodeIgniter’s form validation library. It filters html escape strings and cross site scripting (xss) attacks.
 
 Speed
 
-All pages within the website should be accessible in under one second? 
+The web app shall load a page quickly. Codeigniter provides database caching which is useful where requesting select query to the database. By caching the select requests, less queries can reduce a large percentage load on the database.
+ 
+All pages within the website should be accessible in under one second.
 
 Usability 
 
-The web application should be cross-platform compatible usable through various mobile,tablet OS such as android and iOS in addition to full desktop support. Mytinerary will be accessible through any web browser, it will be compatible with popular web browsers such as: Google Chrome, FireFox , Internet Explorer and Safari. 
-
-Mytinerary will be able to operate from any operating system( Windows, Android , MAC, Linux etc). 
-
+The web application should be cross-platform compatible usable through various mobile ,tablet and desktop systems. Various broswers support like the Google Chrome, Safari and edge by Microsoft. With the help of normalize it will render HTML and CSS consistent across all web browser. Mytinerary will be enable to support Legacy web browers with the help of Modernizer. A library writing in Javascript aids the brower with unsupported features
 
 
