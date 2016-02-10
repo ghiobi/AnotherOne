@@ -1,1 +1,47 @@
+### Plan ###
+# Activities #
+The following are the main activites that have or will be undertaken to achieve
+the project goals.
+
+# Planning Activities #
+Division of Responsibilities
+
+Setting Project Requirements
+
+Risk Analysis
+
+Survey
+
+# Design Activities #
+Create Domain Model
+
+Determine Use Cases
+
+Specify Non-functional Requirements
+
+Resource Evaluation and Scoping
+
+Solution Sketch
+
 Plan
+
+# Implementation Activities #
+Setup GitHub Repository
+
+Setup Website Server
+
+Setup mySQL Database
+
+Add Course and Student Information to Database
+
+Build Website Back-end
+
+Build Website Front-end
+
+Create Architecture Design Diagrams
+
+Create and Test Prototype 1
+
+Create and Test Prototype 2
+
+Create and Test Prototype 3
