@@ -428,10 +428,10 @@ mandatory goals which must be implemented in order to meet the minimum project
 requirements. The second category includes goals which, while not absolutely necessary, would
 enhance the quality of the project and set Mytinerary apart from other program planners.
 These secondary goals were set by asking ourselves what features \emph{we} would look for
-in a program planner. Additionally, a survey targeting Concordia software engineering
+in a program planner. Additionally, a survey targeting 200 Concordia software engineering
 students was conducted to gauge interest in proposed features, including multilingual
 support and integration with Rate-My-Professor. The data from this survey are
-presented in Appendix A.
+unfortunately still being processed and could not be included in the present document.
 
 \subsection{Functional Requirements}
 The following use cases summarize Mytinerary's functional requirements. Each
@@ -462,7 +462,7 @@ Difficult and importance are scored on a scale of 1 to 10 with 10 denoting extre
 \item User is informed of the failed login attempt and is asked to re-enter their
 user credentials.
 \end{enumerate}
-\textbf{Postconditions:} User is logged in, meaning that they have access to restricted content, including the user's private data. This is accomplished by giving the user anauthentification cookie.\\
+\textbf{Postconditions:} User is logged in, meaning that they have access to restricted content, including the user's private data. This is accomplished by giving the user an authentication cookie.\\
 \textbf{Difficulty:} 3\\
 \textbf{Importance:} 10\\
 
@@ -470,7 +470,7 @@ user credentials.
 \paragraph*{Use case:} Log out \\
 \textbf{Actors:} Student, program director\\
 \textbf{Goal:} Prevent future users of the browser section to have access to user's credentials.\\
-\textbf{Preconditions:} User must be logged in. That is, user must have the required authentification cookie.\\
+\textbf{Preconditions:} User must be logged in. That is, user must have the required authentication cookie.\\
 \textbf{Summary:} User logs out of the system, preventing anyone who uses their browser afterwards from having access to the site under the user's name.\\
 \textbf{Trigger:} User indicates intention to log off.\\
 \textbf{Basic course of action:}
@@ -487,7 +487,7 @@ user credentials.
 \paragraph*{Use case:} Return to home page.\\
 \textbf{Actors:} Student, program director.\\
 \textbf{Goal:} Return to the website's home page.\\
-\textbf{Precondition:} User must be logged in. That is, user must have the required authentification cookie.\\
+\textbf{Precondition:} User must be logged in. That is, user must have the required authentication cookie.\\
 \textbf{Summary:} User indicates their intention to return to the home page in order to access all of the site's facilities.\\
 \textbf{Trigger:} User indicates intention to return to the home page.\\
 \textbf{Basic course of events:}
@@ -685,19 +685,139 @@ user should not be given the opportunity to even attempt to modify course inform
 \textbf{Goal:} User selects a course they wish to be added to their next schedule.\\
 \textbf{Precondition:} User is logged in and they are eligible to take the specified course.\\
 \textbf{Included use cases:} View course listing OR view course details.\\
-\textbf{Summary:} User adds a course they wish to be included in their next schedule.\\
-\textbf{Trigger:}\\
+\textbf{Summary:} User adds a course to be included in their next schedule.\\
+\textbf{Trigger:} User selects a course to be included in their next schedule.\\
 \textbf{Basic course of events:}
 \begin{enumerate}
 \item User selects a course to be added, either by searching specifically for the course
 (see use case View course details) or by selecting the course in the list of available courses
 (see use case View course listing).
+\item System verifies that user is eligible to take specified course.
+\item Course is added to a list of courses to be added in the next schedule.
 \end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{User cannot take specified course:}
+\begin{enumerate}
+\item User selects a course to be added, either by searching specifically for the course
+(see use case View course details) or by selecting the course in the list of available courses
+(see use case View course listing).
+\item System determines that user is not eligible to take requested course.
+\item An error message is displayed to the user, informing them of the reason why the course could not be added.
+\end{enumerate}
+\textbf{Postcondition:} Specified course has been added to a list of courses that must be included in any generated schedules.\\
 \textbf{Difficulty:} 4\\
 \textbf{Importance:} 9\\
 
-\subsubsection{Domain Model}
+
+\paragraph*{Use case:} Generate schedules\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} System creates a series of schedules that meet student's preferences.\\
+\textbf{Precondition:} User is logged in.\\
+\textbf{Summary:} System generates schedules that meet student's preferences, include courses that student requested, and further student's progress towards meeting the graduation requirements. \\
+\textbf{Trigger:} User indicates they wish to generate schedules.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates they wish to generate schedules.
+\item System finds all possible schedules that meet user's preferences and incorporate user-selected classes.
+\item The generated schedules are presented to the user.
+\end{enumerate}
+\textbf{Postcondition:} The set of possible schedules are stored by the system in memory.\\
+\textbf{Difficulty:} 6\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Select schedule\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User selects one of the system-generated schedules to be their actual schedule.\\
+\textbf{Precondition:} User is logged in and has generated schedules.\\
+\textbf{Extends use cases:} Generate schedules\\
+\textbf{Summary:} User selects the schedule they find most desirable.\\
+\textbf{Trigger:} User selects and commits a schedule.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User generates schedules.
+\item User reviews schedules and selects one they find desirable.
+\item System stores the chosen scheduled and updates user's record.
+\end{enumerate}
+\textbf{Postcondition:} The selected schedule is stored in the system's database.\\
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Change language\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} User changes the website language to French or English.\\
+\textbf{Summary:} User selects a different language for the website's content to be delivered in.\\
+\textbf{Trigger:} User selects a different language.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a different language.
+\item System records language change and delivers website content in new language.
+\end{enumerate}
+\textbf{Postcondition:} The system records the user's language preferences and will deliver the website content in the user's chosen language.\\
+\textbf{Difficulty:} 8\\
+\textbf{Importance:} 3\\
+
+
+\paragraph*{Use case:} View professor profile\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User views a professor's profile on Rate-my-Professor to determine whether they want to take course taught by them.\\
+\textbf{Summary:} System will include easy access to a given professor's Rate-my-Professor profile.\\
+\textbf{Trigger:} User selects the professor who's profile they wish to view.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a professor.
+\item System accesses ratemyprofessor.com, fetches professor's profile, and displays it to user.
+\end{enumerate}
+\textbf{Difficulty:} 9\\
+\textbf{Importance:} 2\\
+
+Figure \ref{fig:use_case_diagram} graphically displays the above use cases and the relationships between them.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.4\textwidth, angle=-90]{use_case_diagram}
+\caption{Use case diagram for the Mytinerary scheduling system}
+\label{fig:use_case_diagram}
+\end{figure}
+
+\subsection{Domain Model}
 Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
+
+\subsection{Constraints and Qualities}
+The non-functional requirements that Mytinerary will meet can be divided into three categories: security, performance, and usability.
+
+\subsubsection*{Security}
+\begin{itemize}
+    \item  Mytinerary shall ensure that login is protected using a strong hashing algorithm. This ensures that user data is kept safe if there is a partial database breach. The blowfish hashing function is provided by PHP’s hashing function 'password\_hash()' which generates a unique hash of a password. Unlike traditional md5 hash, hashing would produce two identical hashes if the same passwords was used. Using md5 would be valuable if a dictionary attack is performed.
+    \item Login timeouts will be implemented to discourage brute-force attempts at compromising a user's account. Specifically, Mytinerary will mandate a five minute wait if a user's password was incorrectly entered 10 times.
+    \item  Mytinerary shall ensure that data transactions between the application and server are secure by the blowfish encrypting algorithm. The scheduler is one page user interface which means that when passing serialized data of PHP objects they are vulnerable to changes if the client decides to alter the string. Thus encrypting the string would prevent any alternation and stay consistent.
+    \item  Forms are validated automatically through CodeIgniter’s form validation library. It filters html escape strings and cross site scripting (xss) attacks.
+    \item Server-client commmunication will be done using the HTTPS protocol.
+\end{itemize}
+
+\subsubsection*{Performance}
+\begin{itemize}
+    \item A page shall load in under a second, as tested on a Concordia computer using Concordia University's network.
+    \item The schedules shall be generated in under five seconds, as tested on a Concordia computer using Concordia University's network.
+\end{itemize}
+
+\subsubsection*{Usability}
+\begin{itemize}
+    \item  The web application should be cross-platform compatible usable through various mobile, tablet, and desktop systems. Various browsers support like the Google Chrome, Safari and edge by Microsoft. With the help of normalize it will render HTML and CSS consistent across all web browser. Mytinerary will be enable to support Legacy web browsers with the help of Modernizer. A library writing in JavaScript aids the browser with unsupported features.
+    \item There will be a minimum of ten preferences that a user can set in order to tailor the schedule generator to their individual needs.
+    \item There will be a maximum of three mouse clicks that a user will have to make in order to use any of the website's functions. This ensures that Mytinerary is easy to use for users of varying computer skills.
+\end{itemize}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.4\textwidth, angle=-90]{domain_model}
+\caption{Domain Model for the Mytinerary scheduling system}
+\label{fig:domain_model}
+\end{figure}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -932,6 +1052,7 @@ We are using slack to communicate, Google drive to share files and documents. an
 \vfill
 \newpage
 \section{Scoping}
+Based on the resource constraints listed above, we will not be implementing the Rate-my-Professor integration unless time permits. Due to the lack of a publicly available API, integrating Mytinerary with Rate-my-Professor's services would be time-consuming to implement, and it is not essential to the project's success. Likewise, support for the French language will not be included. It can be safely assumed that any Concordia student can speak English sufficiently well to navigate an English-based program scheduler website.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                             %---------------------------%       
@@ -1102,16 +1223,28 @@ The list of artifacts this project has and will produce are tabulated below. The
 \hline
 \textbf{Artifact}	&  \centering \textbf{Artifact Description} & \textbf{Target Date} & \textbf{Assigned to} \\ \hline \hline
 List of Proposed Roles          & Tentative list of the roles each team member has been assigned to.   & Jan. 8 \checkmark & All   \\ \hline
-Survey Results  & Results of survey conducted by Concordia Software Engineering students on their interest in proposed features. & Feb. 2 \checkmark & A. Power \\ \hline
+Survey Results  & Results of survey conducted by Concordia Software Engineering students on their interest in proposed features. & Feb. 12 & A. Power \\ \hline
 Project Requirements  & Tentative list of requirements for the project. Will be refined in the use cases and non-functional requirements artifacts. & Jan. 15 \checkmark & All \\ \hline
 Risk Analysis  & List of possible events that would impede project progress, along with an estimate for their likelihood and projected severity. & Feb. 5 \checkmark & J. Talarico \\ \hline
 Domain Model & Domain model for project. & Jan. 10 \checkmark & L. Lam, A. Power, J. Talarico \\ \hline
-Deliverable 1  & System overview and team members. & Jan. 13 \checkmark & L. Lam, A. Power, J. Talarico \\ \hline
+Deliverable 0  & System overview and team members document. & Jan. 13 \checkmark & L. Lam, A. Power, J. Talarico \\ \hline
 Use Cases and Use Case Diagram  &  Summary of functional requirements through use cases; graphical representation of the relationships between use cases through a use case diagram. & Feb. 2 \checkmark & A. Power \\ \hline
 Non-Functional Requirements  & Non-functional requirements to be implemented. & Feb. 6 \checkmark & K. Nguyen  \\ \hline
 Resource Evaluation & List of resources available -- both human and technical. Scoping down of project requirements based on resource limitations. & Feb. 6 \checkmark & A. Nguyen, A. Power \\ \hline
  Solution Sketch & High-level overview of project implementation. Includes description of high-level system architecture and technologies used. & Feb. 2 \checkmark & J. Talarico \\ \hline
-Plan  &  & Feb. 7 \checkmark & A. Power \\ \hline
+Plan  & Project schedule. Includes artifacts to complete and target dates for their completion. & Feb. 7 \checkmark & A. Power \\ \hline
+Deliverable 1  & Project scope and plan document. & Feb. 10 \checkmark & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+GitHub repository  & Remote git repository for hosting project files. & Jan. 8 \checkmark & L. Lam \\ \hline
+Web Server on Heroku & Webserver for hosting content of our website. & Feb. 7 \checkmark & L. Lam, R. Pang \\ \hline
+mySQL Database  & Populated database with course, student, and user information. & Feb. 5 \checkmark & J. Luo, P. Velauthapillai  \\ \hline
+Architecture Design Diagrams & Architecture design diagrams include the 4+1 Architectural View and UML diagrams. & Mar. 2 & P. Annamalai, A. Vu-Nguyen \\ \hline
+Prototype 1 & First prototype. Features to include: student login, password hashing with blowfish algorithm, news feed, course searching, user setting of some preferences, student viewing of academic record, schedule generation, return to homepage by clicking Mytinerary logo. & Mar. 2 & P. Annamalai, L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai, A. Vu-Nguyen \\ \hline
+Deliverable 2  & Project design document. & Mar. 8 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+Prototype 2 & Second prototype. Features to include: program director login, ability for program director to modify courses, more preferences that student can set, full encryption of communication between server and client, ability of students to view academic progress. & Mar. 15 & P. Annamalai, L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai, A. Vu-Nguyen \\ \hline
+Deliverable 3  & Project implementation and testing document. & Mar. 21 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+Prototype 3 & Third prototype. Implement remaining features. & Mar. 25 & L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai \\ \hline
+Final delivery & Incorporate any missing features from prototype 3, as well as bugs and deficiencies revealed through testing of prototype 3. & Apr. 1 & L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai \\ \hline
+Final deliverable  & Combination of previous deliverables. & Apr. 3 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
 \end{longtable}
 \end{center}
 
@@ -1156,6 +1289,8 @@ Technology		& Our site is being hosted using Heroku. If the serivice were to go 
 \newpage
 
 \section{Prototyping}
+The following sections describes the features that will be implemented for the first prototype. The current status of this prototype can be view at 
+http://myit.herokuapp.com; the reader is encouraged to view the website in its current state. A test user with the username "john\_smith" and password "password" can be used to explore the features of the site. The source code for the current prototype is included in Appendix A.
 
 Upon entering the website’s URL the user is presented with a login page. The login page features a brief description of the current situation. For instance, any course issues or service downtime would be displayed here. The users also have the ability to view courses in any given semester without needing to log in. The login system security is handled by hashing the entered username and password using the Blowfish algorithm and sent to the database for server side validation. 
 Once logged in, the users are sent to the default page with various options presented to them.  Additionally, there is also a section containing relevant news that will updated on a regular interval. This section is currently created by using JSON and the New York Times API (may be modified later on). 
