@@ -419,122 +419,268 @@ presented in Appendix A.
 
 \subsection{Functional Requirements}
 The following use cases summarize Mytinerary's functional requirements. Each
-use case will deal with two possible actors: a student, who will use the
+use case will deal with two possible \textbf{Actors:} a student, who will use the
 system to generate course schedules, and a program director, who can modify
 course and section information.
 
-Difficult and importance are scored on a scale of 1 to 10, with 10 denoting
-extremely high difficulty/importance.
+Difficult and importance are scored on a scale of 1 to 10 with 10 denoting extremely high difficulty/importance.\\
 
-
-\textbf{Use case:} Log in
-Actors: Student, program director
-Goal: Gain access to website services.
-Preconditions: User must be a registered user.
-Summary: User logs into the website by providing their username and password.
-Trigger: User enters their username and password into the respective fields.
-Basic course of events:
-1. System prompts the user to log in when the user accesses the website.
-2. User enters their username and password.
-3. System verifies the login information.
-4. User is logged in.
-Exception paths:
-1. System prompts the user to log in when the user accesses the website.
-2. User enters their username and password.
-3. System determines that either the username or password were entered incorrectly.
-4. User is informed of the failed login attempt and is asked to re-enter their
+\paragraph*{Use case:} Log in\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Gain access to website services.\\
+\textbf{Preconditions:} User must be a registered user in the system's database.\\
+\textbf{Summary:} User logs into the website by providing their username and password.\\
+\textbf{Trigger:} User enters their username and password into the respective fields.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item System prompts the user to log in when the user accesses the website.
+\item User enters their username and password.
+\item System verifies the login information.
+\item User is logged in.
+\end{enumerate}
+\textbf{Exception paths:}
+\begin{enumerate}
+\item System prompts the user to log in when the user accesses the website.
+\item User enters their username and password.
+\item System determines that either the username or password were entered incorrectly.
+\item User is informed of the failed login attempt and is asked to re-enter their
 user credentials.
-Postconditions: User is logged in, meaning that they have access to restricted content,
-including the user's private data.
-Difficult: 3
-Importance: 10
+\end{enumerate}
+\textbf{Postconditions:} User is logged in, meaning that they have access to restricted content, including the user's private data. This is accomplished by giving the user anauthentification cookie.\\
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 10\\
 
 
-Use case: Log out
-Actors: Student, program director
-Goal: Prevent future users of the browser section to have access to user's credentials.
-Preconditions: User must be logged in.
-Summary: User logs out of the system, preventing anyone who uses their browser
-afterwards from having access to the site under the user's name.
-Trigger: User indicates intention to log off.
-Basic course of action:
-1. User indicates intention to log off.
-2. User if logged off of the system.
-3. User is directed to the website's login page.
-Postconditions: User is logged off, meaning that they no longer have access
-to restricted content such as the user's private data.
-Difficulty: 2
-Importance: 10
+\paragraph*{Use case:} Log out \\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Prevent future users of the browser section to have access to user's credentials.\\
+\textbf{Preconditions:} User must be logged in. That is, user must have the required authentification cookie.\\
+\textbf{Summary:} User logs out of the system, preventing anyone who uses their browser afterwards from having access to the site under the user's name.\\
+\textbf{Trigger:} User indicates intention to log off.\\
+\textbf{Basic course of action:}
+\begin{enumerate}
+\item User indicates intention to log off.
+\item User if logged off of the system.
+\item User is directed to the website's login page.
+\end{enumerate}
+\textbf{Postconditions:} User is logged off, meaning that they no longer have access to restricted content such as the user's private data. This is accomplished by having the system no longer recognize the previous authentification cookie.\\
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 10\\
 
 
-Use case: Return to home page
-Actors: Student, program director
-Goal: Return to the website's home page.
-Precondition: User must be logged in.
-Summary: User indicates their intention to return to the home page in order to
-access all of the site's facilities.
-Trigger: User indicates intention to return to the home page.
-Basic course of events:
-1. User indicates intention to return to home page.
-2. User is brought to home page.
-Postconditions: User has been brought to website's homepage.
-Difficulty: 2
-Importance: 8
+\paragraph*{Use case:} Return to home page.\\
+\textbf{Actors:} Student, program director.\\
+\textbf{Goal:} Return to the website's home page.\\
+\textbf{Precondition:} User must be logged in. That is, user must have the required authentification cookie.\\
+\textbf{Summary:} User indicates their intention to return to the home page in order to access all of the site's facilities.\\
+\textbf{Trigger:} User indicates intention to return to the home page.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to return to home page.
+\item User is brought to home page.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 8\\
 
 
-Use case: View academic record
-Actors: Student
-Goal: View personal academic record.
-Preconditions: User must be logged in and in the home page.
-Summary: User indicates that they wish to view their academic record, at which
-point the system retrieves and displays their academic record.
-Trigger: User indicates that they wish to view their academic record.
-Basic course of events:
-1. User indicates intention to view academic record.
-2. Academic record is presented to user.
-Postconditions: Academic record is displayed.
-Difficulty: 2
-Importance: 7
+\paragraph*{Use case:} View academic record\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} View personal academic record.\\
+\textbf{Preconditions:} User must be logged in and in the home page.\\
+\textbf{Summary:} User indicates that they wish to view their academic record, at which point the system retrieves and displays their academic record.\\
+\textbf{Trigger:} User indicates that they wish to view their academic record.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item Academic record is presented to user.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 7\\
 
 
-Use case: View student's academic record
-Actors: Program director
-Goal: View the academic record of a selected student.
-Precondition: User must be a program director. Student must exist.
-Summary: Program director requests access to academic record of selected student,
-which is then displayed.
-Trigger: Program director indicates intention to view a student's academic record.
-Basic course of events:
-1. User indicates intention to view academic record.
-2. System prompts user to enter either the name of the student or the student's Concordia ID number.
-3. System verifies that user is a program director.
-4. System verifies that specified student exists.
-5. System retrieves student's academic record and displays it to the user.
-Exception paths:
-Student does not exist:
-1. User indicates intention to view academic record.
-2. System prompts user to enter either the name of the student or the student's Concordia ID number.
-3. System verifies that user is a program director.
-4. System determines that specified student does not exist.
-5. User is informed that specified student does not exist, and is prompted to re-enter
-the student's identifying information.
-User is not a program director:
-1. User indicates intention to view academic record.
-2. System prompts user to enter either the name of the student or the student's Concordia ID number.
-3. System determines that the user is not a program director. This shouldn't happen, as
-non-program directors will not be given the opportunity to even attempt to view
-a student's academic record other than their own; however, for extra security the
-system will perform this check.
-4. User presented with an error message and is immediately logged off.
-Postconditions: Specified student's academic record is displayed.
-Difficulty: 3
-Importance: 6
+\paragraph*{Use case:} View student's academic record\\
+\textbf{Actors:} Program director\\
+\textbf{Goal:} View the academic record of a selected student.\\
+\textbf{Precondition:} User must be a program director. Student must exist in the system's database.\\
+\textbf{Summary:} Program director requests access to academic record of selected student, which is then displayed.\\
+\textbf{Trigger:} Program director indicates intention to view a student's academic record.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System verifies that user is a program director.
+\item System verifies that specified student exists.
+\item System retrieves student's academic record and displays it to the user.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Student does not exist:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System verifies that user is a program director.
+\item System determines that specified student does not exist.
+\item User is informed that specified student does not exist, and is prompted to re-enter the student's identifying information
+\end{enumerate}.
+\textbf{User is not a program director:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System determines that the user is not a program director. This shouldn't happen, as non-program directors will not be given the opportunity to even attempt to view a student's academic record other than their own; however, for extra security the system will perform this check.
+\item User presented with an error message and is immediately logged off.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 6\\
 
 
-Use case: 
+\paragraph*{Use case:} View course listing\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} View a list of available courses.\\
+\textbf{Summary:} A list of all available courses, grouped by program and sorted in numerical order, is presented to the user.\\
+\textbf{Trigger:} User indicates intention to see course list.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicated intention to see course list.
+\item System retrieves list of courses and displays them to user in appropriate order.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 8\\
 
 
-\subsection{Domain Model}
+\paragraph*{Use case:} View academic progress\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} View current progress towards completing degree in Software Engineering.\\
+\textbf{Precondition:} User is logged in as a user. That is, user must have the required authentification cookie.\\
+\textbf{Included Use case:} View course listing.\\
+\textbf{Summary:} When accessing list of courses, system will present a summary of user's progress towards their Software Engineering degree.\\
+\textbf{Trigger:} User indicates intention to see course list.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to see course list.
+\item System retrieves list of courses (see \paragraph*{Use case:} View course listing).
+\item System accesses student's academic record to determine courses that have been
+completed.
+\item System compares completed courses versus required courses.
+\item System displays course list to user along with information highlighting their
+academic progress.
+\end{enumerate}
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 6\\
+
+
+\paragraph*{Use case:} View course details.\\
+\textbf{Actors:} Student, program director.\\
+\textbf{Goal:} View details of specified course.\\
+\textbf{Precondition:} Course exists in the system's database.\\
+\textbf{Summary:} Users enters a course number to view details such as location, number of credits, prerequisites, etc.\\
+\textbf{Trigger:} User enters course number into appropriate field.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Course does not exist:}
+\begin{enumerate}
+\item User indicates intention to view course details.
+\item User enters course number into appropriate field.
+\item System does not find any course matching that course number.
+\item User is informed that the specified course does not exist, and is re-prompted
+to enter a course number.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 8\\
+
+
+\paragraph*{Use case:} Modify course details.\\
+\textbf{Actors:} Program director.\\
+\textbf{Goal:} Modify the details of a course.\\
+\textbf{Extended Use case:} View course details\\
+\textbf{Precondition:} User is a program director. Course exists in the system's database.\\
+\textbf{Summary:} User specifies a course to modify. Properties of the course that can be modified include location, time, professor, class capacity, etc.\\
+\textbf{Trigger:} User enters course number into appropriate field.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\item System displays fields where user can edit course information.
+\item User enters new course information.
+\item System checks that user is a program director.
+\item System modifies course information based on user input.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Course does not exist:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System does not find any course matching that course number.
+\item User is informed that the specified course does not exist, and is re-prompted
+to enter a course number.
+\end{enumerate}
+\textbf{User is not a program director:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\item System displays fields where user can edit course information.
+\item User enters new course information.
+\item System confirms that user is not a program director. An error message is displayed
+and the user is logged off the system. This should not happen in practice, as the
+user should not be given the opportunity to even attempt to modify course information.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 7\\
+
+
+\paragraph*{Use case:} View news feed\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Present users with a news feed.\\
+\textbf{Precondition:} User is logged in and on the home page.\\
+\textbf{Summary:} User is presented with headlines of news around the world.\\
+\textbf{Trigger:} User is on the home page.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User is on the home page and is presented with headlines of current news.
+\end{enumerate}
+\textbf{Difficulty:} 5\\
+\textbf{Importance:} 2\\
+
+
+\paragraph*{Use case:} Set schedule preferences\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User sets their preferences for the type of schedule they want.\\
+\textbf{Precondition:} User is logged in.\\
+\textbf{Summary:} User sets their schedule preferences, which may include their available times, days they cannot go to school on, number of credits they wish to take, etc.\\
+\textbf{Trigger:} User requests to edit schedule preferences.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User requests to edit schedule preferences.
+\item System presents user with an interface to set preferences.
+\item User uses this interface to set their preferences, which the system then saves.
+\end{enumerate}
+\textbf{Postconditions:} User preferences are saved in the database.\\
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 9\\
+
+
+\paragraph*{Use case:} Select course for schedule\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User selects a course they wish to be added to their next schedule.\\
+\textbf{Precondition:} User is logged in and they are eligible to take the specified course.\\
+\textbf{Included use cases:} View course listing OR view course details.\\
+\textbf{Summary:} User adds a course they wish to be included in their next schedule.\\
+\textbf{Trigger:}\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a course to be added, either by searching specifically for the course
+(see use case View course details) or by selecting the course in the list of available courses
+(see use case View course listing).
+\end{enumerate}
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 9\\
+
+\subsubsection{Domain Model}
 Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
 
 
@@ -795,7 +941,7 @@ As the name suggests, the Model-View-Controller pattern can be broken down into 
 \paragraph*{Model}~\\
 The Model is where the data used in the program is permanently stored. The model acts as a sort of bridge between the view and controller component. It updates the View on pertinent changes that have been made, and allows the Controller to manipulate it's data content. 
 \paragraph*{View}~\\
-The View is where the information requested from the Model layer can be viewed. In our system, this would correspond to Mytinerary's HTML page. The View does not recieve any information from the Controller whatsoever. All data received by the View is given upon requesting it from the Model. This happens when a method from the Controller changes data in the Model. The Model then informs the View of these changes.
+The View is where the information requested from the Model layer can be viewed. In our system, this would correspond to Mytinerary's HTML page. The View does not receive any information from the Controller whatsoever. All data received by the View is given upon requesting it from the Model. This happens when a method from the Controller changes data in the Model. The Model then informs the View of these changes.
 %
 \paragraph*{Controller}~\\
 The job of the Controller is to take in any information that is passed by the user, and update the Model accordingly. The Controller does not interact with the View directly, but instead changes the data held by the Model. It is important to note that changes made by the Controller are initiated by user interactions.
