@@ -265,7 +265,7 @@ Figure \ref{fig:domain_model} illustrates a domain model for our system. The pri
 
 # Constraints and Qualities #
 Security
-Security is a important requirement, the Mytinerary website has many security contraints. The passwords are protected by a hashing algorithm, which means that the password is scrambled. 
+Security is an important requirement, the Mytinerary website shall ensure that data is protected. The datas are protected by unauthorized access by a hashing algorithm, called blowfish encryption algorithm. 
 
 Speed
 
