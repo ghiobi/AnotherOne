@@ -12,6 +12,18 @@
 \usepackage{todonotes}
 \usepackage[margin=1.2in]{geometry}
 \usepackage{listings}
+\usepackage{color}
+
+\usepackage{longtable}  % Multipage tables
+
+\usepackage{hyperref}   % Clickable table of contents + references
+\hypersetup {
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 % Mark's packages...trust in MOW
 \usepackage{float}		% this is to place figures where requested!
@@ -296,7 +308,8 @@
     postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
 }
 
-
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
 
 \begin{document}
 
@@ -382,6 +395,9 @@ Anhkhoi \textsc{Vu-Nguyen}    \\
 \vfill % Fill the rest of the page with whitespace
 
 \end{titlepage}
+
+% <3 LaTeX
+\tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -994,7 +1010,6 @@ Apache is an open-source web server software. We chose it because it is currentl
 %
 \paragraph*{Heroku}~\\
 Heroku is a Platform-as-a-Service (PaaS), which allows it's users to host a database on a remote server. We chose Heroku because other web hosting services were not working properly with Mytinerary. Heroku was user-friendly and had extensive documentation making it easy to learn.
-\todo[inline] {Add this!}
 %
 \paragraph*{MySQL}~\\
 MySQL is a Database Management system which uses relational databases. We chose MySQL as it is easy to use, very popular and has excellent support. We also chose it because our programming team was very familiar with it. We will be using the most recent stable release, 5.7.10.
@@ -1038,7 +1053,87 @@ Gliffy is an online web diagram editor with was used to make all UMLs and Domain
 \vfill
 \newpage
 \section{Plan}
+\subsection{Activities}
+The following are the main activities that have been or will be undertaken to reach
+the project goals.
 
+\subsection*{Planning Activities}
+\paragraph*{Division of Roles:}The purpose of this activity is to determine which team members will assigned to each of the project roles, which includes documentation, implementation, and testing. The result of this activity will be a list of proposed roles for each team member, which will be included in the first deliverable.
+
+\paragraph*{Survey:}A survey of Concordia Software Engineering students will be conducted to gauge user interest in proposed features. The results of the survey will be included in the second deliverable.
+
+\paragraph*{Setting Project Requirements:}The purpose of this activity is to fix the project requirements. These include mandatory features necessary to meet the minimum project requirements, as well as additionally features which would enhance Mytinerary's overall quality. These requirements will be collected to form a list of requirements, which if necessary will be scoped down.
+
+\paragraph*{Risk Analysis:}Risk analysis will be undertaken to identify those events and circumstances that will put the project's success in jeopardy should they occur. The purpose of risk analysis is to assist us in initiating proactive measures to reduce the probability that these events take place. The risk analysis will be included in the second deliverable.
+
+\subsection*{Design Activities}
+
+\paragraph*{Create Domain Model:}A domain model consists of high-level overview of the domain level objects, their attributes, and the associations between them. The purpose of creating a domain model is to assist the high-level organization of the project. The domain model will be included in the first deliverable
+
+\paragraph*{Specify Use Cases}The project's expected functional requirements will be organized into a series of use cases and graphically displayed in a use case diagram, which will be included in the second deliverable.
+
+\paragraph*{Specify Non-functional Requirements:}As an extension of the \emph{setting project requirements} activity and a complement to the \emph{specify use cases} activity, a list of non-functional requirements will be made and included in the second deliverable.
+
+\paragraph*{Resource Evaluation and Scoping:}The purpose of this activity is to determine the human and technical resources available to our project, which will be used to scope down the project goals if necessary. The resource evaluation and scoping will be included in the second deliverable.
+
+\paragraph*{Create Solution Sketch:}The solution sketch presents an overview of the how we chose to implement the project requirements. This includes both the high-level project architecture as well as the specific technologies what will be used. The solution sketch will be included in the second deliverable.
+
+\paragraph*{Plan:}The purpose of this activity is to create a schedule for the project to ensure that all requirements can be implemented in time for the final delivery date. The project plan will be included in the second deliverable.
+
+\subsection*{Implementation Activities}
+\paragraph*{Create GitHub Repository}The creation of a GitHub repository facilitates the integration of code and project documents that individual team members create.
+
+\paragraph*{Setup Website Server:}The initialization of a web server on Heroku to host our website is a necessary step in the creation of prototypes and eventually the final product.
+
+\paragraph*{Setup mySQL Database:}The system's database will have to be populated with course, student, and user information in order for the system to work effectively.
+
+\paragraph*{Create Architecture Design Diagrams:}Architecture design diagrams, including the 4+1 Architectural View and UML diagrams, will be created to facilitate the detailed design of the system. These diagrams will be included in the third deliverable.
+
+\paragraph*{Create and Test Prototypes 1, 2, and 3:}The system will be delivered in three prototypes, each adding increasing functionality. The delivery of a particular prototype will be followed by rigorous testing to ensure the prototypes meets the specified requirements. The third prototype will be tested with actual Concordia students (outside of our own group), and their feedback will be incorporated into the final delivery.
+
+\paragraph*{Create and Test Final Delivery:}After the third prototype has been completed and tested, the final delivery will be assembled and tested before being pushed into production.
+
+\subsection{Artifacts}
+\begin{center}
+\begin{longtable}{| p{4cm} | p{7cm} | p{2cm} | p{2cm} |}
+\hline
+\textbf{Artifact}	&  \centering \textbf{Artifact Description} & \textbf{Target Date} & \textbf{Assignment} \\ \hline \hline
+List of Proposed Roles          & Tentative list of the roles each team member has been assigned to.   & \color{green}Jan. 8 & All   \\ \hline
+Estimation  & The project has been given 3 months to complete. The length of time allotted to each step must be properly estimated because if the deadline is not met, we will not be given an extension. & Medium & Catastrophic \\ \hline
+\end{longtable}
+\end{center}
+
+
+
+%% RISK%%
+\subsection{Risk} 
+The perceived likelihood of the risks can be measured by Low, Medium or High. The effects of a risk can be broken up into four categories: insignificant, tolerable, serious and catastrophic.
+
+\begin{center}
+\begin{longtable}{| p{2cm} | p{9cm} | p{2cm} | p{2cm} |}
+\hline
+\textbf{Risk Type}	&  \centering \textbf{Risk Description} & \textbf{Probability} & \textbf{Effects} \\ \hline \hline
+People          & The group relies on one particular programmer to help with troubleshooting the more unfamiliar software. If he were to become seriously ill, or had to withdraw from the project due to personal reasons, the project's progress would slow dramatically.   & Medium & Catastrophic.    \\ \hline
+Estimation  & The project has been given 3 months to complete. The length of time allotted to each step must be properly estimated because if the deadline is not met, we will not be given an extension. & Medium & Catastrophic \\ \hline
+
+Technology		& Only one person is familiar with the CodeIgniter framework that is being used. Although it does not have a steep learning curve, it may take some programmers  time before becoming fully familiar with the tool. This can cause the project to take more time than expected. & High & Serious \\ \hline	 
+Technology		& Not all our programmers are familiar with PHP. This could result in result in the project taking longer than expected, since some members cannot contribute to that portion. & Low & Serious \\ 	\hline	
+Organization  & There are a large number of people collaborating in this project. If there is any hostility between members, the groups communication and cooperation may be negatively effected. & Low & Serious \\ \hline
+Security		&  Our scheduler site uses HTTP, which is not a secure protocol. This means that anyone could potential intercept data being transmitted. & Low & Serious \\ \hline
+
+Technology		&  Only two people in the documentation team are familiar with LaTeX. This may create a time bottle-neck since all of the writing done must be sent to two people, who can then properly format the documentation in LaTeX. & High & Tolerable\\ \hline
+Organization  &  Communication between members is key to a seamless project. Some members may not be reachable for period of time, due to an unwillingness to cooperate. & Medium & Tolerable\\ \hline
+Organization  &  If our scheduler receives an overwhelming number of requests users will experience high latency, which will negatively effect their experience. & Low & Tolerable\\ \hline
+Technology		&  Our programmers collaborate using GitHub. It the service goes down temporarily, our project comes to a halt as no one can access the source code. & Low & Tolerable\\ \hline
+
+Technology		&  All of our group communication is done through Slack. If the site goes down, members will not be able to communicate will one another. However, because there are many other communication platform, this is not serious. & Low & Insignificant \\ \hline
+Technology		& Our site is being hosted using Heroku. If the serivice were to go down, users would not have any way of accessing our scheduler. However, because there are many other hosting companies, this is not serious.  & Low & Insignificant \\ \hline
+
+
+
+\end{longtable}
+\end{center}
+%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                              %---------------------------%       
