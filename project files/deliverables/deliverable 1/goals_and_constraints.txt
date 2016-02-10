@@ -261,3 +261,16 @@ Importance: 9
 
 # Domain Model #
 Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
+
+
+# Constraints and Qualities #
+Security
+Security is a important requirement, the Mytinerary website has many security contraints. The passwords are protected by a hashing algorithm, which means that the password is scrambled. 
+
+Speed
+
+Usability 
+
+Performance 
+
+Platform Compatibility
