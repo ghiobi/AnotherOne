@@ -265,7 +265,7 @@ Figure \ref{fig:domain_model} illustrates a domain model for our system. The pri
 
 # Constraints and Qualities #
 Security
-Mytinerary shall ensure that login is protected a strong hashing algorithm. The blowfish hashing function is provided by PHP’s hashing function ‘password_hash()’ which generate a unique hash of a password. Unlike traditional md5 hash, hashing would produce two identical hashes if the same passwords was used. Using md5 would be valuable if a dictionary attack is performed.
+Mytinerary shall ensure that login is protected using a strong hashing algorithm. The blowfish hashing function is provided by PHP’s hashing function ‘password_hash()’ which generates a unique hash of a password. Unlike traditional md5 hash, hashing would produce two identical hashes if the same passwords was used. Using md5 would be valuable if a dictionary attack is performed.
  
 Mytinerary shall ensure that data transactions between the application and server are secure by the blowfish encrypting algorithm. The scheduler is one page user interface which means that when passing serialized data of PHP objects they are vulnerable to changes if the client decides to alter the string. Thus encrypting the string would prevent any alternation and stay consistent.  
  
