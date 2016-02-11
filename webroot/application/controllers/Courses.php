@@ -12,8 +12,7 @@ class Courses extends CI_Controller
 
     function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
-        if($SEMESTER != NULL)
-            $SEMESTER = str_replace('-', ' ', $SEMESTER);
+        $SEMESTER = str_replace('-', ' ', $SEMESTER);
 
         //Loading header
         if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)

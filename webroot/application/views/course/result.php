@@ -1,5 +1,6 @@
 <?php
-    defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+    defined('BASEPATH') OR exit('No direct script access allowed');
+    $weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']?>
 
 <main class="container">
 
@@ -45,21 +46,21 @@
 
                                     foreach($section['lect'] as $lecture)
                                     {
-                                        echo '<tr><td colspan="3"></td><td>' . $lecture->room . '</td><td>' . my_time($lecture->start) . '</td><td>' . my_time($lecture->end) . '</td><td>' . jddayofweek($lecture->weekday - 1 % 7, 1) . '</td></tr>';
+                                        echo '<tr><td colspan="3"></td><td>' . $lecture->room . '</td><td>' . my_time($lecture->start) . '</td><td>' . my_time($lecture->end) . '</td><td>' . $weekday[$lecture->weekday] . '</td></tr>';
                                     }
 
                                     if($section['tuts'])
                                     {
                                         echo '<tr><th colspan="7">Tutorials</th></tr>';
                                         foreach ($section['tuts'] as $tutorial)
-                                            echo '<tr><td>' . $tutorial->letter . '</td><td>' . $tutorial->instructor . '</td><td>' . $tutorial->capacity . '</td><td>' . $tutorial->room . '</td><td>' . my_time($tutorial->start) . '</td><td>' . my_time($tutorial->end) . '</td><td>' . jddayofweek($tutorial->weekday - 1 % 7, 1) . '</td></tr>';
+                                            echo '<tr><td>' . $tutorial->letter . '</td><td>' . $tutorial->instructor . '</td><td>' . $tutorial->capacity . '</td><td>' . $tutorial->room . '</td><td>' . my_time($tutorial->start) . '</td><td>' . my_time($tutorial->end) . '</td><td>' . $weekday[$tutorial->weekday] . '</td></tr>';
                                     }
 
                                     if($section['labs'])
                                     {
                                         echo '<tr><th colspan="7">Laboratories</th></tr>';
                                         foreach ($section['labs'] as $laboratory)
-                                            echo '<tr><td>' . $laboratory->letter . '</td><td>' . $laboratory->instructor . '</td><td>' . $laboratory->capacity . '</td><td>' . $laboratory->room . '</td><td>' . my_time($laboratory->start) . '</td><td>' . my_time($laboratory->end) . '</td><td>' . jddayofweek($laboratory->weekday - 1 % 7, 1) . '</td></tr>';
+                                            echo '<tr><td>' . $laboratory->letter . '</td><td>' . $laboratory->instructor . '</td><td>' . $laboratory->capacity . '</td><td>' . $laboratory->room . '</td><td>' . my_time($laboratory->start) . '</td><td>' . my_time($laboratory->end) . '</td><td>' . $weekday[$laboratory->weekday] . '</td></tr>';
                                     }
 
                                 ?>

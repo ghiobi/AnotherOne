@@ -57,24 +57,40 @@ $(function()
     //Search
     $srch_input.keyup(function()
     {
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/ajax_search_course',
-            data: {input: $srch_input.val()},
-            success: function(output){
-                console.log(output);
-            }
-        });
+        var srch_val = $srch_input.val();
+
+        if(srch_val.length > 1)
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/search',
+                data: {input: srch_val},
+                success: function(output){
+                    console.log(output);
+                }
+            });
     });
 
     //My schedule
     var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
 
-    MySchedule.emptyTimeBlocks();
-    MySchedule.setTableProperties({class: 'table table-bordered table-condensed', style: 'color: black'});
-    MySchedule.addBlock('HEhe', '8:45', '10:00', 1);
-    MySchedule.addBlock('HEhe', '8:45', '10:00', 3);
-    MySchedule.addBlock('What block is this', '9:00', '10:00', 2);
+    MySchedule.emptyBlocks();
+    MySchedule.setTableAttr({
+        class: 'table table-bordered table-condensed',
+        style: 'color: black'
+    });
+    MySchedule.setBlockAttr({
+        style: 'background-color: #00cc99; text-align:center; vertical-align:middle'
+    });
+    MySchedule.addBlock('SOEN 341', '8:45', '10:00', 3);
+    MySchedule.addBlock('SOEN 341', '8:45', '10:00', 5);
+    MySchedule.addBlock('ENGR 242', '11:45', '13:00', 2);
+    MySchedule.addBlock('ENGR 242', '11:45', '13:00', 4);
+    MySchedule.addBlock('SOEN 341', '12:15', '13:05', 5);
+    MySchedule.addBlock('ENGR 371', '10:15', '11:05', 5);
+    MySchedule.addBlock('ENGR 371', '14:45', '16:00', 2);
+    MySchedule.addBlock('ENGR 371', '14:45', '16:00', 4);
+    MySchedule.addBlock('ENGR 242', '17:45', '19:25', 5);
+
     MySchedule.render();
 
 
