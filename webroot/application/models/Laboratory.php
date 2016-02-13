@@ -29,7 +29,7 @@ class Laboratory extends CI_Model
             SELECT
               *
             FROM laboratories
-            WHERE id = '$lab_id'")->result();
+            WHERE id = '$lab_id'")->row();
     }
 
 }

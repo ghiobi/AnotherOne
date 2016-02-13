@@ -5,50 +5,31 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Schedule
 {
-    private $courses;
-    private $sectionGroups;
+    private $section;
 
     /**
      * Schedule constructor.
-     * @param $courses
-     * @param $sectionGroups
+     * @param $section
      */
-    public function __construct($courses, $sectionGroups)
+    public function __construct(Array $section)
     {
-        $this->courses = $courses;
-        $this->sectionGroups = $sectionGroups;
+        $this->sectionGroups = $section;
     }
 
     /**
      * @return mixed
      */
-    public function getCourses()
+    public function getSection()
     {
-        return $this->courses;
+        return $this->section;
     }
 
     /**
-     * @param mixed $courses
+     * @param array $section
      */
-    public function setCourses($courses)
+    public function setSection(Array $section)
     {
-        $this->courses = $courses;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSectionGroups()
-    {
-        return $this->sectionGroups;
-    }
-
-    /**
-     * @param mixed $sectionGroups
-     */
-    public function setSectionGroups($sectionGroups)
-    {
-        $this->sectionGroups = $sectionGroups;
+        $this->section = $section;
     }
 
 

@@ -3,12 +3,13 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class TimeBlock
+ * Class TimeBlock -
  * @package Scheduler
  */
 class TimeBlock
 {
 
+    private $id;
     private $start_time;
     private $end_time;
     private $weekday;
@@ -20,7 +21,7 @@ class TimeBlock
      * @param $weekday
      * @throws Exception If start time is greater than end time.
      */
-    function __construct($start_time, $end_time, $weekday)
+    function __construct($id, $room, $start_time, $end_time, $weekday)
     {
         $this->start_time = new \DateTime($start_time);
         $this->end_time = new \DateTime($end_time);
@@ -80,6 +81,8 @@ class TimeBlock
     }
 
     /**
+     * Returns true if a time block overlaps anotherone one.
+     *
      * @param TimeBlock $block
      * @return bool
      */

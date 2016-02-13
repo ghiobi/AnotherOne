@@ -13,33 +13,14 @@ class LectureBlock extends TimeBlock
     /**
      * LectureBlock constructor.
      * @param $room
-     * @param $time
      * @param $start_time
      * @param $end_time
      * @param $weekday
      */
-    public function __construct($room, $time, $start_time, $end_time, $weekday)
+    public function __construct($room, $start_time, $end_time, $weekday)
     {
         parent::__construct($start_time, $end_time, $weekday);
         $this->room = $room;
-        $this->time = $time;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    /**
-     * @param mixed $time
-     */
-    public function setTime($time)
-    {
-        $this->time = $time;
     }
 
     /**
@@ -57,7 +38,5 @@ class LectureBlock extends TimeBlock
     {
         $this->room = $room;
     }
-
-
 
 }

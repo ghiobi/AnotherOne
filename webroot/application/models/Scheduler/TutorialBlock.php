@@ -13,7 +13,6 @@ class TutorialBlock extends TimeBlock
     private $letter;
     private $capacity;
     private $room;
-    private $time;
 
     /**
      * TutorialBlock constructor.

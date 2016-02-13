@@ -26,7 +26,7 @@ class GroupSection
      * @param Tutorial|NULL $tutorial
      * @param Laboratory|NULL $laboratory
      */
-    public function __construct($course_id, $section_id, $instructor, $capacity, $letter, Lecture $lecture, Tutorial $tutorial = NULL, Laboratory $laboratory = NULL)
+    public function __construct($course_id, $section_id, $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
     {
         $this->course_id = $course_id;
         $this->section_id = $section_id;
@@ -161,10 +161,11 @@ class GroupSection
     public function getTimeBlocks()
     {
         $array = [];
-        array_push($array, $this->lecture);
-        if(!$this->tutorial)
+        foreach ($this->lecture as $lect)
+            array_push($array, $lect);
+        if($this->tutorial != NULL)
             array_push($array, $this->tutorial);
-        if(!$this->laboratory)
+        if($this->laboratory != NULL)
             array_push($array, $this->laboratory);
         return $array;
     }
@@ -182,7 +183,8 @@ class GroupSection
      * @param GroupSection $sectionGroup
      * @return bool
      */
-    public function overlaps(GroupSection $sectionGroup){
+    public function overlaps(GroupSection $sectionGroup)
+    {
         $thisGroup = $this->getTimeBlocks();
         $thatGroup = $sectionGroup->getTimeBlocks();
 
@@ -190,11 +192,11 @@ class GroupSection
         {
             foreach($thatGroup as $thatG)
             {
-                if($thisG.overlaps($thatG))
+                if($thisG->overlaps($thatG))
                     return TRUE;
             }
         }
-
+        return FALSE;
     }
 
 }

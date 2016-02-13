@@ -117,7 +117,7 @@ class Section extends CI_Model
             SELECT
               *
             FROM sections
-            WHERE id = '$section_id'")->result();
+            WHERE id = '$section_id'")->row();
     }
 
 }
