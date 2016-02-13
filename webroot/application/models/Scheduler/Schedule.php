@@ -9,11 +9,11 @@ class Schedule
 
     /**
      * Schedule constructor.
-     * @param $section
+     * @param array $section
      */
-    public function __construct(Array $section)
+    public function __construct(array $section)
     {
-        $this->sectionGroups = $section;
+        $this->section = $section;
     }
 
     /**
@@ -32,6 +32,14 @@ class Schedule
         $this->section = $section;
     }
 
-
+    public function toJSON()
+    {
+        $array = [];
+        foreach($this->section as $section)
+        {
+            array_push($array, $section->toArray());
+        }
+        return json_encode($array);
+    }
 
 }

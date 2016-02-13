@@ -79,4 +79,5 @@ class LaboratoryBlock extends Block
     {
         $this->capacity = $capacity;
     }
+
 }

@@ -5,6 +5,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class GroupSection
 {
     private $course_id;
+    private $course_name;
+    private $course_subject;
+    private $course_number;
+
     private $section_id;
 
     private $instructor;
@@ -21,9 +25,10 @@ class GroupSection
      * @param $section_id
      * @param $instructor
      * @param $capacity
-     * @param array $lecture
-     * @param Tutorial|NULL $tutorial
-     * @param Laboratory|NULL $laboratory
+     * @param $letter
+     * @param $lecture
+     * @param TutorialBlock|NULL $tutorial
+     * @param LaboratoryBlock|NULL $laboratory
      */
     public function __construct($course_id, $section_id, $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
     {
@@ -200,6 +205,35 @@ class GroupSection
             }
         }
         return FALSE;
+    }
+
+    public function toArray()
+    {
+        $lectures = [];
+
+        foreach($this->lecture as $lecture)
+            array_push($lectures, $lecture->toArray());
+
+        $tutorials = NULL;
+        if($this->tutorial != NULL)
+            $tutorials = $this->tutorial->toArray();
+
+        $laboratory = NULL;
+        if($this->laboratory != NULL)
+            $laboratory = $this->laboratory->toArray();
+
+        $array = [
+            'lectures' => $lectures,
+            'tutorial' => $tutorials,
+            'laboratory' => $laboratory
+        ];
+
+        return $array;
+    }
+
+    public function getJSON()
+    {
+        return json_encode($this->toArray());
     }
 
 }

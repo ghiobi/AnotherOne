@@ -43,12 +43,8 @@ class Scheduler extends CI_Model
 			array_push($sectionGroups, $this->groupSectionFactory($sect->course_id, $sect->section_id, $sect->tutorial_id, $sect->laboratory_id));
 		}
 
-		$start = microtime(true);
-		var_dump($sectionGroups[0]->overlaps($sectionGroups[1]));
-		var_dump(microtime(true)-$start);
-		die();
-
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups);
+		die($this->main_schedule->toJSON());
 	}
 	
 	function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)

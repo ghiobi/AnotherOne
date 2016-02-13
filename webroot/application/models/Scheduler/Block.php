@@ -72,7 +72,7 @@ class Block
      */
     public function getStartTime()
     {
-        return $this->start_time;
+        return $this->start_time->format('G:i');
     }
 
     /**
@@ -88,7 +88,7 @@ class Block
      */
     public function getEndTime()
     {
-        return $this->end_time;
+        return $this->end_time->format('G:i');
     }
 
     /**
@@ -121,7 +121,7 @@ class Block
      * @param Block $block
      * @return bool
      */
-    function overlaps(Block $block)
+    public function overlaps(Block $block)
     {
         if($this->weekday != $block->weekday)
             return FALSE;
@@ -130,6 +130,17 @@ class Block
         if($block->start_time <= $this->start_time && $this->start_time  <= $block->end_time)
             return TRUE;
         return FALSE;
+    }
+
+    public function toArray()
+    {
+        $array = [
+            'room' => $this->room,
+            'start' => $this->getStartTime(),
+            'end' => $this->getEndTime(),
+            'weekday' => $this->weekday
+        ];
+        return $array;
     }
 
 }

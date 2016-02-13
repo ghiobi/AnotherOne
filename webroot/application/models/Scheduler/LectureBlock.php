@@ -21,5 +21,4 @@ class LectureBlock extends Block
     }
 
 
-
 }
