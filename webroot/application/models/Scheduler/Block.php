@@ -9,10 +9,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Block
 {
     private $id;
-    private $room;
-    private $start_time;
-    private $end_time;
-    private $weekday;
+    public $room;
+    public $start_time;
+    public $end_time;
+    public $weekday;
 
     /**
      * Block constructor.
@@ -24,8 +24,8 @@ class Block
      */
     function __construct($id, $room, $start_time, $end_time, $weekday)
     {
-        $this->id;
-        $this->room;
+        $this->id = $id;
+        $this->room = $room;
         $this->start_time = new \DateTime($start_time);
         $this->end_time = new \DateTime($end_time);
         if($this->end_time < $this->start_time)
@@ -132,15 +132,5 @@ class Block
         return FALSE;
     }
 
-    public function toArray()
-    {
-        $array = [
-            'room' => $this->room,
-            'start' => $this->getStartTime(),
-            'end' => $this->getEndTime(),
-            'weekday' => $this->weekday
-        ];
-        return $array;
-    }
 
 }

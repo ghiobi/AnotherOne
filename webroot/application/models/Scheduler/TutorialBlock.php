@@ -9,9 +9,9 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  */
 class TutorialBlock extends Block
 {
-    private $instructor;
-    private $letter;
-    private $capacity;
+    public $instructor;
+    public $letter;
+    public $capacity;
 
     /**
      * TutorialBlock constructor.

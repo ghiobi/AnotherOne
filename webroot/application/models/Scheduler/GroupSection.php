@@ -5,19 +5,19 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class GroupSection
 {
     private $course_id;
-    private $course_name;
-    private $course_subject;
-    private $course_number;
+    public $course_name;
+    public $course_subject;
+    public $course_number;
 
     private $section_id;
 
-    private $instructor;
-    private $capacity;
-    private $letter;
+    public $instructor;
+    public $capacity;
+    public $letter;
 
-    private $lecture;
-    private $tutorial;
-    private $laboratory;
+    public $lecture;
+    public $tutorial;
+    public $laboratory;
 
     /**
      * GroupSection constructor.
@@ -30,9 +30,12 @@ class GroupSection
      * @param TutorialBlock|NULL $tutorial
      * @param LaboratoryBlock|NULL $laboratory
      */
-    public function __construct($course_id, $section_id, $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
+    public function __construct($course_id, $course_name, $course_subject, $course_number, $section_id, $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
     {
         $this->course_id = $course_id;
+        $this->course_name = $course_name;
+        $this->course_subject = $course_subject;
+        $this->course_number = $course_number;
         $this->section_id = $section_id;
         $this->instructor = $instructor;
         $this->capacity = $capacity;
@@ -205,35 +208,6 @@ class GroupSection
             }
         }
         return FALSE;
-    }
-
-    public function toArray()
-    {
-        $lectures = [];
-
-        foreach($this->lecture as $lecture)
-            array_push($lectures, $lecture->toArray());
-
-        $tutorials = NULL;
-        if($this->tutorial != NULL)
-            $tutorials = $this->tutorial->toArray();
-
-        $laboratory = NULL;
-        if($this->laboratory != NULL)
-            $laboratory = $this->laboratory->toArray();
-
-        $array = [
-            'lectures' => $lectures,
-            'tutorial' => $tutorials,
-            'laboratory' => $laboratory
-        ];
-
-        return $array;
-    }
-
-    public function getJSON()
-    {
-        return json_encode($this->toArray());
     }
 
 }

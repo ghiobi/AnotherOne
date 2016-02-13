@@ -12,10 +12,6 @@ function WeeklySchedule(elm) {
 
     this.tattr = [];
 	
-	this.maxtime=moment('8:15', 'HH:mm');
-	
-	this.mintime=moment('20:00', 'HH:mm');
-	
 	this.sweek2 = 1; //weekday
     this.eweek2	= 5;
 	
@@ -29,7 +25,7 @@ function WeeklySchedule(elm) {
     this.eweek = 5;
 
     this.stime = moment('8:15', 'HH:mm');
-    this.etime = moment('20:00', 'HH:mm');
+    this.etime = moment('23:00', 'HH:mm');
 
     this.setTableAttr = function (prop) {
         this.tattr = prop;
@@ -53,7 +49,7 @@ function WeeklySchedule(elm) {
         this.tblocks = [];
     }
 	
-	this.setStartTime()=function()
+	this.setStartTime=function()
 	{
 		//i have no idea what im doing
 	 for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
@@ -78,7 +74,7 @@ function WeeklySchedule(elm) {
 	}
 	
 	
-	this.setEndTime()=function()
+	this.setEndTime=function()
 	{
 		
 		
@@ -102,7 +98,7 @@ function WeeklySchedule(elm) {
 		
 		
 	}
-	this.setStartWeekday()=function()
+	this.setStartWeekday=function()
 	{
 		
 		
@@ -122,7 +118,7 @@ function WeeklySchedule(elm) {
 	}
 	return sweek2;
 	}
-	this.setEndWeekday()=function()
+	this.setEndWeekday=function()
 	{
 		
 		

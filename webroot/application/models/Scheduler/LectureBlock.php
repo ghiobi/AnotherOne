@@ -11,6 +11,8 @@ class LectureBlock extends Block
 
     /**
      * LectureBlock constructor.
+     * @param $id
+     * @param $room
      * @param $start_time
      * @param $end_time
      * @param $weekday

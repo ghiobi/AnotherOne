@@ -76,7 +76,7 @@ class Students extends App_Base_Controller
 
 			//Returns information of preferences and the schedule.
 			case 'load': {
-
+				echo $this->scheduler->getMainSchedule();
 			} break;
 
 			//Returns a list of courses the user can take.

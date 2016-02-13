@@ -20,19 +20,20 @@ class Scheduler extends CI_Model
 	private $semester_id;
 	private $main_schedule;
 
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
 		//Loading useful models for the scheduler;
 		$this->load->model('student');
+		$this->load->model('course');
 		$this->load->model('section');
 		$this->load->model('lecture');
 		$this->load->model('tutorial');
 		$this->load->model('laboratory');
 	}
 
-	function init($semester_id)
+	public function init($semester_id)
 	{
 		$this->semester_id = $semester_id;
 
@@ -44,10 +45,14 @@ class Scheduler extends CI_Model
 		}
 
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups);
-		die($this->main_schedule->toJSON());
 	}
-	
-	function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+
+	public function getMainSchedule()
+	{
+		return $this->main_schedule->toJSON();
+	}
+
+	public function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
 	{
 
 		$tutorial = NULL;
@@ -70,8 +75,9 @@ class Scheduler extends CI_Model
 		}
 
 		$section = $this->section->getBySectID($section_id);
+		$course = $this->course->getByID($course_id);
 
-		return new Scheduler\GroupSection($course_id, $section_id, $section->professor, $section->capacity, $section->letter, $lectArray, $tutorial, $laboratory);
+		return new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section_id, $section->professor, $section->capacity, $section->letter, $lectArray, $tutorial, $laboratory);
 	}
 
 }

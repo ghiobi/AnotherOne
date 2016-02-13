@@ -5,7 +5,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Schedule
 {
-    private $section;
+    public $sections;
 
     /**
      * Schedule constructor.
@@ -13,33 +13,27 @@ class Schedule
      */
     public function __construct(array $section)
     {
-        $this->section = $section;
+        $this->sections = $section;
     }
 
     /**
      * @return mixed
      */
-    public function getSection()
+    public function getSections()
     {
-        return $this->section;
+        return $this->sections;
     }
 
     /**
-     * @param array $section
+     * @param array $sections
      */
-    public function setSection(Array $section)
+    public function setSections(Array $sections)
     {
-        $this->section = $section;
+        $this->sections = $sections;
     }
 
-    public function toJSON()
-    {
-        $array = [];
-        foreach($this->section as $section)
-        {
-            array_push($array, $section->toArray());
-        }
-        return json_encode($array);
+    public function toJSON(){
+        return die(json_encode($this, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT ));
     }
 
 }
