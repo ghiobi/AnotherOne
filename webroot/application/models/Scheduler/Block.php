@@ -6,23 +6,26 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * Class TimeBlock -
  * @package Scheduler
  */
-class TimeBlock
+class Block
 {
-
     private $id;
+    private $room;
     private $start_time;
     private $end_time;
     private $weekday;
 
     /**
-     * TimeBlock constructor.
+     * Block constructor.
+     * @param $id
+     * @param $room
      * @param $start_time
      * @param $end_time
      * @param $weekday
-     * @throws Exception If start time is greater than end time.
      */
     function __construct($id, $room, $start_time, $end_time, $weekday)
     {
+        $this->id;
+        $this->room;
         $this->start_time = new \DateTime($start_time);
         $this->end_time = new \DateTime($end_time);
         if($this->end_time < $this->start_time)
@@ -33,7 +36,39 @@ class TimeBlock
     }
 
     /**
-     * @return DateTime
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRoom()
+    {
+        return $this->room;
+    }
+
+    /**
+     * @param mixed $room
+     */
+    public function setRoom($room)
+    {
+        $this->room = $room;
+    }
+
+    /**
+     * @return \DateTime
      */
     public function getStartTime()
     {
@@ -41,7 +76,7 @@ class TimeBlock
     }
 
     /**
-     * @param DateTime $start_time
+     * @param \DateTime $start_time
      */
     public function setStartTime($start_time)
     {
@@ -49,7 +84,7 @@ class TimeBlock
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getEndTime()
     {
@@ -57,7 +92,7 @@ class TimeBlock
     }
 
     /**
-     * @param DateTime $end_time
+     * @param \DateTime $end_time
      */
     public function setEndTime($end_time)
     {
@@ -81,12 +116,12 @@ class TimeBlock
     }
 
     /**
-     * Returns true if a time block overlaps anotherone one.
+     * Returns true if a block overlaps another one.
      *
-     * @param TimeBlock $block
+     * @param Block $block
      * @return bool
      */
-    function overlaps(TimeBlock $block)
+    function overlaps(Block $block)
     {
         if($this->weekday != $block->weekday)
             return FALSE;
@@ -96,4 +131,5 @@ class TimeBlock
             return TRUE;
         return FALSE;
     }
+
 }

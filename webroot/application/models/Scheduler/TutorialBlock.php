@@ -7,15 +7,15 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * Class Tutorial
  * @package Scheduler
  */
-class TutorialBlock extends TimeBlock
+class TutorialBlock extends Block
 {
     private $instructor;
     private $letter;
     private $capacity;
-    private $room;
 
     /**
      * TutorialBlock constructor.
+     * @param $id
      * @param $instructor
      * @param $letter
      * @param $capacity
@@ -24,13 +24,12 @@ class TutorialBlock extends TimeBlock
      * @param $end_time
      * @param $weekday
      */
-    public function __construct($instructor, $letter, $capacity, $room, $start_time, $end_time, $weekday)
+    public function __construct($id, $instructor, $letter, $capacity, $room, $start_time, $end_time, $weekday)
     {
-        parent::__construct($start_time, $end_time, $weekday);
+        parent::__construct($id, $room, $start_time, $end_time, $weekday);
         $this->instructor = $instructor;
         $this->letter = $letter;
         $this->capacity = $capacity;
-        $this->room = $room;
     }
 
     /**
@@ -79,22 +78,6 @@ class TutorialBlock extends TimeBlock
     public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoom()
-    {
-        return $this->room;
-    }
-
-    /**
-     * @param mixed $room
-     */
-    public function setRoom($room)
-    {
-        $this->room = $room;
     }
 
 }

@@ -21,8 +21,7 @@ class GroupSection
      * @param $section_id
      * @param $instructor
      * @param $capacity
-     * @param $letter
-     * @param Lecture $lecture
+     * @param array $lecture
      * @param Tutorial|NULL $tutorial
      * @param Laboratory|NULL $laboratory
      */
@@ -158,6 +157,18 @@ class GroupSection
         return $this->laboratory;
     }
 
+    /**
+     * @param mixed $laboratory
+     */
+    public function setLaboratory($laboratory)
+    {
+        $this->laboratory = $laboratory;
+    }
+
+    /**
+     * Returns all the blocks for this group section
+     * @return array
+     */
     public function getTimeBlocks()
     {
         $array = [];
@@ -168,14 +179,6 @@ class GroupSection
         if($this->laboratory != NULL)
             array_push($array, $this->laboratory);
         return $array;
-    }
-
-    /**
-     * @param mixed $laboratory
-     */
-    public function setLaboratory($laboratory)
-    {
-        $this->laboratory = $laboratory;
     }
 
     /**
