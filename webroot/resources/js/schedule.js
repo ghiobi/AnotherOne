@@ -181,6 +181,7 @@ function WeeklySchedule(elm) {
             {
                 console.log("end");
                 MaxBlockTime = this.tblocks[newtblock];
+                console.log('test');
 
             }
 
