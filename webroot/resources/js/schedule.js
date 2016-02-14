@@ -52,98 +52,145 @@ function WeeklySchedule(elm) {
         this.tblocks = null;
         this.tblocks = [];
     }
-	
-	this.setStartTime()=function()
-	{
-		//i have no idea what im doing
-	 for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
-				var time = r_time.format('H:mm');
 
-		             for (var week = this.sweek; week <= this.eweek; week++) { 
-						 
-						var block1 = this.tblocks[week + '-' + time];
-						 if(block1 != null)
-						if(mintime > block1['start'])
-							mintime = block1['start'];
 
-					
-	 }
-	 
-	 
-	 }
-	 
-	 return mintime;
-		
-		
-	}
-	
-	
-	this.setEndTime()=function()
-	{
-		
-		
-		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
-				var time = r_time.format('H:mm');
 
-		             for (var week = this.sweek; week <= this.eweek; week++) { 
-						 
-						var block1 = this.tblocks[week + '-' + time];
-						 if(block1 != null)
-						if(maxtime < block1['end'])
-							maxtime = block1['end'];
+    this.getMaxblock = function () {
 
-					
-	 }
-	 
-	 
-	 }
-	 
-	 return maxtime;
-		
-		
-	}
-	this.setStartWeekday()=function()
-	{
-		
-		
-			
-		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
-				var time = r_time.format('H:mm');
+        var maxblock = null;
 
-		             for (var week = this.sweek; week <= this.eweek; week++) { 
-						 
-						var block1 = this.tblocks[week + '-' + time];
-						 if(block1 != null)
-						if( sweek2 > block1['weekday'])
-							sweek2 = block1['weekday'];
-		
-		
-	}
-	}
-	return sweek2;
-	}
-	this.setEndWeekday()=function()
-	{
-		
-		
-			
-		for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
-				var time = r_time.format('H:mm');
+        for (var first in this.tblocks) {
 
-		             for (var week = this.sweek; week <= this.eweek; week++) { 
-						 
-						var block1 = this.tblocks[week + '-' + time];
-						 if(block1 != null)
-						if( eweek2 < block1['weekday'])
-							eweek2 = block1['weekday'];
-		
-		
-	}
-	}
-	return eweek2;
-		
-		
-	}
+            firstblock = this.tblocks[first];
+            console.log("first");
+            maxblock = firstblock;
+            break;
+
+        }
+
+
+        for(var newtblock in this.tblocks)
+        {
+
+            if (this.tblocks[newtblock]['weekday'] > maxblock['weekday'])
+            {
+                console.log("bigger");
+                maxblock = this.tblocks[newtblock];
+
+            }
+
+
+        }
+
+        return maxblock['weekday'];
+
+
+    }
+
+
+//GET MIN BLOCK DAY IN DAYS
+
+
+    this.getMinBlock = function () {
+
+        var minblock = null;
+
+        for (var first in this.tblocks) {
+
+            firstblock = this.tblocks[first];
+            console.log("first");
+            minblock = firstblock;
+            break;
+
+        }
+
+
+        for(var newtblock in this.tblocks)
+        {
+
+            if (this.tblocks[newtblock]['weekday'] < minblock['weekday'])
+            {
+                console.log("bigger");
+                minblock = this.tblocks[newtblock];
+
+            }
+
+
+        }
+
+        return minblock['weekday'];
+
+
+    }
+
+    //GET MIN BLOCK TIME IN HH:MM
+
+
+    this.getMinBlocktime = function () {
+
+        var minblocktime = null;
+
+        for (var first in this.tblocks) {
+
+            firstblock = this.tblocks[first];
+            console.log("first");
+            minblocktime = firstblock;
+            break;
+
+        }
+
+
+        for(var newtblock in this.tblocks)
+        {
+
+            if (this.tblocks[newtblock]['start'] < minblocktime['start'])
+            {
+                console.log("bigger");
+                minblocktime = this.tblocks[newtblock];
+
+            }
+
+
+        }
+
+        return minblocktime['start'];
+
+
+    }
+
+//GET MAXIMUM BLOCK TIME IN HH:MM
+
+    this.getMaxBlockTime = function () {
+
+        var MaxBlockTime = null;
+
+        for (var first in this.tblocks) {
+
+            firstblock = this.tblocks[first];
+            console.log("first");
+            MaxBlockTime = firstblock;
+            break;
+
+        }
+
+
+        for(var newtblock in this.tblocks)
+        {
+
+            if (this.tblocks[newtblock]['end'] > MaxBlockTime['end'])
+            {
+                console.log("end");
+                MaxBlockTime = this.tblocks[newtblock];
+
+            }
+
+
+        }
+
+        return MaxBlockTime['end'].format('H:mm');
+
+
+    }
 
     this.render = function () {
 
@@ -167,7 +214,7 @@ function WeeklySchedule(elm) {
          ***************************************************************************/
         table += '<tr><td>Time</td>';
 
-        for (var i = this.sweek; i < this.eweek + 1; i++) {
+        for (var i = this.getMinBlock(); i < this.getMaxBlockTime() + 1; i++) {
 
             table += '<td>' + moment(i, 'd').format('dddd') + '</td>';
 
@@ -189,7 +236,7 @@ function WeeklySchedule(elm) {
 
         }
 
-        for (var r_time = this.stime.clone(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
+        for (var r_time = this.getMinBlocktime(); r_time.diff(this.etime) != 0; r_time.add(this.inc, 'm')) {
 
             table += '<tr>';
 
