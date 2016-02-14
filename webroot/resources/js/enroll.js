@@ -16,73 +16,16 @@ $(function()
         style: 'background-color: #00cc99; text-align:center; vertical-align:middle'
     });
 
-    //Load
-    var schedule = null;
+    var main_schedule = null;
+
+    //Load the main schedule
     $.ajax({
         method: 'POST',
         url: controllerURL + '/load',
         success: function(output)
         {
-            schedule = JSON.parse(output);
-
-            console.log(schedule);
-
-            MySchedule.emptyBlocks();
-
-            for (var i in schedule['sections'])
-            {
-                var section = schedule['sections'][i];
-
-                if(section['lecture'] != null)
-                {
-                    for(var j in section['lecture'])
-                    {
-                        var start = section['lecture'][j]['start_time']['date'];
-                        var end = section['lecture'][j]['end_time']['date'];
-
-                        start = moment(start).format('H:mm');
-                        end = moment(end).format('H:mm');
-
-                        var title = section['course_subject'] + ' ' + section['course_number'];
-                        title += '<br>' + 'Lecture'
-                        title += '<br>' + start + ' - ' + end;
-                        title += '<br>' + section['lecture'][j]['room'];
-
-                        MySchedule.addBlock(title, start, end, section['lecture'][j]['weekday'])
-                    }
-                }
-                if(section['tutorial'] != null)
-                {
-                    var start = section['tutorial']['start_time']['date'];
-                    var end = section['tutorial']['end_time']['date'];
-
-                    start = moment(start).format('H:mm');
-                    end = moment(end).format('H:mm');
-
-                    var title = section['course_subject'] + ' ' + section['course_number'];
-                    title += '<br>' + 'Tutorial';
-                    title += '<br>' + start + ' - ' + end;
-                    title += '<br>' + section['tutorial']['room'];
-
-                    MySchedule.addBlock(title, start, end, section['tutorial']['weekday'])
-                }
-                if(section['laboratory'] != null)
-                {
-                    var start = section['laboratory']['start_time']['date'];
-                    var end = section['laboratory']['end_time']['date'];
-
-                    start = moment(start).format('H:mm');
-                    end = moment(end).format('H:mm');
-
-                    var title = section['course_subject'] + ' ' + section['course_number'];
-                    title += '<br>' + 'Laboratory';
-                    title += '<br>' + start + ' - ' + end;
-                    title += '<br>' + section['laboratory']['room'];
-
-                    MySchedule.addBlock(title, start, end, section['laboratory']['weekday'])
-                }
-            }
-            MySchedule.render();
+            main_schedule = JSON.parse(output);
+            drawSchedule(MySchedule, main_schedule);
         }
     });
 
@@ -100,22 +43,49 @@ $(function()
         $srch_input.slideUp(100);
     });
 
-    //Time Preferences and Modal
-    $('.scheduler-pref-time').append(
-        '<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>'
-    );
-    $('.remove-time-block').click(function(){
-        $parent = $('.remove-time-block').parent();
-        if($parent.length == 0){
-            $parent.append('<p class="no-blocks"></p>');
-        }
+    var num_time_pref = 0;
+    $time_pref_div = $('.scheduler-pref-time');
+    updateTimePref($time_pref_div, num_time_pref);
+
+    /**
+     * Time Preferences and Modal
+     *
+     * + Time blocks should be tagged in the server so it could know which time block to remove from the scheduler object.
+     */
+    $(document).on('click', '.remove-time-block',function(){
+        $(this).remove();
+
+        //TODO: remove preference from scheduler object in cookie
+        num_time_pref--;
+        updateTimePref($time_pref_div, num_time_pref);
     });
+
     $('.time_add').click(function(){
         var is_complete = true;
+        $time_pref_div.append('<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
 
-        if (!is_complete) {
+        num_time_pref++;
+        updateTimePref($time_pref_div, num_time_pref);
+
+        /* TODO: valid the preference by sending to server and adding preference to scheduler object
+         * + The server should send back a confirmation to if the preference is valid.
+         *      + Success or failure bool
+         *      + Should come with a tag identifier of this preference 'hash code'
+         */
+
+        if(!is_complete)
+        {
+            //TODO: If server response is not valid. Display error message.
+        }
+
+        if (is_complete)
+        {
             $('#scheduler-pref-modal').modal({show: false});
-            return;
+
+            //TODO: Incollapse the time preference to show the user he has added.
+
+            //TODO: Add message of success!
+            //TODO: Empty inputs
         }
     });
 
@@ -129,7 +99,6 @@ $(function()
     {
         $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
     });
-
 
 
     //Search
@@ -148,5 +117,93 @@ $(function()
             });
     });
 
+    //Auto Pick
+    $auto_pick_btn = $('.auto-pick');
+    $auto_pick_btn.click(function(){
+        alert('Do something');
+    });
+
+    //Generate Schedule
+    $generate_btn = $('.generate');
+    $generate_btn.click(function(){
+        alert('Do something');
+    });
+
+    //Commit Schedule
+    $commit_btn = $('.scheduler-commit');
+    $commit_btn.click(function(){
+        alert('Do something');
+    });
 
 });
+
+function updateTimePref($prefcontainer, num_time_pref)
+{
+    if(num_time_pref == 0)
+        $prefcontainer.append('<p class="no-blocks">No Time Preferences!</p>');
+    else
+        $('.no-blocks').remove();
+}
+
+function drawSchedule(scheduleController, scheduleData)
+{
+    scheduleController.emptyBlocks();
+
+    //Loop through every section
+    for (var i in scheduleData['sections'])
+    {
+        var section = scheduleData['sections'][i];
+
+        if(section['lecture'] != null)
+        {
+            for(var j in section['lecture'])
+            {
+                var start = section['lecture'][j]['start_time']['date'];
+                var end = section['lecture'][j]['end_time']['date'];
+
+                start = moment(start).format('H:mm');
+                end = moment(end).format('H:mm');
+
+                var title = section['course_subject'] + ' ' + section['course_number'];
+                title += '<br>' + 'Lecture'
+                title += '<br>' + start + ' - ' + end;
+                title += '<br>' + section['lecture'][j]['room'];
+
+                scheduleController.addBlock(title, start, end, section['lecture'][j]['weekday'])
+            }
+        }
+        if(section['tutorial'] != null)
+        {
+            var start = section['tutorial']['start_time']['date'];
+            var end = section['tutorial']['end_time']['date'];
+
+            start = moment(start).format('H:mm');
+            end = moment(end).format('H:mm');
+
+            var title = section['course_subject'] + ' ' + section['course_number'];
+            title += '<br>' + 'Tutorial';
+            title += '<br>' + start + ' - ' + end;
+            title += '<br>' + section['tutorial']['room'];
+
+            scheduleController.addBlock(title, start, end, section['tutorial']['weekday'])
+        }
+        if(section['laboratory'] != null)
+        {
+            var start = section['laboratory']['start_time']['date'];
+            var end = section['laboratory']['end_time']['date'];
+
+            start = moment(start).format('H:mm');
+            end = moment(end).format('H:mm');
+
+            var title = section['course_subject'] + ' ' + section['course_number'];
+            title += '<br>' + 'Laboratory';
+            title += '<br>' + start + ' - ' + end;
+            title += '<br>' + section['laboratory']['room'];
+
+            scheduleController.addBlock(title, start, end, section['laboratory']['weekday'])
+        }
+    }
+
+    //Render schedule once every cell time is added
+    scheduleController.render();
+}

@@ -14,7 +14,6 @@
 					</div>
 					<div class="collapsing app-container" id="scheduler-pref">
 						<div class="scheduler-pref-time">
-							<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>
 						</div>
 					</div>
 				</div>
@@ -27,7 +26,7 @@
 					</div>
 					<div class="scheduler-courses">
 						<h3 class="scheduler-header">COURSES
-							<button class="scheduler-auto-btn">Auto-Pick</button>
+							<button class="scheduler-auto-btn auto-pick">Auto-Pick</button>
 						</h3>
 						<div class="list-group scheduler-list-group">
 							<div class="list-group-item scheduler-list-item">
@@ -54,7 +53,7 @@
 					</div>
 					<div class="scheduler-results">
 						<h3 class="scheduler-header">SCHEDULES
-							<button class="scheduler-auto-btn">Generate</button>
+							<button class="scheduler-auto-btn generate">Generate</button>
 						</h3>
 						<div class="list-group scheduler-list-group">
 							<div class="list-group-item scheduler-list-item">
