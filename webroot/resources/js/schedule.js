@@ -74,7 +74,47 @@ function WeeklySchedule(elm) {
         this.tblocks = [];
     }
 
-    this.getDimension = function()
+    this.getEarliestWeekday = function ()
+    {
+        var maxblock = null;
+
+        for (var first in this.tblocks)
+        {
+            firstblock = this.tblocks[first];
+            console.log("first");
+            maxblock = firstblock;
+            break;
+        }
+        for(var newtblock in this.tblocks)
+        {
+            if (this.tblocks[newtblock]['weekday'] > maxblock['weekday'])
+                maxblock = this.tblocks[newtblock];
+        }
+        return maxblock['weekday'];
+    }
+
+
+    this.getLatestWeekday = function ()
+    {
+        var minblock = null;
+
+        for (var first in this.tblocks)
+        {
+            firstblock = this.tblocks[first];
+            minblock = firstblock;
+            break;
+        }
+
+        for(var newtblock in this.tblocks)
+        {
+            if (this.tblocks[newtblock]['weekday'] < minblock['weekday'])
+                minblock = this.tblocks[newtblock];
+        }
+        return minblock['weekday'];
+    }
+
+    //Set table dimension automatically by max and min time
+    this.autoDimensions = function()
     {
         var minTime = null;
         var maxTime = null;
@@ -102,8 +142,8 @@ function WeeklySchedule(elm) {
 
     this.render = function ()
     {
-        //Settings table dimension automatically
-        this.getDimension();
+        //Settings table dimensions automatically
+        this.autoDimensions();
 
         //Emptying inner HTML
         this.elm.innerHTML = '';
