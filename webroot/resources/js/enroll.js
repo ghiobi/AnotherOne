@@ -21,10 +21,12 @@ $(function()
     $.ajax({
         method: 'POST',
         url: controllerURL + '/load',
-        success: function(output){
+        success: function(output)
+        {
             schedule = JSON.parse(output);
 
             MySchedule.emptyBlocks();
+
             for (var i in schedule['sections'])
             {
                 var section = schedule['sections'][i];
@@ -52,7 +54,6 @@ $(function()
 
                     MySchedule.addBlock('tutorial', start, end, section['tutorial']['weekday'])
                 }
-                console.log(section['laboratory']);
                 if(section['laboratory'] != null)
                 {
                     var start = section['laboratory']['start_time']['date'];
