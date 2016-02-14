@@ -7,7 +7,7 @@
 
  */
 
-function format(minutes){
+function formatTime(minutes){
     var hours = Math.floor(minutes / 60);
     var minutes = minutes % 60;
 
@@ -80,9 +80,7 @@ function WeeklySchedule(elm) {
 
         for (var first in this.tblocks)
         {
-            firstblock = this.tblocks[first];
-            console.log("first");
-            maxblock = firstblock;
+            maxblock = this.tblocks[first];
             break;
         }
         for(var newtblock in this.tblocks)
@@ -100,8 +98,7 @@ function WeeklySchedule(elm) {
 
         for (var first in this.tblocks)
         {
-            firstblock = this.tblocks[first];
-            minblock = firstblock;
+            minblock = this.tblocks[first];
             break;
         }
 
@@ -132,7 +129,6 @@ function WeeklySchedule(elm) {
                 minTime = this.tblocks[key]['start'];
             if(this.tblocks[key]['end'] > maxTime)
                 maxTime = this.tblocks[key]['end'];
-            console.log(this.tblocks[key]['end'] + " > " + maxTime);
         }
 
         //One row padding on the max time and min time.
@@ -181,7 +177,7 @@ function WeeklySchedule(elm) {
             table += '<tr>';
 
             //Time column
-            var time = format(r_time);
+            var time = formatTime(r_time);
             table += '<td>' + time + '</td>';
 
             for (var week = this.sweek; week <= this.eweek; week++)

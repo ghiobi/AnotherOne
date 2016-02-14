@@ -1987,7 +1987,7 @@
 
         var output = formats && (isFunction(formats[format]) ? formats[format]() : formats[format]);
 
-        return this.format(output || this.localeData().calendar(format, this, local__createLocal(now)));
+        return this.formatTime(output || this.localeData().calendar(format, this, local__createLocal(now)));
     }
 
     function clone () {

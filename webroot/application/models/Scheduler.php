@@ -58,13 +58,13 @@ class Scheduler extends CI_Model
 		$tutorial = NULL;
 		if($tutorial_id != NULL) {
 			$obj = $this->tutorial->getByID($tutorial_id);
-			$tutorial = new Scheduler\TutorialBlock($obj->id, $obj->room, $obj->instructor, $obj->letter, $obj->capacity, $obj->start, $obj->end, $obj->weekday);
+			$tutorial = new Scheduler\TutorialBlock($obj->id, $obj->instructor, $obj->letter, $obj->capacity, $obj->room, $obj->start, $obj->end, $obj->weekday);
 		}
 
 		$laboratory = NULL;
 		if($laboratory_id != NULL){
 			$obj = $this->laboratory->getByID($laboratory_id);
-			$laboratory = new Scheduler\LaboratoryBlock($obj->id, $obj->room, $obj->instructor, $obj->letter, $obj->capacity, $obj->start, $obj->end, $obj->weekday);
+			$laboratory = new Scheduler\LaboratoryBlock($obj->id, $obj->instructor, $obj->letter, $obj->capacity, $obj->room, $obj->start, $obj->end, $obj->weekday);
 		}
 
 		$lectArray = [];

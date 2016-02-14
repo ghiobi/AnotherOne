@@ -25,6 +25,8 @@ $(function()
         {
             schedule = JSON.parse(output);
 
+            console.log(schedule);
+
             MySchedule.emptyBlocks();
 
             for (var i in schedule['sections'])
@@ -41,7 +43,12 @@ $(function()
                         start = moment(start).format('H:mm');
                         end = moment(end).format('H:mm');
 
-                        MySchedule.addBlock('Lecture', start, end, section['lecture'][j]['weekday'])
+                        var title = section['course_subject'] + ' ' + section['course_number'];
+                        title += '<br>' + 'Lecture'
+                        title += '<br>' + start + ' - ' + end;
+                        title += '<br>' + section['lecture'][j]['room'];
+
+                        MySchedule.addBlock(title, start, end, section['lecture'][j]['weekday'])
                     }
                 }
                 if(section['tutorial'] != null)
@@ -52,7 +59,12 @@ $(function()
                     start = moment(start).format('H:mm');
                     end = moment(end).format('H:mm');
 
-                    MySchedule.addBlock('tutorial', start, end, section['tutorial']['weekday'])
+                    var title = section['course_subject'] + ' ' + section['course_number'];
+                    title += '<br>' + 'Tutorial';
+                    title += '<br>' + start + ' - ' + end;
+                    title += '<br>' + section['tutorial']['room'];
+
+                    MySchedule.addBlock(title, start, end, section['tutorial']['weekday'])
                 }
                 if(section['laboratory'] != null)
                 {
@@ -62,7 +74,12 @@ $(function()
                     start = moment(start).format('H:mm');
                     end = moment(end).format('H:mm');
 
-                    MySchedule.addBlock('laboratory', start, end, section['laboratory']['weekday'])
+                    var title = section['course_subject'] + ' ' + section['course_number'];
+                    title += '<br>' + 'Laboratory';
+                    title += '<br>' + start + ' - ' + end;
+                    title += '<br>' + section['laboratory']['room'];
+
+                    MySchedule.addBlock(title, start, end, section['laboratory']['weekday'])
                 }
             }
             MySchedule.render();
