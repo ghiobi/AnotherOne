@@ -13,13 +13,13 @@ class LectureBlock extends Block
      * LectureBlock constructor.
      * @param $id
      * @param $room
-     * @param $start_time
+     * @param $start
      * @param $end_time
      * @param $weekday
      */
-    public function __construct($id, $room, $start_time, $end_time, $weekday)
+    public function __construct($id, $room, $start, $end_time, $weekday)
     {
-        parent::__construct($id, $room, $start_time, $end_time, $weekday);
+        parent::__construct($id, $room, $start, $end_time, $weekday);
     }
 
 

@@ -32,8 +32,31 @@ class Schedule
         $this->sections = $sections;
     }
 
+    /**
+     * Adds a section to the schedule
+     *
+     * @param GroupSection $section
+     * @return bool - Returns true if operation is successful
+     */
+    public function addSection(GroupSection $section)
+    {
+        foreach($this->sections as $current)
+        {
+            if($section->overlaps($current))
+                return FALSE;
+        }
+
+        array_push($this->sections, $section);
+
+        return TRUE;
+    }
+
+    public function removeSection(){
+
+    }
+
     public function toJSON(){
-        return die(json_encode($this, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT ));
+        return json_encode($this, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT );
     }
 
 }

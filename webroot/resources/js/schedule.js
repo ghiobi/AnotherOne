@@ -117,7 +117,8 @@ function WeeklySchedule(elm) {
         var maxTime = null;
 
         //Getting first minimums and maximums.
-        for (var key in this.tblocks){
+        for (var key in this.tblocks)
+        {
             minTime = this.tblocks[key]['start'];
             maxTime = this.tblocks[key]['end'];
             break;

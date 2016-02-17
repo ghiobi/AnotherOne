@@ -158,8 +158,8 @@ function drawSchedule(scheduleController, scheduleData)
         {
             for(var j in section['lecture'])
             {
-                var start = section['lecture'][j]['start_time']['date'];
-                var end = section['lecture'][j]['end_time']['date'];
+                var start = section['lecture'][j]['start']['date'];
+                var end = section['lecture'][j]['end']['date'];
 
                 start = moment(start).format('H:mm');
                 end = moment(end).format('H:mm');
@@ -174,8 +174,8 @@ function drawSchedule(scheduleController, scheduleData)
         }
         if(section['tutorial'] != null)
         {
-            var start = section['tutorial']['start_time']['date'];
-            var end = section['tutorial']['end_time']['date'];
+            var start = section['tutorial']['start']['date'];
+            var end = section['tutorial']['end']['date'];
 
             start = moment(start).format('H:mm');
             end = moment(end).format('H:mm');
@@ -189,8 +189,8 @@ function drawSchedule(scheduleController, scheduleData)
         }
         if(section['laboratory'] != null)
         {
-            var start = section['laboratory']['start_time']['date'];
-            var end = section['laboratory']['end_time']['date'];
+            var start = section['laboratory']['start']['date'];
+            var end = section['laboratory']['end']['date'];
 
             start = moment(start).format('H:mm');
             end = moment(end).format('H:mm');

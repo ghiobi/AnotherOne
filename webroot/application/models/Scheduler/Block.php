@@ -10,25 +10,25 @@ class Block
 {
     private $id;
     public $room;
-    public $start_time;
-    public $end_time;
+    public $start;
+    public $end;
     public $weekday;
 
     /**
      * Block constructor.
      * @param $id
      * @param $room
-     * @param $start_time
-     * @param $end_time
+     * @param $start
+     * @param $end
      * @param $weekday
      */
-    function __construct($id, $room, $start_time, $end_time, $weekday)
+    function __construct($id, $room, $start, $end, $weekday)
     {
         $this->id = $id;
         $this->room = $room;
-        $this->start_time = new \DateTime($start_time);
-        $this->end_time = new \DateTime($end_time);
-        if($this->end_time < $this->start_time)
+        $this->start = new \DateTime($start);
+        $this->end = new \DateTime($end);
+        if($this->end < $this->start)
             throw new \InvalidArgumentException('TimeBlock: Start time is greater than end time.');
         if($weekday < 0 || $weekday > 6)
             throw new \InvalidArgumentException('TimeBlock: Invalid Weekday');
@@ -70,33 +70,33 @@ class Block
     /**
      * @return \DateTime
      */
-    public function getStartTime()
+    public function getStart()
     {
-        return $this->start_time->format('G:i');
+        return $this->start->format('G:i');
     }
 
     /**
-     * @param \DateTime $start_time
+     * @param \DateTime $start
      */
-    public function setStartTime($start_time)
+    public function setStart($start)
     {
-        $this->start_time = $start_time;
+        $this->start = $start;
     }
 
     /**
      * @return \DateTime
      */
-    public function getEndTime()
+    public function getEnd()
     {
-        return $this->end_time->format('G:i');
+        return $this->end->format('G:i');
     }
 
     /**
      * @param \DateTime $end_time
      */
-    public function setEndTime($end_time)
+    public function setEnd($end_time)
     {
-        $this->end_time = $end_time;
+        $this->end = $end_time;
     }
 
     /**
@@ -125,9 +125,9 @@ class Block
     {
         if($this->weekday != $block->weekday)
             return FALSE;
-        if($this->start_time <= $block->start_time && $block->start_time <= $this->end_time)
+        if($this->start <= $block->start && $block->start <= $this->end)
             return TRUE;
-        if($block->start_time <= $this->start_time && $this->start_time  <= $block->end_time)
+        if($block->start <= $this->start && $this->start  <= $block->end)
             return TRUE;
         return FALSE;
     }

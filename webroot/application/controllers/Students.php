@@ -51,7 +51,6 @@ class Students extends App_Base_Controller
 			//After initializing the scheduler, it save the data into a session cookie.
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
-
 		$data['title'] = strtoupper($semester_name);
 		$data['info_bar'] = 'Register in three simple steps. 1. Pick your courses 2. Generate 3. Commit!';
 
@@ -92,6 +91,7 @@ class Students extends App_Base_Controller
 			case 'generate': {
 
 			} break;
+
 		endswitch;
 
 		//Serialize the scheduler object model back to the cookie.
