@@ -4,16 +4,16 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 *
 */
 
-include_once 'Scheduler/Schedule.php';
-include_once 'Scheduler/ScheduleGenerator.php';
+include_once 'Helper/Schedule.php';
+include_once 'Helper/ScheduleGenerator.php';
 
-include_once 'Scheduler/GroupSection.php';
-include_once 'Scheduler/GroupSectionGenerator.php';
+include_once 'Helper/GroupSection.php';
+include_once 'Helper/GroupSectionGenerator.php';
 
-include_once 'Scheduler/Block.php';
-include_once 'Scheduler/LectureBlock.php';
-include_once 'Scheduler/LaboratoryBlock.php';
-include_once 'Scheduler/TutorialBlock.php';
+include_once 'Helper/Block.php';
+include_once 'Helper/LectureBlock.php';
+include_once 'Helper/LaboratoryBlock.php';
+include_once 'Helper/TutorialBlock.php';
 
 class Scheduler extends CI_Model
 {
@@ -149,6 +149,10 @@ class Scheduler extends CI_Model
 			}
 		}
 		return $combo;
+	}
+
+	public function searchCourse(){
+		
 	}
 
 	public function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)

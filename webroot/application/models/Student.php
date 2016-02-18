@@ -143,14 +143,50 @@ class Student extends CI_Model
     }
 
     /**
+     * TODO: @eric
+     * Returns array with info of course progress.
      *
+     * @return array - Returns an array that contains associative arrays with
+     *      - String => The course full name ex: 'SOEN 341 Software Process'
+     *      - Boolean => Is completed course with a passing grade
+     *      - Boolean => Can he take the course? (If course is already completed )
      */
-    function getProgramProgress()
+    function getProgress()
     {
-        $this->load('course');
+        $program_id = $this->getProgram()->id;
 
-        $this->course->getCourseSequence($this->getProgram()->id);
+        //Loading course model
+        $this->load->model('course');
 
-        //TODO
+        $array = [];
+
+
+        array_push($array, [
+            'name' => 'SOEN 341 Software Process',
+            'completed' => false,
+            'take' => false
+        ]);
+
+        //Please use the functions in the course model, and this.
+
+        return $array;
+    }
+
+    /**
+     * TODO: @eric
+     * @return bool
+     */
+    function isCompleted($course_id)
+    {
+        return TRUE;
+    }
+
+    /**
+     * TODO: @eric
+     * @return bool
+     */
+    function isTakeable($course_id)
+    {
+        return TRUE;
     }
 }
