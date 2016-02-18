@@ -174,6 +174,9 @@ class Student extends CI_Model
 
     /**
      * TODO: @eric
+     * Determines if a course is completed with passing grade
+     *
+     * @param $course_id
      * @return bool
      */
     function isCompleted($course_id)
@@ -183,6 +186,9 @@ class Student extends CI_Model
 
     /**
      * TODO: @eric
+     * Determines if this student can take a course. INFO: Independent of student records
+     * 
+     * @param $course_id
      * @return bool
      */
     function isTakeable($course_id)
