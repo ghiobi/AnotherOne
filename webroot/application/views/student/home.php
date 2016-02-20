@@ -44,5 +44,8 @@
 				</div>
 			</div>
 		</div>
+		<pre>
+			<?php var_dump($progress) //@eric ?>
+		</pre>
 	</div>
 </main>

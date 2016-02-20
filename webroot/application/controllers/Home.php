@@ -21,6 +21,9 @@ class Home extends App_Base_Controller
 		$this->load->model('semester');
 		$data['semesters'] = $this->semester->getActiveSemesters();
 
+		$this->load->model('student');
+		$data['progress'] = $this->student->getProgress();
+
 		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/home.php', $data);
 		$this->load->view('layouts/footer.php');
