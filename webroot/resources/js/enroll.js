@@ -22,8 +22,7 @@ $(function()
     $.ajax({
         method: 'POST',
         url: controllerURL + '/load',
-        success: function(output)
-        {
+        success: function(output) {
             main_schedule = JSON.parse(output);
             drawSchedule(MySchedule, main_schedule);
         },
@@ -65,7 +64,8 @@ $(function()
 
     $('.time_add').click(function(){
         var is_complete = true;
-        $time_pref_div.append('<p class="remove-time-block"><i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
+        $time_pref_div.append('<p class="remove-time-block">'
+            + '<i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
 
         num_time_pref++;
         updateTimePref($time_pref_div, num_time_pref);
@@ -128,8 +128,53 @@ $(function()
 
     //Generate Schedule
     $generate_btn = $('.generate');
+    $generate_div = $('.generated-schedules');
+
+    var generated_schedules;
     $generate_btn.click(function(){
-        alert('Do something');
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/generate',
+            success: function(output){
+                generated_schedules = JSON.parse(output);
+                console.log("Found " + generated_schedules.length + " results!");
+
+                $generate_div.empty();
+                for(var i in generated_schedules)
+                {
+                    $generate_div.append('' +
+                        '<div class="list-group-item scheduler-list-item generated" data-schedule-index="'
+                        + i
+                        +'">Schedule #' + (parseInt(i) + 1) + '</div>');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    });
+
+    var curr_schdle_index = -1;
+
+    $(document).on('click', '.generated',function(){
+        var index = $(this).data('scheduleIndex');
+        curr_schdle_index = index;
+        drawSchedule(MySchedule, generated_schedules[index]);
+    });
+
+    $(document).on("keyup", function(e) {
+        var key = e.which;
+        if (key == 39) { //Key or Right
+            if(curr_schdle_index != generated_schedules - 1){
+                curr_schdle_index++;
+                drawSchedule(MySchedule, generated_schedules[curr_schdle_index]);
+            }
+        } else if (key == 37) { //Key or Left
+            if(curr_schdle_index != -1){
+                curr_schdle_index--;
+                drawSchedule(MySchedule, generated_schedules[curr_schdle_index]);
+            }
+        }
     });
 
     //Commit Schedule
@@ -150,6 +195,7 @@ function updateTimePref($prefcontainer, num_time_pref)
 
 function drawSchedule(scheduleController, scheduleData)
 {
+    console.log(scheduleData);
     scheduleController.emptyBlocks();
 
     //Loop through every section
@@ -161,52 +207,42 @@ function drawSchedule(scheduleController, scheduleData)
         {
             for(var j in section['lecture'])
             {
-                var start = section['lecture'][j]['start']['date'];
-                var end = section['lecture'][j]['end']['date'];
-
-                start = moment(start).format('H:mm');
-                end = moment(end).format('H:mm');
+                var start = section['lecture'][j]['start'];
+                var end = section['lecture'][j]['end'];
 
                 var title = section['course_subject'] + ' ' + section['course_number'];
-                title += '<br>' + 'Lecture'
-                title += '<br>' + start + ' - ' + end;
-                title += '<br>' + section['lecture'][j]['room'];
+                title += '<br>' + 'LECT ' + section['letter']
+                    + '<br>' + start + ' - ' + end
+                    + '<br>' + section['lecture'][j]['room'];
 
                 scheduleController.addBlock(title, start, end, section['lecture'][j]['weekday'])
             }
         }
         if(section['tutorial'] != null)
         {
-            var start = section['tutorial']['start']['date'];
-            var end = section['tutorial']['end']['date'];
-
-            start = moment(start).format('H:mm');
-            end = moment(end).format('H:mm');
+            var start = section['tutorial']['start'];
+            var end = section['tutorial']['end'];
 
             var title = section['course_subject'] + ' ' + section['course_number'];
-            title += '<br>' + 'Tutorial';
-            title += '<br>' + start + ' - ' + end;
-            title += '<br>' + section['tutorial']['room'];
+            title += '<br>' + 'TUT ' + section['tutorial']['letter']
+                + '<br>' + start + ' - ' + end
+                + '<br>' + section['tutorial']['room'];
 
             scheduleController.addBlock(title, start, end, section['tutorial']['weekday'])
         }
         if(section['laboratory'] != null)
         {
-            var start = section['laboratory']['start']['date'];
-            var end = section['laboratory']['end']['date'];
-
-            start = moment(start).format('H:mm');
-            end = moment(end).format('H:mm');
+            var start = section['laboratory']['start'];
+            var end = section['laboratory']['end'];
 
             var title = section['course_subject'] + ' ' + section['course_number'];
-            title += '<br>' + 'Laboratory';
-            title += '<br>' + start + ' - ' + end;
-            title += '<br>' + section['laboratory']['room'];
+            title += '<br>' + 'LAB ' + section['laboratory']['letter']
+                + '<br>' + start + ' - ' + end
+                + '<br>' + section['laboratory']['room'];
 
             scheduleController.addBlock(title, start, end, section['laboratory']['weekday'])
         }
     }
-
-    //Render schedule once every cell time is added
+    //Render schedule
     scheduleController.render();
 }

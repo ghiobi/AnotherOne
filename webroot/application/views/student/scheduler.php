@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class="scheduler-row">
-				<div class="scheduler-half">
+				<div class="scheduler-left">
 					<div class="scheduler-search">
 						<h3 id="scheduler-search-cover"><i class="glyphicon glyphicon-search fix-icon"></i> SEARCH <span id="blink_underscore">_</span></h3>
 						<input id="scheduler-search-input" style="display: none" type="text" placeholder="SEARCH">
@@ -56,25 +56,16 @@
 							<button class="scheduler-auto-btn generate">Generate</button>
 						</h3>
 						<div class="list-group scheduler-list-group">
-							<div class="list-group-item scheduler-list-item">
+							<div class="list-group-item scheduler-list-item main-schedule">
 								Cras justo odio
 							</div>
-							<div class="list-group-item scheduler-list-item">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								Cras justo odio
+							<div class="generated-schedules">
+
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="scheduler-half">
+				<div class="scheduler-right">
 					<div  class="scheduler-registered">
 						<h3 class="scheduler-header">REGISTER</h3>
 						<div class="list-group scheduler-list-group">

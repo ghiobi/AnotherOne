@@ -79,8 +79,12 @@ header{
 .scheduler-row {
 	clear: both;
 }
-.scheduler-half {
-	width: 50%;
+.scheduler-left {
+	width: 35%;
+	float: left;
+}
+.scheduler-right{
+	width: 65%;
 	float: left;
 }
 .scheduler-full {
@@ -207,6 +211,10 @@ header{
 .scheduler-list-group{
 	margin: 0;
 	color:#2c3e50;
+	max-height: 275px;
+	overflow: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 .scheduler-list-item:first-child{
 	border-radius: 0;
@@ -236,7 +244,7 @@ header{
 	.scheduler-list-item{
 		font-size: .95em;
 	}
-	.scheduler-half {
+	.scheduler-left, .scheduler-right {
 		width: 100%;
 	}
 	.scheduler-search {

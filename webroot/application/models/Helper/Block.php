@@ -3,7 +3,8 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class TimeBlock -
+ * Class Block takes care of location and time of blocks
+ *
  * @package Scheduler
  */
 class Block
@@ -13,6 +14,9 @@ class Block
     public $start;
     public $end;
     public $weekday;
+
+    private $intStart;
+    private $intEnd;
 
     /**
      * Block constructor.
@@ -26,9 +30,13 @@ class Block
     {
         $this->id = $id;
         $this->room = $room;
-        $this->start = new \DateTime($start);
-        $this->end = new \DateTime($end);
-        if($this->end < $this->start)
+        $this->start = $this->formatFromDB($start);
+        $this->end = $this->formatFromDB($end);
+
+        $this->intStart = $this->toMinutes($this->start);
+        $this->intEnd = $this->toMinutes($this->end);
+
+        if($this->intEnd < $this->intStart)
             throw new \InvalidArgumentException('TimeBlock: Start time is greater than end time.');
         if($weekday < 0 || $weekday > 6)
             throw new \InvalidArgumentException('TimeBlock: Invalid Weekday');
@@ -72,7 +80,7 @@ class Block
      */
     public function getStart()
     {
-        return $this->start->format('G:i');
+        return $this->start;
     }
 
     /**
@@ -88,7 +96,7 @@ class Block
      */
     public function getEnd()
     {
-        return $this->end->format('G:i');
+        return $this->end;
     }
 
     /**
@@ -116,6 +124,28 @@ class Block
     }
 
     /**
+     * Converts from HH:MM:SS to just HH:MM
+     *
+     * @param $time
+     * @return string
+     */
+    private function formatFromDB($time)
+    {
+        $colon = strrpos($time, ':');
+        return substr($time, 0, $colon);
+    }
+
+    private function toMinutes($time)
+    {
+        $colon = strpos($time, ':');
+
+        $hours = substr($time, 0, $colon);
+        $minutes = substr($time, $colon + 1, $colon + 3);
+
+        return $hours * 60 + $minutes;
+    }
+
+    /**
      * Returns true if a block overlaps another one.
      *
      * @param Block $block
@@ -125,9 +155,9 @@ class Block
     {
         if($this->weekday != $block->weekday)
             return FALSE;
-        if($this->start <= $block->start && $block->start <= $this->end)
+        if($this->intStart <= $block->intStart && $block->intStart <= $this->intEnd)
             return TRUE;
-        if($block->start <= $this->start && $this->start  <= $block->end)
+        if($block->intStart <= $this->intStart && $this->intStart  <= $block->intEnd)
             return TRUE;
         return FALSE;
     }
