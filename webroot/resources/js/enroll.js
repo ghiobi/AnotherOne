@@ -26,6 +26,9 @@ $(function()
         {
             main_schedule = JSON.parse(output);
             drawSchedule(MySchedule, main_schedule);
+        },
+        error: function(xhr, status, error) {
+            alert(xhr.responseText);
         }
     });
 

@@ -40,9 +40,16 @@ class Schedule
      */
     public function addSection(GroupSection $section)
     {
+        //If section is empty or not set, meaning schedule is empty, do this.
+        if(!$this->sections)
+        {
+            array_push($this->sections, $section);
+            return TRUE;
+        }
+
         foreach($this->sections as $current)
         {
-            if($section->overlaps($current))
+            if($section->overlaps($current)) //If the section overlaps one of the current sections, return false.
                 return FALSE;
         }
 
@@ -51,10 +58,23 @@ class Schedule
         return TRUE;
     }
 
-    public function removeSection(){
-
+    /**
+     * Removes a section of the schedule
+     *
+     * @param $index
+     * @return bool
+     */
+    public function removeSection($index)
+    {
+        $array = array_splice($this->sections, $index, 1);
+        return $array == TRUE;
     }
 
+    /**
+     * Returns the current object into JSON
+     *
+     * @return string
+     */
     public function toJSON(){
         return json_encode($this, JSON_NUMERIC_CHECK | JSON_FORCE_OBJECT );
     }

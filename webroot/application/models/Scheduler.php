@@ -1,9 +1,9 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
 *
 */
-
 include_once 'Helper/Schedule.php';
 include_once 'Helper/ScheduleGenerator.php';
 
@@ -19,6 +19,7 @@ class Scheduler extends CI_Model
 {
 	private $semester_id;
 	public $main_schedule;
+	public $preferences;
 
 	public function __construct()
 	{
@@ -47,29 +48,60 @@ class Scheduler extends CI_Model
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups);
 	}
 
-	public function getMainSchedule()
+	public function generateSchedules()
 	{
-		return $this->getPossibleSchedule()->toJSON();
+		$schedules = [];
+
+		$courses = [1, 2, 70];
+
+		$course_groups = [];
+
+		foreach($courses as $course) {
+			array_push($course_groups, $this->getPossibleGroups($course));
+		}
+		$this->generate(0, count($course_groups) - 1, $this->main_schedule, $schedules, $course_groups);
+
+		die(json_encode($schedules));
+
+		return $schedules;
 	}
 
-	public function getPossibleSchedule()
+	/**
+	 * @param $current_course - Keeps track of current course
+	 * @param $num_courses - Number of courses being added
+	 * @param Scheduler\Schedule $current_schedule - The current schedule
+	 * @param $stack - Stack of possible schedules
+	 * @param $courses - Two dimensional ragged array. [course][possible group sections]
+	 */
+	private function generate($current_course, $num_courses, $current_schedule, &$stack, $courses)
 	{
-		$temp = clone $this->main_schedule;
-		for($i = 1; $i < 110; $i++){
-			if($i == 28) continue;
-			if(!$groups = $this->getPossibleGroups($i))
-				continue;
-			foreach($groups as $group)
+		for ($i = 0; $i < count($courses[$current_course]); $i++)
+		{
+			//Clone the current schedule
+			$clone = clone $current_schedule;
+
+			//If current_course is not end index of the number of courses to add, recurse if successful group add.
+			if($current_course != $num_courses)
 			{
-				if($temp->addSection($group))
+				if($clone->addSection($courses[$current_course][$i]))
 				{
-					break;
+					$this->generate($current_course + 1, $num_courses, $clone, $stack, $courses);
+				}
+			}
+			else //If this is the last course, and successful in adding group in last course, push to stack.
+			{
+				if($clone->addSection($courses[$current_course][$i]))
+				{
+					array_push($stack, $clone);
 				}
 			}
 		}
-		return $temp;
 	}
 
+	/**
+	 * @param $course_id
+	 * @return array|bool
+	 */
 	public function getPossibleGroups($course_id)
 	{
 		if(!$sections = $this->section->getSection($this->semester_id, $course_id))
@@ -148,6 +180,7 @@ class Scheduler extends CI_Model
 				array_push($combo, $group);
 			}
 		}
+
 		return $combo;
 	}
 
@@ -182,5 +215,11 @@ class Scheduler extends CI_Model
 
 		return new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section_id, $section->professor, $section->capacity, $section->letter, $lectArray, $tutorial, $laboratory);
 	}
+
+	public function getMainSchedule()
+	{
+		return $this->generateSchedules()->toJSON();
+	}
+
 
 }
