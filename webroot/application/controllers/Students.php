@@ -80,7 +80,7 @@ class Students extends App_Base_Controller
 
 			//Returns a list of courses the user can take.
 			case 'search': {
-				echo $this->scheduler->getHello();;
+				echo 'Hello';
 			} break;
 
 			case 'addcourse': {

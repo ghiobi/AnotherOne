@@ -132,6 +132,11 @@ function WeeklySchedule(elm) {
                 maxTime = this.tblocks[key]['end'];
         }
 
+        if(minTime % this.inc != 0)
+            minTime = minTime - (minTime % this.inc);
+        if(maxTime % this.inc != 0)
+            maxTime = maxTime - (maxTime % this.inc);
+
         //One row padding on the max time and min time.
         this.stime = minTime - this.inc;
         this.etime = maxTime + this.inc;

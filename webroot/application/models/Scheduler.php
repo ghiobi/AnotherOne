@@ -291,7 +291,7 @@ class Scheduler extends CI_Model
 
 	public function getMainSchedule()
 	{
-		return $this->main_schedule->toJSON();
+		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
 
 

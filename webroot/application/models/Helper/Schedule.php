@@ -106,13 +106,4 @@ class Schedule
         return TRUE;
     }
 
-    /**
-     * Returns the current object into JSON
-     *
-     * @return string
-     */
-    public function toJSON(){
-        return json_encode($this, JSON_NUMERIC_CHECK);
-    }
-
 }

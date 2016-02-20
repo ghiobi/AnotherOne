@@ -24,6 +24,7 @@ $(function()
         url: controllerURL + '/load',
         success: function(output) {
             main_schedule = JSON.parse(output);
+            console.log(output);
             drawSchedule(MySchedule, main_schedule);
         },
         error: function(xhr, status, error) {
@@ -126,7 +127,7 @@ $(function()
         alert('Do something');
     });
 
-    //Generate Schedule
+    //ate Schedule
     $generate_btn = $('.generate');
     $generate_div = $('.generated-schedules');
 
@@ -138,7 +139,7 @@ $(function()
             success: function(output){
                 generated_schedules = JSON.parse(output);
                 console.log("Found " + generated_schedules.length + " results!");
-
+                $('footer').append('<p>' + output + '</p>');
                 $generate_div.empty();
                 for(var i in generated_schedules)
                 {
@@ -168,6 +169,7 @@ $(function()
             if(curr_schdle_index != generated_schedules - 1){
                 curr_schdle_index++;
                 drawSchedule(MySchedule, generated_schedules[curr_schdle_index]);
+                console.log(curr_schdle_index);
             }
         } else if (key == 37) { //Key or Left
             if(curr_schdle_index != -1){
@@ -195,52 +197,54 @@ function updateTimePref($prefcontainer, num_time_pref)
 
 function drawSchedule(scheduleController, scheduleData)
 {
-    console.log(scheduleData);
     scheduleController.emptyBlocks();
 
     //Loop through every section
-    for (var i in scheduleData['sections'])
+    for (var type in scheduleData)
     {
-        var section = scheduleData['sections'][i];
-
-        if(section['lecture'] != null)
+        for (var i in scheduleData[type])
         {
-            for(var j in section['lecture'])
+            var section = scheduleData[type][i];
+
+            if(section['lecture'] != null)
             {
-                var start = section['lecture'][j]['start'];
-                var end = section['lecture'][j]['end'];
+                for(var j in section['lecture'])
+                {
+                    var start = section['lecture'][j]['start'];
+                    var end = section['lecture'][j]['end'];
+
+                    var title = section['course_subject'] + ' ' + section['course_number'];
+                    title += '<br>' + 'LECT ' + section['letter']
+                        + '<br>' + start + ' - ' + end
+                        + '<br>' + section['lecture'][j]['room'];
+                    console.log(title);
+                    scheduleController.addBlock(title, start, end, section['lecture'][j]['weekday'])
+                }
+            }
+            if(section['tutorial'] != null)
+            {
+                var start = section['tutorial']['start'];
+                var end = section['tutorial']['end'];
 
                 var title = section['course_subject'] + ' ' + section['course_number'];
-                title += '<br>' + 'LECT ' + section['letter']
+                title += '<br>' + 'TUT ' + section['tutorial']['letter']
                     + '<br>' + start + ' - ' + end
-                    + '<br>' + section['lecture'][j]['room'];
+                    + '<br>' + section['tutorial']['room'];
 
-                scheduleController.addBlock(title, start, end, section['lecture'][j]['weekday'])
+                scheduleController.addBlock(title, start, end, section['tutorial']['weekday'])
             }
-        }
-        if(section['tutorial'] != null)
-        {
-            var start = section['tutorial']['start'];
-            var end = section['tutorial']['end'];
+            if(section['laboratory'] != null)
+            {
+                var start = section['laboratory']['start'];
+                var end = section['laboratory']['end'];
 
-            var title = section['course_subject'] + ' ' + section['course_number'];
-            title += '<br>' + 'TUT ' + section['tutorial']['letter']
-                + '<br>' + start + ' - ' + end
-                + '<br>' + section['tutorial']['room'];
+                var title = section['course_subject'] + ' ' + section['course_number'];
+                title += '<br>' + 'LAB ' + section['laboratory']['letter']
+                    + '<br>' + start + ' - ' + end
+                    + '<br>' + section['laboratory']['room'];
 
-            scheduleController.addBlock(title, start, end, section['tutorial']['weekday'])
-        }
-        if(section['laboratory'] != null)
-        {
-            var start = section['laboratory']['start'];
-            var end = section['laboratory']['end'];
-
-            var title = section['course_subject'] + ' ' + section['course_number'];
-            title += '<br>' + 'LAB ' + section['laboratory']['letter']
-                + '<br>' + start + ' - ' + end
-                + '<br>' + section['laboratory']['room'];
-
-            scheduleController.addBlock(title, start, end, section['laboratory']['weekday'])
+                scheduleController.addBlock(title, start, end, section['laboratory']['weekday'])
+            }
         }
     }
     //Render schedule
