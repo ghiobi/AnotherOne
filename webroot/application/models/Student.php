@@ -163,8 +163,8 @@ class Student extends CI_Model
 
         array_push($array, [
             'name' => 'SOEN 341 Software Process',
-            'completed' => $this->isCompleted(31),
-            'take' => false
+            'completed' => $this->isCompleted(32),
+            'take' => $this->isTakeable(32)
         ]);
 
         //Please use the functions in the course model, and this.
@@ -173,7 +173,6 @@ class Student extends CI_Model
     }
 
     /**
-     * TODO: @eric
      * Determines if a course is completed with passing grade
      *
      * @param $course_id
@@ -194,27 +193,42 @@ class Student extends CI_Model
 
         foreach($result as $value)
         {
-            if($value->grade=="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-"){
+            $x=$value->grade;
+
+            //Check if passed the course
+            if(($x==="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-")&&!empty($x) ){
                 return true;
             }
         }
         return false;
 
-
-
-
     }
 
     /**
-     * TODO: @eric
      * Determines if this student can take a course. INFO: Independent of student records
-     * 
+     * FIX: Doesn't take corequisite into account and maybe course already completed is takeable
      * @param $course_id
      * @return bool
      */
     function isTakeable($course_id)
     {
-        return TRUE;
+        //check if course is already completed
+        if(!$this->isCompleted($course_id)) {
+
+            $this->load->model('course');
+            $prereqs = $this->course->getPrerequisites($course_id);
+
+            //Check if course prerequisites are completed
+            foreach ($prereqs as $value) {
+                $x = $value->prerequisite_course_id;
+                if (!$this->isCompleted($x)) {
+
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 }

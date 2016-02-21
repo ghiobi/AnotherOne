@@ -152,7 +152,7 @@ class Course extends CI_Model
             SELECT
               courseprequisites.prerequisite_course_id
             FROM courseprequisites
-            WHERE courseprequisites.course_id = 32")->result();
+            WHERE courseprequisites.course_id = $course_id")->result();
     }
 
     /**
