@@ -192,16 +192,15 @@ class Student extends CI_Model
                 ON registered.section_id = sections.id
               WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
 
-        var_dump($result);
-        $grade=$result[0]->grade;
-        var_dump($grade);
-
-
-        if($result==="A+"){
-            return true;
+        foreach($result as $value)
+        {
+            if($value->grade=="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-"){
+                return true;
+            }
         }
-        else
-            return false;
+        return false;
+
+
 
 
     }
