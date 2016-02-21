@@ -163,7 +163,7 @@ class Student extends CI_Model
 
         array_push($array, [
             'name' => 'SOEN 341 Software Process',
-            'completed' => false,
+            'completed' => $this->isCompleted(31),
             'take' => false
         ]);
 
@@ -181,7 +181,29 @@ class Student extends CI_Model
      */
     function isCompleted($course_id)
     {
-        return TRUE;
+
+        $result=$this->db->query("
+            SELECT
+              registered.grade
+              FROM registered
+              INNER JOIN students
+                ON registered.student_id = students.id
+              INNER JOIN sections
+                ON registered.section_id = sections.id
+              WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
+
+        var_dump($result);
+        $grade=$result[0]->grade;
+        var_dump($grade);
+
+
+        if($result==="A+"){
+            return true;
+        }
+        else
+            return false;
+
+
     }
 
     /**
@@ -195,4 +217,5 @@ class Student extends CI_Model
     {
         return TRUE;
     }
+
 }
