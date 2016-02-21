@@ -1,20 +1,11 @@
 //Globals
-var restricted_times = new Array();
 
-$(function()
-{
+var schedule_container = document.getElementById('schedule-div');
+var schedule_title = document.getElementById('schedule-name');;
+
+$(function() {
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
-
-    var MySchedule = new WeeklySchedule(document.getElementById('mySchedule'));
-
-    MySchedule.setTableAttr({
-        class: 'table table-bordered table-condensed',
-        style: 'color: black'
-    });
-    MySchedule.setBlockAttr({
-        style: 'background-color: #00cc99; text-align:center; vertical-align:middle'
-    });
 
     var main_schedule = null;
 
@@ -22,12 +13,11 @@ $(function()
     $.ajax({
         method: 'POST',
         url: controllerURL + '/load',
-        success: function(output) {
-            main_schedule = JSON.parse(output);
-            console.log(output);
-            drawSchedule(MySchedule, main_schedule);
+        success: function (output) {
+            main_schedule = new Schedule(schedule_container, schedule_title, 'CURRENT SCHEDULE', JSON.parse(output), null);
+            main_schedule.render();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             alert(xhr.responseText);
         }
     });
@@ -37,11 +27,11 @@ $(function()
     var $srch_cover = $('#scheduler-search-cover');
     var $srch_input = $('#scheduler-search-input');
 
-    $srch_ctnr.mouseenter(function(){
+    $srch_ctnr.mouseenter(function () {
         $srch_cover.slideUp(100);
         $srch_input.slideDown(100);
     });
-    $srch_ctnr.mouseleave(function(){
+    $srch_ctnr.mouseleave(function () {
         $srch_cover.slideDown(100);
         $srch_input.slideUp(100);
     });
@@ -55,7 +45,7 @@ $(function()
      *
      * + Time blocks should be tagged in the server so it could know which time block to remove from the scheduler object.
      */
-    $(document).on('click', '.remove-time-block',function(){
+    $(document).on('click', '.remove-time-block', function () {
         $(this).remove();
 
         //TODO: remove preference from scheduler object in cookie
@@ -63,7 +53,7 @@ $(function()
         updateTimePref($time_pref_div, num_time_pref);
     });
 
-    $('.time_add').click(function(){
+    $('.time_add').click(function () {
         var is_complete = true;
         $time_pref_div.append('<p class="remove-time-block">'
             + '<i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
@@ -77,13 +67,11 @@ $(function()
          *      + Should come with a tag identifier of this preference 'hash code'
          */
 
-        if(!is_complete)
-        {
+        if (!is_complete) {
             //TODO: If server response is not valid. Display error message.
         }
 
-        if (is_complete)
-        {
+        if (is_complete) {
             $('#scheduler-pref-modal').modal({show: false});
 
             //TODO: Incollapse the time preference to show the user he has added.
@@ -93,29 +81,27 @@ $(function()
         }
     });
 
-    $('.time_interval').first().keyup(function(){
+    $('.time_interval').first().keyup(function () {
     });
 
-    $('.time_remove').click(function(){
+    $('.time_remove').click(function () {
     });
 
-    $('#time_all_day').change(function()
-    {
+    $('#time_all_day').change(function () {
         $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
     });
 
 
     //Search
-    $srch_input.keyup(function()
-    {
+    $srch_input.keyup(function () {
         var srch_val = $srch_input.val();
 
-        if(srch_val.length > 1)
+        if (srch_val.length > 1)
             $.ajax({
                 method: 'POST',
                 url: controllerURL + '/search',
                 data: {input: srch_val},
-                success: function(output){
+                success: function (output) {
                     console.log(output);
                 }
             });
@@ -123,7 +109,7 @@ $(function()
 
     //Auto Pick
     $auto_pick_btn = $('.auto-pick');
-    $auto_pick_btn.click(function(){
+    $auto_pick_btn.click(function () {
         alert('Do something');
     });
 
@@ -131,122 +117,80 @@ $(function()
     $generate_btn = $('.generate');
     $generate_div = $('.generated-schedules');
 
-    var generated_schedules;
-    $generate_btn.click(function(){
+    var generated_schedules = [];
+    $generate_btn.click(function () {
         $.ajax({
             method: 'POST',
             url: controllerURL + '/generate',
-            success: function(output){
-                generated_schedules = JSON.parse(output);
-                console.log("Found " + generated_schedules.length + " results!");
-                $('footer').append('<p>' + output + '</p>');
+            success: function (output) {
+                var generated_data = JSON.parse(output);
+                generated_schedules = [];
+
+                console.log("GENERATOR: Found " + generated_data.length + " results!");
+
                 $generate_div.empty();
-                for(var i in generated_schedules)
-                {
+
+                for (var i in generated_data) {
+                    var name = 'Schedule #' + (parseInt(i) + 1);
                     $generate_div.append('' +
                         '<div class="list-group-item scheduler-list-item generated" data-schedule-index="'
-                        + i
-                        +'">Schedule #' + (parseInt(i) + 1) + '</div>');
+                        + i + '">'
+                        + name + '</div>');
+
+                    generated_schedules.push(
+                        new Schedule(schedule_container, schedule_title, name, generated_data[i][0], generated_data[i][1])
+                    );
                 }
+
+                console.log(generated_schedules);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 alert(xhr.responseText);
             }
         });
     });
 
-    var curr_schdle_index = -1;
+    var curr_index = -1;
 
-    $(document).on('click', '.generated',function(){
+    $(document).on('click', '.generated', function () {
         var index = $(this).data('scheduleIndex');
-        curr_schdle_index = index;
-        drawSchedule(MySchedule, generated_schedules[index]);
+        curr_index = index;
+        generated_schedules[index].render();
     });
 
-    $(document).on("keyup", function(e) {
+    $(document).on("keyup", function (e) {
         var key = e.which;
         if (key == 39) { //Key or Right
-            if(curr_schdle_index != generated_schedules - 1){
-                curr_schdle_index++;
-                drawSchedule(MySchedule, generated_schedules[curr_schdle_index]);
-                console.log(curr_schdle_index);
+            if (curr_index < generated_schedules.length - 1) {
+                curr_index++;
+                generated_schedules[curr_index].render();
             }
         } else if (key == 37) { //Key or Left
-            if(curr_schdle_index != -1){
-                curr_schdle_index--;
-                drawSchedule(MySchedule, generated_schedules[curr_schdle_index]);
+            if (curr_index > -1) {
+                if(curr_index == 0) {
+                    curr_index--;
+                    main_schedule.render();
+                }
+                else {
+                    curr_index--;
+                    generated_schedules[curr_index].render();
+                }
             }
         }
     });
 
     //Commit Schedule
     $commit_btn = $('.scheduler-commit');
-    $commit_btn.click(function(){
+    $commit_btn.click(function () {
         alert('Do something');
     });
 
+
 });
 
-function updateTimePref($prefcontainer, num_time_pref)
-{
+function updateTimePref($prefcontainer, num_time_pref) {
     if(num_time_pref == 0)
         $prefcontainer.append('<p class="no-blocks">No Time Preferences!</p>');
     else
         $('.no-blocks').remove();
-}
-
-function drawSchedule(scheduleController, scheduleData)
-{
-    scheduleController.emptyBlocks();
-
-    //Loop through every section
-    for (var type in scheduleData)
-    {
-        for (var i in scheduleData[type])
-        {
-            var section = scheduleData[type][i];
-
-            if(section['lecture'] != null)
-            {
-                for(var j in section['lecture'])
-                {
-                    var start = section['lecture'][j]['start'];
-                    var end = section['lecture'][j]['end'];
-
-                    var title = section['course_subject'] + ' ' + section['course_number'];
-                    title += '<br>' + 'LECT ' + section['letter']
-                        + '<br>' + start + ' - ' + end
-                        + '<br>' + section['lecture'][j]['room'];
-                    console.log(title);
-                    scheduleController.addBlock(title, start, end, section['lecture'][j]['weekday'])
-                }
-            }
-            if(section['tutorial'] != null)
-            {
-                var start = section['tutorial']['start'];
-                var end = section['tutorial']['end'];
-
-                var title = section['course_subject'] + ' ' + section['course_number'];
-                title += '<br>' + 'TUT ' + section['tutorial']['letter']
-                    + '<br>' + start + ' - ' + end
-                    + '<br>' + section['tutorial']['room'];
-
-                scheduleController.addBlock(title, start, end, section['tutorial']['weekday'])
-            }
-            if(section['laboratory'] != null)
-            {
-                var start = section['laboratory']['start'];
-                var end = section['laboratory']['end'];
-
-                var title = section['course_subject'] + ' ' + section['course_number'];
-                title += '<br>' + 'LAB ' + section['laboratory']['letter']
-                    + '<br>' + start + ' - ' + end
-                    + '<br>' + section['laboratory']['room'];
-
-                scheduleController.addBlock(title, start, end, section['laboratory']['weekday'])
-            }
-        }
-    }
-    //Render schedule
-    scheduleController.render();
 }

@@ -56,7 +56,7 @@ class Students extends App_Base_Controller
 
 		$data['semester_name'] = $data['title'];
 		$data['ajax_route'] = base_url('students/ajax/'.$semester_url);
-		$data['add_js'] = ['moment.js', 'schedule.js', 'enroll.js'];
+		$data['add_js'] = ['schedule.js', 'enroll.js'];
 
 		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/scheduler.php', $data);

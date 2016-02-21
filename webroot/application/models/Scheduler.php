@@ -32,6 +32,13 @@ class Scheduler extends CI_Model
 		$this->load->model('lecture');
 		$this->load->model('tutorial');
 		$this->load->model('laboratory');
+
+		//Loading libraries
+		$this->load->library('encryption');
+		$this->encryption->initialize([
+			'cipher' => 'blowfish',
+			'mode' => 'ctr'
+		]);
 	}
 
 	public function init($semester_id)
@@ -53,30 +60,36 @@ class Scheduler extends CI_Model
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
 	}
 
-	public function generateSchedules()
+	/**
+	 * Returns possible generated schedules.
+	 *
+	 * @param course_list - Courses to add
+	 * @return array
+	 */
+	public function generateSchedules($course_list = [1, 2])
 	{
 		$schedules = [];
-
-		$courses = [1, 2, 70];
-
 		$course_groups = [];
 
-		foreach($courses as $course) {
+		foreach($course_list as $course) {
 			array_push($course_groups, $this->getPossibleGroups($course));
 		}
-		$this->generate(0, count($course_groups) - 1, $this->main_schedule, $schedules, $course_groups);
+
+		$this->generator(0, count($course_groups) - 1, $this->main_schedule, $schedules, $course_groups);
 
 		return $schedules;
 	}
 
 	/**
+	 * Generator generates all possible valid schedules into an array.
+	 *
 	 * @param $current_course - Keeps track of current course
 	 * @param $num_courses - Number of courses being added
 	 * @param Scheduler\Schedule $current_schedule - The current schedule
 	 * @param $stack - Stack of possible schedules
 	 * @param $courses - Two dimensional ragged array. [course][possible group sections]
 	 */
-	private function generate($current_course, $num_courses, $current_schedule, &$stack, $courses)
+	private function generator($current_course, $num_courses, $current_schedule, &$stack, $courses)
 	{
 		for ($i = 0; $i < count($courses[$current_course]); $i++)
 		{
@@ -88,14 +101,17 @@ class Scheduler extends CI_Model
 			{
 				if($clone->addUnregistered($courses[$current_course][$i]))
 				{
-					$this->generate($current_course + 1, $num_courses, $clone, $stack, $courses);
+					$this->generator($current_course + 1, $num_courses, $clone, $stack, $courses);
 				}
 			}
 			else //If this is the last course, and successful in adding group in last course, push to stack.
 			{
 				if($clone->addUnregistered($courses[$current_course][$i]))
 				{
-					array_push($stack, $clone);
+					$serialize = serialize($clone);
+					$ciphered = $this->encryption->encrypt($serialize);
+
+					array_push($stack, [$clone , $serialize]);
 				}
 			}
 		}

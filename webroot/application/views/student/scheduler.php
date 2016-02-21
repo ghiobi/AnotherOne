@@ -98,9 +98,9 @@
 			<div class="scheduler-row">
 				<div class="scheduler-full">
 					<div class="scheduler-schedule">
-						<h3 class="scheduler-header">SCHEDULE</h3>
+						<h3 class="scheduler-header" id="schedule-name">SCHEDULE</h3>
 					</div>
-					<div id="mySchedule">
+					<div id="schedule-div">
 
 					</div>
 				</div>

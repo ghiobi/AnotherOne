@@ -237,6 +237,16 @@ header{
 	border-radius: 5px;
 	box-shadow: none;
 }
+.scheduler-cells{
+	text-align: center;
+	vertical-align: middle !important;
+}
+.registered{
+	background-color: #00cc99;
+}
+.unregistered{
+	background-color: #ffff99;
+}
 @media (max-width: 992px) {
 	.scheduler-app h3{
 		font-size:1.25em;
