@@ -169,5 +169,4 @@ class Course extends CI_Model
             FROM programsequence
             WHERE programsequence.program_id = '$program_id'")->result();
     }
-
 }

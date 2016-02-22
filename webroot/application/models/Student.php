@@ -143,7 +143,6 @@ class Student extends CI_Model
     }
 
     /**
-     * TODO: @eric
      * Returns array with info of course progress.
      *
      * @return array - Returns an array that contains associative arrays with
@@ -157,18 +156,19 @@ class Student extends CI_Model
 
         //Loading course model
         $this->load->model('course');
+        $sequence=$this->course->getCourseSequence($program_id);
 
         $array = [];
 
-
-        array_push($array, [
-            'name' => 'SOEN 341 Software Process',
-            'completed' => $this->isCompleted(32),
-            'take' => $this->isTakeable(32)
-        ]);
-
-        //Please use the functions in the course model, and this.
-
+        foreach($sequence as $value)
+        {
+            $course_id=$value->course_id;
+            array_push($array, [
+                'name' => $this->course->getByID($course_id)->code ." ". $this->course->getByID($course_id)->number." ".$this->course->getByID($course_id)->name,
+                'completed' => $this->isCompleted($course_id),
+                'take' => $this->isTakeable($course_id)
+            ]);
+        }
         return $array;
     }
 
@@ -180,7 +180,6 @@ class Student extends CI_Model
      */
     function isCompleted($course_id)
     {
-
         $result=$this->db->query("
             SELECT
               registered.grade
@@ -201,19 +200,18 @@ class Student extends CI_Model
             }
         }
         return false;
-
     }
 
     /**
      * Determines if this student can take a course. INFO: Independent of student records
-     * FIX: Doesn't take corequisite into account and maybe course already completed is takeable
+     * FIX: Doesn't take corequisite into account
      * @param $course_id
      * @return bool
      */
     function isTakeable($course_id)
     {
-        //check if course is already completed
-        if(!$this->isCompleted($course_id)) {
+        //check if student already registered in course
+        if(!$this->isRegistered($course_id)) {
 
             $this->load->model('course');
             $prereqs = $this->course->getPrerequisites($course_id);
@@ -221,12 +219,42 @@ class Student extends CI_Model
             //Check if course prerequisites are completed
             foreach ($prereqs as $value) {
                 $x = $value->prerequisite_course_id;
-                if (!$this->isCompleted($x)) {
 
+                if (!$this->isCompleted($x)) {
                     return false;
                 }
             }
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the student is registered in the course and has not completed it.
+     * @param $course_id
+     * @return bool
+     */
+    function isRegistered($course_id)
+    {
+        $result=$this->db->query("
+            SELECT
+              registered.grade
+              FROM registered
+              INNER JOIN students
+                ON registered.student_id = students.id
+              INNER JOIN sections
+                ON registered.section_id = sections.id
+              WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
+
+        foreach($result as $value)
+        {
+            $x=$value->grade;
+
+            //Check if doesn't have a grade and is registered
+            if(empty($x))
+            {
+                return true;
+            }
         }
         return false;
     }
