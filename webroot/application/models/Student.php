@@ -156,31 +156,32 @@ class Student extends CI_Model
 
         //Loading course model
         $this->load->model('course');
-        $sequence=$this->course->getCourseSequence($program_id);
+        $sequence = $this->course->getCourseSequence($program_id);
 
         $array = [];
 
         foreach($sequence as $value)
         {
-            $course_id=$value->course_id;
+            $course = $this->course->getByID($value->course_id);
+
             array_push($array, [
-                'name' => $this->course->getByID($course_id)->code ." ". $this->course->getByID($course_id)->number." ".$this->course->getByID($course_id)->name,
-                'completed' => $this->isCompleted($course_id),
-                'take' => $this->isTakeable($course_id)
+                'name' => $course->code ." ". $course->number." ".$course->name,
+                'completed' => $this->isCompleted($value->course_id),
+                'takable' => $this->isTakable($value->course_id)
             ]);
         }
         return $array;
     }
 
     /**
-     * Determines if a course is completed with passing grade
+     * Determines if a course is completed with passing grade or going to be completed.
      *
      * @param $course_id
      * @return bool
      */
     function isCompleted($course_id)
     {
-        $result=$this->db->query("
+        $result = $this->db->query("
             SELECT
               registered.grade
               FROM registered
@@ -192,10 +193,14 @@ class Student extends CI_Model
 
         foreach($result as $value)
         {
-            $x=$value->grade;
+            $grade = $value->grade;
 
-            //Check if passed the course
-            if(($x==="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-")&&!empty($x) ){
+            //If grade is empty or meaning in progress, it assumes he is going to complete it.
+            if(!$grade)
+                return true;
+
+            //Check if passed the course @eric this doesn't work
+            if(($grade==="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-")&&!empty($grade) ){
                 return true;
             }
         }
@@ -203,34 +208,33 @@ class Student extends CI_Model
     }
 
     /**
-     * Determines if this student can take a course. INFO: Independent of student records
+     * Determines if this student can take a course.
      * FIX: Doesn't take corequisite into account
      * @param $course_id
      * @return bool
      */
-    function isTakeable($course_id)
+    function isTakable($course_id)
     {
-        //check if student already registered in course
-        if(!$this->isRegistered($course_id)) {
+        $this->load->model('course');
+        $prereqs = $this->course->getPrerequisites($course_id);
 
-            $this->load->model('course');
-            $prereqs = $this->course->getPrerequisites($course_id);
+        //Check if course prerequisites are completed
+        foreach ($prereqs as $value)
+        {
+            $x = $value->prerequisite_course_id;
 
-            //Check if course prerequisites are completed
-            foreach ($prereqs as $value) {
-                $x = $value->prerequisite_course_id;
-
-                if (!$this->isCompleted($x)) {
-                    return false;
-                }
+            if (!$this->isCompleted($x)) {
+                return false;
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     /**
      * Checks if the student is registered in the course and has not completed it.
+     *
+     * note: this is almost just repeating isComplete. it is somewhat just the negation of iscomplete.
+     *
      * @param $course_id
      * @return bool
      */
