@@ -1,13 +1,13 @@
 /**************************************************************************
   ____       _              _       _
- / ___|  ___| |__   ___  __| |_   _| | ___ _ __
- \___ \ / __| '_ \ / _ \/ _` | | | | |/ _ \ '__|
- ___) | (__| | | |  __/ (_| | |_| | |  __/ |
- |____/ \___|_| |_|\___|\__,_|\__,_|_|\___|_|
+ / ___|  ___| |__   ___  __| |_   _| | ___
+ \___ \ / __| '_ \ / _ \/ _` | | | | |/ _ \
+ ___) | (__| | | |  __/ (_| | |_| | |  __/
+ |____/ \___|_| |_|\___|\__,_|\__,_|_|\___|
 
  */
 
-function Schedule(container, header, name, json, php) {
+function Schedule(container, header, panel, name, json, php) {
 
     this.table_attr = {
         class: 'table table-bordered table-condensed',
@@ -202,17 +202,20 @@ function Schedule(container, header, name, json, php) {
         //Emptying
         this.schedule_container.innerHTML = '';
         this.schedule_header.innerHTML = '';
+        this.schedule_detail.innerHTML = '';
 
         //Insertion
-
         this.schedule_container.insertAdjacentHTML('beforeend', this.htmlTable);
         this.schedule_header.insertAdjacentHTML('beforeend', this.name);
+        this.schedule_detail.insertAdjacentHTML('beforeend', this.details);
     };
 
     this.extract =  function ()
     {
         var JSON = this.JSON;
         //Loop through every section
+        var details = "";
+
         for (var type in JSON)
         {
             var cell_attributes;
@@ -225,8 +228,14 @@ function Schedule(container, header, name, json, php) {
             {
                 var section = JSON[type][i];
 
+                details += '<table class="table table-bordered table-condensed">';
+                details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="3">'+section['course_name']+'</th></tr>' +
+                    '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
+                    '<th>Start Time</th><th>End Time</th><th>Weekday</th></tr></thead>';
                 if(section['lecture'] != null)
                 {
+                    details += '<tr><th colspan="7">Lectures</th></tr>';
+
                     for(var j in section['lecture'])
                     {
                         var start = section['lecture'][j]['start'];
@@ -237,7 +246,11 @@ function Schedule(container, header, name, json, php) {
                             + '<br>' + start + ' - ' + end
                             + '<br>' + section['lecture'][j]['room'];
 
-                        this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes)
+                        this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes);
+
+                        details += '<tr><td colspan="3"></td><td>' + section['lecture'][j]['room']
+                            + '</td><td>' + start + '</td><td>' + end + '</td><td>'
+                            + section['lecture'][j]['weekday'] + '</td></tr>';
                     }
                 }
                 if(section['tutorial'] != null)
@@ -250,7 +263,15 @@ function Schedule(container, header, name, json, php) {
                         + '<br>' + start + ' - ' + end
                         + '<br>' + section['tutorial']['room'];
 
-                    this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes)
+                    this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes);
+
+                    details += '<tr><th colspan="7">Tutorial</th></tr>';
+                    details += '<tr><td>' + section['tutorial']['letter'] + '</td><td>'
+                        + section['tutorial']['instructor'] + '</td><td>'
+                        + section['tutorial']['capacity'] + '</td><td>'
+                        + section['tutorial']['room'] + '</td><td>'
+                        + start + '</td><td>' + end + '</td><td>'
+                        + section['tutorial']['weekday'] + '</td></tr>';
                 }
                 if(section['laboratory'] != null)
                 {
@@ -262,10 +283,21 @@ function Schedule(container, header, name, json, php) {
                         + '<br>' + start + ' - ' + end
                         + '<br>' + section['laboratory']['room'];
 
-                    this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes)
+                    this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes);
+
+                    details += '<tr><th colspan="7">Laboratory</th></tr>';
+                    details += '<tr><td>' + section['laboratory']['letter'] + '</td><td>'
+                        + section['laboratory']['instructor'] + '</td><td>'
+                        + section['laboratory']['capacity'] + '</td><td>'
+                        + section['laboratory']['room'] + '</td><td>'
+                        + start + '</td><td>' + end + '</td><td>'
+                        + section['laboratory']['weekday'] + '</td></tr>';
                 }
+                details += '</table>';
             }
         }
+
+        return details;
     };
 
     this.inc = 15; //incrementation, 15 minutes.
@@ -277,11 +309,12 @@ function Schedule(container, header, name, json, php) {
 
     this.schedule_container = container;
     this.schedule_header = header;
+    this.schedule_detail = panel;
 
     this.JSON = json;
     this.php = php;
     this.name = name;
 
-    this.extract();
+    this.details = this.extract();
     this.htmlTable = this.makeTable();
 }

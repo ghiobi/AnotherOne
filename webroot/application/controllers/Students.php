@@ -38,20 +38,21 @@ class Students extends App_Base_Controller
 		$this->load->model('semester');
 		$this->load->model('scheduler');
 
+
+		//Validating if semester name url exist. If not, redirect to main page.
+		if(!$semester_id = $this->semester->getIDByName($semester_name))
+			redirect(base_url());
+
 		//If there the semester cookie already exists then load data from that of init a new scheduler object.
 		if(!$this->session->userdata($semester_url))
 		{
-			//Validating if semester name url exist. If not, redirect to main page.
-			if(!$semester_id = $this->semester->getIDByName($semester_name))
-				redirect(base_url());
-
 			//Initializing the scheduler because the cookie doesn't exist.
 			$this->scheduler->init($semester_id);
 
 			//After initializing the scheduler, it save the data into a session cookie.
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
-		$data['title'] = strtoupper($semester_name);
+		$data['title'] = strtoupper(substr($semester_name, 0 , 1)) . substr($semester_name, 1);
 		$data['info_bar'] = 'Register in three simple steps. 1. Pick your courses 2. Generate 3. Commit!';
 
 		$data['semester_name'] = $data['title'];

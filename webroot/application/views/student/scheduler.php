@@ -3,7 +3,7 @@
 		<div class="scheduler-app">
 			<div class="scheduler-row">
 				<div class="scheduler-full scheduler-title">
-					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> <?= $semester_name ?></h3>
+					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> <?= strtoupper($semester_name) ?></h3>
 				</div>
 			</div>
 			<div class="scheduler-row">
@@ -57,7 +57,7 @@
 						</h3>
 						<div class="list-group scheduler-list-group">
 							<div class="list-group-item scheduler-list-item main-schedule">
-								Cras justo odio
+								Current Schedule for <?= $semester_name ?>
 							</div>
 							<div class="generated-schedules">
 
@@ -67,23 +67,8 @@
 				</div>
 				<div class="scheduler-right">
 					<div  class="scheduler-registered">
-						<h3 class="scheduler-header">REGISTER</h3>
-						<div class="list-group scheduler-list-group">
-							<div class="list-group-item scheduler-list-item list-group-item-success">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item list-group-item-success">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item list-group-item-warning">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item list-group-item-warning">
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item list-group-item-danger">
-								Cras justo odio
-							</div>
+						<h3 class="scheduler-header">Schedule Details</h3>
+						<div class="list-group scheduler-details" id="schedule-detail">
 						</div>
 					</div>
 				</div>

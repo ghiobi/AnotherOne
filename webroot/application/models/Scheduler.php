@@ -37,7 +37,7 @@ class Scheduler extends CI_Model
 		$this->load->library('encryption');
 		$this->encryption->initialize([
 			'cipher' => 'blowfish',
-			'mode' => 'ctr'
+			'mode' => 'cbc'
 		]);
 	}
 
@@ -49,7 +49,7 @@ class Scheduler extends CI_Model
 
 		$sectionGroups = [];
 		foreach ($registered_sections as $sect) {
-			array_push($sectionGroups, $this->groupSectionFactory(
+			array_push($sectionGroups, $this->buildGroupSection(
 				$sect->course_id,
 				$sect->section_id,
 				$sect->tutorial_id,
@@ -66,7 +66,7 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [1, 2])
+	public function generateSchedules($course_list = [1, 2, 28, 32, 96])
 	{
 		$schedules = [];
 		$course_groups = [];
@@ -111,7 +111,7 @@ class Scheduler extends CI_Model
 					$serialize = serialize($clone);
 					$ciphered = $this->encryption->encrypt($serialize);
 
-					array_push($stack, [$clone , $serialize]);
+					array_push($stack, [$clone , $ciphered]);
 				}
 			}
 		}
@@ -256,7 +256,7 @@ class Scheduler extends CI_Model
 		
 	}
 
-	public function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+	public function buildGroupSection($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
 	{
 
 		$tutorial = NULL;

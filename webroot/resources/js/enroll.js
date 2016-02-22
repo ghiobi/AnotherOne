@@ -1,7 +1,8 @@
 //Globals
 
 var schedule_container = document.getElementById('schedule-div');
-var schedule_title = document.getElementById('schedule-name');;
+var schedule_title = document.getElementById('schedule-name');
+var schedule_panel = document.getElementById('schedule-detail');
 
 $(function() {
     //Scheduler config
@@ -14,7 +15,7 @@ $(function() {
         method: 'POST',
         url: controllerURL + '/load',
         success: function (output) {
-            main_schedule = new Schedule(schedule_container, schedule_title, 'CURRENT SCHEDULE', JSON.parse(output), null);
+            main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', JSON.parse(output), null);
             main_schedule.render();
         },
         error: function (xhr, status, error) {
@@ -138,7 +139,7 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, name, generated_data[i][0], generated_data[i][1])
+                        new Schedule(schedule_container, schedule_title, schedule_panel,name, generated_data[i][0], generated_data[i][1])
                     );
                 }
 
@@ -158,7 +159,7 @@ $(function() {
         generated_schedules[index].render();
     });
 
-    $(document).on("keyup", function (e) {
+    $(document).on("keydown", function (e) {
         var key = e.which;
         if (key == 39) { //Key or Right
             if (curr_index < generated_schedules.length - 1) {
