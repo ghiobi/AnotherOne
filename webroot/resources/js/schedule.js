@@ -1,114 +1,90 @@
 /**************************************************************************
   ____       _              _       _
- / ___|  ___| |__   ___  __| |_   _| | ___ _ __
- \___ \ / __| '_ \ / _ \/ _` | | | | |/ _ \ '__|
- ___) | (__| | | |  __/ (_| | |_| | |  __/ |
- |____/ \___|_| |_|\___|\__,_|\__,_|_|\___|_|
+ / ___|  ___| |__   ___  __| |_   _| | ___
+ \___ \ / __| '_ \ / _ \/ _` | | | | |/ _ \
+ ___) | (__| | | |  __/ (_| | |_| | |  __/
+ |____/ \___|_| |_|\___|\__,_|\__,_|_|\___|
 
  */
 
-function formatTime(minutes){
-    var hours = Math.floor(minutes / 60);
-    var minutes = minutes % 60;
+function Schedule(container, header, panel, name, json, php) {
 
-    minutes = (minutes < 10)? '0' + minutes : minutes;
+    this.table_attr = {
+        class: 'table table-bordered table-condensed',
+        style: 'color: black'
+    };
 
-    return hours + ':' + minutes;
-}
+    this.formatTime = function(minutes){
+        var hours = Math.floor(minutes / 60);
+        var minutes = minutes % 60;
 
-function toMinutes(time){
-    var colon = time.indexOf(':');
+        minutes = (minutes < 10)? '0' + minutes : minutes;
 
-    var hours = parseInt(time.substr(0, colon));
-    var minutes = parseInt(time.substr(colon + 1));
+        return hours + ':' + minutes;
+    };
 
-    return hours * 60 + minutes;
-}
+    this.toMinutes = function (time){
+        var colon = time.indexOf(':');
 
-function WeeklySchedule(elm) {
+        var hours = parseInt(time.substr(0, colon));
+        var minutes = parseInt(time.substr(colon + 1));
 
-    this.elm = elm;
-
-    this.tattr = []; //table attributes
-
-    this.tblocks = []; //Time Blocks
-    this.tblockattr = []; //Cell Attributes
-
-    this.inc = 15; //incrementation, 15 minutes.
-
-    this.sweek = 1; //default start weekday (Monday)
-    this.eweek = 5;
-
-    this.stime = toMinutes('8:30');
-    this.etime = toMinutes('23:00');
-
-    this.setTableAttr = function (prop)
+        return hours * 60 + minutes;
+    };
+    
+    this.addBlock = function (title, start, end, weekday, attr)
     {
-        this.tattr = prop;
-    }
-
-    this.setBlockAttr = function (prop)
-    {
-        this.tblockattr = prop;
-    }
-
-    this.addBlock = function (title, start, end, weekday)
-    {
-        var start_index = toMinutes(start);
+        var start_index = this.toMinutes(start);
 
         //If the time block does not start with a multiple of the incrementation then do this
         if(start_index % this.inc != 0)
             start_index = start_index - (start_index % this.inc);
 
         //Insert time block
-        this.tblocks[weekday + '-' + start_index] = {
+        this.cells[weekday + '-' + start_index] = {
             title: title,
-            start: toMinutes(start),
-            end: toMinutes(end),
-            weekday: weekday
+            start: this.toMinutes(start),
+            end: this.toMinutes(end),
+            weekday: weekday,
+            attr: attr
         }
-    }
-
-    this.emptyBlocks = function ()
-    {
-        this.tblocks = [];
-    }
+    };
 
     this.getEarliestWeekday = function ()
     {
         var maxblock = null;
 
-        for (var first in this.tblocks)
+        for (var first in this.cells)
         {
-            maxblock = this.tblocks[first];
+            maxblock = this.cells[first];
             break;
         }
-        for(var newtblock in this.tblocks)
+        for(var newtblock in this.cells)
         {
-            if (this.tblocks[newtblock]['weekday'] > maxblock['weekday'])
-                maxblock = this.tblocks[newtblock];
+            if (this.cells[newtblock]['weekday'] > maxblock['weekday'])
+                maxblock = this.cells[newtblock];
         }
         return maxblock['weekday'];
-    }
+    };
 
 
     this.getLatestWeekday = function ()
     {
         var minblock = null;
 
-        for (var first in this.tblocks)
+        for (var first in this.cells)
         {
-            minblock = this.tblocks[first];
+            minblock = this.cells[first];
             break;
         }
 
-        for(var newtblock in this.tblocks)
+        for(var newtblock in this.cells)
         {
-            if (this.tblocks[newtblock]['weekday'] < minblock['weekday'])
-                minblock = this.tblocks[newtblock];
+            if (this.cells[newtblock]['weekday'] < minblock['weekday'])
+                minblock = this.cells[newtblock];
         }
         return minblock['weekday'];
-    }
+    };
 
     //Set table dimension automatically by max and min time
     this.autoDimensions = function()
@@ -117,40 +93,42 @@ function WeeklySchedule(elm) {
         var maxTime = null;
 
         //Getting first minimums and maximums.
-        for (var key in this.tblocks)
+        for (var key in this.cells)
         {
-            minTime = this.tblocks[key]['start'];
-            maxTime = this.tblocks[key]['end'];
+            minTime = this.cells[key]['start'];
+            maxTime = this.cells[key]['end'];
             break;
         }
 
         //Comparing times to determine the maximum and minimum times.
-        for (var key in this.tblocks){
-            if(this.tblocks[key]['start'] < minTime)
-                minTime = this.tblocks[key]['start'];
-            if(this.tblocks[key]['end'] > maxTime)
-                maxTime = this.tblocks[key]['end'];
+        for (var key in this.cells){
+            if(this.cells[key]['start'] < minTime)
+                minTime = this.cells[key]['start'];
+            if(this.cells[key]['end'] > maxTime)
+                maxTime = this.cells[key]['end'];
         }
 
-        //One row padding on the max time and min time.
-        this.stime = minTime - this.inc;
-        this.etime = maxTime + this.inc;
-    }
+        if(minTime % this.inc != 0)
+            minTime = minTime - (minTime % this.inc);
+        if(maxTime % this.inc != 0)
+            maxTime = maxTime - (maxTime % this.inc);
 
-    this.render = function ()
+        //One row padding on the max time and min time.
+        this.start_time = minTime - this.inc;
+        this.end_time = maxTime + this.inc;
+    };
+
+    this.makeTable = function()
     {
         //Settings table dimensions automatically
         this.autoDimensions();
-
-        //Emptying inner HTML
-        this.elm.innerHTML = '';
 
         //Drawing table
         var table = '<table';
 
         //Settings table attributes
-        for (var attr in this.tattr)
-            table += ' ' + attr + '="' + this.tattr[attr] + '"';
+        for (var attr in this.table_attr)
+            table += ' ' + attr + '="' + this.table_attr[attr] + '"';
         table += '>';
 
         //Drawing weekday row starting with time
@@ -158,33 +136,33 @@ function WeeklySchedule(elm) {
 
         var weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-        for (var i = this.sweek; i < this.eweek + 1; i++)
+        for (var i = this.start_week; i < this.end_week + 1; i++)
             table += '<td>' + weekDay[i] + '</td>';
 
         table += '</tr>';
 
         //Fill is a array to determine the empty blocks or occupied
         var fill = [];
-        for (var r_time = this.stime; r_time <= this.etime; r_time += this.inc)
+        for (var r_time = this.start_time; r_time <= this.end_time; r_time += this.inc)
         {
             fill[r_time.toString()] = [];
-            for (var week = this.sweek; week <= this.eweek; week++)
+            for (var week = this.start_week; week <= this.end_week; week++)
                 fill[r_time.toString()][week.toString()] = false;
         }
 
         //Drawing the main schedule
-        for (var r_time = this.stime; r_time <= this.etime; r_time += this.inc)
+        for (var r_time = this.start_time; r_time <= this.end_time; r_time += this.inc)
         {
             table += '<tr>';
 
             //Time column
-            var time = formatTime(r_time);
+            var time = this.formatTime(r_time);
             table += '<td>' + time + '</td>';
 
-            for (var week = this.sweek; week <= this.eweek; week++)
+            for (var week = this.start_week; week <= this.end_week; week++)
             {
                 //If block is not null then there is data
-                var block = this.tblocks[week + '-' + r_time];
+                var block = this.cells[week + '-' + r_time];
                 if (block != null)
                 {
                     //Occupying cell
@@ -196,8 +174,8 @@ function WeeklySchedule(elm) {
 
                     //Cell Attributes
                     table += '<td';
-                    for (var attr in this.tblockattr)
-                        table += ' ' + attr + '="' + this.tblockattr[attr] + '"';
+                    for (var attr in block['attr'])
+                        table += ' ' + attr + '="' + block['attr'][attr] + '"';
                     table += '" rowspan="' + rowsp + '">' + block['title'] + '</td>';
 
                     //Occupying the spaces
@@ -216,8 +194,127 @@ function WeeklySchedule(elm) {
         }
         table += '</table>';
 
-        //Inserting table into element
-        elm.insertAdjacentHTML('beforeend', table);
-    }
+        return table;
+    };
 
+    this.render = function ()
+    {
+        //Emptying
+        this.schedule_container.innerHTML = '';
+        this.schedule_header.innerHTML = '';
+        this.schedule_detail.innerHTML = '';
+
+        //Insertion
+        this.schedule_container.insertAdjacentHTML('beforeend', this.htmlTable);
+        this.schedule_header.insertAdjacentHTML('beforeend', this.name);
+        this.schedule_detail.insertAdjacentHTML('beforeend', this.details);
+    };
+
+    this.extract =  function ()
+    {
+        var JSON = this.JSON;
+        //Loop through every section
+        var details = "";
+
+        for (var type in JSON)
+        {
+            var cell_attributes;
+            if(type == 'sections')
+                cell_attributes = {class: 'scheduler-cells registered'};
+            else
+                cell_attributes = {class: 'scheduler-cells unregistered'};
+
+            for (var i in JSON[type])
+            {
+                var section = JSON[type][i];
+
+                details += '<table class="table table-bordered table-condensed">';
+                details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="3">'+section['course_name']+'</th></tr>' +
+                    '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
+                    '<th>Start Time</th><th>End Time</th><th>Weekday</th></tr></thead>';
+                if(section['lecture'] != null)
+                {
+                    details += '<tr><th colspan="7">Lectures</th></tr>';
+
+                    for(var j in section['lecture'])
+                    {
+                        var start = section['lecture'][j]['start'];
+                        var end = section['lecture'][j]['end'];
+
+                        var title = section['course_subject'] + ' ' + section['course_number']
+                            + '<br>' + 'LECT ' + section['letter']
+                            + '<br>' + start + ' - ' + end
+                            + '<br>' + section['lecture'][j]['room'];
+
+                        this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes);
+
+                        details += '<tr><td colspan="3"></td><td>' + section['lecture'][j]['room']
+                            + '</td><td>' + start + '</td><td>' + end + '</td><td>'
+                            + section['lecture'][j]['weekday'] + '</td></tr>';
+                    }
+                }
+                if(section['tutorial'] != null)
+                {
+                    var start = section['tutorial']['start'];
+                    var end = section['tutorial']['end'];
+
+                    var title = section['course_subject'] + ' ' + section['course_number']
+                        + '<br>' + 'TUT ' + section['tutorial']['letter']
+                        + '<br>' + start + ' - ' + end
+                        + '<br>' + section['tutorial']['room'];
+
+                    this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes);
+
+                    details += '<tr><th colspan="7">Tutorial</th></tr>';
+                    details += '<tr><td>' + section['tutorial']['letter'] + '</td><td>'
+                        + section['tutorial']['instructor'] + '</td><td>'
+                        + section['tutorial']['capacity'] + '</td><td>'
+                        + section['tutorial']['room'] + '</td><td>'
+                        + start + '</td><td>' + end + '</td><td>'
+                        + section['tutorial']['weekday'] + '</td></tr>';
+                }
+                if(section['laboratory'] != null)
+                {
+                    var start = section['laboratory']['start'];
+                    var end = section['laboratory']['end'];
+
+                    var title = section['course_subject'] + ' ' + section['course_number']
+                        + '<br>' + 'LAB ' + section['laboratory']['letter']
+                        + '<br>' + start + ' - ' + end
+                        + '<br>' + section['laboratory']['room'];
+
+                    this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes);
+
+                    details += '<tr><th colspan="7">Laboratory</th></tr>';
+                    details += '<tr><td>' + section['laboratory']['letter'] + '</td><td>'
+                        + section['laboratory']['instructor'] + '</td><td>'
+                        + section['laboratory']['capacity'] + '</td><td>'
+                        + section['laboratory']['room'] + '</td><td>'
+                        + start + '</td><td>' + end + '</td><td>'
+                        + section['laboratory']['weekday'] + '</td></tr>';
+                }
+                details += '</table>';
+            }
+        }
+
+        return details;
+    };
+
+    this.inc = 15; //incrementation, 15 minutes.
+
+    this.start_week = 1; //Monday to Friday
+    this.end_week = 5;
+
+    this.cells = [];
+
+    this.schedule_container = container;
+    this.schedule_header = header;
+    this.schedule_detail = panel;
+
+    this.JSON = json;
+    this.php = php;
+    this.name = name;
+
+    this.details = this.extract();
+    this.htmlTable = this.makeTable();
 }

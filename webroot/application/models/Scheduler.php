@@ -1,9 +1,9 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
 *
 */
-
 include_once 'Helper/Schedule.php';
 include_once 'Helper/ScheduleGenerator.php';
 
@@ -19,6 +19,7 @@ class Scheduler extends CI_Model
 {
 	private $semester_id;
 	public $main_schedule;
+	public $preferences;
 
 	public function __construct()
 	{
@@ -31,6 +32,13 @@ class Scheduler extends CI_Model
 		$this->load->model('lecture');
 		$this->load->model('tutorial');
 		$this->load->model('laboratory');
+
+		//Loading libraries
+		$this->load->library('encryption');
+		$this->encryption->initialize([
+			'cipher' => 'blowfish',
+			'mode' => 'cbc'
+		]);
 	}
 
 	public function init($semester_id)
@@ -41,35 +49,80 @@ class Scheduler extends CI_Model
 
 		$sectionGroups = [];
 		foreach ($registered_sections as $sect) {
-			array_push($sectionGroups, $this->groupSectionFactory($sect->course_id, $sect->section_id, $sect->tutorial_id, $sect->laboratory_id));
+			array_push($sectionGroups, $this->buildGroupSection(
+				$sect->course_id,
+				$sect->section_id,
+				$sect->tutorial_id,
+				$sect->laboratory_id
+			));
 		}
 
-		$this->main_schedule = new Scheduler\Schedule($sectionGroups);
+		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
 	}
 
-	public function getMainSchedule()
+	/**
+	 * Returns possible generated schedules.
+	 *
+	 * @param course_list - Courses to add
+	 * @return array
+	 */
+	public function generateSchedules($course_list = [1, 2, 28, 32, 96])
 	{
-		return $this->getPossibleSchedule()->toJSON();
+		$schedules = [];
+		$course_groups = [];
+
+		foreach($course_list as $course) {
+			array_push($course_groups, $this->getPossibleGroups($course));
+		}
+
+		$this->generator(0, count($course_groups) - 1, $this->main_schedule, $schedules, $course_groups);
+
+		return $schedules;
 	}
 
-	public function getPossibleSchedule()
+	/**
+	 * Generator generates all possible valid schedules into an array.
+	 *
+	 * @param $current_course - Keeps track of current course
+	 * @param $num_courses - Number of courses being added
+	 * @param Scheduler\Schedule $current_schedule - The current schedule
+	 * @param $stack - Stack of possible schedules
+	 * @param $courses - Two dimensional ragged array. [course][possible group sections]
+	 */
+	private function generator($current_course, $num_courses, $current_schedule, &$stack, $courses)
 	{
-		$temp = clone $this->main_schedule;
-		for($i = 1; $i < 110; $i++){
-			if($i == 28) continue;
-			if(!$groups = $this->getPossibleGroups($i))
-				continue;
-			foreach($groups as $group)
+		for ($i = 0; $i < count($courses[$current_course]); $i++)
+		{
+			//Clone the current schedule
+			$clone = clone $current_schedule;
+
+			//If current_course is not end index of the number of courses to add, recurse if successful group add.
+			if($current_course != $num_courses)
 			{
-				if($temp->addSection($group))
+				if($clone->addUnregistered($courses[$current_course][$i]))
 				{
-					break;
+					$this->generator($current_course + 1, $num_courses, $clone, $stack, $courses);
+				}
+			}
+			else //If this is the last course, and successful in adding group in last course, push to stack.
+			{
+				if($clone->addUnregistered($courses[$current_course][$i]))
+				{
+					$serialize = serialize($clone);
+					$ciphered = $this->encryption->encrypt($serialize);
+
+					array_push($stack, [$clone , $ciphered]);
 				}
 			}
 		}
-		return $temp;
 	}
 
+	/**
+	 * Returns an array of all section combination groups of section lectures, tutorials, and laboratories
+	 *
+	 * @param $course_id
+	 * @return array|bool
+	 */
 	public function getPossibleGroups($course_id)
 	{
 		if(!$sections = $this->section->getSection($this->semester_id, $course_id))
@@ -81,14 +134,18 @@ class Scheduler extends CI_Model
 
 		foreach($sections as $section)
 		{
-			if(!$section['lect'])
+			if(!$section['lect']) //If section has no lectures skip. Invalid data filtering.
 				continue;
 
 			$lectures = [];
 
 			foreach($section['lect'] as $lect)
 			{
-				$obj = new Scheduler\LectureBlock($lect->id, $lect->room, $lect->start, $lect->end, $lect->weekday);
+				$obj = new Scheduler\LectureBlock(
+					$lect->id, $lect->room,
+					$lect->start, $lect->end,
+					$lect->weekday
+				);
 				array_push($lectures, $obj);
 			}
 
@@ -98,7 +155,12 @@ class Scheduler extends CI_Model
 			{
 				foreach ($section['tuts'] as $tut)
 				{
-					$obj = new Scheduler\TutorialBlock($tut->id, $tut->instructor, $tut->letter, $tut->capacity, $tut->room, $tut->start, $tut->end, $tut->weekday);
+					$obj = new Scheduler\TutorialBlock(
+						$tut->id, $tut->instructor,
+						$tut->letter, $tut->capacity,
+						$tut->room, $tut->start,
+						$tut->end, $tut->weekday
+					);
 					array_push($tutorials, $obj);
 				}
 			}
@@ -109,7 +171,12 @@ class Scheduler extends CI_Model
 			{
 				foreach ($section['labs'] as $lab)
 				{
-					$obj = new Scheduler\LaboratoryBlock($lab->id, $lab->instructor, $lab->letter, $lab->capacity, $lab->room, $lab->start, $lab->end, $lab->weekday);
+					$obj = new Scheduler\LaboratoryBlock(
+						$lab->id, $lab->instructor,
+						$lab->letter, $lab->capacity,
+						$lab->room, $lab->start,
+						$lab->end, $lab->weekday
+					);
 					array_push($laboratories, $obj);
 				}
 			}
@@ -120,34 +187,68 @@ class Scheduler extends CI_Model
 				{
 					foreach($tutorials as $tutorial)
 					{
-						$group = new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section['sect']->id, $section['sect']->professor, $section['sect']->capacity, $section['sect']->letter, $lectures, $tutorial, $laboratory);
+						$group = new Scheduler\GroupSection(
+							$course_id, $course->name,
+							$course->code,
+							$course->number,
+							$section['sect']->id,
+							$section['sect']->professor,
+							$section['sect']->capacity,
+							$section['sect']->letter,
+							$lectures, $tutorial, $laboratory
+						);
 						array_push($combo, $group);
 					}
 				}
 			}
-
 			elseif($tutorials && !$laboratories)
 			{
 				foreach($tutorials as $tutorial)
 				{
-					$group = new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section['sect']->id, $section['sect']->professor, $section['sect']->capacity, $section['sect']->letter, $lectures, $tutorial, NULL);
+					$group = new Scheduler\GroupSection(
+						$course_id, $course->name,
+						$course->code,
+						$course->number,
+						$section['sect']->id,
+						$section['sect']->professor,
+						$section['sect']->capacity,
+						$section['sect']->letter,
+						$lectures, $tutorial, NULL
+					);
 					array_push($combo, $group);
 				}
 			}
-
 			elseif(!$tutorials && $laboratories)
 			{
 				foreach($laboratories as $laboratory)
 				{
-					$group = new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section['sect']->id, $section['sect']->professor, $section['sect']->capacity, $section['sect']->letter, $lectures, NULL, $laboratory);
+					$group = new Scheduler\GroupSection(
+						$course_id, $course->name,
+						$course->code,
+						$course->number,
+						$section['sect']->id,
+						$section['sect']->professor,
+						$section['sect']->capacity,
+						$section['sect']->letter,
+						$lectures, NULL, $laboratory
+					);
 					array_push($combo, $group);
 				}
 			}
 			else{
-				$group = new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section['sect']->id, $section['sect']->professor, $section['sect']->capacity, $section['sect']->letter, $lectures, NULL, NULL);
+				$group = new Scheduler\GroupSection(
+					$course_id, $course->name,
+					$course->code,
+					$course->number,
+					$section['sect']->id,
+					$section['sect']->professor,
+					$section['sect']->capacity,
+					$section['sect']->letter,
+					$lectures, NULL, NULL);
 				array_push($combo, $group);
 			}
 		}
+
 		return $combo;
 	}
 
@@ -155,32 +256,59 @@ class Scheduler extends CI_Model
 		
 	}
 
-	public function groupSectionFactory($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+	public function buildGroupSection($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
 	{
 
 		$tutorial = NULL;
 		if($tutorial_id != NULL) {
 			$obj = $this->tutorial->getByID($tutorial_id);
-			$tutorial = new Scheduler\TutorialBlock($obj->id, $obj->instructor, $obj->letter, $obj->capacity, $obj->room, $obj->start, $obj->end, $obj->weekday);
+			$tutorial = new Scheduler\TutorialBlock(
+				$obj->id, $obj->instructor,
+				$obj->letter, $obj->capacity,
+				$obj->room, $obj->start,
+				$obj->end, $obj->weekday
+			);
 		}
 
 		$laboratory = NULL;
 		if($laboratory_id != NULL){
 			$obj = $this->laboratory->getByID($laboratory_id);
-			$laboratory = new Scheduler\LaboratoryBlock($obj->id, $obj->instructor, $obj->letter, $obj->capacity, $obj->room, $obj->start, $obj->end, $obj->weekday);
+			$laboratory = new Scheduler\LaboratoryBlock(
+				$obj->id, $obj->instructor,
+				$obj->letter, $obj->capacity,
+				$obj->room, $obj->start,
+				$obj->end, $obj->weekday
+			);
 		}
 
 		$lectArray = [];
 		$lectures = $this->lecture->getLecturesBySectID($section_id);
 
 		foreach($lectures as $obj){
-			array_push($lectArray, new Scheduler\LectureBlock($obj->id, $obj->room, $obj->start, $obj->end, $obj->weekday));
+			array_push($lectArray,
+				new Scheduler\LectureBlock(
+				$obj->id, $obj->room,
+				$obj->start, $obj->end,
+				$obj->weekday)
+			);
 		}
 
 		$section = $this->section->getBySectID($section_id);
 		$course = $this->course->getByID($course_id);
 
-		return new Scheduler\GroupSection($course_id, $course->name, $course->code, $course->number, $section_id, $section->professor, $section->capacity, $section->letter, $lectArray, $tutorial, $laboratory);
+		return new Scheduler\GroupSection(
+			$course_id, $course->name,
+			$course->code, $course->number,
+			$section_id, $section->professor,
+			$section->capacity, $section->letter,
+			$lectArray, $tutorial, $laboratory
+		);
 	}
+
+	public function getMainSchedule()
+	{
+		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
+	}
+
 
 }

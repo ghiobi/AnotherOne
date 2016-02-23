@@ -7,6 +7,9 @@
 .fix-icon {
 	font-size: .78em;
 }
+.table-condensed>tbody>tr>td{
+	padding: ;
+}
 /******************************
 			Header
 *******************************/
@@ -79,8 +82,12 @@ header{
 .scheduler-row {
 	clear: both;
 }
-.scheduler-half {
-	width: 50%;
+.scheduler-left {
+	width: 35%;
+	float: left;
+}
+.scheduler-right{
+	width: 65%;
 	float: left;
 }
 .scheduler-full {
@@ -207,6 +214,10 @@ header{
 .scheduler-list-group{
 	margin: 0;
 	color:#2c3e50;
+	max-height: 275px;
+	overflow: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 .scheduler-list-item:first-child{
 	border-radius: 0;
@@ -229,6 +240,26 @@ header{
 	border-radius: 5px;
 	box-shadow: none;
 }
+.scheduler-cells{
+	text-align: center;
+	vertical-align: middle !important;
+}
+.scheduler-details{
+	margin-bottom: 0;
+	color: black;
+}
+.scheduler-details > .table{
+	margin-bottom: 0;
+}
+#schedule-div > table >tbody>tr>td{
+	padding: 0;
+}
+.registered{
+	background-color: #00cc99;
+}
+.unregistered{
+	background-color: #ffff99;
+}
 @media (max-width: 992px) {
 	.scheduler-app h3{
 		font-size:1.25em;
@@ -236,7 +267,7 @@ header{
 	.scheduler-list-item{
 		font-size: .95em;
 	}
-	.scheduler-half {
+	.scheduler-left, .scheduler-right {
 		width: 100%;
 	}
 	.scheduler-search {
