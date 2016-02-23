@@ -166,7 +166,7 @@ class Student extends CI_Model
 
             array_push($array, [
                 'name' => $course->code ." ". $course->number." ".$course->name,
-                'completed' => $this->isCompleted($value->course_id),
+                'completed' => $this->isCompleted($value->course_id, $course->passing_grade),
                 'takable' => $this->isTakable($value->course_id)
             ]);
         }
@@ -179,17 +179,17 @@ class Student extends CI_Model
      * @param $course_id
      * @return bool
      */
-    function isCompleted($course_id)
+    function isCompleted($course_id, $passing_grade = '-C')
     {
         $result = $this->db->query("
             SELECT
               registered.grade
-              FROM registered
+            FROM registered
               INNER JOIN students
                 ON registered.student_id = students.id
               INNER JOIN sections
                 ON registered.section_id = sections.id
-              WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
+            WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
 
         foreach($result as $value)
         {

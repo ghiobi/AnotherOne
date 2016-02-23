@@ -94,6 +94,19 @@ class Course extends CI_Model
     }
 
     /**
+     * Returns a array of courses by string search
+     *
+     * TODO: Complete function
+     *
+     * @param $search - string
+     * @return array of course objects
+     */
+    function getBySearch($search)
+    {
+
+    }
+
+    /**
      * Returns all courses and details about that course by semester id.
      *
      * @param $semester_name
@@ -141,6 +154,21 @@ class Course extends CI_Model
     }
 
     /**
+     * Returns the course's passing grade
+     *
+     * @param $course_id
+     * @return string
+     */
+    function getPassingGrade($course_id)
+    {
+        return $this->db->query("
+            SELECT
+              *
+            FROM courses
+            WHERE courses.id = '$course_id'")->row()->passing_grade;
+    }
+
+    /**
      * Returns a course's prerequisites
      *
      * @param $course_id
@@ -152,7 +180,22 @@ class Course extends CI_Model
             SELECT
               courseprequisites.prerequisite_course_id
             FROM courseprequisites
-            WHERE courseprequisites.course_id = $course_id")->result();
+            WHERE courseprequisites.course_id = '$course_id'")->result();
+    }
+
+    /**
+     * Returns a course's corequisites
+     *
+     * @param $course_id
+     * @return array of objects
+     */
+    function getCorequisites($course_id)
+    {
+        return $this->db->query("
+        SELECT
+          coursecorequisite.corequisite_course_id
+        FROM coursecorequisite
+        WHERE coursecorequisite.course_id = '$course_id'")->result();
     }
 
     /**

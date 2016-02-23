@@ -14,7 +14,7 @@
 					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
 						<?php foreach($semesters as $semester):
 							$name =  url_title($semester->name); ?>
-							<li><a href="<?= site_url('students/enroll/'.strtolower($name)) ?>">Winter 2016</a></li>
+							<li><a href="<?= site_url('students/enroll/'.strtolower($name)) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
@@ -44,8 +44,37 @@
 				</div>
 			</div>
 		</div>
-		<pre>
-			<?php var_dump($progress) //@eric ?>
-		</pre>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center" style="margin-top: 20px">
+			<h3>Progress</h3>
+		</div>
+		<?php
+			$num_course = count($progress);
+			$num_per_col = ceil($num_course / 3);
+
+			$current = 0;
+			for($col = 0; $col < $num_per_col; $col++)
+			{
+				echo '<div class="col-md-4">
+						<ul class="list-group">';
+					for($i = 0; $i < $num_per_col; $i++)
+					{
+						if($current >= $num_course)
+							continue;
+
+						echo '<li class="list-group-item';
+						if($progress[$current]['completed'])
+							echo ' list-group-item-success';
+						else if($progress[$current]['takable'])
+							echo ' list-group-item-warning';
+						echo '">' . $progress[$current]['name'] . '</li>';
+
+						$current++;
+					}
+				echo '</ul>
+					</div>';
+			}
+		?>
 	</div>
 </main>
