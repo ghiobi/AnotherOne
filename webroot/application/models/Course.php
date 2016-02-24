@@ -22,10 +22,10 @@ class Course extends CI_Model
     function isAvailableInSemester($course_id, $semester_id)
     {
         $result = $this->db->query("
-            SELECT
-              COUNT(sections.id) AS result
-            FROM sections
-            WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'");
+        SELECT
+          COUNT(sections.id) AS result
+        FROM sections
+        WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'");
         return $result > 0;
     }
 
@@ -103,6 +103,27 @@ class Course extends CI_Model
      */
     function getBySearch($search)
     {
+
+        if(str_word_count($search)==1)
+        {
+
+        return $this->db->query("
+
+        SELECT *
+        FROM courses
+        WHERE code REGEX '$search' OR number REGEX '$search' ") -> result();
+
+
+    }
+
+      $search=  str_replace(' ', '|', $search);
+
+        return $this->db->query("
+
+        SELECT *
+        FROM courses
+        WHERE code REGEX '$search' AND number REGEX '$search' ") -> result();
+
 
     }
 
