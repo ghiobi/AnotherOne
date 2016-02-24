@@ -12,7 +12,7 @@ class Home extends App_Base_Controller
 	function index()
 	{
 		$this->load->model('course');
-		$result = $this->course->getBySearch('COMP');
+		$result = $this->course->getBySearch('soen 341');
 		var_dump($result);
 		die();
 		$data['title'] = 'Homepage';

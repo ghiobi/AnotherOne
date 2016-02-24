@@ -104,10 +104,11 @@ class Course extends CI_Model
     function getBySearch($search)
     {
         $num_words = str_word_count($search);
+
         if($num_words == 0)
             return [];
 
-        if(str_word_count($search)==1)
+        if(str_word_count($search) == 1)
         {
             return $this->db->query("
                 SELECT
@@ -115,13 +116,14 @@ class Course extends CI_Model
                 FROM courses
                 WHERE code REGEXP '$search' OR number REGEXP '$search'") -> result();
         }
-        $search=  str_replace(' ', '|', $search);
+        $search =  str_replace(' ', '|', $search);
+        die();
             return $this->db->query("
                 SELECT
                 *
                 FROM courses
-                WHERE code REGEXP '$search' OR number REGEXP '$search'") -> result();
-        }
+                WHERE code REGEXP '$search' AND number REGEXP '$search'") -> result();
+    }
 
     /**
      * Returns all courses and details about that course by semester id.
