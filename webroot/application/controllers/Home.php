@@ -11,6 +11,10 @@ class Home extends App_Base_Controller
 	}
 	function index()
 	{
+		$this->load->model('course');
+		$result = $this->course->getBySearch('COMP 232');
+		var_dump($result);
+		die();
 		$data['title'] = 'Homepage';
 		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select a option!';
 		$data['name'] = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');
