@@ -103,12 +103,12 @@ class Course extends CI_Model
      */
     function getBySearch($search)
     {
-        $num_words = str_word_count($search);
+        $num_words = count(explode(' ', $search));
 
         if($num_words == 0)
             return [];
 
-        if(str_word_count($search) == 1)
+        if($num_words == 1)
         {
             return $this->db->query("
                 SELECT
@@ -117,7 +117,6 @@ class Course extends CI_Model
                 WHERE code REGEXP '$search' OR number REGEXP '$search'") -> result();
         }
         $search =  str_replace(' ', '|', $search);
-        die();
             return $this->db->query("
                 SELECT
                 *
