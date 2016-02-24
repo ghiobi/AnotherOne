@@ -152,25 +152,26 @@ class Student extends CI_Model
      */
     function getProgress()
     {
-        $program_id = $this->getProgram()->id;
+        $program = $this->getProgram();
 
         //Loading course model
         $this->load->model('course');
-        $sequence = $this->course->getCourseSequence($program_id);
+        $sequence = $this->course->getCourseSequence($program->id);
 
-        $array = [];
+        $progress = [];
 
         foreach($sequence as $value)
         {
             $course = $this->course->getByID($value->course_id);
 
-            array_push($array, [
+            array_push($progress, [
                 'name' => $course->code ." ". $course->number." ".$course->name,
                 'completed' => $this->isCompleted($value->course_id, $course->passing_grade),
                 'takable' => $this->isTakable($value->course_id)
             ]);
         }
-        return $array;
+
+        return ['program_name' => $program->name, 'progress' => $progress];
     }
 
     /**

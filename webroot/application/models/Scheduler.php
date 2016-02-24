@@ -19,6 +19,9 @@ class Scheduler extends CI_Model
 {
 	private $semester_id;
 	public $main_schedule;
+
+	public $adding_courses_list;
+
 	public $preferences;
 
 	public function __construct()
@@ -41,6 +44,11 @@ class Scheduler extends CI_Model
 		]);
 	}
 
+	/**
+	 * Initializes the schedule object
+	 *
+	 * @param $semester_id
+	 */
 	public function init($semester_id)
 	{
 		$this->semester_id = $semester_id;
@@ -66,7 +74,7 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [1, 2, 28, 32, 96])
+	public function generateSchedules($course_list = [1, 2])
 	{
 		$schedules = [];
 		$course_groups = [];
@@ -252,10 +260,45 @@ class Scheduler extends CI_Model
 		return $combo;
 	}
 
-	public function searchCourse(){
-		
+	/**
+	 * Adds a course to the list
+	 * + Assumes the search has already filtered out invalid courses
+	 *
+	 * Actions:
+	 * + Generates a possible section combinations of the course.
+	 * + Adds the course to the list;
+	 *
+	 * @param
+	 * @return int - number of possible sections.
+	 */
+	public function addCourseToList($course)
+	{
+
 	}
 
+	/**
+	 * Returns a valid list of encrypted course ids and their full names
+	 * Course must be:
+	 * + Takable, refer to student model
+	 * + Available in semester
+	 *
+	 * @param $search_string - encrypted course id of course
+	 * @return string - JSON
+	 */
+	public function courseSearch($search_string)
+	{
+
+	}
+
+	/**
+	 * Used for initializing schedule. Returns the Objectified Group Section of a registered table.
+	 *
+	 * @param $course_id
+	 * @param $section_id
+	 * @param null $tutorial_id
+	 * @param null $laboratory_id
+	 * @return \Scheduler\GroupSection
+	 */
 	public function buildGroupSection($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
 	{
 
@@ -305,10 +348,16 @@ class Scheduler extends CI_Model
 		);
 	}
 
+	/**
+	 * Returns the encoded JSON string of a schedule Object
+	 *
+	 * @return string
+	 */
 	public function getMainSchedule()
 	{
 		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
+
 
 
 }

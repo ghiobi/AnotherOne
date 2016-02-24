@@ -45,30 +45,30 @@
 			</div>
 		</div>
 	</div>
+	<hr>
+	<h4 class="text-center" style="margin-bottom: 17px">Course Sequence for <?= $progress['program_name'] ?></h4>
 	<div class="row">
-		<div class="col-md-12 text-center" style="margin-top: 20px">
-			<h3>Progress</h3>
-		</div>
 		<?php
-			$num_course = count($progress);
+			$sequence = $progress['progress'];
+			$num_course = count($sequence);
 			$num_per_col = ceil($num_course / 3);
 
 			$current = 0;
-			for($col = 0; $col < $num_per_col; $col++)
+			for($col = 0; $col < $num_per_col && $current < $num_course; $col++)
 			{
 				echo '<div class="col-md-4">
 						<ul class="list-group">';
 					for($i = 0; $i < $num_per_col; $i++)
 					{
 						if($current >= $num_course)
-							continue;
+							break;
 
 						echo '<li class="list-group-item';
-						if($progress[$current]['completed'])
+						if($sequence[$current]['completed'])
 							echo ' list-group-item-success';
-						else if($progress[$current]['takable'])
+						else if($sequence[$current]['takable'])
 							echo ' list-group-item-warning';
-						echo '">' . $progress[$current]['name'] . '</li>';
+						echo '">' . $sequence[$current]['name'] . '</li>';
 
 						$current++;
 					}
