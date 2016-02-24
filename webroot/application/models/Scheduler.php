@@ -74,7 +74,7 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [1, 2])
+	public function generateSchedules($course_list = [1, 2, 6, 29, 39])
 	{
 		$schedules = [];
 		$course_groups = [];

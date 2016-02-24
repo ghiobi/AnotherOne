@@ -22,10 +22,10 @@ class Course extends CI_Model
     function isAvailableInSemester($course_id, $semester_id)
     {
         $result = $this->db->query("
-        SELECT
-          COUNT(sections.id) AS result
-        FROM sections
-        WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'")->row->result;
+            SELECT
+              COUNT(sections.id) AS result
+            FROM sections
+            WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'");
         return $result > 0;
     }
 
@@ -126,7 +126,7 @@ class Course extends CI_Model
                 ON sections.semester_id = semesters.id
               INNER JOIN courses
                 ON sections.course_id = courses.id
-            WHERE semesters.id = '$semester_id'")->result();
+            WHERE semesters.id = '$semester_id'")->result()
     }
 
     /**

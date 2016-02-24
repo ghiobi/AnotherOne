@@ -83,7 +83,7 @@ class Schedule
 
     public function addUnregistered($section)
     {
-        if(!$this->unregistered && !$section)
+        if(!$this->unregistered && !$this->sections)
         {
             array_push($this->unregistered, $section);
             return TRUE;
