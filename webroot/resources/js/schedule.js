@@ -7,7 +7,9 @@
 
  */
 
-function Schedule(container, header, panel, name, json, php) {
+//TODO: comment
+//TODO: optimize code
+function Schedule(container, header, panel, name, json, php) { //TODO: add another parameter indicating it's a generated schedule
 
     this.table_attr = {
         class: 'table table-bordered table-condensed',
@@ -230,7 +232,7 @@ function Schedule(container, header, panel, name, json, php) {
 
                 details += '<table class="table table-bordered table-condensed">';
                 details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="2">'+section['course_name']+'</th>' +
-
+                    //TODO: what if hash is empty, meaning it's not a registered section?
                     '<th><button class="drop-section" data-hash-id="'+ section['hash'] +'">Drop Section</button></th></tr>' +
 
                     '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
