@@ -110,4 +110,16 @@ class Schedule
         return TRUE;
     }
 
+    public function getRegisteredCourseList()
+    {
+        $course_list = [];
+
+        foreach($this->sections as $section)
+        {
+            array_push($course_list, $section->getCourseId());
+        }
+
+        return $course_list;
+    }
+
 }

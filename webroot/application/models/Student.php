@@ -102,7 +102,8 @@ class Student extends CI_Model
     /**
      * @return array of semester objects
      */
-    function getRegisteredSemesters(){
+    function getRegisteredSemesters()
+    {
         return $this->db->query("
             SELECT DISTINCT
               semesters.id,

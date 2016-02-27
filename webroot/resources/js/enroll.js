@@ -216,8 +216,10 @@ $(function() {
                     load_main_schedule()
                     if(undo_section_drop.length == 0)
                         $('.schedule-undo-drop').hide();
+                    console.log('Successfully undo drop section.');
                 },
                 error: function (xhr, status, error) {
+                    undo_section_drop.push(section);
                     alert(xhr.responseText);
                 }
             });
@@ -238,6 +240,14 @@ $(function() {
         });
     });
 
+    //TODO: create a function to empty generate schedules and set to main schedule
+    function set_to_main_schedule(){
+
+    }
+
+    /**
+     * Loads the main schedule on to the user interface.
+     */
     function load_main_schedule(){
         $.ajax({
             method: 'POST',
@@ -254,6 +264,11 @@ $(function() {
 
 });
 
+/**
+ * TODO: Updates the time preference UI
+ * @param $prefcontainer
+ * @param num_time_pref
+ */
 function updateTimePref($prefcontainer, num_time_pref) {
     if(num_time_pref == 0)
         $prefcontainer.append('<p class="no-blocks">No Time Preferences!</p>');

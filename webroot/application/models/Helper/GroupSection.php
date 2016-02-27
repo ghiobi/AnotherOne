@@ -6,12 +6,12 @@ class GroupSection
 {
     private $course_id;
     private $register_id;
+    private $section_id;
+
     public $hash;
     public $course_name;
     public $course_subject;
     public $course_number;
-
-    private $section_id;
 
     public $instructor;
     public $capacity;
@@ -60,6 +60,15 @@ class GroupSection
     public function getRegisterId()
     {
         return $this->register_id;
+    }
+
+    public function setRegisterId($register_id)
+    {
+        $this->register_id = $register_id;
+        if($this->register_id != NULL)
+            $this->hash = hash('ripemd128' ,$register_id);
+        else
+            $this->hash = NULL;
     }
 
     /**
@@ -188,6 +197,20 @@ class GroupSection
     public function setLaboratory($laboratory)
     {
         $this->laboratory = $laboratory;
+    }
+
+    public function getTutorialId()
+    {
+        if($this->tutorial == NULL)
+            return NULL;
+        return $this->tutorial->getId();
+    }
+
+    public function getLaboratoryId()
+    {
+        if($this->laboratory == NULL)
+            return NULL;
+        return $this->laboratory->getId();
     }
 
     /**

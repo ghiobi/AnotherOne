@@ -17,10 +17,11 @@ include_once 'Helper/TutorialBlock.php';
 class Scheduler extends CI_Model
 {
 	private $semester_id;
+	private $student_id;
+
 	public $main_schedule;
-
+	public $registered_course_list;
 	public $adding_courses_list;
-
 	public $preferences;
 
 	public function __construct()
@@ -65,7 +66,10 @@ class Scheduler extends CI_Model
 			));
 		}
 
+		$this->student_id = $this->student->getID();
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
+		$this->registered_course_list = $this->main_schedule->getRegisteredCourseList();
+		$this->adding_courses_list = [];
 	}
 
 	/**
@@ -76,34 +80,101 @@ class Scheduler extends CI_Model
 	 */
 	public function dropSection($hash_id)
 	{
+		//Removing section from main schedule, it returns the section_group
 		$section_group = $this->main_schedule->removeSection($hash_id);
 
+		//Usually doesn't not return false. Just a checkpoint.
 		if($section_group === FALSE)
 			return FALSE;
 
-		//Delete record
+		//Delete Record from database
 		$register_id = $section_group->getRegisterId();
 
-//		$this->db->where('id', $register_id);
-//		$this->db->delete('registered');
+		$section_group->setRegisterId(NULL);
+
+		$this->db->where('id', $register_id);
+		$this->db->delete('registered');
 
 		$serialize = serialize($section_group);
-		$ciphered = $this->encryption->encrypt($serialize);
+		$ciphered_section = $this->encryption->encrypt($serialize);
 
-		return $ciphered;
+		//Returns the encrypted section object.
+		return $ciphered_section;
 	}
 
 	/**
 	 * @param $section_group
 	 * @return mixed
 	 */
-	public function undoDropSection($encrpyted)
+	public function undoDropSection($encrpyted_section)
 	{
-		$section_group = $this->encryption->decrypt($encrpyted);
+		$serialized_section_group = $this->encryption->decrypt($encrpyted_section);
+		$section_group = unserialize($serialized_section_group);
 
-		$section_group = unserialize($section_group);
+		//Registered section back to database.
+		$register_id = $this->addSectionRecordToDB($section_group);
+		//TODO: Does not check if the database insertion is a failure
+
+		$section_group->setRegisterId($register_id);
 
 		return $this->main_schedule->addSection($section_group);
+	}
+
+	/**
+	 * Adds a group section to the registered table. Returns the register id
+	 *
+	 * @param $section_id
+	 * @param $tutorial_id
+	 * @param $laboratory_id
+	 * @return $register_id
+	 */
+	public function addSectionRecordToDB($section_group)
+	{
+		$student_id = $this->student_id;
+		$section_id = $section_group->getSectionId();
+
+		$tutorial_id = $section_group->getTutorialId();
+		if($tutorial_id)
+			$tutorial_id = "'" . $tutorial_id . "'";
+		else
+			$tutorial_id = 'NULL';
+
+		$laboratory_id = $section_group->getLaboratoryId();
+		if($laboratory_id)
+			$laboratory_id = "'" . $laboratory_id . "'";
+		else
+			$laboratory_id = 'NULL';
+
+		$this->db->query("
+			INSERT INTO
+			  registered
+				(student_id, section_id, tutorial_id, laboratory_id)
+			VALUES
+				('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
+
+		$register_id = $this->db->query("SELECT LAST_INSERT_ID() AS  inserted_id")->row()->inserted_id;
+
+		//TODO: needs to return false if insertion is a fail.
+
+		return $register_id;
+	}
+
+	/**
+	 * Transfers the new generated schedule as the main schedule.
+	 *
+	 * @param $encrypted_schedule
+	 */
+	public function transferNewSchedule($encrypted_schedule)
+	{
+
+	}
+
+	/**
+	 * Returns a possible list of courses the student can take.
+	 */
+	public function autoPickCourse()
+	{
+		
 	}
 
 	/**
@@ -303,7 +374,18 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Adds a course to the list
+	 * TODO: Return true if course is a valid takable course.
+	 *
+	 * @param $course_id
+	 * @return bool
+	 */
+	public function validateCourse($course_id)
+	{
+
+	}
+
+	/**
+	 * TODO:Adds a course to the list
 	 * + Assumes the search has already filtered out invalid courses
 	 *
 	 * Actions:
@@ -319,7 +401,7 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Returns a valid list of encrypted course ids and their full names
+	 * TODO: Returns a valid list of encrypted course ids and their full names
 	 * Course must be:
 	 * + Takable, refer to student model
 	 * + Available in semester
@@ -400,7 +482,5 @@ class Scheduler extends CI_Model
 	{
 		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
-
-
 
 }
