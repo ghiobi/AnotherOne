@@ -44,7 +44,7 @@ class Students extends App_Base_Controller
 			redirect(base_url());
 
 		//If there the semester cookie already exists then load data from that of init a new scheduler object.
-		if(!$this->session->userdata($semester_url))
+		if($this->session->userdata($semester_url) == NULL || $this->session->userdata($semester_url) == 'Reset')
 		{
 			//Initializing the scheduler because the cookie doesn't exist.
 			$this->scheduler->init($semester_id);
@@ -93,6 +93,28 @@ class Students extends App_Base_Controller
 				$schedules = $this->scheduler->generateSchedules();
 				echo json_encode($schedules,  JSON_NUMERIC_CHECK);
 			} break;
+
+			case 'drop': {
+				$hash_id = $this->input->post('input', TRUE);
+
+				$section = $this->scheduler->dropSection($hash_id);
+
+				echo $section;
+			} break;
+
+			case 'undo-drop': {
+				$section = $this->input->post('input');
+
+				$response = $this->scheduler->undoDropSection($section);
+
+				echo ($response)? 'Re-added to section to schedule': 'Failed at re-adding section to schedule';
+			} break;
+
+			case'reset': {
+				$this->session->unset_userdata($semester_url);
+				echo 'Resetting Schedule';
+				return;
+			}
 
 		endswitch;
 

@@ -5,6 +5,8 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class GroupSection
 {
     private $course_id;
+    private $register_id;
+    public $hash;
     public $course_name;
     public $course_subject;
     public $course_number;
@@ -21,6 +23,7 @@ class GroupSection
 
     /**
      * GroupSection constructor.
+     * @param $register_id
      * @param $course_id
      * @param $section_id
      * @param $instructor
@@ -30,8 +33,12 @@ class GroupSection
      * @param TutorialBlock|NULL $tutorial
      * @param LaboratoryBlock|NULL $laboratory
      */
-    public function __construct($course_id, $course_name, $course_subject, $course_number, $section_id, $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
+    public function __construct($register_id, $course_id, $course_name, $course_subject, $course_number, $section_id,
+                                $instructor, $capacity, $letter, $lecture, TutorialBlock $tutorial = NULL, LaboratoryBlock $laboratory = NULL)
     {
+        $this->register_id = $register_id;
+        if($register_id != NULL)
+            $this->hash = hash('ripemd128' ,$register_id);
         $this->course_id = $course_id;
         $this->course_name = $course_name;
         $this->course_subject = $course_subject;
@@ -43,6 +50,16 @@ class GroupSection
         $this->lecture = $lecture;
         $this->tutorial = $tutorial;
         $this->laboratory = $laboratory;
+    }
+
+    /**
+     * Returns the register id.
+     *
+     * @return integer
+     */
+    public function getRegisterId()
+    {
+        return $this->register_id;
     }
 
     /**

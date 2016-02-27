@@ -130,6 +130,7 @@ class Student extends CI_Model
             SELECT
               sections.course_id,
               sections.semester_id,
+              registered.id,
               registered.section_id,
               registered.tutorial_id,
               registered.laboratory_id,

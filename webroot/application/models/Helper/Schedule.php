@@ -72,13 +72,17 @@ class Schedule
      * @param $index
      * @return bool
      */
-    public function removeSection($index)
+    public function removeSection($hash_id)
     {
-        if($index < 0 || $index > count($this->sections) - 1)
-            return FALSE;
-
-        $array = array_splice($this->sections, $index, 1); //array, index, number of blocks
-        return $array;
+        for($i = 0; $i < count($this->sections); $i++)
+        {
+            if($hash_id == $this->sections[$i]->hash){
+                $clone = $this->sections[$i];
+                array_splice($this->sections, $i, 1);
+                return $clone;
+            }
+        }
+        return FALSE;
     }
 
     public function addUnregistered($section)

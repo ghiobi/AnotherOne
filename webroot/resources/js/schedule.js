@@ -229,9 +229,14 @@ function Schedule(container, header, panel, name, json, php) {
                 var section = JSON[type][i];
 
                 details += '<table class="table table-bordered table-condensed">';
-                details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="3">'+section['course_name']+'</th></tr>' +
+                details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="2">'+section['course_name']+'</th>' +
+
+                    '<th><button class="drop-section" data-hash-id="'+ section['hash'] +'">Drop Section</button></th></tr>' +
+
                     '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
+
                     '<th>Start Time</th><th>End Time</th><th>Weekday</th></tr></thead>';
+
                 if(section['lecture'] != null)
                 {
                     details += '<tr><th colspan="7">Lectures</th></tr>';

@@ -4,6 +4,8 @@ var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
 
+var undo_section_drop = [];
+
 $(function() {
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
@@ -11,17 +13,7 @@ $(function() {
     var main_schedule = null;
 
     //Load the main schedule
-    $.ajax({
-        method: 'POST',
-        url: controllerURL + '/load',
-        success: function (output) {
-            main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', JSON.parse(output), null);
-            main_schedule.render();
-        },
-        error: function (xhr, status, error) {
-            alert(xhr.responseText);
-        }
-    });
+    load_main_schedule();
 
     //User Interface
     var $srch_ctnr = $('.scheduler-search');
@@ -114,7 +106,7 @@ $(function() {
         alert('Do something');
     });
 
-    //ate Schedule
+    //Schedule Generation
     $generate_btn = $('.generate');
     $generate_div = $('.generated-schedules');
 
@@ -186,6 +178,79 @@ $(function() {
         alert('Do something');
     });
 
+    //Remove Section
+    $(document).on('click', '.drop-section', function(){
+        var response = confirm('Are you sure you want to do this? You are fully responsible if sections renders full and will not re-register!');
+        if(response){
+            var hash = $(this).data('hashId');
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/drop',
+                data: {input: hash},
+                success: function (output) {
+                    if(output == ''){
+                        console.log('Failed at dropping section.');
+                    }
+                    else{
+                        load_main_schedule();
+                        console.log('Successfully dropped a section.')
+                        undo_section_drop.push(output);
+                    }
+                    $('.schedule-undo-drop').show();
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    });
+
+    $('.schedule-undo-drop').click(function(){
+        if(undo_section_drop.length != 0){
+            var section = undo_section_drop.pop();
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/undo-drop',
+                data: {input: section},
+                success: function (output) {
+                    load_main_schedule()
+                    if(undo_section_drop.length == 0)
+                        $('.schedule-undo-drop').hide();
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    });
+
+    $('.schedule-reset').click(function(){
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/reset',
+            success: function (output){
+                console.log(output);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    });
+
+    function load_main_schedule(){
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/load',
+            success: function (output) {
+                main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', JSON.parse(output), null);
+                main_schedule.render();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    }
 
 });
 

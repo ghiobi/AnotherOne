@@ -8,7 +8,6 @@ include_once 'Helper/Schedule.php';
 include_once 'Helper/ScheduleGenerator.php';
 
 include_once 'Helper/GroupSection.php';
-include_once 'Helper/GroupSectionGenerator.php';
 
 include_once 'Helper/Block.php';
 include_once 'Helper/LectureBlock.php';
@@ -58,6 +57,7 @@ class Scheduler extends CI_Model
 		$sectionGroups = [];
 		foreach ($registered_sections as $sect) {
 			array_push($sectionGroups, $this->buildGroupSection(
+				$sect->id,
 				$sect->course_id,
 				$sect->section_id,
 				$sect->tutorial_id,
@@ -69,12 +69,50 @@ class Scheduler extends CI_Model
 	}
 
 	/**
+	 * Drops a section in the main schedule and in the database.
+	 *
+	 * @param $hash_id - the hash id of the registered section, kept on the client side.
+	 * @return bool/oject - false if drop was successful - usually should be true all the time unless hacking.
+	 */
+	public function dropSection($hash_id)
+	{
+		$section_group = $this->main_schedule->removeSection($hash_id);
+
+		if($section_group === FALSE)
+			return FALSE;
+
+		//Delete record
+		$register_id = $section_group->getRegisterId();
+
+//		$this->db->where('id', $register_id);
+//		$this->db->delete('registered');
+
+		$serialize = serialize($section_group);
+		$ciphered = $this->encryption->encrypt($serialize);
+
+		return $ciphered;
+	}
+
+	/**
+	 * @param $section_group
+	 * @return mixed
+	 */
+	public function undoDropSection($encrpyted)
+	{
+		$section_group = $this->encryption->decrypt($encrpyted);
+
+		$section_group = unserialize($section_group);
+
+		return $this->main_schedule->addSection($section_group);
+	}
+
+	/**
 	 * Returns possible generated schedules.
 	 *
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [1, 2, 6, 29, 39])
+	public function generateSchedules($course_list = [1, 2])
 	{
 		$schedules = [];
 		$course_groups = [];
@@ -196,6 +234,7 @@ class Scheduler extends CI_Model
 					foreach($tutorials as $tutorial)
 					{
 						$group = new Scheduler\GroupSection(
+							NULL,
 							$course_id, $course->name,
 							$course->code,
 							$course->number,
@@ -214,6 +253,7 @@ class Scheduler extends CI_Model
 				foreach($tutorials as $tutorial)
 				{
 					$group = new Scheduler\GroupSection(
+						NULL,
 						$course_id, $course->name,
 						$course->code,
 						$course->number,
@@ -231,6 +271,7 @@ class Scheduler extends CI_Model
 				foreach($laboratories as $laboratory)
 				{
 					$group = new Scheduler\GroupSection(
+						NULL,
 						$course_id, $course->name,
 						$course->code,
 						$course->number,
@@ -245,6 +286,7 @@ class Scheduler extends CI_Model
 			}
 			else{
 				$group = new Scheduler\GroupSection(
+					NULL,
 					$course_id, $course->name,
 					$course->code,
 					$course->number,
@@ -299,7 +341,7 @@ class Scheduler extends CI_Model
 	 * @param null $laboratory_id
 	 * @return \Scheduler\GroupSection
 	 */
-	public function buildGroupSection($course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+	public function buildGroupSection($register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
 	{
 
 		$tutorial = NULL;
@@ -340,6 +382,7 @@ class Scheduler extends CI_Model
 		$course = $this->course->getByID($course_id);
 
 		return new Scheduler\GroupSection(
+			$register_id,
 			$course_id, $course->name,
 			$course->code, $course->number,
 			$section_id, $section->professor,
