@@ -25,22 +25,6 @@ class Schedule
     }
 
     /**
-     * @return mixed
-     */
-    public function getSections()
-    {
-        return $this->sections;
-    }
-
-    /**
-     * @param array $sections
-     */
-    public function setSections(Array $sections)
-    {
-        $this->sections = $sections;
-    }
-
-    /**
      * Adds a section to the schedule
      *
      * @param GroupSection $section
@@ -110,16 +94,53 @@ class Schedule
         return TRUE;
     }
 
+    /**
+     * Returns an associative hash array.
+     * @return array
+     */
     public function getRegisteredCourseList()
     {
         $course_list = [];
 
         foreach($this->sections as $section)
         {
-            array_push($course_list, $section->getCourseId());
+            $course_list[$section->getCourseId()] = TRUE;
         }
 
         return $course_list;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUnregistered()
+    {
+        return $this->unregistered;
+    }
+
+    /**
+     * @param array $unregistered
+     */
+    public function setUnregistered($unregistered)
+    {
+        $this->unregistered = $unregistered;
+    }
+
+    /**
+     * @param array $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
+    }
+
 
 }

@@ -19,9 +19,14 @@ class Scheduler extends CI_Model
 	private $semester_id;
 	private $student_id;
 
+	//Main Schedule;
 	public $main_schedule;
+
+	//Keeps track of registered/unregistered courses associative arrays HASH
 	public $registered_course_list;
 	public $adding_courses_list;
+
+	//Preferences
 	public $preferences;
 
 	public function __construct()
@@ -112,51 +117,47 @@ class Scheduler extends CI_Model
 		$section_group = unserialize($serialized_section_group);
 
 		//Registered section back to database.
-		$register_id = $this->addSectionRecordToDB($section_group);
+		$section_group = $this->record_section($section_group);
 		//TODO: Does not check if the database insertion is a failure
-
-		$section_group->setRegisterId($register_id);
 
 		return $this->main_schedule->addSection($section_group);
 	}
 
 	/**
-	 * Adds a group section to the registered table. Returns the register id
+	 * Adds a group section to the registered table record. Returns the register id
 	 *
-	 * @param $section_id
-	 * @param $tutorial_id
-	 * @param $laboratory_id
-	 * @return $register_id
+	 * @param $section_group
+	 * @return mixed
 	 */
-	public function addSectionRecordToDB($section_group)
+	public function record_section($section_group)
 	{
-		$student_id = $this->student_id;
 		$section_id = $section_group->getSectionId();
 
+		//Preparing tutorial_id for SQL
 		$tutorial_id = $section_group->getTutorialId();
 		if($tutorial_id)
 			$tutorial_id = "'" . $tutorial_id . "'";
 		else
 			$tutorial_id = 'NULL';
 
+		//Preparing laboratory_id for SQL
 		$laboratory_id = $section_group->getLaboratoryId();
 		if($laboratory_id)
 			$laboratory_id = "'" . $laboratory_id . "'";
 		else
 			$laboratory_id = 'NULL';
 
-		$this->db->query("
-			INSERT INTO
-			  registered
-				(student_id, section_id, tutorial_id, laboratory_id)
-			VALUES
-				('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
+		//Inserting record to database
+		$this->db->query(" INSERT INTO registered
+			(student_id, section_id, tutorial_id, laboratory_id)
+				VALUES ('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
 
 		$register_id = $this->db->query("SELECT LAST_INSERT_ID() AS  inserted_id")->row()->inserted_id;
 
-		//TODO: needs to return false if insertion is a fail.
+		//Sets the registeration_id;
+		$section_group->setRegisterId($register_id);
 
-		return $register_id;
+		return $section_group;
 	}
 
 	/**
@@ -166,7 +167,23 @@ class Scheduler extends CI_Model
 	 */
 	public function transferNewSchedule($encrypted_schedule)
 	{
+		//Decrypting selected schedule and unserializing string.
+		$serialized_schedule = $this->encryption->decrypt($encrypted_schedule);
+		$schedule = unserialize($serialized_schedule);
 
+		//getting unregistered sections and emptying list
+		$unregistered_sections = $schedule->getUnregistered();
+		$schedule->setUnregistered([]);
+
+		//for each section/course add the section to schedule
+		foreach($unregistered_sections as $section)
+		{
+			$section = $this->record_section($section);
+			$schedule->addSection($section);
+		}
+
+		//sets the schedule as the main schedule.
+		$this->main_schedule = $schedule;
 	}
 
 	/**
@@ -183,14 +200,21 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [1, 2])
+	public function generateSchedules($course_list = [31])
 	{
 		$schedules = [];
 		$course_groups = [];
 
 		foreach($course_list as $course) {
-			array_push($course_groups, $this->getPossibleGroups($course));
+			//if section_groups is empty continue
+			if(!$section_groups = $this->getPossibleGroups($course))
+				continue;
+			array_push($course_groups, $section_groups);
 		}
+
+		//if the array is empty return array array
+		if(!$course_groups)
+			return [];
 
 		$this->generator(0, count($course_groups) - 1, $this->main_schedule, $schedules, $course_groups);
 
@@ -385,19 +409,29 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * TODO:Adds a course to the list
 	 * + Assumes the search has already filtered out invalid courses
 	 *
 	 * Actions:
 	 * + Generates a possible section combinations of the course.
 	 * + Adds the course to the list;
 	 *
-	 * @param
+	 * @param $course_id - the course_id;
 	 * @return int - number of possible sections.
 	 */
-	public function addCourseToList($course)
+	public function addCourseToList($course_id)
 	{
+		//Checking if course id already exists in current semester
+		if(array_key_exists($course_id, $this->registered_course_list))
+			return FALSE;
 
+		if(array_key_exists($course_id, $this->adding_courses_list))
+			return FALSE;
+
+		//Generates possible sections and adds course to section.
+		$possible_sections = $this->getPossibleGroups($course_id);
+		$this->adding_courses_list[$course_id] = $possible_sections;
+
+		RETURN count($possible_sections);
 	}
 
 	/**

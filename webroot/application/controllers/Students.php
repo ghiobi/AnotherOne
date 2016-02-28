@@ -88,15 +88,22 @@ class Students extends App_Base_Controller
 
 			} break;
 
+			case 'commit':{
+				$new_schedule = $this->input->post('input', TRUE);
+				$this->scheduler->transferNewSchedule($new_schedule);
+
+				echo $this->scheduler->getMainSchedule();
+			}break;
+
 			//Returns a list of possible schedules.
 			case 'generate': {
 				$schedules = $this->scheduler->generateSchedules();
+
 				echo json_encode($schedules,  JSON_NUMERIC_CHECK);
 			} break;
 
 			case 'drop': {
 				$hash_id = $this->input->post('input', TRUE);
-
 				$section = $this->scheduler->dropSection($hash_id);
 
 				echo $section;
@@ -104,7 +111,6 @@ class Students extends App_Base_Controller
 
 			case 'undo-drop': {
 				$section = $this->input->post('input');
-
 				$response = $this->scheduler->undoDropSection($section);
 
 				echo ($response)? 'Re-added to section to schedule': 'Failed at re-adding section to schedule';
@@ -112,6 +118,7 @@ class Students extends App_Base_Controller
 
 			case'reset': {
 				$this->session->unset_userdata($semester_url);
+
 				echo 'Resetting Schedule';
 				return;
 			}

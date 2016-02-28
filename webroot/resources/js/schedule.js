@@ -9,7 +9,8 @@
 
 //TODO: comment
 //TODO: optimize code
-function Schedule(container, header, panel, name, json, php) { //TODO: add another parameter indicating it's a generated schedule
+//TODO: when there is not schedule display : 'Nothing to display'
+function Schedule(container, header, panel, name, json, object) { //TODO: add another parameter indicating it's a generated schedule
 
     this.table_attr = {
         class: 'table table-bordered table-condensed',
@@ -319,7 +320,7 @@ function Schedule(container, header, panel, name, json, php) { //TODO: add anoth
     this.schedule_detail = panel;
 
     this.JSON = json;
-    this.php = php;
+    this.object = object;
     this.name = name;
 
     this.details = this.extract();
