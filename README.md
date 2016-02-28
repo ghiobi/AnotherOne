@@ -1,5 +1,7 @@
 # mytinerary
-Welcome to mytinerary. A simple web app for schedule making and course sequence planning.
+Welcome to mytinerary. A simple web app for schedule making and course sequence planning. Currently in development
+
+![alt text](https://github.com/DoubleBond/AnotherOne/blob/master/project%20files/Screenshot.29.png "Logo Title Text 1")
 
 ## Important Tasks
 
@@ -36,17 +38,23 @@ Due Jan 17th.
 #### Intermediate and Working Project Delivery
 Due Feb 7th.
 
-#### Implement Small Features
-Due Feb 28th.
+### Finalized Scheduler
+To be completed Mar 6th.
 
-#### Clean up & Debug
-Due Mar 13th
+## Develiverable 2
+Due Mar 10th
 
-#### Finalize Project Delivery
-Due Mar 20th
+#### Clean up & Debug & Test
+To be completed by Mar 10th
+
+#### Finalize Programming
+To be completed by March 15th.
+
+## Develiverable 3
+Due April 6
 
 #### Final Report
-Due Mar 27th.
+To Complete by April 10th.
 
 ## Helpful Tools
   + https://www.codecademy.com/ - learn some coding if ya bit rusty mate.
