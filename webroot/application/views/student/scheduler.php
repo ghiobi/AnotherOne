@@ -33,25 +33,11 @@
 							<button class="scheduler-auto-btn auto-pick">Auto-Pick</button>
 						</h3>
 						<div class="list-group scheduler-list-group">
-							<div class="list-group-item scheduler-list-item">
-								<span class="badge">2</span>
-								Cras justo odio
+							<div id="scheduler-reg-course">
+
 							</div>
-							<div class="list-group-item scheduler-list-item">
-								<span class="badge">3</span>
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								<span class="badge">4</span>
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								<span class="badge">5</span>
-								Cras justo odio
-							</div>
-							<div class="list-group-item scheduler-list-item">
-								<span class="badge">6</span>
-								Cras justo odio
+							<div id="scheduler-unreg-course">
+
 							</div>
 						</div>
 					</div>

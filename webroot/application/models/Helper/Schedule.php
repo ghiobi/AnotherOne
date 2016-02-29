@@ -95,16 +95,17 @@ class Schedule
     }
 
     /**
-     * Returns an associative hash array.
+     * Returns an associative array of the registered courses.
+     *
      * @return array
      */
-    public function getRegisteredCourseList()
+    public function getCourseList()
     {
         $course_list = [];
 
         foreach($this->sections as $section)
         {
-            $course_list[$section->getCourseId()] = $section->code.' '.$section->number.' '.$section->name;
+            $course_list[$section->getCourseId()] = $section->course_subject.' '.$section->course_number.' '.$section->course_name;
         }
 
         return $course_list;

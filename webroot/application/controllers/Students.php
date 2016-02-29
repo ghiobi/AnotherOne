@@ -78,22 +78,19 @@ class Students extends App_Base_Controller
 				echo $this->scheduler->getMainSchedule();
 			} break;
 
-			case 'course-list': {
+			case 'search-list': {
 				echo $this->scheduler->searchCourseList();
 			} break;
 
-			//Returns a list of courses the user can take.
-			case 'search': {
-				echo 'Hello';
-			} break;
+			case 'add-course': {
+				$course = $this->input->post('input', TRUE);
 
-			case 'addcourse': {
-
+				echo $this->scheduler->add_course($course);
 			} break;
 
 			case 'commit':{
 				$new_schedule = $this->input->post('input', TRUE);
-				$this->scheduler->transferNewSchedule($new_schedule);
+				$this->scheduler->apply_new_schedule($new_schedule);
 
 				echo $this->scheduler->getMainSchedule();
 			}break;
@@ -107,24 +104,27 @@ class Students extends App_Base_Controller
 
 			case 'drop': {
 				$hash_id = $this->input->post('input', TRUE);
-				$section = $this->scheduler->dropSection($hash_id);
+				$section = $this->scheduler->drop($hash_id);
 
 				echo $section;
 			} break;
 
 			case 'undo-drop': {
+				//TODO: Improve undo-drop mechanism
 				$section = $this->input->post('input');
-				$response = $this->scheduler->undoDropSection($section);
+				$response = $this->scheduler->undo_drop($section);
 
-				echo ($response)? 'Re-added to section to schedule': 'Failed at re-adding section to schedule';
+				echo ($response)? 'Re-added section to schedule': 'Failed at re-adding section to schedule';
 			} break;
 
-			case'reset': {
+			case 'reset': {
 				$this->session->unset_userdata($semester_url);
-
-				echo 'Resetting Schedule';
 				return;
 			}
+
+			case 'course-list': {
+				echo $this->scheduler->get_course_list();
+			} break;
 
 		endswitch;
 

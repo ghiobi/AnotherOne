@@ -13,24 +13,6 @@ $(function() {
 
     var main_schedule = null;
 
-    //Load the main schedule
-    load_main_schedule();
-
-    /* TODO: TO REMOVE
-    //User Interface
-    var $srch_ctnr = $('.scheduler-search');
-    var $srch_cover = $('#scheduler-search-cover');
-
-
-    $srch_ctnr.mouseenter(function () {
-        $srch_cover.slideUp(100);
-        $srch_input.slideDown(100);
-    });
-    $srch_ctnr.mouseleave(function () {
-        $srch_cover.slideDown(100);
-        $srch_input.slideUp(100);
-    }); */
-
     var num_time_pref = 0;
     $time_pref_div = $('.scheduler-pref-time');
     updateTimePref($time_pref_div, num_time_pref);
@@ -91,7 +73,7 @@ $(function() {
     var $srch_input = $('#scheduler-search');
     $srch_input.autocomplete({
         source: function(request, response){
-            $.getJSON( controllerURL + '/course-list/',
+            $.getJSON( controllerURL + '/search-list/',
                 function(data){
                     response($.ui.autocomplete.filter(data, request.term));
                 });
@@ -99,7 +81,23 @@ $(function() {
         minLength: 2,
         select: function(event, ui){
             var course = ui.item.hash;
-            //TODO: send course id to server to add to list
+
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/add-course',
+                data: {input: course},
+                success: function (output) {
+                    if(output != ''){
+                        console.log(output);
+                    }
+                    else{
+                        load_interface();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
 
             $srch_input.val('');
             return false;
@@ -131,15 +129,12 @@ $(function() {
 
     var generated_schedules = [];
     $generate_btn.click(function () {
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/generate',
-            success: function (output) {
-                var generated_data = JSON.parse(output);
-                clear_to_main_schedule();
-
-                console.log("Generator found " + generated_data.length + " results!");
-                for (var i in generated_data) {
+        clear_to_main_schedule();
+        $.getJSON(
+            controllerURL + '/generate',
+            function (output) {
+                console.log("Generator found " + output.length + " results!");
+                for (var i in output) {
                     var name = 'Schedule #' + (parseInt(i) + 1);
                     $generate_div.append('' +
                         '<div class="list-group-item scheduler-list-item schedule" data-schedule-index="'
@@ -147,14 +142,11 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, schedule_panel,name, generated_data[i][0], generated_data[i][1])
+                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1])
                     );
                 }
-            },
-            error: function (xhr, status, error) {
-                alert(xhr.responseText);
             }
-        });
+        );
     });
 
     $(document).on('click', '.schedule', function () {
@@ -173,19 +165,24 @@ $(function() {
 
     $(document).on("keydown", function (e) {
         var key = e.which;
-        if (key == 39) { //Key or Right
+        if (key == 39) { //Right Key
             if (selected_schedule < generated_schedules.length - 1) {
                 selected_schedule++;
+                $('.scheduler-selected').removeClass('scheduler-selected');
+                $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('scheduler-selected');
                 generated_schedules[selected_schedule].render();
             }
-        } else if (key == 37) { //Key or Left
+        } else if (key == 37) {//Left Key
             if (selected_schedule > -1) {
-                if(selected_schedule == 0) {
-                    selected_schedule--;
+                selected_schedule--;
+                if(selected_schedule == -1) {
+                    $('.scheduler-selected').removeClass('scheduler-selected');
+                    $('.main-schedule').addClass('scheduler-selected');
                     main_schedule.render();
                 }
                 else {
-                    selected_schedule--;
+                    $('.scheduler-selected').removeClass('scheduler-selected');
+                    $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('scheduler-selected');
                     generated_schedules[selected_schedule].render();
                 }
             }
@@ -206,9 +203,7 @@ $(function() {
                         console.log('Failed at committing new schedule.');
                     }
                     else{
-                        load_main_schedule();
-                        clear_to_main_schedule();
-
+                        load_interface();
                         //Clear undo button
                         undo_drop_array = [];
                         $('.schedule-undo-drop').hide();
@@ -238,8 +233,7 @@ $(function() {
                         console.log('Failed at dropping section.');
                     }
                     else{
-                        load_main_schedule();
-                        clear_to_main_schedule();
+                        load_interface();
                         console.log('Successfully dropped a section.')
                         undo_drop_array.push(output);
                     }
@@ -254,13 +248,14 @@ $(function() {
 
     $undo_btn.click(function(){
         if(undo_drop_array.length != 0){
+            clear_to_main_schedule();
             var section = undo_drop_array.pop();
             $.ajax({
                 method: 'POST',
                 url: controllerURL + '/undo-drop',
                 data: {input: section},
                 success: function (output) {
-                    load_main_schedule()
+                    load_interface();
                     if(undo_drop_array.length == 0)
                         $undo_btn.hide();
                     console.log('Successfully undo drop section.');
@@ -277,15 +272,17 @@ $(function() {
         $.ajax({
             method: 'POST',
             url: controllerURL + '/reset',
-            success: function (output){
-                console.log(output);
+            success: function(){
                 location.reload();
-            },
-            error: function (xhr, status, error) {
-                alert(xhr.responseText);
             }
         });
     });
+
+    function load_interface(){
+        load_main_schedule();
+        clear_to_main_schedule();
+        get_course_list();
+    }
 
     /**
      * Clears generated schedules and switches to main schedule
@@ -302,23 +299,36 @@ $(function() {
         generated_schedules = [];
     }
 
+    var $reg_div = $('#scheduler-reg-course');
+    var $unreg_div = $('#scheduler-unreg-course');
+    function get_course_list(){ //TODO: display no course to display info message
+        $.getJSON(controllerURL + '/course-list',
+            function(course){
+                $reg_div.empty();
+                for(var key in course['registered']){
+                    $reg_div.append('<div class="list-group-item scheduler-list-item">'+course['registered'][key]+'</div>');
+                }
+                $unreg_div.empty();
+                for(var key in course['unregistered']){
+                    $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item">'+key+'<span class="badge">'+course['unregistered'][key]+'</span></div>');
+                }
+            }
+        );
+    }
     /**
      * Loads the main schedule on to the user interface.
      */
     function load_main_schedule(){
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/load',
-            success: function (output) {
-                main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', JSON.parse(output), null);
+        $.getJSON( controllerURL + '/load',
+            function (schedule) {
+                main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', schedule, null);
                 main_schedule.render();
                 selected_schedule = -1;
-            },
-            error: function (xhr, status, error) {
-                alert(xhr.responseText);
             }
-        });
+        );
     }
+
+    load_interface();
 
 });
 

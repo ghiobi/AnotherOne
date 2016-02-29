@@ -74,7 +74,7 @@ class Scheduler extends CI_Model
 
 		$this->search_course_list = [];
 
-		$this->registered_course_list = $this->main_schedule->getRegisteredCourseList();
+		$this->registered_course_list = $this->main_schedule->getCourseList();
 		$this->generator_course_list = [];
 	}
 
@@ -84,7 +84,7 @@ class Scheduler extends CI_Model
 	 * @param $hash_id - the hash id of the registered section, kept on the client side.
 	 * @return bool/oject - false if drop was successful - usually should be true all the time unless hacking.
 	 */
-	public function dropSection($hash_id)
+	public function drop($hash_id)
 	{
 		//Removing section from main schedule, it returns the section_group
 		$section_group = $this->main_schedule->removeSection($hash_id);
@@ -106,6 +106,8 @@ class Scheduler extends CI_Model
 		$serialize = serialize($section_group);
 		$ciphered_section = $this->encryption->encrypt($serialize);
 
+		$this->registered_course_list = $this->main_schedule->getCourseList();
+
 		//Returns the encrypted section object.
 		return $ciphered_section;
 	}
@@ -114,7 +116,7 @@ class Scheduler extends CI_Model
 	 * @param $section_group
 	 * @return mixed
 	 */
-	public function undoDropSection($encrpyted_section)
+	public function undo_drop($encrpyted_section)
 	{
 		$serialized_section_group = $this->encryption->decrypt($encrpyted_section);
 		$section_group = unserialize($serialized_section_group);
@@ -122,9 +124,13 @@ class Scheduler extends CI_Model
 		//Registered section back to database.
 		$section_group = $this->record_section($section_group);
 		//TODO: Does not check if the database insertion is a failure
-		//TODO: Add course back to registered_course_list
 
-		return $this->main_schedule->addSection($section_group);
+		$success = $this->main_schedule->addSection($section_group);
+
+		//Refreshes the registered course list
+		$this->registered_course_list = $this->main_schedule->getCourseList();
+
+		return $success;
 	}
 
 	/**
@@ -169,7 +175,7 @@ class Scheduler extends CI_Model
 	 *
 	 * @param $encrypted_schedule
 	 */
-	public function transferNewSchedule($encrypted_schedule)
+	public function apply_new_schedule($encrypted_schedule)
 	{
 		//Decrypting selected schedule and unserializing string.
 		$serialized_schedule = $this->encryption->decrypt($encrypted_schedule);
@@ -178,8 +184,6 @@ class Scheduler extends CI_Model
 		//getting unregistered sections and emptying list
 		$unregistered_sections = $schedule->getUnregistered();
 		$schedule->setUnregistered([]);
-
-		//TODO: transfer sections to the registered_course_list and empty generator_course_list
 
 		//for each section/course add the section to schedule
 		foreach($unregistered_sections as $section)
@@ -190,6 +194,9 @@ class Scheduler extends CI_Model
 
 		//sets the schedule as the main schedule.
 		$this->main_schedule = $schedule;
+
+		$this->generator_course_list = [];
+		$this->registered_course_list = $this->main_schedule->getCourseList();
 	}
 	
 	/**
@@ -198,17 +205,13 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [2])
+	public function generateSchedules()
 	{
 		$schedules = [];
 		$course_groups = [];
 
-		foreach($course_list as $course) {
-			//if section_groups is empty continue
-			if(!$section_groups = $this->getPossibleGroups($course))
-				continue;
-			array_push($course_groups, $section_groups);
-		}
+		foreach($this->generator_course_list as $course)
+			array_push($course_groups, $course['sections']);
 
 		//if the array is empty return array array
 		if(!$course_groups)
@@ -268,10 +271,8 @@ class Scheduler extends CI_Model
 			}
 
 			$this->db->cache_off();
-
 			$this->search_course_list = json_encode($course_list, JSON_NUMERIC_CHECK);
 		}
-
 		return $this->search_course_list;
 	}
 
@@ -306,7 +307,7 @@ class Scheduler extends CI_Model
 			return $e->getMessage();
 		}
 
-		return TRUE;
+		return NULL;
 	}
 
 	/**
@@ -334,9 +335,13 @@ class Scheduler extends CI_Model
 
 		//Generates possible sections and adds course to section.
 		$possible_sections = $this->getPossibleGroups($course_id);
-		$this->generator_course_list[$course_id] = $possible_sections;
+		$this->generator_course_list[$course_id] = [
+			'count' => count($possible_sections),
+			'name' => $possible_sections[0]->course_subject.' '.$possible_sections[0]->course_number.' '.$possible_sections[0]->course_name,
+			'sections' => $possible_sections,
+		];
 
-		RETURN count($possible_sections);
+		return count($possible_sections);
 	}
 
 	/**
@@ -361,7 +366,16 @@ class Scheduler extends CI_Model
 	 */
 	public function get_course_list()
 	{
-
+		$unreg_list = [];
+		foreach($this->generator_course_list as $key => $course)
+		{
+			$unreg_list[$course['name']] = $course['count'];
+		}
+		$array = [
+			'registered' => $this->registered_course_list,
+			'unregistered' => $unreg_list
+		];
+		return json_encode($array, JSON_NUMERIC_CHECK);
 	}
 
 	/**
