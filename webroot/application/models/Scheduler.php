@@ -1,9 +1,6 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
-*
-*/
 include_once 'Helper/Schedule.php';
 include_once 'Helper/ScheduleGenerator.php';
 
@@ -18,13 +15,14 @@ class Scheduler extends CI_Model
 {
 	private $semester_id;
 	private $student_id;
-	private $course_list;
+	private $search_course_list;
+
 	//Main Schedule;
 	public $main_schedule;
 
 	//Keeps track of registered/unregistered courses associative arrays HASH
 	public $registered_course_list;
-	public $adding_courses_list;
+	public $generator_course_list;
 
 	//Preferences
 	public $preferences;
@@ -74,10 +72,10 @@ class Scheduler extends CI_Model
 		$this->student_id = $this->student->getID();
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
 
-		$this->course_list = [];
+		$this->search_course_list = [];
 
 		$this->registered_course_list = $this->main_schedule->getRegisteredCourseList();
-		$this->adding_courses_list = [];
+		$this->generator_course_list = [];
 	}
 
 	/**
@@ -188,18 +186,10 @@ class Scheduler extends CI_Model
 		//sets the schedule as the main schedule.
 		$this->main_schedule = $schedule;
 	}
-
-	/**
-	 * Returns a possible list of courses the student can take.
-	 */
-	public function autoPickCourse()
-	{
-
-	}
-
+	
 	/**
 	 * Returns possible generated schedules.
-	 *
+	 * //TODO: remove course list and replace with unregistered $adding_courses_list
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
@@ -259,6 +249,156 @@ class Scheduler extends CI_Model
 				}
 			}
 		}
+	}
+
+	public function searchCourseList()
+	{
+		if(!$this->search_course_list){
+			$this->db->cache_on();
+			$course_list = [];
+
+			foreach($this->course->getAvailableBySemester($this->semester_id) as $course){
+				array_push($course_list, ['label' => $course->code.' '.$course->number.' '.$course->name,
+					'hash' => $this->encryption->encrypt($course->id)]);
+			}
+
+			$this->db->cache_off();
+
+			$this->search_course_list = json_encode($course_list, JSON_NUMERIC_CHECK);
+		}
+
+		return $this->search_course_list;
+	}
+
+	/**
+	 * TODO: Return true if course is a valid takable course.
+	 *
+	 * @param $course_id
+	 * @return bool
+	 */
+	public function validateCourse($course_id)
+	{
+
+	}
+	
+	/**
+	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
+	 * 
+	 * Returns a possible list of courses the student can take.
+	 */
+	public function auto_fill_generator_course()
+	{
+		//Before doing this contact me
+	}
+
+	/**
+	 * Actions:
+	 * + Generates a possible section combinations of the course.
+	 * + Adds the course to the list;
+	 *
+	 * @param $course_id - the course_id;
+	 * @return int - number of possible sections.
+	 */
+	public function add_to_generator($course_id)
+	{
+		//Checking if course id already exists in current semester
+		if(array_key_exists($course_id, $this->registered_course_list))
+			return FALSE;
+
+		if(array_key_exists($course_id, $this->generator_course_list))
+			return FALSE;
+		
+		//TODO: limit of course student can take
+
+		//Generates possible sections and adds course to section.
+		$possible_sections = $this->getPossibleGroups($course_id);
+		$this->generator_course_list[$course_id] = $possible_sections;
+
+		RETURN count($possible_sections);
+	}
+
+	/**
+	 * Removes course from generator list
+	 * 
+	 * @param $course_id
+	 * @return bool - True if successful removal
+	 */
+	public function remove_from_generator($course_id)
+	{
+		if(array_key_exists($course_id, $this->generator_course_list)){
+			unset($this->generator_course_list[$course_id]);
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Returns the registered course_list and generator_course_list to the view
+	 *
+	 * @return json
+	 */
+	public function get_course_list()
+	{
+		
+	}
+
+	/**
+	 * Used for initializing schedule. Returns the Objectified Group Section of a registered table.
+	 *
+	 * @param $course_id
+	 * @param $section_id
+	 * @param null $tutorial_id
+	 * @param null $laboratory_id
+	 * @return \Scheduler\GroupSection
+	 */
+	public function buildGroupSection($register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+	{
+
+		$tutorial = NULL;
+		if($tutorial_id != NULL) {
+			$obj = $this->tutorial->getByID($tutorial_id);
+			$tutorial = new Scheduler\TutorialBlock(
+				$obj->id, $obj->instructor,
+				$obj->letter, $obj->capacity,
+				$obj->room, $obj->start,
+				$obj->end, $obj->weekday
+			);
+		}
+
+		$laboratory = NULL;
+		if($laboratory_id != NULL){
+			$obj = $this->laboratory->getByID($laboratory_id);
+			$laboratory = new Scheduler\LaboratoryBlock(
+				$obj->id, $obj->instructor,
+				$obj->letter, $obj->capacity,
+				$obj->room, $obj->start,
+				$obj->end, $obj->weekday
+			);
+		}
+
+		$lectArray = [];
+		$lectures = $this->lecture->getLecturesBySectID($section_id);
+
+		foreach($lectures as $obj){
+			array_push($lectArray,
+				new Scheduler\LectureBlock(
+				$obj->id, $obj->room,
+				$obj->start, $obj->end,
+				$obj->weekday)
+			);
+		}
+
+		$section = $this->section->getBySectID($section_id);
+		$course = $this->course->getByID($course_id);
+
+		return new Scheduler\GroupSection(
+			$register_id,
+			$course_id, $course->name,
+			$course->code, $course->number,
+			$section_id, $section->professor,
+			$section->capacity, $section->letter,
+			$lectArray, $tutorial, $laboratory
+		);
 	}
 
 	/**
@@ -398,135 +538,6 @@ class Scheduler extends CI_Model
 		}
 
 		return $combo;
-	}
-
-	public function getCourseList()
-	{
-		if(!$this->course_list){
-			$this->db->cache_on();
-			$course_list = [];
-
-			foreach($this->course->getAvailableBySemester($this->semester_id) as $course){
-				array_push($course_list, ['label' => $course->code.' '.$course->number.' '.$course->name,
-					'hash' => $this->encryption->encrypt($course->id)]);
-			}
-
-			$this->db->cache_off();
-
-			$this->course_list = json_encode($course_list, JSON_NUMERIC_CHECK);
-		}
-
-		return $this->course_list;
-	}
-
-	/**
-	 * TODO: Return true if course is a valid takable course.
-	 *
-	 * @param $course_id
-	 * @return bool
-	 */
-	public function validateCourse($course_id)
-	{
-
-	}
-
-	/**
-	 * + Assumes the search has already filtered out invalid courses
-	 *
-	 * Actions:
-	 * + Generates a possible section combinations of the course.
-	 * + Adds the course to the list;
-	 *
-	 * @param $course_id - the course_id;
-	 * @return int - number of possible sections.
-	 */
-	public function addCourseToList($course_id)
-	{
-		//Checking if course id already exists in current semester
-		if(array_key_exists($course_id, $this->registered_course_list))
-			return FALSE;
-
-		if(array_key_exists($course_id, $this->adding_courses_list))
-			return FALSE;
-
-		//Generates possible sections and adds course to section.
-		$possible_sections = $this->getPossibleGroups($course_id);
-		$this->adding_courses_list[$course_id] = $possible_sections;
-
-		RETURN count($possible_sections);
-	}
-
-	/**
-	 * TODO: Returns a valid list of encrypted course ids and their full names
-	 * Course must be:
-	 * + Takable, refer to student model
-	 * + Available in semester
-	 *
-	 * @param $search_string - encrypted course id of course
-	 * @return string - JSON
-	 */
-	public function courseSearch($search_string)
-	{
-
-	}
-
-	/**
-	 * Used for initializing schedule. Returns the Objectified Group Section of a registered table.
-	 *
-	 * @param $course_id
-	 * @param $section_id
-	 * @param null $tutorial_id
-	 * @param null $laboratory_id
-	 * @return \Scheduler\GroupSection
-	 */
-	public function buildGroupSection($register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
-	{
-
-		$tutorial = NULL;
-		if($tutorial_id != NULL) {
-			$obj = $this->tutorial->getByID($tutorial_id);
-			$tutorial = new Scheduler\TutorialBlock(
-				$obj->id, $obj->instructor,
-				$obj->letter, $obj->capacity,
-				$obj->room, $obj->start,
-				$obj->end, $obj->weekday
-			);
-		}
-
-		$laboratory = NULL;
-		if($laboratory_id != NULL){
-			$obj = $this->laboratory->getByID($laboratory_id);
-			$laboratory = new Scheduler\LaboratoryBlock(
-				$obj->id, $obj->instructor,
-				$obj->letter, $obj->capacity,
-				$obj->room, $obj->start,
-				$obj->end, $obj->weekday
-			);
-		}
-
-		$lectArray = [];
-		$lectures = $this->lecture->getLecturesBySectID($section_id);
-
-		foreach($lectures as $obj){
-			array_push($lectArray,
-				new Scheduler\LectureBlock(
-				$obj->id, $obj->room,
-				$obj->start, $obj->end,
-				$obj->weekday)
-			);
-		}
-
-		$section = $this->section->getBySectID($section_id);
-		$course = $this->course->getByID($course_id);
-
-		return new Scheduler\GroupSection(
-			$register_id,
-			$course_id, $course->name,
-			$course->code, $course->number,
-			$section_id, $section->professor,
-			$section->capacity, $section->letter,
-			$lectArray, $tutorial, $laboratory
-		);
 	}
 
 	/**

@@ -79,7 +79,7 @@ class Students extends App_Base_Controller
 			} break;
 
 			case 'course-list': {
-				echo $this->scheduler->getCourseList();
+				echo $this->scheduler->searchCourseList();
 			} break;
 
 			//Returns a list of courses the user can take.
