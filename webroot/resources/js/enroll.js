@@ -16,10 +16,11 @@ $(function() {
     //Load the main schedule
     load_main_schedule();
 
+    /* TODO: TO REMOVE
     //User Interface
     var $srch_ctnr = $('.scheduler-search');
     var $srch_cover = $('#scheduler-search-cover');
-    var $srch_input = $('#scheduler-search-input');
+
 
     $srch_ctnr.mouseenter(function () {
         $srch_cover.slideUp(100);
@@ -28,7 +29,7 @@ $(function() {
     $srch_ctnr.mouseleave(function () {
         $srch_cover.slideDown(100);
         $srch_input.slideUp(100);
-    });
+    }); */
 
     var num_time_pref = 0;
     $time_pref_div = $('.scheduler-pref-time');
@@ -87,7 +88,24 @@ $(function() {
 
 
     //Search
-    $srch_input.keyup(function () {
+    var $srch_input = $('#scheduler-search');
+    $srch_input.autocomplete({
+        source: function(request, response){
+            $.getJSON( controllerURL + '/course-list/',
+                function(data){
+                    response($.ui.autocomplete.filter(data, request.term));
+                });
+        },
+        minLength: 2,
+        select: function(event, ui){
+            var course = ui.item.hash;
+            //TODO: send course id to server to add to list
+
+            $srch_input.val('');
+            return false;
+        }
+    });
+    /*$srch_input.keyup(function () {
         var srch_val = $srch_input.val();
 
         if (srch_val.length > 1)
@@ -99,7 +117,7 @@ $(function() {
                     console.log(output);
                 }
             });
-    });
+    });*/
 
     //Auto Pick
     $auto_pick_btn = $('.auto-pick');
@@ -124,7 +142,7 @@ $(function() {
                 for (var i in generated_data) {
                     var name = 'Schedule #' + (parseInt(i) + 1);
                     $generate_div.append('' +
-                        '<div class="list-group-item scheduler-list-item generated" data-schedule-index="'
+                        '<div class="list-group-item scheduler-list-item schedule" data-schedule-index="'
                         + i + '">'
                         + name + '</div>');
 
@@ -139,10 +157,18 @@ $(function() {
         });
     });
 
-    $(document).on('click', '.generated', function () {
-        var index = $(this).data('scheduleIndex');
-        selected_schedule = index;
-        generated_schedules[index].render();
+    $(document).on('click', '.schedule', function () {
+        $('.scheduler-selected').removeClass('scheduler-selected');
+        $(this).addClass('scheduler-selected');
+        if($(this).hasClass('main-schedule')) {
+            selected_schedule = -1;
+            main_schedule.render();
+        }
+        else {
+            var index = $(this).data('scheduleIndex');
+            selected_schedule = index;
+            generated_schedules[index].render();
+        }
     });
 
     $(document).on("keydown", function (e) {
@@ -166,7 +192,7 @@ $(function() {
         }
     });
 
-    //Commit Schedule
+    //Commit Schedule //TODO: Confirmation dialogue box
     $commit_btn = $('.scheduler-commit');
     $commit_btn.click(function () {
         if(selected_schedule != -1){

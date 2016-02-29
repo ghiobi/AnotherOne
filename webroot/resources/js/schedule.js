@@ -231,6 +231,7 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
             {
                 var section = JSON[type][i];
 
+                //TODO: Redesign the course details
                 details += '<table class="table table-bordered table-condensed">';
                 details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="2">'+section['course_name']+'</th>' +
                     //TODO: what if hash is empty, meaning it's not a registered section?

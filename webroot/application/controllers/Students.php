@@ -71,12 +71,15 @@ class Students extends App_Base_Controller
 		$this->scheduler = unserialize($this->session->userdata($semester_url));
 
 		//Actions that can be performed to the scheduler object start here with
-
 		switch ($action):
 
 			//Returns information of preferences and the schedule.
 			case 'load': {
 				echo $this->scheduler->getMainSchedule();
+			} break;
+
+			case 'course-list': {
+				echo $this->scheduler->getCourseList();
 			} break;
 
 			//Returns a list of courses the user can take.

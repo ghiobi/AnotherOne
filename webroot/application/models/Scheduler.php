@@ -18,7 +18,7 @@ class Scheduler extends CI_Model
 {
 	private $semester_id;
 	private $student_id;
-
+	private $course_list;
 	//Main Schedule;
 	public $main_schedule;
 
@@ -73,6 +73,9 @@ class Scheduler extends CI_Model
 
 		$this->student_id = $this->student->getID();
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
+
+		$this->course_list = [];
+
 		$this->registered_course_list = $this->main_schedule->getRegisteredCourseList();
 		$this->adding_courses_list = [];
 	}
@@ -191,7 +194,7 @@ class Scheduler extends CI_Model
 	 */
 	public function autoPickCourse()
 	{
-		
+
 	}
 
 	/**
@@ -200,7 +203,7 @@ class Scheduler extends CI_Model
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
-	public function generateSchedules($course_list = [31])
+	public function generateSchedules($course_list = [2])
 	{
 		$schedules = [];
 		$course_groups = [];
@@ -395,6 +398,25 @@ class Scheduler extends CI_Model
 		}
 
 		return $combo;
+	}
+
+	public function getCourseList()
+	{
+		if(!$this->course_list){
+			$this->db->cache_on();
+			$course_list = [];
+
+			foreach($this->course->getAvailableBySemester($this->semester_id) as $course){
+				array_push($course_list, ['label' => $course->code.' '.$course->number.' '.$course->name,
+					'hash' => $this->encryption->encrypt($course->id)]);
+			}
+
+			$this->db->cache_off();
+
+			$this->course_list = json_encode($course_list, JSON_NUMERIC_CHECK);
+		}
+
+		return $this->course_list;
 	}
 
 	/**
