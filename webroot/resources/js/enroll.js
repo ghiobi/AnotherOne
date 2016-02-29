@@ -68,7 +68,6 @@ $(function() {
         $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
     });
 
-
     //Search
     var $srch_input = $('#scheduler-search');
     $srch_input.autocomplete({
@@ -78,10 +77,9 @@ $(function() {
                     response($.ui.autocomplete.filter(data, request.term));
                 });
         },
-        minLength: 2,
+        minLength: 3,
         select: function(event, ui){
             var course = ui.item.hash;
-
             $.ajax({
                 method: 'POST',
                 url: controllerURL + '/add-course',
@@ -103,19 +101,6 @@ $(function() {
             return false;
         }
     });
-    /*$srch_input.keyup(function () {
-        var srch_val = $srch_input.val();
-
-        if (srch_val.length > 1)
-            $.ajax({
-                method: 'POST',
-                url: controllerURL + '/search',
-                data: {input: srch_val},
-                success: function (output) {
-                    console.log(output);
-                }
-            });
-    });*/
 
     //Auto Pick
     $auto_pick_btn = $('.auto-pick');
@@ -129,7 +114,10 @@ $(function() {
 
     var generated_schedules = [];
     $generate_btn.click(function () {
+        //TODO: add confirmation of the undo capability and if there is no courses to add should not work.
         clear_to_main_schedule();
+        undo_drop_array = [];
+        $('.schedule-undo-drop').hide();
         $.getJSON(
             controllerURL + '/generate',
             function (output) {
@@ -150,8 +138,8 @@ $(function() {
     });
 
     $(document).on('click', '.schedule', function () {
-        $('.scheduler-selected').removeClass('scheduler-selected');
-        $(this).addClass('scheduler-selected');
+        $('.green').removeClass('green');
+        $(this).addClass('green');
         if($(this).hasClass('main-schedule')) {
             selected_schedule = -1;
             main_schedule.render();
@@ -168,21 +156,21 @@ $(function() {
         if (key == 39) { //Right Key
             if (selected_schedule < generated_schedules.length - 1) {
                 selected_schedule++;
-                $('.scheduler-selected').removeClass('scheduler-selected');
-                $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('scheduler-selected');
+                $('.green').removeClass('green');
+                $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('green');
                 generated_schedules[selected_schedule].render();
             }
         } else if (key == 37) {//Left Key
             if (selected_schedule > -1) {
                 selected_schedule--;
                 if(selected_schedule == -1) {
-                    $('.scheduler-selected').removeClass('scheduler-selected');
-                    $('.main-schedule').addClass('scheduler-selected');
+                    $('.green').removeClass('green');
+                    $('.main-schedule').addClass('green');
                     main_schedule.render();
                 }
                 else {
-                    $('.scheduler-selected').removeClass('scheduler-selected');
-                    $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('scheduler-selected');
+                    $('.green').removeClass('green');
+                    $('.generated-schedules .schedule:nth-child(' + (selected_schedule + 1) + ')').addClass('green');
                     generated_schedules[selected_schedule].render();
                 }
             }
@@ -204,10 +192,6 @@ $(function() {
                     }
                     else{
                         load_interface();
-                        //Clear undo button
-                        undo_drop_array = [];
-                        $('.schedule-undo-drop').hide();
-
                         console.log('Successfully committed new section.');
                     }
                 },
@@ -287,9 +271,9 @@ $(function() {
     /**
      * Clears generated schedules and switches to main schedule
      */
-    function clear_to_main_schedule(){
+    function clear_to_main_schedule() {
         //Switch to main schedule.
-        if(selected_schedule != -1){
+        if (selected_schedule != -1) {
             main_schedule.render();
             selected_schedule = -1;
         }

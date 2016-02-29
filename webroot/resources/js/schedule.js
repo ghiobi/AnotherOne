@@ -223,9 +223,9 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
         {
             var cell_attributes;
             if(type == 'sections')
-                cell_attributes = {class: 'scheduler-cells registered'};
+                cell_attributes = {class: 'scheduler-cells green'};
             else
-                cell_attributes = {class: 'scheduler-cells unregistered'};
+                cell_attributes = {class: 'scheduler-cells yellow'};
 
             for (var i in JSON[type])
             {
@@ -255,7 +255,8 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
                             + '<br>' + start + ' - ' + end
                             + '<br>' + section['lecture'][j]['room'];
 
-                        this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes);
+                        if(section['lecture'][j]['room'] != 'Online')
+                            this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes);
 
                         details += '<tr><td colspan="3"></td><td>' + section['lecture'][j]['room']
                             + '</td><td>' + start + '</td><td>' + end + '</td><td>'
@@ -272,7 +273,8 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
                         + '<br>' + start + ' - ' + end
                         + '<br>' + section['tutorial']['room'];
 
-                    this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes);
+                    if(section['tutorial']['room'] != 'Online')
+                        this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes);
 
                     details += '<tr><th colspan="7">Tutorial</th></tr>';
                     details += '<tr><td>' + section['tutorial']['letter'] + '</td><td>'
@@ -292,7 +294,8 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
                         + '<br>' + start + ' - ' + end
                         + '<br>' + section['laboratory']['room'];
 
-                    this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes);
+                    if(section['laboratory']['room'] != 'Online')
+                        this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes);
 
                     details += '<tr><th colspan="7">Laboratory</th></tr>';
                     details += '<tr><td>' + section['laboratory']['letter'] + '</td><td>'

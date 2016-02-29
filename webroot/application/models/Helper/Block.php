@@ -153,6 +153,8 @@ class Block
      */
     public function overlaps(Block $block)
     {
+        if($this->room == 'Online' || $block->room == 'Online')
+            return FALSE;
         if($this->weekday != $block->weekday)
             return FALSE;
         if($this->intStart <= $block->intStart && $block->intStart <= $this->intEnd)

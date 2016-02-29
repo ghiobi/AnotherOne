@@ -325,11 +325,11 @@ class Scheduler extends CI_Model
 			throw new Exception('Course already registered.');
 
 		if(array_key_exists($course_id, $this->generator_course_list))
-			throw new Exception('Course already add to list.');
+			throw new Exception('Course already added to list.');
 
 		$max_num_course = 5; //TODO: this must be located somewhere else
-		if(count($this->registered_course_list) + count($this->generator_course_list) > $max_num_course)
-			throw new Exception('Exceeds the maximum number of courses per semester ($max_num_course).');
+		if(count($this->registered_course_list) + count($this->generator_course_list) >= $max_num_course)
+			throw new Exception('Exceeds the maximum number of courses per semester ('.$max_num_course.')');
 
 		//TODO: requires takable function.
 
@@ -341,7 +341,7 @@ class Scheduler extends CI_Model
 			'sections' => $possible_sections,
 		];
 
-		return count($possible_sections);
+		return TRUE;
 	}
 
 	/**
@@ -367,7 +367,7 @@ class Scheduler extends CI_Model
 	public function get_course_list()
 	{
 		$unreg_list = [];
-		foreach($this->generator_course_list as $key => $course)
+		foreach($this->generator_course_list as $course)
 		{
 			$unreg_list[$course['name']] = $course['count'];
 		}

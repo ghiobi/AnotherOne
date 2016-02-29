@@ -272,14 +272,11 @@ header{
 #schedule-div > table >tbody>tr>td{
 	padding: 0;
 }
-.registered{
+.green {
 	background-color: #00cc99;
 }
-.unregistered{
+.yellow {
 	background-color: #ffff99;
-}
-.scheduler-selected{
-	background-color: #1abc9c;
 }
 @media (max-width: 992px) {
 	.scheduler-app h3{
