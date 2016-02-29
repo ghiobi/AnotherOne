@@ -104,7 +104,7 @@ class Schedule
 
         foreach($this->sections as $section)
         {
-            $course_list[$section->getCourseId()] = TRUE;
+            $course_list[$section->getCourseId()] = $section->code.' '.$section->number.' '.$section->name;
         }
 
         return $course_list;

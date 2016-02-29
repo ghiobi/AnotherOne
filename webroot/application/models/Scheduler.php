@@ -93,6 +93,8 @@ class Scheduler extends CI_Model
 		if($section_group === FALSE)
 			return FALSE;
 
+		//TODO: remove from registered_course_list and move to generator_course_list?
+
 		//Delete Record from database
 		$register_id = $section_group->getRegisterId();
 
@@ -120,6 +122,7 @@ class Scheduler extends CI_Model
 		//Registered section back to database.
 		$section_group = $this->record_section($section_group);
 		//TODO: Does not check if the database insertion is a failure
+		//TODO: Add course back to registered_course_list
 
 		return $this->main_schedule->addSection($section_group);
 	}
@@ -130,7 +133,7 @@ class Scheduler extends CI_Model
 	 * @param $section_group
 	 * @return mixed
 	 */
-	public function record_section($section_group)
+	public function record_section(Scheduler\GroupSection $section_group)
 	{
 		$section_id = $section_group->getSectionId();
 
@@ -175,6 +178,8 @@ class Scheduler extends CI_Model
 		//getting unregistered sections and emptying list
 		$unregistered_sections = $schedule->getUnregistered();
 		$schedule->setUnregistered([]);
+
+		//TODO: transfer sections to the registered_course_list and empty generator_course_list
 
 		//for each section/course add the section to schedule
 		foreach($unregistered_sections as $section)
@@ -276,7 +281,7 @@ class Scheduler extends CI_Model
 	 * @param $course_id
 	 * @return bool
 	 */
-	public function validateCourse($course_id)
+	public function is_takable($course_id)
 	{
 
 	}
@@ -286,9 +291,22 @@ class Scheduler extends CI_Model
 	 * 
 	 * Returns a possible list of courses the student can take.
 	 */
-	public function auto_fill_generator_course()
+	public function auto_fill_course()
 	{
 		//Before doing this contact me
+	}
+
+	public function add_course($encrypted_course_id)
+	{
+		$course_id = $this->encryption->decrypt($encrypted_course_id);
+
+		try{
+			$this->add_to_generator($course_id);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
+
+		return TRUE;
 	}
 
 	/**
@@ -303,12 +321,16 @@ class Scheduler extends CI_Model
 	{
 		//Checking if course id already exists in current semester
 		if(array_key_exists($course_id, $this->registered_course_list))
-			return FALSE;
+			throw new Exception('Course already registered.');
 
 		if(array_key_exists($course_id, $this->generator_course_list))
-			return FALSE;
-		
-		//TODO: limit of course student can take
+			throw new Exception('Course already add to list.');
+
+		$max_num_course = 5; //TODO: this must be located somewhere else
+		if(count($this->registered_course_list) + count($this->generator_course_list) > $max_num_course)
+			throw new Exception('Exceeds the maximum number of courses per semester ($max_num_course).');
+
+		//TODO: requires takable function.
 
 		//Generates possible sections and adds course to section.
 		$possible_sections = $this->getPossibleGroups($course_id);
@@ -333,13 +355,13 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Returns the registered course_list and generator_course_list to the view
-	 *
+	 * TODO: Returns the formatted registered course_list and generator_course_list for the view
+	 * + This function is called every time there is an add, autopick, remove registered course, drop, and commit.
 	 * @return json
 	 */
 	public function get_course_list()
 	{
-		
+
 	}
 
 	/**
