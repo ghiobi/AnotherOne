@@ -327,6 +327,13 @@ class Scheduler extends CI_Model
 		if(array_key_exists($course_id, $this->generator_course_list))
 			throw new Exception('Course already added to list.');
 
+		$num_combinations = 1;
+		foreach($this->generator_course_list as $course)
+			$num_combinations *= $course['count'];
+
+		if($num_combinations > 5000)
+			throw new Exception('Exceeds the maximum number of calculations please commit and then add more courses.');
+
 		$max_num_course = 5; //TODO: this must be located somewhere else
 		if(count($this->registered_course_list) + count($this->generator_course_list) >= $max_num_course)
 			throw new Exception('Exceeds the maximum number of courses per semester ('.$max_num_course.')');

@@ -130,7 +130,7 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1])
+                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
                     );
                 }
             }
@@ -305,7 +305,7 @@ $(function() {
     function load_main_schedule(){
         $.getJSON( controllerURL + '/load',
             function (schedule) {
-                main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', schedule, null);
+                main_schedule = new Schedule(schedule_container, schedule_title, schedule_panel, 'CURRENT SCHEDULE', schedule, null, false);
                 main_schedule.render();
                 selected_schedule = -1;
             }

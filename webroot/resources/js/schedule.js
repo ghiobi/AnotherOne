@@ -10,7 +10,7 @@
 //TODO: comment
 //TODO: optimize code
 //TODO: when there is no schedule to display it must show: 'Nothing to display'
-function Schedule(container, header, panel, name, json, object) { //TODO: add another parameter indicating it's a generated schedule to remove the drop button
+function Schedule(container, header, panel, name, json, object, generated) { //TODO: add another parameter indicating it's a generated schedule to remove the drop button
 
     this.table_attr = {
         class: 'table table-bordered table-condensed',
@@ -235,7 +235,7 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
                 details += '<table class="table table-bordered table-condensed">';
                 details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="2">'+section['course_name']+'</th>' +
                     //TODO: what if hash is empty, meaning it's not a registered section?
-                    '<th><button class="drop-section" data-hash-id="'+ section['hash'] +'">Drop Section</button></th></tr>' +
+                    ((generated)?'':'<th><button class="drop-section" data-hash-id="'+ section['hash'] +'">Drop</button></th>')+'</tr>' +
 
                     '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
 
@@ -322,6 +322,7 @@ function Schedule(container, header, panel, name, json, object) { //TODO: add an
     this.schedule_container = container;
     this.schedule_header = header;
     this.schedule_detail = panel;
+    this.generated = generated;
 
     this.JSON = json;
     this.object = object;
