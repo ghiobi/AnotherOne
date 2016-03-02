@@ -123,6 +123,11 @@ function Schedule(container, header, panel, name, json, object, generated) { //T
 
     this.makeTable = function()
     {
+        if(Object.keys(this.cells).length == 0){
+            var notable = '<div class="text-center" style="text-align: center; padding: 30px 0; color: black">No schedule to display. ):</div>';
+            return notable;
+        }
+
         //Settings table dimensions automatically
         this.autoDimensions();
 
@@ -307,6 +312,11 @@ function Schedule(container, header, panel, name, json, object, generated) { //T
                 }
                 details += '</table>';
             }
+        }
+
+        if(details.length == 0){
+            var nodetails = '<div class="text-center" style="padding: 20px">No details. Start by adding courses to your list!</div>';
+            return nodetails;
         }
 
         return details;

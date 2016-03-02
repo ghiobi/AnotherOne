@@ -290,9 +290,9 @@ class Scheduler extends CI_Model
 	/**
 	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
 	 * 
-	 * Returns a possible list of courses the student can take.
+	 * Automatically adds a courses to the generator list.
 	 */
-	public function auto_fill_course()
+	public function auto_pick_course()
 	{
 		//Before doing this contact me
 	}

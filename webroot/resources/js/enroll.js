@@ -116,8 +116,6 @@ $(function() {
     $generate_btn.click(function () {
         //TODO: add confirmation of the undo capability and if there is no courses to add should not work.
         clear_to_main_schedule();
-        undo_drop_array = [];
-        $('.schedule-undo-drop').hide();
         $.getJSON(
             controllerURL + '/generate',
             function (output) {
@@ -281,10 +279,13 @@ $(function() {
         //Empty generated schedules
         $generate_div.empty();
         generated_schedules = [];
+
+        //Empty undo
+        undo_drop_array = [];
+        $('.schedule-undo-drop').hide();
     }
 
     var $reg_div = $('#scheduler-reg-course');
-    var $unreg_div = $('#scheduler-unreg-course');
     function get_course_list(){ //TODO: display no course to display info message
         $.getJSON(controllerURL + '/course-list',
             function(course){
@@ -292,9 +293,11 @@ $(function() {
                 for(var key in course['registered']){
                     $reg_div.append('<div class="list-group-item scheduler-list-item">'+course['registered'][key]+'</div>');
                 }
-                $unreg_div.empty();
                 for(var key in course['unregistered']){
                     $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item">'+key+'<span class="badge">'+course['unregistered'][key]+'</span></div>');
+                }
+                if(course['registered'].length == 0 && course['unregistered'].length == 0){
+                    $reg_div.append('<div class="list-group-item scheduler-list-item">No Courses.</div>');
                 }
             }
         );

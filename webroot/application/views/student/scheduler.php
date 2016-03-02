@@ -32,13 +32,8 @@
 						<h3 class="scheduler-header">COURSES
 							<button class="scheduler-auto-btn auto-pick">Auto-Pick</button>
 						</h3>
-						<div class="list-group scheduler-list-group">
-							<div id="scheduler-reg-course">
+						<div class="list-group scheduler-list-group" id="scheduler-reg-course">
 
-							</div>
-							<div id="scheduler-unreg-course">
-
-							</div>
 						</div>
 					</div>
 					<div class="scheduler-results">
