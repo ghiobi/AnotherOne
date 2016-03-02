@@ -182,7 +182,7 @@ class Student extends CI_Model
      * @param $course_id
      * @return bool
      */
-    function isCompleted($course_id, $passing_grade = '-C')
+    function isCompleted($course_id, $passing_grade)
     {
         $result = $this->db->query("
             SELECT
@@ -194,16 +194,13 @@ class Student extends CI_Model
                 ON registered.section_id = sections.id
             WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
 
+
         foreach($result as $value)
         {
             $grade = $value->grade;
 
-            //If grade is empty or meaning in progress, it assumes he is going to complete it.
-            if(!$grade)
-                return true;
-
-            //Check if passed the course @eric this doesn't work
-            if(($grade==="A+"||"A"||"A-"||"B+"||"B"||"B-"||"C+"||"C"||"C-")&&!empty($grade) ){
+            //Check if passed the course
+            if($this->rank_Grade($grade)>=$this->rank_Grade($passing_grade) ){
                 return true;
             }
         }
@@ -226,7 +223,7 @@ class Student extends CI_Model
         {
             $x = $value->prerequisite_course_id;
 
-            if (!$this->isCompleted($x)) {
+            if (!$this->isCompleted($x, $this->course->getPassingGrade($course_id))) {
                 return false;
             }
         }
@@ -234,36 +231,54 @@ class Student extends CI_Model
     }
 
     /**
-     * Checks if the student is registered in the course and has not completed it.
-     *
-     * note: this is almost just repeating isComplete. it is somewhat just the negation of iscomplete.
-     *
-     * @param $course_id
-     * @return bool
+     * Returns the value of a grade
+     * @param $grade
+     * @return int
      */
-    function isRegistered($course_id)
-    {
-        $result=$this->db->query("
-            SELECT
-              registered.grade
-              FROM registered
-              INNER JOIN students
-                ON registered.student_id = students.id
-              INNER JOIN sections
-                ON registered.section_id = sections.id
-              WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
-
-        foreach($result as $value)
-        {
-            $x=$value->grade;
-
-            //Check if doesn't have a grade and is registered
-            if(empty($x))
-            {
-                return true;
-            }
+    function rank_Grade($grade){
+        $rank=0;
+        switch($grade){
+            case "D-":
+                $rank=1;
+                break;
+            case "D":
+                $rank=2;
+                break;
+            case "D+":
+                $rank=3;
+                break;
+            case "C-":
+                $rank=4;
+                break;
+            case "C":
+                $rank=5;
+                break;
+            case "C+":
+                $rank=6;
+                break;
+            case "B-":
+                $rank=7;
+                break;
+            case "B":
+                $rank=8;
+                break;
+            case "B+":
+                $rank=9;
+                break;
+            case "A-":
+                $rank=10;
+                break;
+            case "A":
+                $rank=11;
+                break;
+            case "A+":
+                $rank=12;
+                break;
+            case "0":
+                $rank=13;
+                break;
         }
-        return false;
+        return $rank;
     }
 
 }
