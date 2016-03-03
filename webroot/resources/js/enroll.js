@@ -89,7 +89,18 @@ $(function() {
                         console.log(output);
                     }
                     else{
-                        load_interface();
+                        load_course_list();
+
+                        //Empty undo
+                        undo_drop_array = [];
+                        $('.schedule-undo-drop').hide();
+
+                        generated_schedules = [];
+                        if(selected_schedule != -1)
+                        {
+                            main_schedule.render();
+                            selected_schedule = -1;
+                        }
                     }
                 },
                 error: function (xhr, status, error) {
@@ -115,7 +126,6 @@ $(function() {
     var generated_schedules = [];
     $generate_btn.click(function () {
         //TODO: add confirmation of the undo capability and if there is no courses to add should not work.
-        clear_to_main_schedule();
         $.getJSON(
             controllerURL + '/generate',
             function (output) {
@@ -189,7 +199,11 @@ $(function() {
                         console.log('Failed at committing new schedule.');
                     }
                     else{
-                        load_interface();
+                        load();
+
+                        $generate_div.empty();
+                        generated_schedules = [];
+
                         console.log('Successfully committed new section.');
                     }
                 },
@@ -201,7 +215,6 @@ $(function() {
     });
 
     //Remove Section
-    $undo_btn = $('.schedule-undo-drop');
     $(document).on('click', '.drop-section', function(){
         var response = confirm('Are you sure you want to do this? You are fully responsible if sections renders full and will not re-register!');
         if(response){
@@ -215,7 +228,11 @@ $(function() {
                         console.log('Failed at dropping section.');
                     }
                     else{
-                        load_interface();
+                        load();
+
+                        $generate_div.empty();
+                        generated_schedules = [];
+
                         console.log('Successfully dropped a section.')
                         undo_drop_array.push(output);
                     }
@@ -228,16 +245,16 @@ $(function() {
         }
     });
 
+    var $undo_btn = $('.schedule-undo-drop');
     $undo_btn.click(function(){
         if(undo_drop_array.length != 0){
-            clear_to_main_schedule();
             var section = undo_drop_array.pop();
             $.ajax({
                 method: 'POST',
                 url: controllerURL + '/undo-drop',
                 data: {input: section},
                 success: function (output) {
-                    load_interface();
+                    if(output != 0)
                     if(undo_drop_array.length == 0)
                         $undo_btn.hide();
                     console.log('Successfully undo drop section.');
@@ -260,33 +277,13 @@ $(function() {
         });
     });
 
-    function load_interface(){
+    function load(){
         load_main_schedule();
-        clear_to_main_schedule();
-        get_course_list();
-    }
-
-    /**
-     * Clears generated schedules and switches to main schedule
-     */
-    function clear_to_main_schedule() {
-        //Switch to main schedule.
-        if (selected_schedule != -1) {
-            main_schedule.render();
-            selected_schedule = -1;
-        }
-
-        //Empty generated schedules
-        $generate_div.empty();
-        generated_schedules = [];
-
-        //Empty undo
-        undo_drop_array = [];
-        $('.schedule-undo-drop').hide();
+        load_course_list();
     }
 
     var $reg_div = $('#scheduler-reg-course');
-    function get_course_list(){ //TODO: display no course to display info message
+    function load_course_list(){ //TODO: display no course to display info message
         $.getJSON(controllerURL + '/course-list',
             function(course){
                 $reg_div.empty();
@@ -315,7 +312,7 @@ $(function() {
         );
     }
 
-    load_interface();
+    load();
 
 });
 

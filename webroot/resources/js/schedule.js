@@ -9,8 +9,7 @@
 
 //TODO: comment
 //TODO: optimize code
-//TODO: when there is no schedule to display it must show: 'Nothing to display'
-function Schedule(container, header, panel, name, json, object, generated) { //TODO: add another parameter indicating it's a generated schedule to remove the drop button
+function Schedule(container, header, panel, name, json, object, generated) {
 
     this.table_attr = {
         class: 'table table-bordered table-condensed',

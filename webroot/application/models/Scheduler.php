@@ -118,7 +118,9 @@ class Scheduler extends CI_Model
 	 */
 	public function undo_drop($encrpyted_section)
 	{
-		$serialized_section_group = $this->encryption->decrypt($encrpyted_section);
+		if(!$serialized_section_group = $this->encryption->decrypt($encrpyted_section))
+			return FALSE;
+
 		$section_group = unserialize($serialized_section_group);
 
 		//Registered section back to database.
@@ -139,7 +141,7 @@ class Scheduler extends CI_Model
 	 * @param $section_group
 	 * @return mixed
 	 */
-	public function record_section(Scheduler\GroupSection $section_group)
+	public function record_section($section_group)
 	{
 		$section_id = $section_group->getSectionId();
 

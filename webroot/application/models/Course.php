@@ -150,7 +150,7 @@ class Course extends CI_Model
     {
         return $this->db->query("
             SELECT
-              *
+              courses.passing_grade
             FROM courses
             WHERE courses.id = '$course_id'")->row()->passing_grade;
     }
