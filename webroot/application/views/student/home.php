@@ -33,12 +33,18 @@
 						<!-- Carousel indicators -->
 						<!-- Carousel items -->
 						<div class="carousel-inner">
-							<?php for($i = 0; $i < 10; $i++): ?>
-							<div class="<?php if($i == 0) echo 'active' ;?> item">
-								<h4><a target="_blank" href="<?php echo $news[$i]['url'] ?>" ><?php echo $news[$i]['title'] ?></a></h4>
-								<p><?php echo $news[$i]['abstract'] ?></p>
-							</div>
-							<?php endfor; ?>
+
+							<?php
+							if ($news === FALSE):
+								echo 'Had trouble connecting to New York Times.';
+							else:
+								for($i = 0; $i < 10; $i++): ?>
+									<div class="<?php if($i == 0) echo 'active' ;?> item">
+										<h4><a target="_blank" href="<?php echo $news[$i]['url'] ?>" ><?php echo $news[$i]['title'] ?></a></h4>
+										<p><?php echo $news[$i]['abstract'] ?></p>
+									</div>
+								<?php endfor;
+							endif;?>
 						</div>
 					</div>
 				</div>
