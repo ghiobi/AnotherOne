@@ -286,7 +286,20 @@ class Scheduler extends CI_Model
 	 */
 	public function is_takable($course_id)
 	{
+		//get course prerequisites
+		$pre_req = $this->course->getPrerequisites($course_id);
+		//get course corequisites
+		$co_req = $this->course->getCorequisites($course_id);
+		//if no course pre and co return true
+		if(! $pre_req && ! $co_req)
+			return TRUE;
 
+		//for each pre check complete
+		foreach($pre_req as $pre){
+			$pre->prerequisite_course_id;
+		}
+		//for each co check complete
+		//return bool
 	}
 	
 	/**
