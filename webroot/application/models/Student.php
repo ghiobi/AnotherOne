@@ -1,4 +1,6 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+include_once 'Helper/Grade.php';
 
 class Student extends CI_Model
 {
@@ -197,10 +199,10 @@ class Student extends CI_Model
 
         foreach($result as $value)
         {
-            $grade = $value->grade;
 
-            //Check if passed the course
-            if($this->rank_Grade($grade)>=$this->rank_Grade($passing_grade) ){
+            $grade = new Grade($value->grade);
+
+            if($grade->passed($passing_grade)){
                 return true;
             }
         }
@@ -228,57 +230,6 @@ class Student extends CI_Model
             }
         }
         return true;
-    }
-
-    /**
-     * Returns the value of a grade
-     * @param $grade
-     * @return int
-     */
-    function rank_Grade($grade){
-        $rank=0;
-        switch($grade){
-            case "D-":
-                $rank=1;
-                break;
-            case "D":
-                $rank=2;
-                break;
-            case "D+":
-                $rank=3;
-                break;
-            case "C-":
-                $rank=4;
-                break;
-            case "C":
-                $rank=5;
-                break;
-            case "C+":
-                $rank=6;
-                break;
-            case "B-":
-                $rank=7;
-                break;
-            case "B":
-                $rank=8;
-                break;
-            case "B+":
-                $rank=9;
-                break;
-            case "A-":
-                $rank=10;
-                break;
-            case "A":
-                $rank=11;
-                break;
-            case "A+":
-                $rank=12;
-                break;
-            case "0":
-                $rank=13;
-                break;
-        }
-        return $rank;
     }
 
 }

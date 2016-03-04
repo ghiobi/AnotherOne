@@ -4,9 +4,8 @@ class Grade
 {
 
     private $grade;
-    private $passing_grade;
 
-    CONST marks = [
+    public static $marks = [
         'A+' => 0,
         'A' => 1,
         'A-' => 2,
@@ -25,12 +24,15 @@ class Grade
     /**
      * Grade constructor.
      * @param $grade
-     * @param $passing_grade
+     * @throws Exception if it's an invalid grade
      */
-    public function __construct($grade, $passing_grade)
+    public function __construct($grade)
     {
+        if(! $grade)
+            $this->grade = $grade;
+        elseif ( ! SELF::validate($grade))
+            throw new Exception('Invalid Grade');
         $this->grade = $grade;
-        $this->passing_grade = $passing_grade;
     }
 
     /**
@@ -49,37 +51,25 @@ class Grade
         $this->grade = $grade;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPassingGrade()
+    public function passed($passing_grade)
     {
-        return $this->passing_grade;
-    }
+        if( ! SELF::validate($passing_grade))
+            throw new Exception('Invalid Grade');
 
-    /**
-     * @param mixed $passing_grade
-     */
-    public function setPassingGrade($passing_grade)
-    {
-        $this->passing_grade = $passing_grade;
-    }
-
-    public function passed()
-    {
         if( ! $this->grade)
             return TRUE;
 
-        if(SELF::marks[$this->grade] <= SELF::marks[$this->passing_grade])
+        if(SELF::$marks[$this->grade] <= SELF::$marks[$passing_grade])
             return TRUE;
 
         return FALSE;
     }
 
-    public function valid($grade)
+    public static function validate($grade)
     {
-        if(key_exists($grade, SELF::marks))
+        if(key_exists($grade, SELF::$marks))
             return TRUE;
+        return FALSE;
     }
 
 
