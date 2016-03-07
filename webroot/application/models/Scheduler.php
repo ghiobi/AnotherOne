@@ -4,8 +4,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 include_once 'Helper/Grade.php';
 
 include_once 'Helper/Schedule.php';
-include_once 'Helper/ScheduleGenerator.php';
-
 include_once 'Helper/GroupSection.php';
 
 include_once 'Helper/Block.php';
@@ -95,7 +93,7 @@ class Scheduler extends CI_Model
 		if($section_group === FALSE)
 			return FALSE;
 
-		//TODO: remove from registered_course_list and move to generator_course_list?
+		//TODO: prevent drop when there is a co-requisite course.
 
 		//Delete Record from database
 		$register_id = $section_group->getRegisterId();
@@ -369,10 +367,10 @@ class Scheduler extends CI_Model
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}
-	//TODO: maybe create specific exception classes.
+
 		return NULL;
 	}
-
+	//TODO: maybe create specific exception classes.
 	/**
 	 * Actions:
 	 * + Generates a possible section combinations of the course.

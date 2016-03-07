@@ -219,6 +219,9 @@ function Schedule(container, header, panel, name, json, object, generated) {
 
     this.extract =  function ()
     {
+
+        var weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
         var JSON = this.JSON;
         //Loop through every section
         var details = "";
@@ -236,18 +239,17 @@ function Schedule(container, header, panel, name, json, object, generated) {
                 var section = JSON[type][i];
 
                 //TODO: Redesign the course details
-                details += '<table class="table table-bordered table-condensed">';
-                details += '<thead><tr><th>'+section['course_number']+'</th><th colspan="2">'+section['course_name']+'</th>' +
+                details += '<table class="table table-bordered table-condensed ' +
+                    ((type == 'sections')? '' : 'yellow') +
+                    '">';
+                details += '<thead><th>'+section['course_subject']+' '+ section['course_number']+'</th><th>' +
+                        section['letter'] + '</th><th></th><th>' + section['instructor'] + '</th><th>' +section['capacity'] + '</th>' +
                     //TODO: what if hash is empty, meaning it's not a registered section?
-                    ((generated)?'':'<th><button class="drop-section" data-hash-id="'+ section['hash'] +'">Drop</button></th>')+'</tr>' +
-
-                    '<tr><th>Section</th><th>Instructor</th><th>Capacity</th><th>Room</th>' +
-
-                    '<th>Start Time</th><th>End Time</th><th>Weekday</th></tr></thead>';
+                        ((generated)?'<th colspan="2"></th>':'<th colspan="2"><button class="btn btn-danger btn-xs drop-section btn-block" data-hash-id="'+ section['hash'] +'">Drop</button></th>')+'</tr>' +
+                    '</thead>';
 
                 if(section['lecture'] != null)
                 {
-                    details += '<tr><th colspan="7">Lectures</th></tr>';
 
                     for(var j in section['lecture'])
                     {
@@ -262,9 +264,10 @@ function Schedule(container, header, panel, name, json, object, generated) {
                         if(section['lecture'][j]['room'] != 'Online')
                             this.addBlock(title, start, end, section['lecture'][j]['weekday'], cell_attributes);
 
-                        details += '<tr><td colspan="3"></td><td>' + section['lecture'][j]['room']
-                            + '</td><td>' + start + '</td><td>' + end + '</td><td>'
-                            + section['lecture'][j]['weekday'] + '</td></tr>';
+                        details += '<tr><td>LECT</td><td></td><td>'
+                            + section['lecture'][j]['room'] + '</td><td></td><td></td><td>'
+                            + start + ' - ' + end + '</td><td>'
+                            + weekDay[section['lecture'][j]['weekday']] + '</td></tr>';
                     }
                 }
                 if(section['tutorial'] != null)
@@ -280,13 +283,13 @@ function Schedule(container, header, panel, name, json, object, generated) {
                     if(section['tutorial']['room'] != 'Online')
                         this.addBlock(title, start, end, section['tutorial']['weekday'], cell_attributes);
 
-                    details += '<tr><th colspan="7">Tutorial</th></tr>';
-                    details += '<tr><td>' + section['tutorial']['letter'] + '</td><td>'
+                    details += '<tr><td>TUT</td><td>'
+                        + section['tutorial']['letter'] + '</td><td>'
+                        + section['tutorial']['room'] + '</td><td>'
                         + section['tutorial']['instructor'] + '</td><td>'
                         + section['tutorial']['capacity'] + '</td><td>'
-                        + section['tutorial']['room'] + '</td><td>'
-                        + start + '</td><td>' + end + '</td><td>'
-                        + section['tutorial']['weekday'] + '</td></tr>';
+                        + start + ' - ' + end + '</td><td>'
+                        + weekDay[section['tutorial']['weekday']] + '</td></tr>';
                 }
                 if(section['laboratory'] != null)
                 {
@@ -301,13 +304,13 @@ function Schedule(container, header, panel, name, json, object, generated) {
                     if(section['laboratory']['room'] != 'Online')
                         this.addBlock(title, start, end, section['laboratory']['weekday'], cell_attributes);
 
-                    details += '<tr><th colspan="7">Laboratory</th></tr>';
-                    details += '<tr><td>' + section['laboratory']['letter'] + '</td><td>'
+                    details += '<tr><td>LAB</td><td>'
+                        + section['laboratory']['letter'] + '</td><td>'
+                        + section['laboratory']['room'] + '</td><td>'
                         + section['laboratory']['instructor'] + '</td><td>'
                         + section['laboratory']['capacity'] + '</td><td>'
-                        + section['laboratory']['room'] + '</td><td>'
-                        + start + '</td><td>' + end + '</td><td>'
-                        + section['laboratory']['weekday'] + '</td></tr>';
+                        + start + ' - ' + end + '</td><td>'
+                        + weekDay[section['laboratory']['weekday']] + '</td></tr>';
                 }
                 details += '</table>';
             }

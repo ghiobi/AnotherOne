@@ -95,6 +95,7 @@ $(function() {
                         undo_drop_array = [];
                         $('.schedule-undo-drop').hide();
 
+                        $generate_div.empty();
                         generated_schedules = [];
                         if(selected_schedule != -1)
                         {
