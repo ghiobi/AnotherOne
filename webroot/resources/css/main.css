@@ -7,9 +7,6 @@
 .fix-icon {
 	font-size: .78em;
 }
-.table-condensed>tbody>tr>td{
-	padding: ;
-}
 /******************************
 			Header
 *******************************/
@@ -266,7 +263,7 @@ header{
 	margin-bottom: 0;
 	color: black;
 }
-.scheduler-details > .table{
+.scheduler-details > table{
 	margin-bottom: 0;
 }
 #schedule-div > table >tbody>tr>td{

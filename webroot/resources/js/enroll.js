@@ -255,10 +255,12 @@ $(function() {
                 url: controllerURL + '/undo-drop',
                 data: {input: section},
                 success: function (output) {
-                    if(output != 0)
-                    if(undo_drop_array.length == 0)
-                        $undo_btn.hide();
-                    console.log('Successfully undo drop section.');
+                    if(output != ''){
+                        if(undo_drop_array.length == 0)
+                            $undo_btn.hide();
+                        console.log('Successfully undo drop section.');
+                        load();
+                    }
                 },
                 error: function (xhr, status, error) {
                     undo_drop_array.push(section);
