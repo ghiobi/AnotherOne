@@ -1,6 +1,8 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+include_once 'Helper/Grade.php';
+
 include_once 'Helper/Schedule.php';
 include_once 'Helper/ScheduleGenerator.php';
 
@@ -278,6 +280,34 @@ class Scheduler extends CI_Model
 		return $this->search_course_list;
 	}
 
+	public function is_complete($course_id){
+
+		$passing_grade = $this->course->getPassingGrade($course_id);
+
+		$grades = $this->db->query("
+			SELECT
+			  registered.grade
+			FROM registered
+			  INNER JOIN sections
+				ON registered.section_id = sections.id
+			  INNER JOIN semesters
+				ON sections.semester_id = semesters.id
+			WHERE sections.course_id = '$course_id' AND semesters.id < '$this->semester_id' AND registered.student_id = '$this->student_id'")->result();
+
+		foreach($grades as $grade){
+
+			if(!$grade->grade)
+				return TRUE;
+
+			$mark = new Grade($grade->grade);
+			if($mark->passed($passing_grade));
+				return TRUE;
+
+		}
+
+		return FALSE;
+	}
+
 	/**
 	 * TODO: Return true if course is a valid takable course.
 	 *
@@ -286,6 +316,7 @@ class Scheduler extends CI_Model
 	 */
 	public function is_takable($course_id)
 	{
+
 		//get course prerequisites
 		$pre_req = $this->course->getPrerequisites($course_id);
 		//get course corequisites
@@ -296,20 +327,37 @@ class Scheduler extends CI_Model
 
 		//for each pre check complete
 		foreach($pre_req as $pre){
-			$pre->prerequisite_course_id;
+
+			if(! $this->is_complete($pre->prerequisite_course_id))
+				throw new Exception('Prerequisite not complete: X');
+			//TODO: specify what id is not complete
 		}
+
 		//for each co check complete
+		foreach($co_req as $co){
+
+			if( ! $this->is_complete($co->corequisite_course_id)
+				&& ! (key_exists($co->corequisite_course_id, $this->registered_course_list)))
+				throw new Exception('Co-requisite not complete: X');
+			//TODO: specify what id is not complete
+		}
+
 		//return bool
+		return TRUE;
 	}
 	
 	/**
 	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
 	 * 
-	 * Automatically adds a courses to the generator list.
+	 * Automatically adds one courses to the generator list.
 	 */
 	public function auto_pick_course()
 	{
-		//Before doing this contact me
+		$possible_courses = $this->search_course_list();
+
+		//TODO: filter out those not in the program;
+		//TODO: filter out those that have already been completed;
+		//TODO: randomly pick a course;
 	}
 
 	public function add_course($encrypted_course_id)
@@ -321,7 +369,7 @@ class Scheduler extends CI_Model
 		} catch (Exception $e) {
 			return $e->getMessage();
 		}
-
+	//TODO: maybe create specific exception classes.
 		return NULL;
 	}
 
@@ -353,7 +401,7 @@ class Scheduler extends CI_Model
 		if(count($this->registered_course_list) + count($this->generator_course_list) >= $max_num_course)
 			throw new Exception('Exceeds the maximum number of courses per semester ('.$max_num_course.')');
 
-		//TODO: requires takable function.
+		$this->is_takable($course_id);
 
 		//Generates possible sections and adds course to section.
 		$possible_sections = $this->getPossibleGroups($course_id);
