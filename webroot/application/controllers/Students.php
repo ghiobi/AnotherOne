@@ -96,9 +96,7 @@ class Students extends App_Base_Controller
 
 			case 'commit':{
 				$new_schedule = $this->input->post('input', TRUE);
-				if(!$this->scheduler->apply_new_schedule($new_schedule))
-					echo '';
-				else
+				if($this->scheduler->apply_new_schedule($new_schedule))
 					echo 'x';
 			}break;
 
