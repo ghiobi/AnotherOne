@@ -19,11 +19,17 @@ class Home extends App_Base_Controller
 		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select an option!';
 		$data['name'] = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');
 
-		$json = file_get_contents('http://api.nytimes.com/svc/topstories/v1/world.json?api-key=8d1c8aa8bc26b5bb7a282ac1029df999:11:74126097');
-		$data['news'] = json_decode($json, TRUE)['results'];
+		error_reporting(0);
+		if(! $json = file_get_contents('http://api.nytimes.com/svc/topstories/v1/world.json?api-key=8d1c8aa8bc26b5bb7a282ac1029df999:11:74126097'))
+			$data['news'] = FALSE;
+		else
+			$data['news'] = json_decode($json, TRUE)['results'];
 
 		$this->load->model('semester');
 		$data['semesters'] = $this->semester->getActiveSemesters();
+
+		$this->load->model('student');
+		$data['progress'] = $this->student->getProgress();
 
 		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/home.php', $data);

@@ -29,7 +29,7 @@ class Tutorial extends CI_Model
             SELECT
               *
             FROM tutorials
-            WHERE id = '$tutorial_id'")->result();
+            WHERE id = '$tutorial_id'")->row();
     }
 
 }

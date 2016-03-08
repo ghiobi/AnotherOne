@@ -22,10 +22,10 @@ class Course extends CI_Model
     function isAvailableInSemester($course_id, $semester_id)
     {
         $result = $this->db->query("
-        SELECT
-          COUNT(sections.id) AS result
-        FROM sections
-        WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'")->row->result;
+            SELECT
+              COUNT(sections.id) AS result
+            FROM sections
+            WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'")->row()->result;
         return $result > 0;
     }
 
@@ -93,6 +93,17 @@ class Course extends CI_Model
             WHERE courses.id = '$course_id' LIMIT 1")->row();
     }
 
+    function getCourseName($course_id){
+        $course = $this->db->query("
+            SELECT
+               courses.code,
+               courses.number,
+               courses.name
+            FROM courses
+            WHERE courses.id = '$course_id' LIMIT 1")->row();
+        return $course->code.' '.$course->number.' '.$course->name;
+    }
+
     /**
      * Returns all courses and details about that course by semester id.
      *
@@ -141,6 +152,21 @@ class Course extends CI_Model
     }
 
     /**
+     * Returns the course's passing grade
+     *
+     * @param $course_id
+     * @return string
+     */
+    function getPassingGrade($course_id)
+    {
+        return $this->db->query("
+            SELECT
+              courses.passing_grade
+            FROM courses
+            WHERE courses.id = '$course_id'")->row()->passing_grade;
+    }
+
+    /**
      * Returns a course's prerequisites
      *
      * @param $course_id
@@ -152,20 +178,45 @@ class Course extends CI_Model
             SELECT
               courseprequisites.prerequisite_course_id
             FROM courseprequisites
-            WHERE courseprequisites.course_id = 32")->result();
+            WHERE courseprequisites.course_id = '$course_id'")->result();
     }
 
     /**
+     * Returns a course's corequisites
+     *
+     * @param $course_id
+     * @return array of objects
+     */
+    function getCorequisites($course_id)
+    {
+        return $this->db->query("
+        SELECT
+          coursecorequisite.corequisite_course_id
+        FROM coursecorequisite
+        WHERE coursecorequisite.course_id = '$course_id'")->result();
+    }
+
+    /**
+<<<<<<< HEAD
      * Returns the course sequence of a selected program
      *
      * @param $program_id
      */
     function getCourseSequence($program_id){
         $this->db->query("
+=======
+     * Returns a program's course sequence
+     *
+     * @param $program_id
+     * @return array of objects
+     */
+    function getCourseSequence($program_id)
+    {
+        return $this->db->query("
+>>>>>>> scheduler
             SELECT
               programsequence.course_id
             FROM programsequence
             WHERE programsequence.program_id = '$program_id'")->result();
     }
-
 }

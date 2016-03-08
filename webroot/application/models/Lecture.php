@@ -30,7 +30,7 @@ class Lecture extends CI_Model
             SELECT
               *
             FROM lectures
-            WHERE id = '$lecture_id'")->result();
+            WHERE id = '$lecture_id'")->row();
     }
 
 }
