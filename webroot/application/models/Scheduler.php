@@ -48,16 +48,12 @@ class Scheduler extends CI_Model
 		]);
 	}
 
-<<<<<<< HEAD
-	function init($semester_id)
-=======
 	/**
 	 * Initializes the schedule object
 	 *
 	 * @param $semester_id
 	 */
 	public function init($semester_id)
->>>>>>> scheduler
 	{
 		$this->semester_id = $semester_id;
 
@@ -121,9 +117,6 @@ class Scheduler extends CI_Model
 	 * @param $section_group
 	 * @return mixed
 	 */
-<<<<<<< HEAD
-	function getHello()
-=======
 	public function undo_drop($encrpyted_section)
 	{
 		if(!$serialized_section_group = $this->encryption->decrypt($encrpyted_section))
@@ -220,7 +213,6 @@ class Scheduler extends CI_Model
 	 * @return array
 	 */
 	public function generateSchedules()
->>>>>>> scheduler
 	{
 		$schedules = [];
 		$course_groups = [];
@@ -237,8 +229,6 @@ class Scheduler extends CI_Model
 		return $schedules;
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * Generator generates all possible valid schedules into an array.
 	 *
@@ -690,5 +680,4 @@ class Scheduler extends CI_Model
 		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
 
->>>>>>> scheduler
 }

@@ -197,14 +197,6 @@ class Course extends CI_Model
     }
 
     /**
-<<<<<<< HEAD
-     * Returns the course sequence of a selected program
-     *
-     * @param $program_id
-     */
-    function getCourseSequence($program_id){
-        $this->db->query("
-=======
      * Returns a program's course sequence
      *
      * @param $program_id
@@ -213,7 +205,6 @@ class Course extends CI_Model
     function getCourseSequence($program_id)
     {
         return $this->db->query("
->>>>>>> scheduler
             SELECT
               programsequence.course_id
             FROM programsequence
