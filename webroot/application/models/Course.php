@@ -93,6 +93,17 @@ class Course extends CI_Model
             WHERE courses.id = '$course_id' LIMIT 1")->row();
     }
 
+    function getCourseName($course_id){
+        $course = $this->db->query("
+            SELECT
+               courses.code,
+               courses.number,
+               courses.name
+            FROM courses
+            WHERE courses.id = '$course_id' LIMIT 1")->row();
+        return $course->code.' '.$course->number.' '.$course->name;
+    }
+
     /**
      * Returns all courses and details about that course by semester id.
      *

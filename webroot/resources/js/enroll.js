@@ -1,5 +1,5 @@
 //Globals
-
+//TODO: able to remove the add to generated list.
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
@@ -115,14 +115,29 @@ $(function() {
     });
 
     //Auto Pick
-    $auto_pick_btn = $('.auto-pick');
+    var $auto_pick_btn = $('.auto-pick');
     $auto_pick_btn.click(function () {
-        alert('Do something');
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/auto-pick',
+            data: {input: null},
+            success: function (output) {
+                if(output == ''){
+                    console.log('Successfully added random course');
+                    load_course_list();
+                }
+                else
+                    console.log(output);
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
     });
 
     //Schedule Generation
-    $generate_btn = $('.generate');
-    $generate_div = $('.generated-schedules');
+    var $generate_btn = $('.generate');
+    var $generate_div = $('.generated-schedules');
 
     var generated_schedules = [];
     $generate_btn.click(function () {
@@ -187,7 +202,7 @@ $(function() {
     });
 
     //Commit Schedule //TODO: Confirmation dialogue box
-    $commit_btn = $('.scheduler-commit');
+    var $commit_btn = $('.scheduler-commit');
     $commit_btn.click(function () {
         if(selected_schedule != -1){
             var new_schedule = generated_schedules[selected_schedule].object;

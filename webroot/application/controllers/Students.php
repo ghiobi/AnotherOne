@@ -88,11 +88,18 @@ class Students extends App_Base_Controller
 				echo $this->scheduler->add_course($course);
 			} break;
 
+			case 'auto-pick':{
+
+				echo $this->scheduler->auto_pick_course();
+
+			} break;
+
 			case 'commit':{
 				$new_schedule = $this->input->post('input', TRUE);
-				$this->scheduler->apply_new_schedule($new_schedule);
-
-				echo $this->scheduler->getMainSchedule();
+				if(!$this->scheduler->apply_new_schedule($new_schedule))
+					echo '';
+				else
+					echo 'x';
 			}break;
 
 			//Returns a list of possible schedules.
