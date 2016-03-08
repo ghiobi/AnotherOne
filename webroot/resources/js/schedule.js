@@ -243,9 +243,9 @@ function Schedule(container, header, panel, name, json, object, generated) {
                     ((type == 'sections')? '' : 'yellow') +
                     '">';
                 details += '<thead><th>'+section['course_subject']+' '+ section['course_number']+'</th><th>' +
-                        section['letter'] + '</th><th></th><th>' + section['instructor'] + '</th><th>' +section['capacity'] + '</th>' +
+                        section['letter'] + '</th><th></th><th>' + section['instructor'] + '</th><th>' +section['capacity'] + '</th><th></th>' +
                     //TODO: what if hash is empty, meaning it's not a registered section?
-                        ((generated)?'<th colspan="2"></th>':'<th colspan="2"><button class="btn btn-danger btn-xs drop-section btn-block" data-hash-id="'+ section['hash'] +'">Drop</button></th>')+'</tr>' +
+                        ((generated)?'<th></th>':'<th colspan="2"><button class="btn btn-danger btn-xs drop-section btn-block" data-hash-id="'+ section['hash'] +'"><i class="glyphicon glyphicon-trash fix-icon"></i> Drop</button></th>')+'</tr>' +
                     '</thead>';
 
                 if(section['lecture'] != null)

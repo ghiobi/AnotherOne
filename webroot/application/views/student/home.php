@@ -11,6 +11,7 @@
 					<div class="dropdown-toggle" type="button" id="enroll-semester" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						<i class="glyphicon glyphicon-pencil"></i> Register Now
 					</div>
+					<!-- /TODO: transform to collapsible menu-->
 					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
 						<?php foreach($semesters as $semester):
 							$name =  url_title($semester->name); ?>

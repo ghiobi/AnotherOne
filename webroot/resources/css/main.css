@@ -148,61 +148,6 @@ header{
 .ui-state-focus{
 	background-color: #00cc99;
 }
-/*
-.scheduler-search {
-	background-color: #bdc3c7;
-	height: 56px;
-	overflow: hidden;
-}
-.scheduler-search h3{
-	margin: 0;
-	padding: 15px;
-}
-.scheduler-search input{
-	color: #2c3e50;
-	font-size: 20px;
-	height: 56px;
-	width: 100%;
-	border: none;
-	padding: 10px 15px;
-	box-sizing: border-box;
-	text-transform: uppercase;
-}
-.scheduler-search input:focus{
-	outline: none;
-}
-#blink_underscore{
-	color: white;
-	-webkit-animation: 1s blink step-end infinite;
-	-moz-animation: 1s blink step-end infinite;
-	-ms-animation: 1s blink step-end infinite;
-	-o-animation: 1s blink step-end infinite;
-	animation: 1s blink step-end infinite;
-}
-@keyframes "blink" {
-	from, to { color: transparent;  }
-	50% { color: white;  }
-}
-@keyframes "blink" {
-	from, to {  color: transparent;  }
-	50% { color: white;  }
-}
-@-moz-keyframes blink {
-	from, to { color: transparent;  }
-	50% { color: white;  }
-}
-@-webkit-keyframes "blink" {
-	from, to {  color: transparent;  }
-	50% {  color: white; }
-}
-@-ms-keyframes "blink" {
-	from, to {  color: transparent;  }
-	50% {  color: white;  }
-}
-@-o-keyframes "blink" {
-	from, to {  color: transparent;  }
-	50% {  color: white;  }
-}*/
 .scheduler-auto-btn {
     text-align: center;
     background-color: #18a186;

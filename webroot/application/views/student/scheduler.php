@@ -24,9 +24,6 @@
 			</div>
 			<div class="scheduler-row">
 				<div class="scheduler-left">
-					<!-- <div class="scheduler-search">
-						<h3 id="scheduler-search-cover"><i class="glyphicon glyphicon-search fix-icon"></i> SEARCH <span id="blink_underscore">_</span></h3>
-					</div> TODO: MAYBE REMOVE -->
 					<input id="scheduler-search" type="text" placeholder="SEARCH">
 					<div class="scheduler-courses">
 						<h3 class="scheduler-header">COURSES

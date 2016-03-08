@@ -205,6 +205,9 @@ $(function() {
                         $generate_div.empty();
                         generated_schedules = [];
 
+                        undo_drop_array = [];
+                        $undo_btn.hide();
+
                         console.log('Successfully committed new section.');
                     }
                 },
@@ -259,6 +262,10 @@ $(function() {
                         if(undo_drop_array.length == 0)
                             $undo_btn.hide();
                         console.log('Successfully undo drop section.');
+
+                        generated_schedules = [];
+                        $generate_div.empty();
+
                         load();
                     }
                 },
