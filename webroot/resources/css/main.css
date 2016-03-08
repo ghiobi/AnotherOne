@@ -211,6 +211,12 @@ header{
 .scheduler-details > table{
 	margin-bottom: 0;
 }
+.scheduler-details > table> thead > tr > th{
+	border: none;
+}
+.scheduler-details > table > tbody{
+	background-color: #ffffff;
+}
 #schedule-div > table >tbody>tr>td{
 	padding: 0;
 }

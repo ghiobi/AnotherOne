@@ -1,6 +1,6 @@
 
 <main class="container">
-		<div>
+		<div> <!--TODO: move this somewhere else-->
 			<button class="schedule-reset">RESET</button>
 			<button class="schedule-undo-drop" style="display: none">UNDO</button>
 		</div>
@@ -58,7 +58,7 @@
 			<div class="scheduler-row">
 				<div class="scheduler-full">
 					<div class="scheduler-commit text-center">
-						<h3 class="scheduler-header">COMMIT</h3>
+						<h3 class="scheduler-header">COMMIT & ENROLL</h3>
 					</div>
 				</div>
 			</div>
