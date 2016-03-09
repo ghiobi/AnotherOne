@@ -169,21 +169,6 @@ class Student extends CI_Model
     }
 
     /**
-<<<<<<< HEAD
-     * Returns true if the student is registered to the course
-     *
-     * @param $course_id
-     */
-    function isRegistered($course_id)
-    {
-        $this->db->query("
-
-        "); //TODO
-    }
-
-    /**
-     * Gets the progress to completing his program
-=======
      * Returns array with info of course progress.
      *
      * @return array - Returns an array that contains associative arrays with
@@ -195,19 +180,55 @@ class Student extends CI_Model
     {
         $program = $this->getProgram();
 
-        //Loading course model
-        $this->load->model('course');
-        $sequence = $this->course->getCourseSequence2($program->id);
+        $course_sequence = $this->db->query("
+            SELECT
+              courses.id,
+              courses.code,
+              courses.number,
+              courses.name
+            FROM programsequence
+              INNER JOIN courses
+                ON programsequence.course_id = courses.id
+            WHERE programsequence.program_id='$program->id'")->result();
+
+        $course_list = [];
+        foreach($course_sequence as $course)
+            array_push($course_list, $course->id);
+        $course_list = implode(',', $course_list);
+
+        //Getting prerequisites
+        $sql_reqs = $this->db->query("
+            SELECT
+              courseprequisites.course_id,
+              courseprequisites.prerequisite_course_id
+            FROM courseprequisites
+            WHERE courseprequisites.course_id IN ($course_list)")->result();
+
+        $prerequisites = [];
+        if(! empty($sql_reqs))
+        {
+            $previous_id = $sql_reqs[0]->course_id;
+            $prerequisites[$previous_id] = [$sql_reqs[0]->prerequisite_course_id];
+            for($i = 1; $i < count($sql_reqs); $i++)
+            {
+                if($previous_id != $sql_reqs[$i]->course_id)
+                    $prerequisites[$sql_reqs[$i]->course_id] = [$sql_reqs[$i]->prerequisite_course_id];
+                else{
+                    array_push($prerequisites[$sql_reqs[$i]->course_id], $sql_reqs[$i]->prerequisite_course_id);
+                }
+                $previous_id = $sql_reqs[$i]->course_id;
+            }
+        }
 
         $allGrades = $this->getStudentsGrades();
 
         $progress = [];
-        foreach($sequence as $value)
+        foreach($course_sequence as $value)
         {
             array_push($progress, [
                 'name' => $value->code ." ". $value->number." ".$value->name,
                 'completed' => $this->isCompleted($value->id,$allGrades),
-                'takable' => $this->isTakable($value->id,$allGrades)
+                'takable' => $this->isTakable($value->id, $allGrades, $prerequisites[$value->id])
             ]);
         }
 
@@ -240,24 +261,21 @@ class Student extends CI_Model
 
     /**
      * Determines if this student can take a course.
-     * FIX: Doesn't take corequisite into account
+     *
      * @param $course_id
      * @param $allGrades
      * @return bool
->>>>>>> scheduler
      */
-    function isTakable($course_id, $allGrades)
+    function isTakable($course_id, $allGrades, $prereqs)
     {
-        $this->load->model('course');
-        $prereqs = $this->course->getPrerequisites($course_id);
-
         //Check if course prerequisites are completed
-        foreach ($prereqs as $value)
+        if($prereqs != NULL)
         {
-            $x = $value->prerequisite_course_id;
-
-            if (!$this->isCompleted($x, $allGrades)) {
-                return false;
+            foreach ($prereqs as $value)
+            {
+                $x = $value->prerequisite_course_id;
+                if (!$this->isCompleted($x, $allGrades))
+                    return false;
             }
         }
         return true;
