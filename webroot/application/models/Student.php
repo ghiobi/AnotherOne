@@ -225,14 +225,17 @@ class Student extends CI_Model
         $progress = [];
         foreach($course_sequence as $value)
         {
-            array_push($progress, [
+            $progress[$value->id] =  [
                 'name' => $value->code ." ". $value->number." ".$value->name,
-                'completed' => $this->isCompleted($value->id,$allGrades),
-                'takable' => $this->isTakable($value->id, $allGrades, $prerequisites[$value->id])
-            ]);
+                'completed' => $this->isCompleted($value->id, $allGrades)
+            ];
         }
 
-        return ['program_name' => $program->name, 'progress' => $progress];
+        foreach($progress as $key => $course) {
+            $progress[$key]['takable'] = $this->isTakable($prerequisites[$key], $progress);
+        }
+
+        return ['program_name' => $program->name, 'progress' => array_values($progress)];
     }
 
     /**
@@ -266,15 +269,14 @@ class Student extends CI_Model
      * @param $allGrades
      * @return bool
      */
-    function isTakable($course_id, $allGrades, $prereqs)
+    function isTakable($prereqs, $progress)
     {
         //Check if course prerequisites are completed
         if($prereqs != NULL)
         {
-            foreach ($prereqs as $value)
+            foreach ($prereqs as $course)
             {
-                $x = $value->prerequisite_course_id;
-                if (!$this->isCompleted($x, $allGrades))
+                if (! $progress[$course]['completed'])
                     return false;
             }
         }
