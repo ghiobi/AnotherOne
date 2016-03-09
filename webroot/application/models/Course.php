@@ -210,4 +210,24 @@ class Course extends CI_Model
             FROM programsequence
             WHERE programsequence.program_id = '$program_id'")->result();
     }
+
+    /**
+     * Returns course code, number, name and id of each course in program sequence
+     *
+     * @param $program_id
+     * @return mixed
+     */
+    function getCourseSequence2($program_id)
+    {
+        return $this->db->query("
+            SELECT
+              courses.code,
+              courses.number,
+              courses.name,
+              courses.id
+            FROM programsequence
+              INNER JOIN courses
+                ON programsequence.course_id = courses.id
+            WHERE programsequence.program_id='$program_id'")->result();
+    }
 }

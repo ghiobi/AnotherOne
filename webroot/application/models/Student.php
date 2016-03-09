@@ -147,6 +147,28 @@ class Student extends CI_Model
     }
 
     /**
+     * Return all grades of the student logged in
+     *
+     * @return mixed
+     */
+    function getStudentsGrades()
+    {
+        return $this->db->query("
+          SELECT
+            sections.course_id,
+            registered.grade,
+            courses.passing_grade
+          FROM registered
+            INNER JOIN sections
+              ON registered.section_id = sections.id
+            INNER JOIN students
+             ON registered.student_id = students.id
+            INNER JOIN courses
+              ON sections.course_id = courses.id
+          WHERE  students.user_id='$this->user_id'")->result();
+    }
+
+    /**
 <<<<<<< HEAD
      * Returns true if the student is registered to the course
      *
@@ -175,18 +197,17 @@ class Student extends CI_Model
 
         //Loading course model
         $this->load->model('course');
-        $sequence = $this->course->getCourseSequence($program->id);
+        $sequence = $this->course->getCourseSequence2($program->id);
+
+        $allGrades = $this->getStudentsGrades();
 
         $progress = [];
-
         foreach($sequence as $value)
         {
-            $course = $this->course->getByID($value->course_id);
-
             array_push($progress, [
-                'name' => $course->code ." ". $course->number." ".$course->name,
-                'completed' => $this->isCompleted($value->course_id, $course->passing_grade),
-                'takable' => $this->isTakable($value->course_id)
+                'name' => $value->code ." ". $value->number." ".$value->name,
+                'completed' => $this->isCompleted($value->id,$allGrades),
+                'takable' => $this->isTakable($value->id,$allGrades)
             ]);
         }
 
@@ -197,28 +218,21 @@ class Student extends CI_Model
      * Determines if a course is completed with passing grade or going to be completed.
      *
      * @param $course_id
+     * @param $allGrades
      * @return bool
+     * @throws Exception
      */
-    function isCompleted($course_id, $passing_grade)
+    function isCompleted($course_id,$allGrades)
     {
-        $result = $this->db->query("
-            SELECT
-              registered.grade
-            FROM registered
-              INNER JOIN students
-                ON registered.student_id = students.id
-              INNER JOIN sections
-                ON registered.section_id = sections.id
-            WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
+        foreach($allGrades as $value) {
 
+            if ($value->course_id == $course_id) {
 
-        foreach($result as $value)
-        {
+                $grade = new Grade($value->grade);
 
-            $grade = new Grade($value->grade);
-
-            if($grade->passed($passing_grade)){
-                return true;
+                if ($grade->passed($value->passing_grade)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -228,10 +242,11 @@ class Student extends CI_Model
      * Determines if this student can take a course.
      * FIX: Doesn't take corequisite into account
      * @param $course_id
+     * @param $allGrades
      * @return bool
 >>>>>>> scheduler
      */
-    function isTakable($course_id)
+    function isTakable($course_id, $allGrades)
     {
         $this->load->model('course');
         $prereqs = $this->course->getPrerequisites($course_id);
@@ -241,7 +256,7 @@ class Student extends CI_Model
         {
             $x = $value->prerequisite_course_id;
 
-            if (!$this->isCompleted($x, $this->course->getPassingGrade($course_id))) {
+            if (!$this->isCompleted($x, $allGrades)) {
                 return false;
             }
         }
