@@ -448,7 +448,7 @@ class Scheduler extends CI_Model
 	{
 		if(array_key_exists($course_id, $this->generator_course_list)){
 			unset($this->generator_course_list[$course_id]);
-			return TRUE;
+			return 'Course removed from generator.';
 		}
 		return FALSE;
 	}
@@ -461,9 +461,12 @@ class Scheduler extends CI_Model
 	public function get_course_list()
 	{
 		$unreg_list = [];
-		foreach($this->generator_course_list as $course)
+		foreach($this->generator_course_list as $key => $course)
 		{
-			$unreg_list[$course['name']] = $course['count'];
+			$unreg_list[$key] = [
+				'count' => $course['count'],
+				'name' => $course['name']
+			];
 		}
 		$array = [
 			'registered' => $this->registered_course_list,

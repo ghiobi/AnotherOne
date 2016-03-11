@@ -129,6 +129,12 @@ class Students extends App_Base_Controller
 				return;
 			}
 
+			case 'remove-course': {
+				$course_id = $this->input->post('input', TRUE);
+
+				echo $this->scheduler->remove_from_generator($course_id);
+			} break;
+
 			case 'course-list': {
 				echo $this->scheduler->get_course_list();
 			} break;
@@ -158,7 +164,6 @@ class Students extends App_Base_Controller
 			$this->scheduler->init($semester->id);
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
-
 
 		$this->scheduler = unserialize($this->session->userdata($semester_url));
 

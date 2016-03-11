@@ -302,6 +302,24 @@ $(function() {
         });
     });
 
+    $(document).on('click','.generated-course-item',function(){
+        var course_id = $(this).data("courseId");
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/remove-course',
+            data: {input: course_id},
+            success: function(output){
+                if(output == ''){
+                    console.log('')
+                }
+                else{
+                    load_course_list();
+                    console.log(output);
+                }
+            }
+        });
+    });
+
     function load(){
         load_main_schedule();
         load_course_list();
@@ -316,7 +334,7 @@ $(function() {
                     $reg_div.append('<div class="list-group-item scheduler-list-item">'+course['registered'][key]+'</div>');
                 }
                 for(var key in course['unregistered']){
-                    $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item">'+key+'<span class="badge">'+course['unregistered'][key]+'</span></div>');
+                    $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item generated-course-item" data-course-id="'+key+'">'+course['unregistered'][key]['name']+'<span class="badge">'+course['unregistered'][key]['count']+'</span></div>');
                 }
                 if(course['registered'].length == 0 && course['unregistered'].length == 0){
                     $reg_div.append('<div class="list-group-item scheduler-list-item">No Courses.</div>');

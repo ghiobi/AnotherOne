@@ -226,6 +226,11 @@ header{
 .yellow {
 	background-color: #ffff99;
 }
+.generated-course-item:hover{
+	cursor: pointer;
+	background-color: #f2dede;
+	color: #a94442;
+}
 @media (max-width: 992px) {
 	.scheduler-app h3{
 		font-size:1.25em;
