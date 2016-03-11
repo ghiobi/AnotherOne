@@ -7,29 +7,26 @@
 			<h4>Welcome Back, <?php echo $name ?>.</h4>
 			<div>
 				<a class="front-menu" href="<?php echo site_url('students/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
-				<div class="dropdown front-menu">
-					<div class="dropdown-toggle" type="button" id="enroll-semester" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						<i class="glyphicon glyphicon-pencil"></i> Register Now
-					</div>
-					<!-- /TODO: transform to collapsible menu-->
-					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
+				<a class="front-menu" role="button" data-toggle="collapse" href="#enroll" aria-expanded="false" aria-controls="collapseExample">
+					<i class="glyphicon glyphicon-pencil"></i> Register Now
+				</a>
+				<div class="collapse" id="enroll">
+					<ul class="front-dropdown">
 						<?php foreach($semesters as $semester): ?>
 							<li><a href="<?= site_url('students/enroll/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
-				<!--
-				<a class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-				  Button with data-target
-				</a>
-				<div class="collapse" id="collapseExample">
-				  <div class="well">
-					...
-				  </div>
+				<a class="front-menu" style="margin-top: 10px" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
+				<a class="front-menu" role="button" data-toggle="collapse" href="#view-schedule" aria-expanded="false" aria-controls="collapseExample">
+					<i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
+				<div class="collapse" id="view-schedule">
+					<ul class="front-dropdown">
+						<?php foreach($semesters as $semester): ?>
+							<li><a href="<?= site_url('students/view/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
+						<?php endforeach; ?>
+					</ul>
 				</div>
-				-->
-				<a class="front-menu" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
-				<a class="front-menu" href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
 			</div>
 		</div>
 		<div class="col-md-6" style="margin-top: 39px">
