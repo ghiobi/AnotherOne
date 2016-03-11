@@ -4,8 +4,8 @@
 */
 class Home extends App_Base_Controller
 {
-	
-	function __construct()
+
+	public function __construct()
 	{
 		parent::__construct();
 	}
@@ -13,7 +13,7 @@ class Home extends App_Base_Controller
 	/**
 	 * loads the home page
 	 */
-	function index()
+	public function index()
 	{
 		$data['title'] = 'Homepage';
 		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select an option!';

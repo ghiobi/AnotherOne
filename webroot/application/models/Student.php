@@ -6,7 +6,7 @@ class Student extends CI_Model
 {
     private $user_id;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->user_id = $this->session->user_id;
@@ -17,7 +17,7 @@ class Student extends CI_Model
      *
      * @return object
      */
-    function getProgram()
+    public function getProgram()
     {
         $result = $this->db->query(
             "SELECT
@@ -37,7 +37,7 @@ class Student extends CI_Model
      *
      * @return string
      */
-    function getID()
+    public function getID()
     {
         $result = $this->db->query(
             "SELECT
@@ -53,7 +53,7 @@ class Student extends CI_Model
      *
      * @return object
      */
-    function getInfo()
+    public function getInfo()
     {
         $result = $this->db->query("
             SELECT
@@ -77,7 +77,7 @@ class Student extends CI_Model
      *
      * @return associative array - returns an associative array, where the index is the semester name.
      */
-    function getRecord()
+    public function getRecord()
     {
         $result = $this->getRegisteredSemesters();
 
@@ -104,7 +104,7 @@ class Student extends CI_Model
     /**
      * @return array of semester objects
      */
-    function getRegisteredSemesters()
+    public function getRegisteredSemesters()
     {
         return $this->db->query("
             SELECT DISTINCT
@@ -127,7 +127,7 @@ class Student extends CI_Model
      * @param $semester_id - The semester to get
      * @return mixed
      */
-    function getRecordBySemester($semester_id)
+    public function getRecordBySemester($semester_id)
     {
         return $this->db->query("
             SELECT
@@ -151,7 +151,7 @@ class Student extends CI_Model
      *
      * @return mixed
      */
-    function getStudentsGrades()
+    public function getStudentsGrades()
     {
         return $this->db->query("
           SELECT
@@ -176,7 +176,7 @@ class Student extends CI_Model
      *      - Boolean => Is completed course with a passing grade
      *      - Boolean => Can he take the course? (If course is already completed )
      */
-    function getProgress()
+    public function getProgress()
     {
         $program = $this->getProgram();
 
@@ -246,7 +246,7 @@ class Student extends CI_Model
      * @return bool
      * @throws Exception
      */
-    function isCompleted($course_id,$allGrades)
+    private function isCompleted($course_id,$allGrades)
     {
         foreach($allGrades as $value) {
 
@@ -269,7 +269,7 @@ class Student extends CI_Model
      * @param $allGrades
      * @return bool
      */
-    function isTakable($prereqs, $progress)
+    private function isTakable($prereqs, $progress)
     {
         //Check if course prerequisites are completed
         if($prereqs != NULL)

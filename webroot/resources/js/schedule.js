@@ -208,13 +208,16 @@ function Schedule(container, header, panel, name, json, object, generated) {
     {
         //Emptying
         this.schedule_container.innerHTML = '';
-        this.schedule_header.innerHTML = '';
-        this.schedule_detail.innerHTML = '';
-
-        //Insertion
         this.schedule_container.insertAdjacentHTML('beforeend', this.htmlTable);
-        this.schedule_header.insertAdjacentHTML('beforeend', this.name);
-        this.schedule_detail.insertAdjacentHTML('beforeend', this.details);
+
+        if(this.schedule_header != null){
+            this.schedule_header.innerHTML = '';
+            this.schedule_header.insertAdjacentHTML('beforeend', this.name);
+        }
+        if(this.schedule_detail != null){
+            this.schedule_detail.innerHTML = '';
+            this.schedule_detail.insertAdjacentHTML('beforeend', this.details);
+        }
     };
 
     this.extract =  function ()
