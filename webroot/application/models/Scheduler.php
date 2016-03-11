@@ -161,7 +161,7 @@ class Scheduler extends CI_Model
 			$laboratory_id = 'NULL';
 
 		//Inserting record to database
-		$this->db->query(" INSERT INTO registered
+		$this->db->query("INSERT INTO registered
 			(student_id, section_id, tutorial_id, laboratory_id)
 				VALUES ('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
 

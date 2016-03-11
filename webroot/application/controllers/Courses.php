@@ -5,12 +5,12 @@
 class Courses extends CI_Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
+    public function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
         //Loading header
         if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)
@@ -50,7 +50,10 @@ class Courses extends CI_Controller
         }
         else{
 
-            $results = $this->section->getAllSections($this->semester->getIdBySlug($SEMESTER), $COURSECODE, $NUMBER);
+            if(!$semester = $this->semester->getBySlug($SEMESTER))
+                goto search;
+
+            $results = $this->section->getAllSections($semester->id, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';

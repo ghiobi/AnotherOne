@@ -5,8 +5,8 @@
 */
 class Students extends App_Base_Controller
 {
-	
-	function __construct()
+
+	public function __construct()
 	{
 		parent::__construct();
 	}
@@ -14,7 +14,7 @@ class Students extends App_Base_Controller
     /**
      * Loads the student profile page
      */
-	function profile()
+	public function profile()
     {
         $this->load->model('student');
 
@@ -33,29 +33,28 @@ class Students extends App_Base_Controller
 	/**
 	 * Loads the student enroll page
 	 */
-	function enroll($semester_url)
+	public function enroll($semester_url)
 	{
 		//Loading models
 		$this->load->model('semester');
 		$this->load->model('scheduler');
 
 		//Validating if semester name url exist. If not, redirect to main page.
-		if(!$semester_id = $this->semester->getIdBySlug($semester_url))
+		if(!$semester = $this->semester->getBySlug($semester_url))
 			redirect(base_url());
 
 		//If there the semester cookie already exists then load data from that of init a new scheduler object.
-		if($this->session->userdata($semester_url) == NULL || $this->session->userdata($semester_url) == 'Reset')
+		if($this->session->userdata($semester_url) == NULL)
 		{
 			//Initializing the scheduler because the cookie doesn't exist.
-			$this->scheduler->init($semester_id);
+			$this->scheduler->init($semester->id);
 
 			//After initializing the scheduler, it save the data into a session cookie.
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
 
 		//Preparing data for view
-		$semester_name = str_replace('-', ' ', $semester_url);
-		$data['title'] = strtoupper(substr($semester_name, 0 , 1)) . substr($semester_name, 1);
+		$data['title'] = $semester->name;
 		$data['info_bar'] = 'Register in three simple steps. 1. Pick your courses 2. Generate 3. Commit!';
 
 		$data['semester_name'] = $data['title'];
@@ -67,7 +66,7 @@ class Students extends App_Base_Controller
 		$this->load->view('layouts/footer.php', $data);
 	}
 
-	function ajax($semester_url, $action){
+	public function ajax($semester_url, $action){
 		$this->load->model('scheduler');
 
 		//Continue work on the scheduler model
@@ -144,8 +143,34 @@ class Students extends App_Base_Controller
 	 * Loads the schedule of a semester by id
 	 * @param $semester
 	 */
-	function schedule($semester){
+	public function view($semester_url)
+	{
+		$this->load->model('semester');
+		$this->load->model('scheduler');
 
+		if(!$semester = $this->semester->getBySlug($semester_url))
+			redirect(base_url());
+
+		//If there the semester cookie already exists then load data from that of init a new scheduler object.
+		if($this->session->userdata($semester_url) == NULL)
+		{
+			//Initializing the scheduler because the cookie doesn't exist.
+			$this->scheduler->init($semester->id);
+			$this->session->set_userdata($semester_url, serialize($this->scheduler));
+		}
+
+
+		$this->scheduler = unserialize($this->session->userdata($semester_url));
+
+		$data['info_bar'] = 'Schedule for '.$semester->name;
+		$data['title'] = 'Schedule of '.$semester->name;
+		$data['add_js'] = ['schedule.js', 'enroll.js'];
+
+		$data['schedule'] = $this->scheduler->getMainSchedule();
+
+		$this->load->view('layouts/header.php', $data);
+		$this->load->view('student/view_schedule.php', $data);
+		$this->load->view('layouts/footer.php', $data);
 	}
 
 }
