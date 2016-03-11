@@ -214,7 +214,7 @@ function Schedule(container, header, panel, name, json, object, generated) {
             this.schedule_header.innerHTML = '';
             this.schedule_header.insertAdjacentHTML('beforeend', this.name);
         }
-        if(this.schedule_detail.innerHTML != null){
+        if(this.schedule_detail != null){
             this.schedule_detail.innerHTML = '';
             this.schedule_detail.insertAdjacentHTML('beforeend', this.details);
         }
