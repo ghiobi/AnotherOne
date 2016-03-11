@@ -6,7 +6,7 @@ class Student extends CI_Model
 {
     private $user_id;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->user_id = $this->session->user_id;
@@ -17,7 +17,7 @@ class Student extends CI_Model
      *
      * @return object
      */
-    function getProgram()
+    public function getProgram()
     {
         $result = $this->db->query(
             "SELECT
@@ -37,7 +37,7 @@ class Student extends CI_Model
      *
      * @return string
      */
-    function getID()
+    public function getID()
     {
         $result = $this->db->query(
             "SELECT
@@ -53,7 +53,7 @@ class Student extends CI_Model
      *
      * @return object
      */
-    function getInfo()
+    public function getInfo()
     {
         $result = $this->db->query("
             SELECT
@@ -77,7 +77,7 @@ class Student extends CI_Model
      *
      * @return associative array - returns an associative array, where the index is the semester name.
      */
-    function getRecord()
+    public function getRecord()
     {
         $result = $this->getRegisteredSemesters();
 
@@ -104,7 +104,7 @@ class Student extends CI_Model
     /**
      * @return array of semester objects
      */
-    function getRegisteredSemesters()
+    public function getRegisteredSemesters()
     {
         return $this->db->query("
             SELECT DISTINCT
@@ -127,7 +127,7 @@ class Student extends CI_Model
      * @param $semester_id - The semester to get
      * @return mixed
      */
-    function getRecordBySemester($semester_id)
+    public function getRecordBySemester($semester_id)
     {
         return $this->db->query("
             SELECT
@@ -147,21 +147,28 @@ class Student extends CI_Model
     }
 
     /**
-<<<<<<< HEAD
-     * Returns true if the student is registered to the course
+     * Return all grades of the student logged in
      *
-     * @param $course_id
+     * @return mixed
      */
-    function isRegistered($course_id)
+    public function getStudentsGrades()
     {
-        $this->db->query("
-
-        "); //TODO
+        return $this->db->query("
+          SELECT
+            sections.course_id,
+            registered.grade,
+            courses.passing_grade
+          FROM registered
+            INNER JOIN sections
+              ON registered.section_id = sections.id
+            INNER JOIN students
+             ON registered.student_id = students.id
+            INNER JOIN courses
+              ON sections.course_id = courses.id
+          WHERE  students.user_id='$this->user_id'")->result();
     }
 
     /**
-     * Gets the progress to completing his program
-=======
      * Returns array with info of course progress.
      *
      * @return array - Returns an array that contains associative arrays with
@@ -169,56 +176,87 @@ class Student extends CI_Model
      *      - Boolean => Is completed course with a passing grade
      *      - Boolean => Can he take the course? (If course is already completed )
      */
-    function getProgress()
+    public function getProgress()
     {
         $program = $this->getProgram();
 
-        //Loading course model
-        $this->load->model('course');
-        $sequence = $this->course->getCourseSequence($program->id);
+        $course_sequence = $this->db->query("
+            SELECT
+              courses.id,
+              courses.code,
+              courses.number,
+              courses.name
+            FROM programsequence
+              INNER JOIN courses
+                ON programsequence.course_id = courses.id
+            WHERE programsequence.program_id='$program->id'")->result();
 
-        $progress = [];
+        $course_list = [];
+        foreach($course_sequence as $course)
+            array_push($course_list, $course->id);
+        $course_list = implode(',', $course_list);
 
-        foreach($sequence as $value)
+        //Getting prerequisites
+        $sql_reqs = $this->db->query("
+            SELECT
+              courseprequisites.course_id,
+              courseprequisites.prerequisite_course_id
+            FROM courseprequisites
+            WHERE courseprequisites.course_id IN ($course_list)")->result();
+
+        $prerequisites = [];
+        if(! empty($sql_reqs))
         {
-            $course = $this->course->getByID($value->course_id);
-
-            array_push($progress, [
-                'name' => $course->code ." ". $course->number." ".$course->name,
-                'completed' => $this->isCompleted($value->course_id, $course->passing_grade),
-                'takable' => $this->isTakable($value->course_id)
-            ]);
+            $previous_id = $sql_reqs[0]->course_id;
+            $prerequisites[$previous_id] = [$sql_reqs[0]->prerequisite_course_id];
+            for($i = 1; $i < count($sql_reqs); $i++)
+            {
+                if($previous_id != $sql_reqs[$i]->course_id)
+                    $prerequisites[$sql_reqs[$i]->course_id] = [$sql_reqs[$i]->prerequisite_course_id];
+                else{
+                    array_push($prerequisites[$sql_reqs[$i]->course_id], $sql_reqs[$i]->prerequisite_course_id);
+                }
+                $previous_id = $sql_reqs[$i]->course_id;
+            }
         }
 
-        return ['program_name' => $program->name, 'progress' => $progress];
+        $allGrades = $this->getStudentsGrades();
+
+        $progress = [];
+        foreach($course_sequence as $value)
+        {
+            $progress[$value->id] =  [
+                'name' => $value->code ." ". $value->number." ".$value->name,
+                'completed' => $this->isCompleted($value->id, $allGrades)
+            ];
+        }
+
+        foreach($progress as $key => $course) {
+            $progress[$key]['takable'] = $this->isTakable($prerequisites[$key], $progress);
+        }
+
+        return ['program_name' => $program->name, 'progress' => array_values($progress)];
     }
 
     /**
      * Determines if a course is completed with passing grade or going to be completed.
      *
      * @param $course_id
+     * @param $allGrades
      * @return bool
+     * @throws Exception
      */
-    function isCompleted($course_id, $passing_grade)
+    private function isCompleted($course_id,$allGrades)
     {
-        $result = $this->db->query("
-            SELECT
-              registered.grade
-            FROM registered
-              INNER JOIN students
-                ON registered.student_id = students.id
-              INNER JOIN sections
-                ON registered.section_id = sections.id
-            WHERE  sections.course_id='$course_id' AND students.user_id='$this->user_id'")->result();
+        foreach($allGrades as $value) {
 
+            if ($value->course_id == $course_id) {
 
-        foreach($result as $value)
-        {
+                $grade = new Grade($value->grade);
 
-            $grade = new Grade($value->grade);
-
-            if($grade->passed($passing_grade)){
-                return true;
+                if ($grade->passed($value->passing_grade)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -226,23 +264,20 @@ class Student extends CI_Model
 
     /**
      * Determines if this student can take a course.
-     * FIX: Doesn't take corequisite into account
+     *
      * @param $course_id
+     * @param $allGrades
      * @return bool
->>>>>>> scheduler
      */
-    function isTakable($course_id)
+    private function isTakable($prereqs, $progress)
     {
-        $this->load->model('course');
-        $prereqs = $this->course->getPrerequisites($course_id);
-
         //Check if course prerequisites are completed
-        foreach ($prereqs as $value)
+        if($prereqs != NULL)
         {
-            $x = $value->prerequisite_course_id;
-
-            if (!$this->isCompleted($x, $this->course->getPassingGrade($course_id))) {
-                return false;
+            foreach ($prereqs as $course)
+            {
+                if (! $progress[$course]['completed'])
+                    return false;
             }
         }
         return true;

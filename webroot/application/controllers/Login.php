@@ -5,13 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Login extends CI_Controller
 {
-	
-	function __construct()
+
+	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	function index()
+	public function index()
 	{
 		//Redirects user to homepage if logged in
 		if($this->session->userdata('user_id'))
@@ -68,7 +68,7 @@ class Login extends CI_Controller
 		$this->load->view('layouts/footer.php');
 	}
 
-	function signout()
+	public function signout()
 	{
 		session_destroy();
 		redirect(base_url().'login', 'refresh');
