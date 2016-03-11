@@ -13,12 +13,21 @@
 					</div>
 					<!-- /TODO: transform to collapsible menu-->
 					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
-						<?php foreach($semesters as $semester):
-							$name =  url_title($semester->name); ?>
-							<li><a href="<?= site_url('students/enroll/'.strtolower($name)) ?>"><?= $semester->name ?></a></li>
+						<?php foreach($semesters as $semester): ?>
+							<li><a href="<?= site_url('students/enroll/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
+				<!--
+				<a class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+				  Button with data-target
+				</a>
+				<div class="collapse" id="collapseExample">
+				  <div class="well">
+					...
+				  </div>
+				</div>
+				-->
 				<a class="front-menu" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
 				<a class="front-menu" href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
 			</div>
