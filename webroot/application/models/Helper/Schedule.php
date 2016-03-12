@@ -116,12 +116,12 @@ class Schedule
         $all_blocks = [];
 
         foreach($this->unregistered as $current){
-            $blocks = $current->overlaps();
+            $blocks = $current->getTimeBlocks();
             $all_blocks = array_merge($all_blocks, $blocks);
         }
 
         foreach($all_blocks as $block){
-            if($block->overlaps($preference)){
+            if($preference->overlaps($block)){
                 return TRUE;
             }
         }
@@ -133,13 +133,13 @@ class Schedule
         $all_blocks = [];
 
         foreach($this->sections as $current){
-            $blocks = $current->overlaps();
+            $blocks = $current->getTimeBlocks();
             $all_blocks = array_merge($all_blocks, $blocks);
         }
 
 
         foreach($all_blocks as $block){
-            if($block->overlaps($preference)){
+            if($preference->overlaps($block)){
                 return TRUE;
             }
         }

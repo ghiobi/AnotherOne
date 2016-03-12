@@ -243,7 +243,7 @@ class GroupSection
         {
             foreach($thatGroup as $thatG)
             {
-                if($thisG->overlapsRoom($thatG))
+                if($thisG->overlaps($thatG))
                     return TRUE;
             }
         }
