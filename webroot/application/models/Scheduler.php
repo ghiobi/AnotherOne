@@ -161,7 +161,7 @@ class Scheduler extends CI_Model
 			$laboratory_id = 'NULL';
 
 		//Inserting record to database
-		$this->db->query(" INSERT INTO registered
+		$this->db->query("INSERT INTO registered
 			(student_id, section_id, tutorial_id, laboratory_id)
 				VALUES ('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
 
@@ -208,7 +208,7 @@ class Scheduler extends CI_Model
 	
 	/**
 	 * Returns possible generated schedules.
-	 * //TODO: remove course list and replace with unregistered $adding_courses_list
+	 *
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
@@ -414,7 +414,6 @@ class Scheduler extends CI_Model
 				throw new PrerequisiteNotMetException($course_name);
 			}
 
-			//TODO: specify what id is not complete
 		}
 
 		//for each co check complete
@@ -426,7 +425,6 @@ class Scheduler extends CI_Model
 				throw new CorequisiteNotMetException($course_name);
 			}
 
-			//TODO: specify what id is not complete
 		}
 
 		//Generates possible sections and adds course to section.
@@ -448,22 +446,25 @@ class Scheduler extends CI_Model
 	{
 		if(array_key_exists($course_id, $this->generator_course_list)){
 			unset($this->generator_course_list[$course_id]);
-			return TRUE;
+			return 'Course removed from generator.';
 		}
 		return FALSE;
 	}
 
 	/**
-	 * TODO: Returns the formatted registered course_list and generator_course_list for the view
-	 * + This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 * This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 *
 	 * @return json
 	 */
 	public function get_course_list()
 	{
 		$unreg_list = [];
-		foreach($this->generator_course_list as $course)
+		foreach($this->generator_course_list as $key => $course)
 		{
-			$unreg_list[$course['name']] = $course['count'];
+			$unreg_list[$key] = [
+				'count' => $course['count'],
+				'name' => $course['name']
+			];
 		}
 		$array = [
 			'registered' => $this->registered_course_list,

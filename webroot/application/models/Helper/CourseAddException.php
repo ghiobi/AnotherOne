@@ -30,7 +30,7 @@ class CourseAlreadyAdded extends CourseAlreadyListedException{
 
 class ExceedsMaxCoursesException extends CourseAddException{
     public function __construct($max_course){
-        parent::__construct('Exceeds the maximum number of courses per semester '. $max_course);
+        parent::__construct('Exceeds the maximum number of courses per semester, '. $max_course.'.');
     }
 }
 class ExceedsMaxCombinationException extends CourseAddException{

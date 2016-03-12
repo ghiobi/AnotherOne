@@ -26,7 +26,7 @@
                         <select name="semester" id="semester" class="form-control">
                             <?php
                                 foreach($available_semesters as $semester)
-                                    echo '<option value="'.url_title($semester->name).'">'.$semester->name.'</option>';
+                                    echo '<option value="'.$semester->slug.'">'.$semester->name.'</option>';
                             ?>
                         </select>
                     </div>
