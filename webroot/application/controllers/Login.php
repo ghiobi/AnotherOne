@@ -19,11 +19,6 @@ class Login extends CI_Controller
 			redirect(base_url());
 		}
 
-		$data['title'] = 'Login';
-		$data['info_bar'] = '</i>Welcome to mytinerary. A simple web app for schedule making and course sequence planning.';
-
-		$this->load->view('layouts/header.php', $data);
-
 		//Validates login if sign in button was submitted/pressed
 		if($this->input->post('signin_btn'))
 		{
@@ -63,9 +58,9 @@ class Login extends CI_Controller
 		}
 
 		view:
-		
+
+		$data['awesome'] = null;
 		$this->load->view('login/index.php', $data);
-		$this->load->view('layouts/footer.php');
 	}
 
 	public function signout()
