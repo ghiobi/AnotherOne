@@ -124,11 +124,6 @@ class Students extends App_Base_Controller
 				echo ($response)? 'Re-added section to schedule': 'Failed at re-adding section to schedule';
 			} break;
 
-			case 'reset': {
-				$this->session->unset_userdata($semester_url);
-				return;
-			}
-
 			case 'remove-course': {
 				$course_id = $this->input->post('input', TRUE);
 
@@ -138,6 +133,29 @@ class Students extends App_Base_Controller
 			case 'course-list': {
 				echo $this->scheduler->get_course_list();
 			} break;
+
+			case 'add-preference': {
+				$json_input = $this->input->post('input', TRUE);
+				$message = $this->scheduler->addTimePreference($json_input);
+
+				echo $message;
+			} break;
+
+			case 'remove-preference': {
+				$hash_code = $this->input->post('input', TRUE);
+				$message = $this->scheduler->removeTimePreference($hash_code);
+
+				echo $message;
+			} break;
+
+			case 'get-preference': {
+				echo $this->scheduler->getTimePreferences();
+			} break;
+
+			case 'reset': {
+				$this->session->unset_userdata($semester_url);
+				return;
+			}
 
 		endswitch;
 

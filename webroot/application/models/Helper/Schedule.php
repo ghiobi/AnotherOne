@@ -111,6 +111,24 @@ class Schedule
         return $course_list;
     }
 
+    public function overlapsUnregistered(PreferenceBlock $Preference)
+    {
+        $all_blocks = [];
+
+        foreach($this->unregistered as $current){
+            $blocks = $current->getTimeBlocks();
+            $all_blocks = array_merge($all_blocks, $blocks);
+        }
+
+        foreach($all_blocks as $block){
+            if($block->timeOverlaps($Preference)){
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
     /**
      * @return mixed
      */

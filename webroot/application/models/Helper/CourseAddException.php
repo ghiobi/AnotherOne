@@ -1,18 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: TheChosenOne
- * Date: 2016-03-08
- * Time: 4:59 PM
- */
 
 class CourseAddException extends \Exception{
-
+    public function __construct($message)
+    {
+        parent::__construct($message);
+    }
 }
 
 class CourseAlreadyListedException extends CourseAddException{
-    public function __construct($message){
-        parent::__construct('Course already listed.');
+    public function __construct($message = NULL){
+        if(!$message)
+            $message = 'Course already listed.';
+        parent::__construct($message);
     }
 }
 

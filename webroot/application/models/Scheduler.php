@@ -8,6 +8,8 @@ include_once 'Helper/Schedule.php';
 include_once 'Helper/GroupSection.php';
 
 include_once 'Helper/Block.php';
+include_once 'Helper/PreferenceBlock.php';
+include_once 'Helper/RoomBlock.php';
 include_once 'Helper/LectureBlock.php';
 include_once 'Helper/LaboratoryBlock.php';
 include_once 'Helper/TutorialBlock.php';
@@ -17,6 +19,7 @@ class Scheduler extends CI_Model
 	private $semester_id;
 	private $student_id;
 	private $search_course_list;
+	private $course_sequence;
 
 	//Main Schedule;
 	public $main_schedule;
@@ -26,7 +29,7 @@ class Scheduler extends CI_Model
 	public $generator_course_list;
 
 	//Preferences
-	public $preferences;
+	public $preference_blocks;
 
 	public function __construct()
 	{
@@ -74,6 +77,7 @@ class Scheduler extends CI_Model
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
 
 		$this->search_course_list = [];
+		$this->preference_blocks = [];
 
 		$this->registered_course_list = $this->main_schedule->getCourseList();
 		$this->generator_course_list = [];
@@ -243,24 +247,33 @@ class Scheduler extends CI_Model
 		for ($i = 0; $i < count($courses[$current_course]); $i++)
 		{
 			//Clone the current schedule
-			$clone = clone $current_schedule;
+			$schedule = clone $current_schedule;
 
 			//If current_course is not end index of the number of courses to add, recurse if successful group add.
 			if($current_course != $num_courses)
 			{
-				if($clone->addUnregistered($courses[$current_course][$i]))
+				if($schedule->addUnregistered($courses[$current_course][$i]))
 				{
-					$this->generator($current_course + 1, $num_courses, $clone, $stack, $courses);
+					$this->generator($current_course + 1, $num_courses, $schedule, $stack, $courses);
 				}
 			}
 			else //If this is the last course, and successful in adding group in last course, push to stack.
 			{
-				if($clone->addUnregistered($courses[$current_course][$i]))
+				if($schedule->addUnregistered($courses[$current_course][$i]))
 				{
-					$serialize = serialize($clone);
+					foreach($this->preference_blocks as $pref_block)
+					{
+						if($schedule->overlapsUnregistered($pref_block)){
+							goto skip_add;
+						}
+					}
+
+					$serialize = serialize($schedule);
 					$ciphered = $this->encryption->encrypt($serialize);
 
-					array_push($stack, [$clone , $ciphered]);
+					array_push($stack, [$schedule , $ciphered]);
+
+					skip_add:
 				}
 			}
 		}
@@ -310,7 +323,7 @@ class Scheduler extends CI_Model
 
 		return FALSE;
 	}
-	
+
 	/**
 	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
 	 * 
@@ -318,7 +331,8 @@ class Scheduler extends CI_Model
 	 */
 	public function auto_pick_course()
 	{
-		$sequence = $this->db->query("
+		if($this->course_sequence == NULL){
+			$this->course_sequence = $this->db->query("
 			SELECT DISTINCT
 			  sections.course_id
 			FROM students
@@ -329,11 +343,12 @@ class Scheduler extends CI_Model
 			  INNER JOIN semesters
 				ON sections.semester_id = semesters.id
 			WHERE students.id = '$this->student_id' AND semesters.id = '$this->semester_id'")->result();
+		}
 
 		do{
 			$try_again = false;
 			try{
-				$course = $sequence[array_rand($sequence)];
+				$course = $this->course_sequence[array_rand($this->course_sequence)];
 				if($this->is_complete($course->course_id))
 					throw new CourseAlreadyListedException();
 				$this->add_to_generator($course->course_id);
@@ -471,6 +486,41 @@ class Scheduler extends CI_Model
 			'unregistered' => $unreg_list
 		];
 		return json_encode($array, JSON_NUMERIC_CHECK);
+	}
+
+
+	public function addTimePreference($json_array)
+	{
+		$array_blocks = json_decode($json_array);
+
+		$bad_count = 0;
+		foreach($array_blocks as $block){
+			$time_block = new \Scheduler\PreferenceBlock($block['start'], $block['end'], $block['weekday']);
+
+			if(!$this->main_schedule->overlaps($time_block)){
+				foreach($this->preference_blocks as $pref_block){
+					if($pref_block->overlaps($time_block))
+						goto end;
+				}
+				$this->preference_blocks[spl_object_hash($time_block)] = $time_block;
+				continue;
+			}
+			end: $bad_count++;
+		}
+		return ($bad_count)? 'Could not add '.$bad_count.' preferences.' : '';
+	}
+
+	public function removeTimePreference($object_hashcode){
+		if(array_key_exists($object_hashcode, $this->preference_blocks)){
+			unset($this->preference_blocks[$object_hashcode]);
+			return 'Successfully removed time block';
+		}
+		return NULL;
+	}
+
+	public function getTimePreferences()
+	{
+		return json_encode($this->preference_blocks, JSON_NUMERIC_CHECK);
 	}
 
 	/**
