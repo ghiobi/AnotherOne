@@ -261,6 +261,7 @@ class Scheduler extends CI_Model
 			{
 				if($schedule->addUnregistered($courses[$current_course][$i]))
 				{
+					//If a preference overlaps, skip the addition.
 					foreach($this->preference_blocks as $pref_block)
 					{
 						if($schedule->overlapsUnregistered($pref_block)){
@@ -268,9 +269,9 @@ class Scheduler extends CI_Model
 						}
 					}
 
+					//Addes the schedule to the stack if successful
 					$serialize = serialize($schedule);
 					$ciphered = $this->encryption->encrypt($serialize);
-
 					array_push($stack, [$schedule , $ciphered]);
 
 					skip_add:
@@ -488,28 +489,47 @@ class Scheduler extends CI_Model
 		return json_encode($array, JSON_NUMERIC_CHECK);
 	}
 
-
+	/**
+	 * Adds a time preference object to the preference_block list.
+	 *
+	 * @param $json_array - an array of prefrences in JSON format
+	 * @return string - returns empty string if success
+	 */
 	public function addTimePreference($json_array)
 	{
 		$array_blocks = json_decode($json_array);
 
 		$bad_count = 0;
-		foreach($array_blocks as $block){
+		foreach($array_blocks as $block)
+		{
 			$time_block = new \Scheduler\PreferenceBlock($block['start'], $block['end'], $block['weekday']);
 
-			if(!$this->main_schedule->overlaps($time_block)){
+			//If the preference overlaps the main schedule then skip.
+			if(!$this->main_schedule->overlapsRegistered($time_block)){
+
+				//If a preference overlaps another preference then skip
 				foreach($this->preference_blocks as $pref_block){
 					if($pref_block->overlaps($time_block))
 						goto end;
 				}
+
+				//generates a unique identifier and then addes it the array.
 				$this->preference_blocks[spl_object_hash($time_block)] = $time_block;
 				continue;
 			}
 			end: $bad_count++;
 		}
+
+		//If there were incompatible preferences then a message
 		return ($bad_count)? 'Could not add '.$bad_count.' preferences.' : '';
 	}
 
+	/**
+	 * Removes a time preference by the inputted object hash code
+	 *
+	 * @param $object_hashcode
+	 * @return null|string - returns a message if successful
+	 */
 	public function removeTimePreference($object_hashcode){
 		if(array_key_exists($object_hashcode, $this->preference_blocks)){
 			unset($this->preference_blocks[$object_hashcode]);
@@ -518,6 +538,11 @@ class Scheduler extends CI_Model
 		return NULL;
 	}
 
+	/**
+	 * Returns all the preferences in JSON
+	 *
+	 * @return string
+	 */
 	public function getTimePreferences()
 	{
 		return json_encode($this->preference_blocks, JSON_NUMERIC_CHECK);

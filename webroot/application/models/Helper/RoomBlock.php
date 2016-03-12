@@ -25,7 +25,7 @@ class RoomBlock extends Block
         $this->room = $room;
     }
 
-    public function overlaps(Block $block)
+    public function overlapsRoom(Block $block)
     {
         if($this->room == 'Online' || $block->room == 'Online')
             return FALSE;

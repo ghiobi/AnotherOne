@@ -41,7 +41,7 @@ class Schedule
 
         foreach($this->sections as $current)
         {
-            if($section->overlaps($current)) //If the section overlaps one of the current sections, return false.
+            if($section->overlapsRoom($current)) //If the section overlaps one of the current sections, return false.
                 return FALSE;
         }
 
@@ -79,13 +79,13 @@ class Schedule
 
         foreach($this->sections as $current)
         {
-            if($current->overlaps($section))
+            if($current->overlapsRoom($section))
                 return FALSE;
         }
 
         foreach($this->unregistered as $current)
         {
-            if($current->overlaps($section))
+            if($current->overlapsRoom($section))
                 return FALSE;
         }
 
@@ -111,17 +111,35 @@ class Schedule
         return $course_list;
     }
 
-    public function overlapsUnregistered(PreferenceBlock $Preference)
+    public function overlapsUnregistered(PreferenceBlock $preference)
     {
         $all_blocks = [];
 
         foreach($this->unregistered as $current){
-            $blocks = $current->getTimeBlocks();
+            $blocks = $current->overlaps();
             $all_blocks = array_merge($all_blocks, $blocks);
         }
 
         foreach($all_blocks as $block){
-            if($block->timeOverlaps($Preference)){
+            if($block->overlaps($preference)){
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function overlapsRegistered(PreferenceBlock $preference){
+        $all_blocks = [];
+
+        foreach($this->sections as $current){
+            $blocks = $current->overlaps();
+            $all_blocks = array_merge($all_blocks, $blocks);
+        }
+
+
+        foreach($all_blocks as $block){
+            if($block->overlaps($preference)){
                 return TRUE;
             }
         }

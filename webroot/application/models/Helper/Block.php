@@ -133,7 +133,7 @@ class Block
      * @param Block $block
      * @return bool
      */
-    public function timeOverlaps(Block $block)
+    public function overlaps(Block $block)
     {
         if($this->weekday != $block->weekday)
             return FALSE;
