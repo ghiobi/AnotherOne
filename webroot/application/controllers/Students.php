@@ -187,13 +187,12 @@ class Students extends App_Base_Controller
 
 		$data['info_bar'] = 'Schedule for '.$semester->name;
 		$data['title'] = 'Schedule of '.$semester->name;
-		$data['add_js'] = ['schedule.js', 'enroll.js'];
 
 		$data['schedule'] = $this->scheduler->getMainSchedule();
 
 		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/view_schedule.php', $data);
-		$this->load->view('layouts/footer.php', $data);
+		$this->load->view('layouts/footer.php');
 	}
 
 }

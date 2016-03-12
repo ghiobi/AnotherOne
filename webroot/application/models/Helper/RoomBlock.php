@@ -29,7 +29,7 @@ class RoomBlock extends Block
     {
         if($this->room == 'Online' || $block->room == 'Online')
             return FALSE;
-        return $this->timeOverlaps($block);
+        return $this->overlaps($block);
     }
 
 }

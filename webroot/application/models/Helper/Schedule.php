@@ -79,13 +79,13 @@ class Schedule
 
         foreach($this->sections as $current)
         {
-            if($current->overlapsRoom($section))
+            if($current->overlaps($section))
                 return FALSE;
         }
 
         foreach($this->unregistered as $current)
         {
-            if($current->overlapsRoom($section))
+            if($current->overlaps($section))
                 return FALSE;
         }
 
