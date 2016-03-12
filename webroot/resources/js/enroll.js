@@ -12,6 +12,7 @@ $(function() {
     var main_schedule = null;
 
     //Get Preferences
+    $('#scheduler-pref').collapse({show: true});
     $prefrence_div = $('#scheduler-pref > div');
     function load_preference(){
         $.getJSON( controllerURL + '/get-preference',
