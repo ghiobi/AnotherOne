@@ -208,7 +208,7 @@ class Scheduler extends CI_Model
 	
 	/**
 	 * Returns possible generated schedules.
-	 * //TODO: remove course list and replace with unregistered $adding_courses_list
+	 *
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
@@ -414,7 +414,6 @@ class Scheduler extends CI_Model
 				throw new PrerequisiteNotMetException($course_name);
 			}
 
-			//TODO: specify what id is not complete
 		}
 
 		//for each co check complete
@@ -426,7 +425,6 @@ class Scheduler extends CI_Model
 				throw new CorequisiteNotMetException($course_name);
 			}
 
-			//TODO: specify what id is not complete
 		}
 
 		//Generates possible sections and adds course to section.
@@ -454,8 +452,8 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * TODO: Returns the formatted registered course_list and generator_course_list for the view
-	 * + This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 * This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 *
 	 * @return json
 	 */
 	public function get_course_list()

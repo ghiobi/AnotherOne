@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 /**
-* Redirects different types of users to correct views. TODO: complete description
+* Redirects different types of users to correct views.
 */
 class Home extends App_Base_Controller
 {

@@ -117,7 +117,7 @@ class Students extends App_Base_Controller
 			} break;
 
 			case 'undo-drop': {
-				//TODO: Improve undo-drop mechanism
+
 				$section = $this->input->post('input');
 				$response = $this->scheduler->undo_drop($section);
 

@@ -1,4 +1,14 @@
+<div class="scheduler-notify">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div id="scheduler-notify-item" style="display: none">
 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <main class="container">
 		<div> <!--TODO: move this somewhere else-->
 			<button class="schedule-reset">RESET</button>
