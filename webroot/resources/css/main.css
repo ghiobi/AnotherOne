@@ -174,7 +174,7 @@ header{
 .scheduler-list-group{
 	margin: 0;
 	color:#2c3e50;
-	max-height: 275px;
+	max-height: 300px;
 	overflow: scroll;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -230,6 +230,23 @@ header{
 	cursor: pointer;
 	background-color: #f2dede;
 	color: #a94442;
+}
+.scheduler-notify{
+	position: fixed;
+	display: inline-block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin-top: 130px;
+	z-index: 999;
+}
+#scheduler-notify-item{
+	font-size: 2em;
+	border-radius: 4px;
+	background-color: #2ecc71;
+	padding: 15px;
+	color: white;
+	box-shadow: 0px 0px 23px -3px rgba(0,0,0,0.75);
 }
 @media (max-width: 992px) {
 	.scheduler-app h3{

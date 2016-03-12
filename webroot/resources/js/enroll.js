@@ -1,5 +1,4 @@
-//Globals
-//TODO: able to remove the add to generated list.
+
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
@@ -86,7 +85,7 @@ $(function() {
                 data: {input: course},
                 success: function (output) {
                     if(output != ''){
-                        console.log(output);
+                        notify(false, output);
                     }
                     else{
                         load_course_list();
@@ -123,11 +122,11 @@ $(function() {
             data: {input: null},
             success: function (output) {
                 if(output == ''){
-                    console.log('Successfully added random course');
+                    notify(true, 'Successfully added random course.');
                     load_course_list();
                 }
                 else
-                    console.log(output);
+                    notify(false, output);
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);
@@ -141,11 +140,17 @@ $(function() {
 
     var generated_schedules = [];
     $generate_btn.click(function () {
-        //TODO: add confirmation of the undo capability and if there is no courses to add should not work.
         $.getJSON(
             controllerURL + '/generate',
             function (output) {
-                console.log("Generator found " + output.length + " results!");
+                generated_schedules = [];
+                $generate_div.empty();
+
+                if(output.length == 0)
+                    notify(false, 'Generator found 0 results! Try adding one course at a time.')
+                else
+                    notify(true, "Generator found " + output.length + " results!");
+
                 for (var i in output) {
                     var name = 'Schedule #' + (parseInt(i) + 1);
                     $generate_div.append('' +
@@ -212,7 +217,7 @@ $(function() {
                 data: {input: new_schedule},
                 success: function (output) {
                     if(output == ''){
-                        console.log('Failed at committing new schedule.');
+                        notify(false, 'Failed at committing new schedule.');
                     }
                     else{
                         load();
@@ -223,7 +228,7 @@ $(function() {
                         undo_drop_array = [];
                         $undo_btn.hide();
 
-                        console.log('Successfully committed new section.');
+                        notify(true, 'Successfully enrolled new section(s).');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -244,7 +249,7 @@ $(function() {
                 data: {input: hash},
                 success: function (output) {
                     if(output == ''){
-                        console.log('Failed at dropping section.');
+                        notify(false, 'Failed at dropping section.');
                     }
                     else{
                         load();
@@ -252,7 +257,7 @@ $(function() {
                         $generate_div.empty();
                         generated_schedules = [];
 
-                        console.log('Successfully dropped a section.')
+                        notify(true, 'Successfully dropped a section.');
                         undo_drop_array.push(output);
                     }
                     $undo_btn.show();
@@ -276,7 +281,7 @@ $(function() {
                     if(output != ''){
                         if(undo_drop_array.length == 0)
                             $undo_btn.hide();
-                        console.log('Successfully undo drop section.');
+                        notify(true, 'Successfully undo drop section.');
 
                         generated_schedules = [];
                         $generate_div.empty();
@@ -310,11 +315,11 @@ $(function() {
             data: {input: course_id},
             success: function(output){
                 if(output == ''){
-                    console.log('')
+                    notify(false, 'Failed to remove course. Reset Scheduler.')
                 }
                 else{
                     load_course_list();
-                    console.log(output);
+                    notify(true, output);
                 }
             }
         });
@@ -326,7 +331,7 @@ $(function() {
     }
 
     var $reg_div = $('#scheduler-reg-course');
-    function load_course_list(){ //TODO: display no course to display info message
+    function load_course_list(){
         $.getJSON(controllerURL + '/course-list',
             function(course){
                 $reg_div.empty();
@@ -358,6 +363,16 @@ $(function() {
     load();
 
 });
+
+function notify(success, innerHTML){
+    var notify = $('#scheduler-notify-item');
+    notify.text(innerHTML);
+    if(success)
+        notify.css('background-color', ' #2ecc71');
+    else
+        notify.css('background-color', ' #f1c40f');
+    notify.stop().fadeIn(200).delay(3200).fadeOut(800);
+}
 
 /**
  * TODO: Updates the time preference UI
