@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 	<title></title>
 	<link href="<?php echo base_url('resources/css/bootstrap.min.css'); ?>" rel="stylesheet">
 	<link href="<?php echo base_url('resources/css/normalize.css'); ?>" rel="stylesheet">
+	<link href="<?php echo base_url('resources/css/main.css'); ?>" rel="stylesheet">
 
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
@@ -18,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 		*{
 			font-family: 'Montserrat', sans-serif;
 		}
-		html, body, .container {
+		html, body, .wrapper-m{
 			height: 100%;
 		}
 		body{
@@ -64,6 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			float: right;
 			padding: 15px 15px;
 			display: inline-block;
+			cursor: pointer;
 		}
 		.navigation > ul > li > a{
 			text-decoration: none;
@@ -81,18 +83,18 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="wrap-navigation">
 	<div class="container navigation">
 		<ul>
-			<li><a href="<?= base_url().'course' ?>">Courses</a></li>
-			<li><a id="aboutus-btn">About Us</a></li>
+			<li><a href="<?= base_url().'course' ?>">COURSES</a></li>
+			<li><a id="aboutus-btn">ABOUT US</a></li>
 		</ul>
 	</div>
 </div>
 <div class="wrapper">
-	<div class="container" style="display: table; vertical-align: middle;">
+	<div class="container wrapper-m" style="display: table; vertical-align: middle;">
 		<div style="display: table-cell; vertical-align: middle;">
 			<div class="row">
 				<div class="col-sm-5 col-md-7">
 					<div id="left-post" style="opacity: 0; left: -75px; position: relative">
-						<img class="img-responsive logo" src="<?php echo base_url(); ?>resources/img/logo.png">
+						<img class="img-responsive logo" style="-webkit-filter: invert(1);" src="<?php echo base_url(); ?>resources/img/logo.png">
 						<p class="description">A simple web app for schedule making and course sequence planning.</p>
 					</div>
 				</div>
@@ -220,7 +222,11 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 		</div>
 	</div>
 </div>
-
+<footer>
+	<div class="container">
+		<p class="copyright">&copy; Copyright <?php echo date('Y'); ?> | <?php echo SITE_NAME; ?> | {elapsed_time}s</span></p>
+	</div>
+</footer>
 <script src="<?= base_url('resources/js/jquery-1.12.1.min.js'); ?>"></script>
 <script src="<?= base_url('resources/js/jquery-ui.min.js'); ?>"></script>
 <script src="<?php echo base_url('resources/js/bootstrap.min.js'); ?>"></script>
