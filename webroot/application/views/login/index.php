@@ -16,9 +16,6 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
 	<style>
-		*{
-			font-family: 'Montserrat', sans-serif;
-		}
 		html, body, .wrapper-m{
 			height: 100%;
 		}
@@ -44,6 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			color: white
 		}
 		.img-center{
+			width: 200px;
 			margin: 0 auto;
 		}
 		.wrap-navigation{
@@ -56,18 +54,15 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			background-color: white;
 		}
 		.navigation{
-			height: 50px;
-		}
-		.navigation > ul{
 			list-style-type: none;
 		}
-		.navigation > ul > li{
+		.navigation > li{
 			float: right;
 			padding: 15px 15px;
 			display: inline-block;
 			cursor: pointer;
 		}
-		.navigation > ul > li > a{
+		.navigation > li > a{
 			text-decoration: none;
 			color: black;
 		}
@@ -80,9 +75,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 </head>
 <body>
 
-<div class="wrap-navigation">
-	<div class="container navigation">
-		<ul>
+<div class="wrap-navigation" style="display: none;">
+	<div class="container" style="height: 50px;">
+		<ul class="navigation">
 			<li><a href="<?= base_url().'course' ?>">COURSES</a></li>
 			<li><a id="aboutus-btn">ABOUT US</a></li>
 		</ul>
@@ -137,85 +132,85 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			<h2 class="page-header">Our Team</h2>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/laurendy.jpg') ?>">
+			<h3>Laurendy Lam
+				<small>Lead Engineer</small>
+			</h3>
+			<p>Designs the user experience and loves baking cakes.</p>
+		</div>
+		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/alex.jpg') ?>" alt="">
+			<h3>Alessandro Power
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/anhkhoi.jpg') ?>" alt="">
+			<h3>Anhkhoi Vu-Nguyen
+				<small>Consultant</small>
+			</h3>
+			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+		</div>
+		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/pragas.jpg') ?>" alt="">
+			<h3>Pragas Velauthapillai
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/andy.jpg') ?>" alt="">
+			<h3>Andy Nguyen
+				<small>Component Designer</small>
+			</h3>
+			<p>Andy manages how subsystems interact with each other. He is very proud of his gains.</p>
+		</div>
+		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/jacqueline.jpg') ?>" alt="">
+			<h3>Jacqueline Luo
+				<small>Database</small>
+			</h3>
+			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+		</div>
+		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/michael.jpg') ?>" alt="">
+			<h3>Michael Mescheder
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/theebz.jpg') ?>" alt="">
+			<h3>Piratheeban Annamalai
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/eric.jpg') ?>" alt="">
+			<h3>Eric Payette
+				<small>Software Developer</small>
+			</h3>
+			<p>Eric helps with the development and loves playing Age of Empires 2 on the job.</p>
+		</div>
+		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/ronnie.jpg') ?>" alt="">
+			<h3>Ronnie Pang
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/kenny.jpg') ?>" alt="">
+			<h3>Kenny Nguyen
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="http://placehold.it/200x200" alt="">
-			<h3>John Smith
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/james.jpg') ?>" alt="">
+			<h3>James Talarico
 				<small>Job Title</small>
 			</h3>
 			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
@@ -233,6 +228,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <script>
 	$(function(){
 		$('.login-form').fadeIn(2500);
+		$('.wrap-navigation').slideDown('slow');
 		$('#left-post').animate({
 			opacity: 1,
 			left: 0
