@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/ico" href="<?php echo base_url('resources/img/favicon.ico'); ?>" />
 
-	<title></title>
+	<title>mytierary | Welcome</title>
 	<link href="<?php echo base_url('resources/css/bootstrap.min.css'); ?>" rel="stylesheet">
 	<link href="<?php echo base_url('resources/css/normalize.css'); ?>" rel="stylesheet">
 	<link href="<?php echo base_url('resources/css/main.css'); ?>" rel="stylesheet">
