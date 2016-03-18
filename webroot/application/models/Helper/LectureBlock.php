@@ -6,7 +6,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * Class Lecture
  * @package Scheduler
  */
-class LectureBlock extends Block
+class LectureBlock extends RoomBlock
 {
 
     /**

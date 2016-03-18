@@ -10,7 +10,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Block
 {
     private $id;
-    public $room;
     public $start;
     public $end;
     public $weekday;
@@ -26,10 +25,9 @@ class Block
      * @param $end
      * @param $weekday
      */
-    function __construct($id, $room, $start, $end, $weekday)
+    function __construct($id, $start, $end, $weekday)
     {
         $this->id = $id;
-        $this->room = $room;
         $this->start = $this->formatFromDB($start);
         $this->end = $this->formatFromDB($end);
 
@@ -57,22 +55,6 @@ class Block
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoom()
-    {
-        return $this->room;
-    }
-
-    /**
-     * @param mixed $room
-     */
-    public function setRoom($room)
-    {
-        $this->room = $room;
     }
 
     /**
@@ -153,8 +135,6 @@ class Block
      */
     public function overlaps(Block $block)
     {
-        if($this->room == 'Online' || $block->room == 'Online')
-            return FALSE;
         if($this->weekday != $block->weekday)
             return FALSE;
         if($this->intStart <= $block->intStart && $block->intStart <= $this->intEnd)

@@ -9,63 +9,28 @@ var selected_schedule = -1;
 $(function() {
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
-
     var main_schedule = null;
 
-    var num_time_pref = 0;
-    $time_pref_div = $('.scheduler-pref-time');
-    updateTimePref($time_pref_div, num_time_pref);
+    //Get Preferences
+    $('#scheduler-pref').collapse({show: true});
+    $prefrence_div = $('#scheduler-pref > div');
+    function load_preference(){
+        $.getJSON( controllerURL + '/get-preference',
+            function(preferences) {
+                for(var key in preferences){
+                    $prefrence_div.append('<div><p></p></div>');
+                }
+                if(preferences.length == 0){
+                    $prefrence_div.append('<div><p>No preferences</p></div>');
+                }
+            }
+        );
+    }
 
-    /**
-     * Time Preferences and Modal
-     *
-     * + Time blocks should be tagged in the server so it could know which time block to remove from the scheduler object.
-     */
-    $(document).on('click', '.remove-time-block', function () {
-        $(this).remove();
+    // TODO: Add Preference
 
-        //TODO: remove preference from scheduler object in cookie
-        num_time_pref--;
-        updateTimePref($time_pref_div, num_time_pref);
-    });
-
-    $('.time_add').click(function () {
-        var is_complete = true;
-        $time_pref_div.append('<p class="remove-time-block">'
-            + '<i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
-
-        num_time_pref++;
-        updateTimePref($time_pref_div, num_time_pref);
-
-        /* TODO: valid the preference by sending to server and adding preference to scheduler object
-         * + The server should send back a confirmation to if the preference is valid.
-         *      + Success or failure bool
-         *      + Should come with a tag identifier of this preference 'hash code'
-         */
-
-        if (!is_complete) {
-            //TODO: If server response is not valid. Display error message.
-        }
-
-        if (is_complete) {
-            $('#scheduler-pref-modal').modal({show: false});
-
-            //TODO: Incollapse the time preference to show the user he has added.
-
-            //TODO: Add message of success!
-            //TODO: Empty inputs
-        }
-    });
-
-    $('.time_interval').first().keyup(function () {
-    });
-
-    $('.time_remove').click(function () {
-    });
-
-    $('#time_all_day').change(function () {
-        $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
-    });
+    // TODO: DeletePreference
+    //$(document).on(click, class, function)
 
     //Search
     var $srch_input = $('#scheduler-search');
@@ -328,6 +293,7 @@ $(function() {
     function load(){
         load_main_schedule();
         load_course_list();
+        load_preference();
     }
 
     var $reg_div = $('#scheduler-reg-course');
@@ -372,16 +338,4 @@ function notify(success, innerHTML){
     else
         notify.css('background-color', ' #f1c40f');
     notify.stop().fadeIn(200).delay(3200).fadeOut(800);
-}
-
-/**
- * TODO: Updates the time preference UI
- * @param $prefcontainer
- * @param num_time_pref
- */
-function updateTimePref($prefcontainer, num_time_pref) {
-    if(num_time_pref == 0)
-        $prefcontainer.append('<p class="no-blocks">No Time Preferences!</p>');
-    else
-        $('.no-blocks').remove();
 }

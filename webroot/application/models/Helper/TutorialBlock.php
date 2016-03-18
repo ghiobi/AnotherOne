@@ -7,7 +7,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  * Class Tutorial
  * @package Scheduler
  */
-class TutorialBlock extends Block
+class TutorialBlock extends RoomBlock
 {
     public $instructor;
     public $letter;

@@ -139,6 +139,7 @@ class Students extends App_Base_Controller
 				echo ($response)? 'Re-added section to schedule': 'Failed at re-adding section to schedule';
 			} break;
 
+
 			//Resets the schedule by emptying the cookie.
 			case 'reset': {
 				$this->session->unset_userdata($semester_url);
@@ -156,6 +157,29 @@ class Students extends App_Base_Controller
 			case 'course-list': {
 				echo $this->scheduler->get_course_list();
 			} break;
+
+			case 'add-preference': {
+				$json_input = $this->input->post('input', TRUE);
+				$message = $this->scheduler->addTimePreference($json_input);
+
+				echo $message;
+			} break;
+
+			case 'remove-preference': {
+				$hash_code = $this->input->post('input', TRUE);
+				$message = $this->scheduler->removeTimePreference($hash_code);
+
+				echo $message;
+			} break;
+
+			case 'get-preference': {
+				echo $this->scheduler->getTimePreferences();
+			} break;
+
+			case 'reset': {
+				$this->session->unset_userdata($semester_url);
+				return;
+			}
 
 		endswitch;
 
@@ -191,13 +215,12 @@ class Students extends App_Base_Controller
 
 		$data['info_bar'] = 'Schedule for '.$semester->name;
 		$data['title'] = 'Schedule of '.$semester->name;
-		$data['add_js'] = ['schedule.js', 'enroll.js'];
 
 		$data['schedule'] = $this->scheduler->getMainSchedule();
 
 		$this->load->view('layouts/header.php', $data);
 		$this->load->view('student/view_schedule.php', $data);
-		$this->load->view('layouts/footer.php', $data);
+		$this->load->view('layouts/footer.php');
 	}
 
 }
