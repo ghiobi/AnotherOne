@@ -95,18 +95,19 @@
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Weekday:</label>
 							<div class="col-sm-10">
-								<select class="form-control">
-									<option>Select a Weekday</option>
-									<option value="1">Monday</option>
-									<option value="2">Tuesday</option>
-									<option value="3">Wednesday</option>
-									<option value="4">Thursday</option>
-									<option value="5">Friday</option>
-									<option value="6">Saturday</option>
-									<option value="0">Sunday</option>
-								</select>
+									Select a Weekday
+									<br>
+									<input type="checkbox" name="weekday" value="monday">monday<br>
+									<input type="checkbox" name="weekday" value="tuesday">tuesday <br>
+									<input type="checkbox" name="weekday" value="wednesday">wednesday <br>
+									<input type="checkbox" name="weekday" value="thursday">thursday <br>
+									<input type="checkbox" name="weekday" value="friday">friday <br>
+									<input type="checkbox" name="weekday" value="saturday">saturday<br>
+									<input type="checkbox" name="weekday" value="sunday">sunday <br>
+
+									
+								
 							</div>
 						</div>
 						<div class="form-group">
@@ -133,7 +134,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary time_add">Save</button>
+					<button type="button" id = "btnsubmit" class="btn btn-primary time_add">Save</button>
 				</div>
 			</div>
 		</div>

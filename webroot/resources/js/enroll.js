@@ -28,6 +28,27 @@ $(function() {
     }
 
     // TODO: Add Preference
+	
+	$('#btnsubmit').on('click', function() {
+
+        var days = [];
+        alert($(this).val());
+
+
+        $("input:checkbox[name=weekday]:checked").each(function()
+
+        {
+
+        days.push($(this).val());
+
+
+        });
+
+        $('#scheduler-pref').append('<p>'+days+'<p>');
+
+
+
+    });
 
     // TODO: DeletePreference
     //$(document).on(click, class, function)
