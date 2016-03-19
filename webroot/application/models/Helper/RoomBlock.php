@@ -9,6 +9,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  */
 class RoomBlock extends Block
 {
+    private $id;
     public $room;
 
     /**
@@ -21,8 +22,19 @@ class RoomBlock extends Block
      */
     function __construct($id, $room, $start, $end, $weekday)
     {
-        parent::__construct($id, $start, $end, $weekday);
+        parent::__construct($start, $end, $weekday);
+        $this->id = $id;
         $this->room = $room;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function overlaps(Block $block)

@@ -9,7 +9,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  */
 class Block
 {
-    private $id;
     public $start;
     public $end;
     public $weekday;
@@ -25,9 +24,8 @@ class Block
      * @param $end
      * @param $weekday
      */
-    function __construct($id, $start, $end, $weekday)
+    function __construct($start, $end, $weekday)
     {
-        $this->id = $id;
         $this->start = $this->formatFromDB($start);
         $this->end = $this->formatFromDB($end);
 
@@ -40,23 +38,6 @@ class Block
             throw new \InvalidArgumentException('TimeBlock: Invalid Weekday');
         $this->weekday = $weekday;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
     /**
      * @return \DateTime
      */
