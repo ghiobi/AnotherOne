@@ -41,7 +41,7 @@ class Schedule
 
         foreach($this->sections as $current)
         {
-            if($section->overlapsRoom($current)) //If the section overlaps one of the current sections, return false.
+            if($section->overlaps($current)) //If the section overlaps one of the current sections, return false.
                 return FALSE;
         }
 
