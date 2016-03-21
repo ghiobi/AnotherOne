@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>670</y>
+      <w>290</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>User
+--
+-id: Long
+_-ClassAttribute: Long_
+--
++__consruct() 
++ authenticate(login_name, password) : string
++ is_admin(user_id) : boolean
++ get_user_info(user_id) : string
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>710</x>
+      <y>530</y>
+      <w>30</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m1=1
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>400</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>CI_Model
+--
+
+--
++ __construct()
++ __get(key): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>20</y>
+      <w>350</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>CI_Security
+{Singleton}
+--
+# _xss_hash
+# _csrf_hash
+# _csrf_token_name
+# csrf_cookie_name
+--
++ __construct()
++ csrf_verify() : CI_Security
++ csrf_set_cookie() : CI_Security
++ csrf_show_error() : void
++ ge_csrf_hash() : _csrf_hash</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>730</y>
+      <w>230</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+Authenticates
+m1=1
+m2=*</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>660</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Login
+--
+
+--
++ __construct()
++ index() : void
++ signout() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1180</x>
+      <y>520</y>
+      <w>30</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m1=1
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>390</y>
+      <w>210</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>CI_Controller
+--
+
+_- Instance_
+--
++ __construct()
++ get_instance() : instance</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>240</y>
+      <w>130</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+Uses
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>110.0;10.0;110.0;60.0;10.0;60.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>240</y>
+      <w>140</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+Uses
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;120.0;60.0;120.0;150.0</additional_attributes>
+  </element>
+</diagram>
