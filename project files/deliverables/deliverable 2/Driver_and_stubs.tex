@@ -1,0 +1,29 @@
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+Classes & Driver & Stub & Comment\tabularnewline
+\midrule
+\endhead
+Login & & -Validating and Cleaning Username and Password
+
+-Checks Database Valid User & The user login page requests for their
+login and is directed to respected home page either student or
+administrator.\tabularnewline
+Home & & & Redirects to the appropriate page depending on users level of
+access\tabularnewline
+Students & Student Database & -Student Profile
+
+-View Schedule
+
+-Enroll & Student has access to profile, past schedule and registration
+of their courses. Loads scheduler for registration.\tabularnewline
+Administrator & Manage Database & -Scheduler
+
+-Student Profile
+
+-Section Database & Administrator has full access which includes
+managing students, courses and section.\tabularnewline
+Course & Section Database & Viewsection: semester, course code and
+course number & Administrator manages the courses and the courses can
+also be viewed by public.\tabularnewline
+\bottomrule
+\end{longtable}
