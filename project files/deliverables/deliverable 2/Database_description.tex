@@ -1,0 +1,87 @@
+Database
+
+4.1
+
+Within the database, it's very important to note that the active user
+using the app will have a corresponding ID number. This is will be used
+during the user's process throughout their activity time. Thus any
+action will correspond to that user ID. When accessing the database, the
+user is detected to be either admin or students. The database however,
+is commonly used when the user is a student, thus allowing them to
+view/change their schedule from the database.
+
+Going further into the student objects, it branches out into 2 separate
+blocks: registered and program. Registered block contains the list of
+the courses the student is currently enrolled in. Furthermore, the
+sections block is used to represent the enrolled course's sections which
+include: lecture, tutorial and labs. The reason sections, tutorials and
+laboratories blocks are linked to the registered block is to achieve a
+quicker access to the saved course, as courses within the registered
+block will have an existing section ID which includes tutorial and labs
+ID if possible. This method is preferred over accessing the section
+block first followed by accessing the tutorial/labs sections when
+accessing the database.
+
+The other path: program will allow the student to access the correct
+program sequence according to the corresponding program. This option is
+selected when the student wants to add a new course to their schedule.
+Following the program block is the programsequence block which contains
+the list of course within the program's sequence. Once in the course
+block, it branches out into a few other blocks: subject,
+coursecorequisite and courseprequisite blocks. The subject block returns
+the code of the course selected from the, ie: SOEN341. The
+courseprequisite and coursecorequisite blocks contain any possible
+pre/corequisite of that selected course.
+
+Furthermore, the courses block is linked to the sections block , in
+order to finally insert the course into the schedule with the same ID as
+the original user.
+
+4.2
+
+\begin{itemize}
+\item
+  \textbf{Users} : Contains a list of every users of this application.
+\item
+  \textbf{Admins}: Contains list of every ``admin''-type in the users
+  table
+\item
+  \textbf{Students}: Contains list of every ``student''-type in the
+  users table
+\item
+  \textbf{Registered}: contains list of registered courses for a
+  selected student
+\item
+  \textbf{Program}: contains list of every program in Concordia
+\item
+  \textbf{Programsequence}: list of courses for a selected program.
+\item
+  \textbf{Courses}: Contains details of a selected general course.
+  Details contain: code, co-requisite, pre-requisite and section. This
+  does not contain the availability of the class for a semester.
+\item
+  \textbf{Subject}: Similar to program table, however contains the code
+  rather than the name.
+\item
+  \textbf{Courseprequisite}: contains list of courses that are
+  pre-requisite of a selected course.
+\item
+  \textbf{Coursecorequisite}: contains list of courses that are
+  co-requisite of a selected course.
+\item
+  \textbf{Sections}: contains a list of every lecture sections of
+  selected course.
+\item
+  \textbf{Semesters}: contains details of start and end date of a
+  selected course in the selected semester
+\item
+  \textbf{Lectures}: contains details about a selected lecture section
+  (room \#, start time, end time)
+\item
+  \textbf{Tutorials}: contains a list or every possible tutorial
+  sections of the selected lecture section (if exists) and their
+  details.
+\item
+  \textbf{Laboratories}: Contains a list of every possible laboratory
+  section of the selected lecture section (if exists) and their details
+\end{itemize}
