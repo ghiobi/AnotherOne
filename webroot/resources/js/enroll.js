@@ -32,19 +32,42 @@ $(function() {
 	$('#btnsubmit').on('click', function() {
 
         var days = [];
-        alert($(this).val());
-
-
+        var addeddays=[];
+        var starttime = ($('#starttime').val());
+        var endtime = ($('#endingtime').val());
         $("input:checkbox[name=weekday]:checked").each(function()
 
         {
 
-        days.push($(this).val());
+            if($(this).val() in days)
+            {
 
+                return;
+            }
 
+        days.push({
+            "day":$(this).val(),
+             "starttime":starttime,
+            "endtime":endtime
+
+            });
+        });
+        for(var i in days) {
+
+            $('#scheduler-pref').append('<div id = "'+days[i].day>'">' + '<p>' + days[i].day + '&nbsp' +"Startime:"+ days[i].starttime + '&nbsp' + "Endtime:"+ days[i].endtime + '</div>');
+                }
+
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/add-preference',
+            data: {input: days},
+            success: function () {
+                console.log("Preferences added")
+            }
         });
 
-        $('#scheduler-pref').append('<p>'+days+'<p>');
+
+
 
 
 

@@ -1,0 +1,85 @@
+#ifndef _CLASS_H_
+define _CLASS_H_
+
+#include "ioencv2/opencv.hpp"
+
+#def NUM_TILES_X
+#def NUM_TILES_Y
+
+
+bool findCorrespondences(cv::Mat const&frame)
+{
+cv::size pattern_size(TILE_SIZE,TILE_SIZE);
+cv::Mat_gray_image;
+cvtColor(frame, gray_image,CV_BGR2GRAY);
+
+bool pattern_found = cv::findChessboardCorners(gray_image,pattern_size,corners,cv,
+CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_THRESH |CALIB_CB_FAST_CHECK);
+
+
+if(pattern_found)
+
+{
+cv::cornerSubPix(gray_image,corners,cv::size(11,11),cv::Size(-1,-1),
+cv::termCriteria(CV_TERMCRIT_EPS|CV_TERMCRIT_ITER,30,0.1); 
++CV_TERM
+)
+
+cv::MAT dummy==frame;
+cv::drawChessboardCorners(dummy,pattern_size,cv::MAT(corners),pattern_found);
+
+}
+
+
+
+return false;
+
+}
+
+void captureFrames()
+{
+
+
+cv::videoCapture.cap(0);
+if cap.isOpened()
+{
+return;
+}
+
+cv:: Mat current_frame;
+cv::namedWindow("current_frame");
+bool not_done=true;
+cahr file_name[100];
+
+while(not_done)
+{
+
+cap >> current_frame;
+
+cv::imshow("Current frame",current _frame);
+
+int key = cv::waitkey(20);
+switch(key)
+case:13
+break; //enter
+if(findCorrespondences(current_frame))
+{
+
+sprint(file_name,'calibration_image_%d.png, number_of_images)
+
+}
+case 27;
+not_done==false;
+break;
+}}
+
+return;
+
+}
+
+bool calibrate()
+{
+captureFrames();
+return true
+
+}
