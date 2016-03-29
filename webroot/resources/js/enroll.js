@@ -26,8 +26,6 @@ $(function() {
             }
         );
     }
-
-    // TODO: Add Preference
 	
 	$('#btnsubmit').on('click', function() {
 
@@ -35,28 +33,37 @@ $(function() {
         var addeddays=[];
         var starttime = ($('#starttime').val());
         var endtime = ($('#endingtime').val());
+
+
         $("input:checkbox[name=weekday]:checked").each(function()
 
         {
 
-            if($(this).val() in days)
-            {
+            if($("#time_all_day").is(':checked')) {
+                days.push({
+                    "day": $(this).val(),
+                    "starttime": '0:00',
+                    "endtime": '24:00'
 
-                return;
+                });
             }
 
-        days.push({
-            "day":$(this).val(),
-             "starttime":starttime,
-            "endtime":endtime
+            else {
+                days.push({
+                    "day": $(this).val(),
+                    "starttime": starttime,
+                    "endtime": endtime
 
-            });
+                });
+            }
         });
+
+        console.log(days);
+        $('#scheduler-pref').empty();
+
         for(var i in days) {
-
-            $('#scheduler-pref').append('<div id = "'+days[i].day>'">' + '<p>' + days[i].day + '&nbsp' +"Startime:"+ days[i].starttime + '&nbsp' + "Endtime:"+ days[i].endtime + '</div>');
-                }
-
+            $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="starttime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
+        }
         $.ajax({
             method: 'POST',
             url: controllerURL + '/add-preference',
@@ -65,16 +72,35 @@ $(function() {
                 console.log("Preferences added")
             }
         });
-
-
-
-
-
-
     });
 
-    // TODO: DeletePreference
-    //$(document).on(click, class, function)
+
+    $('#scheduler-pref').on('click','#button_remove', function()
+    {
+        var removed_day = [];
+
+        console.log( $(this).closest('.drop_pref').children("#day").text());
+        removed_day.push(
+            {
+                "day":  $(this).closest('.drop_pref').children("#day").text(),
+                "starttime": $(this).closest('.drop_pref').children("#starttime").text(),
+                "endtime":$(this).closest('.drop_pref').children("#endtime").text()
+            }
+        );
+        console.log(removed_day);
+
+        $(this).closest('.drop_pref').remove();
+
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/remove-preference',
+            data: {input: removed_day},
+            success: function () {
+                console.log("Preferences removed")
+            }
+        });
+
+    });
 
     //Search
     var $srch_input = $('#scheduler-search');
@@ -97,7 +123,7 @@ $(function() {
                         notify(false, output);
                     }
                     else{
-                        load_course_list();
+                        load_course_.list();
 
                         //Empty undo
                         undo_drop_array = [];
