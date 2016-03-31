@@ -141,20 +141,21 @@ var Schedule = (function (){
                         + start + ' - ' + end + '</td><td>'
                         + weekDay[section['laboratory']['weekday']] + '</td></tr>';
                 }
+
                 details += '</table>';
             }
         }
 
-        if(details.length == 0){
-            var nodetails = '<div class="text-center" style="padding: 20px">No details. Start by adding courses to your list!</div>';
-            return nodetails;
-        }
 
         this.details =  details;
 
+        if(details.length == 0){
+            var nodetails = '<div class="text-center" style="padding: 20px">No details. Start by adding courses to your list!</div>';
+            this.details = nodetails;
+        }
 
-        this.htmlTable = (function()
-        {
+        this.htmlTable = (function() {
+
             if(Object.keys(cells).length == 0){
                 var notable = '<div class="text-center" style="text-align: center; padding: 30px 0; color: black">No schedule to display. ):</div>';
                 return notable;
@@ -273,9 +274,9 @@ var Schedule = (function (){
                 table += '</tr>';
             }
             table += '</table>';
-
             return table;
         })();
+
 
     }
 
