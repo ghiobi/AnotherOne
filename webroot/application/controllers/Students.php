@@ -14,7 +14,7 @@ class Students extends App_Base_Controller
     /**
      * Loads the student profile page
      */
-	public function profile()
+	public function profile($data = NULL)
     {
         $this->load->model('student');
 
@@ -28,6 +28,37 @@ class Students extends App_Base_Controller
 		$this->load->view('student/profile.php',$data);
 
         $this->load->view('layouts/footer.php', $data);
+	}
+
+	public function update_password(){
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST')
+		{
+
+			$this->load->model('user');
+
+			$old_password = $this->input->post('old_password', TRUE);
+			$new_password = $this->input->post('new_password', TRUE);
+			$confirm_password = $this->input->post('confirm_password', TRUE);
+
+			//Validating and cleaning data
+			$this->form_validation->set_rules('old_password', 'Login ID', 'trim|required');
+			$this->form_validation->set_rules('new_password', 'Password', 'trim|required|min_length[8]');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[new_password]');
+
+			if($this->form_validation->run() === FALSE)
+			{
+				$this->profile();
+				return;
+			}
+
+			if(!$result = $this->user->update_password($old_password, $new_password))
+				$data['reset_msg'] = 'The old password seems to be incorrect.';
+			else
+				$data['reset_positive'] = 'Successfully updated the password!';
+
+			$this->profile($data);
+		}
 	}
 
 	/**

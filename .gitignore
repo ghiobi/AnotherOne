@@ -2,3 +2,4 @@
 
 .idea/*
 webroot/application/cache/*
+webroot/application/logs/*
