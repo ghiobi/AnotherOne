@@ -7,20 +7,26 @@
 			<h4>Welcome Back, <?php echo $name ?>.</h4>
 			<div>
 				<a class="front-menu" href="<?php echo site_url('students/profile') ?>"><i class="glyphicon glyphicon-user"></i> Student Profile</a>
-				<div class="dropdown front-menu">
-					<div class="dropdown-toggle" type="button" id="enroll-semester" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						<i class="glyphicon glyphicon-pencil"></i> Register Now
-					</div>
-					<!-- /TODO: transform to collapsible menu-->
-					<ul class="dropdown-menu front-dropdown" aria-labelledby="enroll-semester">
-						<?php foreach($semesters as $semester):
-							$name =  url_title($semester->name); ?>
-							<li><a href="<?= site_url('students/enroll/'.strtolower($name)) ?>"><?= $semester->name ?></a></li>
+				<a class="front-menu" role="button" data-toggle="collapse" href="#enroll" aria-expanded="false" aria-controls="collapseExample">
+					<i class="glyphicon glyphicon-pencil"></i> Register Now
+				</a>
+				<div class="collapse" id="enroll">
+					<ul class="front-dropdown">
+						<?php foreach($semesters as $semester): ?>
+							<li><a href="<?= site_url('students/enroll/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
-				<a class="front-menu" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
-				<a class="front-menu" href="<?php echo site_url('students/view') ?>"><i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
+				<a class="front-menu" style="margin-top: 10px" href="<?php echo site_url('courses/sections') ?>"><i class="glyphicon glyphicon-search"></i> View Available Courses</a>
+				<a class="front-menu" role="button" data-toggle="collapse" href="#view-schedule" aria-expanded="false" aria-controls="collapseExample">
+					<i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
+				<div class="collapse" id="view-schedule">
+					<ul class="front-dropdown">
+						<?php foreach($semesters as $semester): ?>
+							<li><a href="<?= site_url('students/view/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-6" style="margin-top: 39px">
@@ -53,7 +59,16 @@
 		</div>
 	</div>
 	<hr>
-	<h4 class="text-center" style="margin-bottom: 17px">Course Sequence for <?= $progress['program_name'] ?></h4>
+	<h4 style="margin-bottom: 17px">Course Sequence for <?= $progress['program_name'] ?>
+		<span class="pull-right">
+			<small>
+				<div style="height: 10px; width: 10px; display: inline-block; background-color: green"></div>
+				Completed or In Progress
+				<div style="height: 10px; width: 10px; display: inline-block; background-color: yellow"></div>
+				Can take
+			</small>
+		</span>
+	</h4>
 	<div class="row">
 		<?php
 			$sequence = $progress['progress'];

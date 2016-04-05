@@ -5,24 +5,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Login extends CI_Controller
 {
-	
-	function __construct()
+
+	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	function index()
+	public function index()
 	{
 		//Redirects user to homepage if logged in
 		if($this->session->userdata('user_id'))
 		{
 			redirect(base_url());
 		}
-
-		$data['title'] = 'Login';
-		$data['info_bar'] = '</i>Welcome to mytinerary. A simple web app for schedule making and course sequence planning.';
-
-		$this->load->view('layouts/header.php', $data);
 
 		//Validates login if sign in button was submitted/pressed
 		if($this->input->post('signin_btn'))
@@ -63,12 +58,12 @@ class Login extends CI_Controller
 		}
 
 		view:
-		
+
+		$data['awesome'] = null;
 		$this->load->view('login/index.php', $data);
-		$this->load->view('layouts/footer.php');
 	}
 
-	function signout()
+	public function signout()
 	{
 		session_destroy();
 		redirect(base_url().'login', 'refresh');

@@ -5,20 +5,13 @@
 class Courses extends CI_Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @param null $SEMESTER
-     * @param null $COURSECODE
-     * @param null $NUMBER
-     */
-    function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
+    public function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
-        $SEMESTER = str_replace('-', ' ', $SEMESTER);
-
         //Loading header
         if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)
             $data['info_bar'] = '<a href="'.site_url('courses/sections').'"><i class="glyphicon glyphicon-info-sign"></i> New Search</a>';
@@ -49,14 +42,18 @@ class Courses extends CI_Controller
                 }
 
                 //If the parameters are filled refresh to ;
-                redirect("courses/sections/".strtolower($semester)."/$course_code/$course_number", 'refresh');
+                redirect("courses/sections/".$semester."/$course_code/$course_number", 'refresh');
 
                 return;
             }
 
         }
         else{
-            $results = $this->section->getAllSections($this->semester->getIDByName($SEMESTER), $COURSECODE, $NUMBER);
+
+            if(!$semester = $this->semester->getBySlug($SEMESTER))
+                goto search;
+
+            $results = $this->section->getAllSections($semester->id, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
                 $data['error_message'] = '<p>No results were found!</p>';

@@ -25,7 +25,7 @@ class Semester extends CI_Model{
     }
 
     /**
-     * Returns the semester if by the semester name
+     * Returns the semester id by the semester name
      *
      * @param $semester_name not case sensitive
      * @return string
@@ -44,8 +44,22 @@ class Semester extends CI_Model{
         return $result->id;
     }
 
+    function getBySlug($url_slug){
+        $result = $this->db->query("
+            SELECT
+              semesters.id,
+              semesters.name
+            FROM semesters
+            WHERE semesters.slug = '$url_slug' LIMIT 1")->row();
+
+        if(!$result)
+            return FALSE;
+
+        return $result;
+    }
+
     /**
-     * Returns the complete semester detail of a semester.
+     * Returns information of a semester by id
      *
      * @param $semester_id
      * @return object

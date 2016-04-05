@@ -15,7 +15,7 @@ class Section extends CI_Model
     }
 
     /**
-     * Returns all of courses in a semester or subject or precisely a course.
+     * Returns all sections in a semester of a course by the course subject and number
      *
      * @param $semester_id
      * @param null $course_code

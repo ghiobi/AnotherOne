@@ -1,0 +1,1337 @@
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{todonotes}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{listings}
+\usepackage{dingbat}
+
+\usepackage{longtable}  % Multipage tables
+
+\usepackage{hyperref}   % Clickable table of contents + references
+\hypersetup {
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+% Mark's packages...trust in MOW
+\usepackage{float}		% this is to place figures where requested!
+\usepackage{times}		% this uses fonts which will look nice in PDF format
+\usepackage{graphicx}		% needed for the figures
+\usepackage{url}
+
+%This does NOT specify language
+\definecolor{mygreen}{rgb}{0,0.4,0}
+\definecolor{mypurp}{rgb}{0.5,0,0.5}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+ \lstdefinelanguage{CSS}{
+      keywords={accelerator,azimuth,background,background-attachment,
+            background-color,background-image,background-position,
+            background-position-x,background-position-y,background-repeat,
+            behavior,border,border-bottom,border-bottom-color,
+            border-bottom-style,border-bottom-width,border-collapse,
+            border-color,border-left,border-left-color,border-left-style,
+            border-left-width,border-right,border-right-color,
+            border-right-style,border-right-width,border-spacing,
+            border-style,border-top,border-top-color,border-top-style,
+            border-top-width,border-width,bottom,caption-side,clear,
+            clip,color,content,counter-increment,counter-reset,cue,
+            cue-after,cue-before,cursor,direction,display,elevation,
+            empty-cells,filter,float,font,font-family,font-size,
+            font-size-adjust,font-stretch,font-style,font-variant,
+            font-weight,height,ime-mode,include-source,
+            layer-background-color,layer-background-image,layout-flow,
+            layout-grid,layout-grid-char,layout-grid-char-spacing,
+            layout-grid-line,layout-grid-mode,layout-grid-type,left,
+            letter-spacing,line-break,line-height,list-style,
+            list-style-image,list-style-position,list-style-type,margin,
+            margin-bottom,margin-left,margin-right,margin-top,
+            marker-offset,marks,max-height,max-width,min-height,
+            min-width,-moz-binding,-moz-border-radius,
+            -moz-border-radius-topleft,-moz-border-radius-topright,
+            -moz-border-radius-bottomright,-moz-border-radius-bottomleft,
+            -moz-border-top-colors,-moz-border-right-colors,
+            -moz-border-bottom-colors,-moz-border-left-colors,-moz-opacity,
+            -moz-outline,-moz-outline-color,-moz-outline-style,
+            -moz-outline-width,-moz-user-focus,-moz-user-input,
+            -moz-user-modify,-moz-user-select,orphans,outline,
+            outline-color,outline-style,outline-width,overflow,
+            overflow-X,overflow-Y,padding,padding-bottom,padding-left,
+            padding-right,padding-top,page,page-break-after,
+            page-break-before,page-break-inside,pause,pause-after,
+            pause-before,pitch,pitch-range,play-during,position,quotes,
+            -replace,richness,right,ruby-align,ruby-overhang,
+            ruby-position,-set-link-source,size,speak,speak-header,
+            speak-numeral,speak-punctuation,speech-rate,stress,
+            scrollbar-arrow-color,scrollbar-base-color,
+            scrollbar-dark-shadow-color,scrollbar-face-color,
+            scrollbar-highlight-color,scrollbar-shadow-color,
+            scrollbar-3d-light-color,scrollbar-track-color,table-layout,
+            text-align,text-align-last,text-decoration,text-indent,
+            text-justify,text-overflow,text-shadow,text-transform,
+            text-autospace,text-kashida-space,text-underline-position,top,
+            unicode-bidi,-use-link-source,vertical-align,visibility,
+            voice-family,volume,white-space,widows,width,word-break,
+            word-spacing,word-wrap,writing-mode,z-index,zoom},  
+      sensitive=true,
+      morecomment=[l]{//},
+      morecomment=[s]{/*}{*/},
+      morestring=[b]',
+      morestring=[b]",
+      alsoletter={:},
+      alsodigit={-}
+    }
+    \lstdefinelanguage{HTML5}{
+            language=html,
+            sensitive=true, 
+            alsoletter={<>=-},
+            otherkeywords={
+            % HTML tags
+            <, </, >,
+            </a, <a, </a>,
+            </abbr, <abbr, </abbr>,
+            </address, <address, </address>,
+            </area, <area, </area>,
+            </area, <area, </area>,
+            </article, <article, </article>,
+            </aside, <aside, </aside>,
+            </audio, <audio, </audio>,
+            </audio, <audio, </audio>,
+            </b, <b, </b>,
+            </base, <base, </base>,
+            </bdi, <bdi, </bdi>,
+            </bdo, <bdo, </bdo>,
+            </blockquote, <blockquote, </blockquote>,
+            </body, <body, </body>,
+            </br, <br, </br>,
+            </button, <button, </button>,
+            </canvas, <canvas, </canvas>,
+            </caption, <caption, </caption>,
+            </cite, <cite, </cite>,
+            </code, <code, </code>,
+            </col, <col, </col>,
+            </colgroup, <colgroup, </colgroup>,
+            </data, <data, </data>,
+            </datalist, <datalist, </datalist>,
+            </dd, <dd, </dd>,
+            </del, <del, </del>,
+            </details, <details, </details>,
+            </dfn, <dfn, </dfn>,
+            </div, <div, </div>,
+            </dl, <dl, </dl>,
+            </dt, <dt, </dt>,
+            </em, <em, </em>,
+            </embed, <embed, </embed>,
+            </fieldset, <fieldset, </fieldset>,
+            </figcaption, <figcaption, </figcaption>,
+            </figure, <figure, </figure>,
+            </footer, <footer, </footer>,
+            </form, <form, </form>,
+            </h1, <h1, </h1>,
+            </h2, <h2, </h2>,
+            </h3, <h3, </h3>,
+            </h4, <h4, </h4>,
+            </h5, <h5, </h5>,
+            </h6, <h6, </h6>,
+            </head, <head, </head>,
+            </header, <header, </header>,
+            </hr, <hr, </hr>,
+            </html, <html, </html>,
+            </i, <i, </i>,
+            </iframe, <iframe, </iframe>,
+            </img, <img, </img>,
+            </input, <input, </input>,
+            </ins, <ins, </ins>,
+            </kbd, <kbd, </kbd>,
+            </keygen, <keygen, </keygen>,
+            </label, <label, </label>,
+            </legend, <legend, </legend>,
+            </li, <li, </li>,
+            </link, <link, </link>,
+            </main, <main, </main>,
+            </map, <map, </map>,
+            </mark, <mark, </mark>,
+            </math, <math, </math>,
+            </menu, <menu, </menu>,
+            </menuitem, <menuitem, </menuitem>,
+            </meta, <meta, </meta>,
+            </meter, <meter, </meter>,
+            </nav, <nav, </nav>,
+            </noscript, <noscript, </noscript>,
+            </object, <object, </object>,
+            </ol, <ol, </ol>,
+            </optgroup, <optgroup, </optgroup>,
+            </option, <option, </option>,
+            </output, <output, </output>,
+            </p, <p, </p>,
+            </param, <param, </param>,
+            </pre, <pre, </pre>,
+            </progress, <progress, </progress>,
+            </q, <q, </q>,
+            </rp, <rp, </rp>,
+            </rt, <rt, </rt>,
+            </ruby, <ruby, </ruby>,
+            </s, <s, </s>,
+            </samp, <samp, </samp>,
+            </script, <script, </script>,
+            </section, <section, </section>,
+            </select, <select, </select>,
+            </small, <small, </small>,
+            </source, <source, </source>,
+            </span, <span, </span>,
+            </strong, <strong, </strong>,
+            </style, <style, </style>,
+            </summary, <summary, </summary>,
+            </sup, <sup, </sup>,
+            </svg, <svg, </svg>,
+            </table, <table, </table>,
+            </tbody, <tbody, </tbody>,
+            </td, <td, </td>,
+            </template, <template, </template>,
+            </textarea, <textarea, </textarea>,
+            </tfoot, <tfoot, </tfoot>,
+            </th, <th, </th>,
+            </thead, <thead, </thead>,
+            </time, <time, </time>,
+            </title, <title, </title>,
+            </tr, <tr, </tr>,
+            </track, <track, </track>,
+            </u, <u, </u>,
+            </ul, <ul, </ul>,
+            </var, <var, </var>,
+            </video, <video, </video>,
+            </wbr, <wbr, </wbr>,
+            />, <!
+            },  
+            ndkeywords={
+            % General
+            =,
+            % HTML attributes
+            accept=, accept-charset=, accesskey=, action=, align=, alt=, async=, autocomplete=, autofocus=, autoplay=, autosave=, bgcolor=, border=, buffered=, challenge=, charset=, checked=, cite=, class=, code=, codebase=, color=, cols=, colspan=, content=, contenteditable=, contextmenu=, controls=, coords=, data=, datetime=, default=, defer=, dir=, dirname=, disabled=, download=, draggable=, dropzone=, enctype=, for=, form=, formaction=, headers=, height=, hidden=, high=, href=, hreflang=, http-equiv=, icon=, id=, ismap=, itemprop=, keytype=, kind=, label=, lang=, language=, list=, loop=, low=, manifest=, max=, maxlength=, media=, method=, min=, multiple=, name=, novalidate=, open=, optimum=, pattern=, ping=, placeholder=, poster=, preload=, pubdate=, radiogroup=, readonly=, rel=, required=, reversed=, rows=, rowspan=, sandbox=, scope=, scoped=, seamless=, selected=, shape=, size=, sizes=, span=, spellcheck=, src=, srcdoc=, srclang=, start=, step=, style=, summary=, tabindex=, target=, title=, type=, usemap=, value=, width=, wrap=,
+            % CSS properties
+            accelerator:,azimuth:,background:,background-attachment:,
+            background-color:,background-image:,background-position:,
+            background-position-x:,background-position-y:,background-repeat:,
+            behavior:,border:,border-bottom:,border-bottom-color:,
+            border-bottom-style:,border-bottom-width:,border-collapse:,
+            border-color:,border-left:,border-left-color:,border-left-style:,
+            border-left-width:,border-right:,border-right-color:,
+            border-right-style:,border-right-width:,border-spacing:,
+            border-style:,border-top:,border-top-color:,border-top-style:,
+            border-top-width:,border-width:,bottom:,caption-side:,clear:,
+            clip:,color:,content:,counter-increment:,counter-reset:,cue:,
+            cue-after:,cue-before:,cursor:,direction:,display:,elevation:,
+            empty-cells:,filter:,float:,font:,font-family:,font-size:,
+            font-size-adjust:,font-stretch:,font-style:,font-variant:,
+            font-weight:,height:,ime-mode:,include-source:,
+            layer-background-color:,layer-background-image:,layout-flow:,
+            layout-grid:,layout-grid-char:,layout-grid-char-spacing:,
+            layout-grid-line:,layout-grid-mode:,layout-grid-type:,left:,
+            letter-spacing:,line-break:,line-height:,list-style:,
+            list-style-image:,list-style-position:,list-style-type:,margin:,
+            margin-bottom:,margin-left:,margin-right:,margin-top:,
+            marker-offset:,marks:,max-height:,max-width:,min-height:,
+            min-width:,transition-duration:,transition-property:,
+            transition-timing-function:,transform:,
+            -moz-transform:,-moz-binding:,-moz-border-radius:,
+            -moz-border-radius-topleft:,-moz-border-radius-topright:,
+            -moz-border-radius-bottomright:,-moz-border-radius-bottomleft:,
+            -moz-border-top-colors:,-moz-border-right-colors:,
+            -moz-border-bottom-colors:,-moz-border-left-colors:,-moz-opacity:,
+            -moz-outline:,-moz-outline-color:,-moz-outline-style:,
+            -moz-outline-width:,-moz-user-focus:,-moz-user-input:,
+            -moz-user-modify:,-moz-user-select:,orphans:,outline:,
+            outline-color:,outline-style:,outline-width:,overflow:,
+            overflow-X:,overflow-Y:,padding:,padding-bottom:,padding-left:,
+            padding-right:,padding-top:,page:,page-break-after:,
+            page-break-before:,page-break-inside:,pause:,pause-after:,
+            pause-before:,pitch:,pitch-range:,play-during:,position:,quotes:,
+            -replace:,richness:,right:,ruby-align:,ruby-overhang:,
+            ruby-position:,-set-link-source:,size:,speak:,speak-header:,
+            speak-numeral:,speak-punctuation:,speech-rate:,stress:,
+            scrollbar-arrow-color:,scrollbar-base-color:,
+            scrollbar-dark-shadow-color:,scrollbar-face-color:,
+            scrollbar-highlight-color:,scrollbar-shadow-color:,
+            scrollbar-3d-light-color:,scrollbar-track-color:,table-layout:,
+            text-align:,text-align-last:,text-decoration:,text-indent:,
+            text-justify:,text-overflow:,text-shadow:,text-transform:,
+            text-autospace:,text-kashida-space:,text-underline-position:,top:,
+            unicode-bidi:,-use-link-source:,vertical-align:,visibility:,
+            voice-family:,volume:,white-space:,widows:,width:,word-break:,
+            word-spacing:,word-wrap:,writing-mode:,z-index:,zoom:
+            },  
+            morecomment=[s]{<!--}{-->},
+            tag=[s]
+    }
+
+\lstset{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=single,
+    xleftmargin=\parindent,
+    showstringspaces=false,
+    basicstyle=\scriptsize\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color{mygreen},
+    stringstyle=\color{mypurp},
+    %
+    %
+    otherkeywords={...},           % add keywords
+    deletekeywords={...},            % delete keywords
+%
+    keepspaces=true,                 % keeps spaces, usefull for indentation using spaces (might need columns=flexible)    breaklines=true,
+    caption=\lstname,                % Makes the caption the filename
+    breakautoindent=true,   % get the red arrows
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Concordia University}\\[1cm] % Name of your university/college
+\textsc{\Large SOEN 341}\\[1cm] % Major heading such as course name
+\begin{flushleft} 
+\end{flushleft}
+\begin{minipage}{0.45\textwidth}
+\begin{flushleft} \large
+\textsc{\large Team Another One }
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\begin{flushright} \large
+\textsc{\large Mytinerary}
+\end{flushright}
+\end{minipage}\\[0.5cm]
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Project Scope and Plan Document}\\[0.4cm] % Title of your document
+\HRule \\[1cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+\centering {\large{\emph{Group Members}}}\\
+[0.5cm]
+\begin{minipage}{0.45\textwidth}
+\begin{flushleft} \large
+Piratheeban \textsc{Annamalai}  \\
+Laurendy \textsc{Lam}  \\
+Jacqueline \textsc{Luo}  \\
+Michael \textsc{Mescheder}  \\
+Andy \textsc{Nguyen}    \\
+Kenny \textsc{Nguyen}  \\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\begin{flushright} \large
+Ronnie \textsc{Pang}    \\
+Eric \textsc{Payette}\\
+Alessandro \textsc{Power}    \\
+James \textsc{Talarico}    \\
+Pragas \textsc{Velauthapillai}    \\
+Anhkhoi \textsc{Vu-Nguyen}    \\
+
+\end{flushright}
+\end{minipage}\\[2cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[scale=0.25]{logo.png} % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+% <3 LaTeX
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Project Description     %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+\section{Project Description}
+Mytinerary is a web application designed to create, adjust and optimize the schedules of Concordia students. The schedule is created by the students who add courses offered by their respective program. Prior to the creation of the schedule, the user must select the according school term. In addition, the program will check whether or not the students have the correct pre or co-requisites prior to adding the class to the schedule. What this program differs from the current Concordia schedule making, is the friendly user interface. One major example is that it displays what the current schedule looks like while the student adds courses. The reason behind this is that the student can add courses while viewing their available schedule times rather than going back and forth viewing what time space is free. The application will also prohibit students from adding courses that is out of their course sequence or do not possess the correct pre/co-requisite.
+This application is also usable by teachers alike. Teachers can post their term schedule which includes the courses being taught or their free hours. This is viewed by the students who then join the course.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Goals and Constraints   %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+\section{Goals and Constraints}
+The project goals can be divided into two categories. The first consists of
+mandatory goals which must be implemented in order to meet the minimum project
+requirements. The second category includes goals which, while not absolutely necessary, would
+enhance the quality of the project and set Mytinerary apart from other program planners.
+These secondary goals were set by asking ourselves what features \emph{we} would look for
+in a program planner. Additionally, a survey targeting 200 Concordia software engineering
+students was conducted to gauge interest in proposed features, including multilingual
+support and integration with Rate-My-Professor. The data from this survey are
+unfortunately still being processed and could not be included in the present document.
+
+\subsection{Functional Requirements}
+The following use cases summarize Mytinerary's functional requirements. Each
+use case will deal with two possible \textbf{Actors:} a student, who will use the
+system to generate course schedules, and a program director, who can modify
+course and section information.
+
+Difficult and importance are scored on a scale of 1 to 10 with 10 denoting extremely high difficulty/importance.\\
+
+\paragraph*{Use case:} Log in\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Gain access to website services.\\
+\textbf{Preconditions:} User must be a registered user in the system's database.\\
+\textbf{Summary:} User logs into the website by providing their username and password.\\
+\textbf{Trigger:} User enters their username and password into the respective fields.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item System prompts the user to log in when the user accesses the website.
+\item User enters their username and password.
+\item System verifies the login information.
+\item User is logged in.
+\end{enumerate}
+\textbf{Exception paths:}
+\begin{enumerate}
+\item System prompts the user to log in when the user accesses the website.
+\item User enters their username and password.
+\item System determines that either the username or password were entered incorrectly.
+\item User is informed of the failed login attempt and is asked to re-enter their
+user credentials.
+\end{enumerate}
+\textbf{Postconditions:} User is logged in, meaning that they have access to restricted content, including the user's private data. This is accomplished by giving the user an authentication cookie.\\
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Log out \\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Prevent future users of the browser section to have access to user's credentials.\\
+\textbf{Preconditions:} User must be logged in. That is, user must have the required authentication cookie.\\
+\textbf{Summary:} User logs out of the system, preventing anyone who uses their browser afterwards from having access to the site under the user's name.\\
+\textbf{Trigger:} User indicates intention to log off.\\
+\textbf{Basic course of action:}
+\begin{enumerate}
+\item User indicates intention to log off.
+\item User if logged off of the system.
+\item User is directed to the website's login page.
+\end{enumerate}
+\textbf{Postconditions:} User is logged off, meaning that they no longer have access to restricted content such as the user's private data. This is accomplished by having the system no longer recognize the previous authentification cookie.\\
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Return to home page.\\
+\textbf{Actors:} Student, program director.\\
+\textbf{Goal:} Return to the website's home page.\\
+\textbf{Precondition:} User must be logged in. That is, user must have the required authentication cookie.\\
+\textbf{Summary:} User indicates their intention to return to the home page in order to access all of the site's facilities.\\
+\textbf{Trigger:} User indicates intention to return to the home page.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to return to home page.
+\item User is brought to home page.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 8\\
+
+
+\paragraph*{Use case:} View academic record\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} View personal academic record.\\
+\textbf{Preconditions:} User must be logged in and in the home page.\\
+\textbf{Summary:} User indicates that they wish to view their academic record, at which point the system retrieves and displays their academic record.\\
+\textbf{Trigger:} User indicates that they wish to view their academic record.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item Academic record is presented to user.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 7\\
+
+
+\paragraph*{Use case:} View student's academic record\\
+\textbf{Actors:} Program director\\
+\textbf{Goal:} View the academic record of a selected student.\\
+\textbf{Precondition:} User must be a program director. Student must exist in the system's database.\\
+\textbf{Summary:} Program director requests access to academic record of selected student, which is then displayed.\\
+\textbf{Trigger:} Program director indicates intention to view a student's academic record.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System verifies that user is a program director.
+\item System verifies that specified student exists.
+\item System retrieves student's academic record and displays it to the user.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Student does not exist:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System verifies that user is a program director.
+\item System determines that specified student does not exist.
+\item User is informed that specified student does not exist, and is prompted to re-enter the student's identifying information
+\end{enumerate}.
+\textbf{User is not a program director:}
+\begin{enumerate}
+\item User indicates intention to view academic record.
+\item System prompts user to enter either the name of the student or the student's Concordia ID number.
+\item System determines that the user is not a program director. This shouldn't happen, as non-program directors will not be given the opportunity to even attempt to view a student's academic record other than their own; however, for extra security the system will perform this check.
+\item User presented with an error message and is immediately logged off.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 6\\
+
+
+\paragraph*{Use case:} View course listing\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} View a list of available courses.\\
+\textbf{Summary:} A list of all available courses, grouped by program and sorted in numerical order, is presented to the user.\\
+\textbf{Trigger:} User indicates intention to see course list.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicated intention to see course list.
+\item System retrieves list of courses and displays them to user in appropriate order.
+\end{enumerate}
+\textbf{Difficulty:} 2\\
+\textbf{Importance:} 8\\
+
+
+\paragraph*{Use case:} View academic progress\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} View current progress towards completing degree in Software Engineering.\\
+\textbf{Precondition:} User is logged in as a user. That is, user must have the required authentification cookie.\\
+\textbf{Included Use case:} View course listing.\\
+\textbf{Summary:} When accessing list of courses, system will present a summary of user's progress towards their Software Engineering degree.\\
+\textbf{Trigger:} User indicates intention to see course list.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to see course list.
+\item System retrieves list of courses (see \textbf{Use case:} View course listing).
+\item System accesses student's academic record to determine courses that have been
+completed.
+\item System compares completed courses versus required courses.
+\item System displays course list to user along with information highlighting their
+academic progress.
+\end{enumerate}
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 6\\
+
+
+\paragraph*{Use case:} View course details.\\
+\textbf{Actors:} Student, program director.\\
+\textbf{Goal:} View details of specified course.\\
+\textbf{Precondition:} Course exists in the system's database.\\
+\textbf{Summary:} Users enters a course number to view details such as location, number of credits, prerequisites, etc.\\
+\textbf{Trigger:} User enters course number into appropriate field.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to view course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Course does not exist:}
+\begin{enumerate}
+\item User indicates intention to view course details.
+\item User enters course number into appropriate field.
+\item System does not find any course matching that course number.
+\item User is informed that the specified course does not exist, and is re-prompted
+to enter a course number.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 8\\
+
+
+\paragraph*{Use case:} Modify course details.\\
+\textbf{Actors:} Program director.\\
+\textbf{Goal:} Modify the details of a course.\\
+\textbf{Extended Use case:} View course details\\
+\textbf{Precondition:} User is a program director. Course exists in the system's database.\\
+\textbf{Summary:} User specifies a course to modify. Properties of the course that can be modified include location, time, professor, class capacity, etc.\\
+\textbf{Trigger:} User enters course number into appropriate field.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\item System displays fields where user can edit course information.
+\item User enters new course information.
+\item System checks that user is a program director.
+\item System modifies course information based on user input.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{Course does not exist:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System does not find any course matching that course number.
+\item User is informed that the specified course does not exist, and is re-prompted
+to enter a course number.
+\end{enumerate}
+\textbf{User is not a program director:}
+\begin{enumerate}
+\item User indicates intention to modify course details.
+\item User enters course number into appropriate field.
+\item System retrieves course information and displays it to user.
+\item System displays fields where user can edit course information.
+\item User enters new course information.
+\item System confirms that user is not a program director. An error message is displayed
+and the user is logged off the system. This should not happen in practice, as the
+user should not be given the opportunity to even attempt to modify course information.
+\end{enumerate}
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 7\\
+
+
+\paragraph*{Use case:} View news feed\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} Present users with a news feed.\\
+\textbf{Precondition:} User is logged in and on the home page.\\
+\textbf{Summary:} User is presented with headlines of news around the world.\\
+\textbf{Trigger:} User is on the home page.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User is on the home page and is presented with headlines of current news.
+\end{enumerate}
+\textbf{Difficulty:} 5\\
+\textbf{Importance:} 2\\
+
+
+\paragraph*{Use case:} Set schedule preferences\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User sets their preferences for the type of schedule they want.\\
+\textbf{Precondition:} User is logged in.\\
+\textbf{Summary:} User sets their schedule preferences, which may include their available times, days they cannot go to school on, number of credits they wish to take, etc.\\
+\textbf{Trigger:} User requests to edit schedule preferences.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User requests to edit schedule preferences.
+\item System presents user with an interface to set preferences.
+\item User uses this interface to set their preferences, which the system then saves.
+\end{enumerate}
+\textbf{Postconditions:} User preferences are saved in the database.\\
+\textbf{Difficulty:} 3\\
+\textbf{Importance:} 9\\
+
+
+\paragraph*{Use case:} Select course for schedule\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User selects a course they wish to be added to their next schedule.\\
+\textbf{Precondition:} User is logged in and they are eligible to take the specified course.\\
+\textbf{Included use cases:} View course listing OR view course details.\\
+\textbf{Summary:} User adds a course to be included in their next schedule.\\
+\textbf{Trigger:} User selects a course to be included in their next schedule.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a course to be added, either by searching specifically for the course
+(see use case View course details) or by selecting the course in the list of available courses
+(see use case View course listing).
+\item System verifies that user is eligible to take specified course.
+\item Course is added to a list of courses to be added in the next schedule.
+\end{enumerate}
+\textbf{Exception paths:}\\
+\textbf{User cannot take specified course:}
+\begin{enumerate}
+\item User selects a course to be added, either by searching specifically for the course
+(see use case View course details) or by selecting the course in the list of available courses
+(see use case View course listing).
+\item System determines that user is not eligible to take requested course.
+\item An error message is displayed to the user, informing them of the reason why the course could not be added.
+\end{enumerate}
+\textbf{Postcondition:} Specified course has been added to a list of courses that must be included in any generated schedules.\\
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 9\\
+
+
+\paragraph*{Use case:} Generate schedules\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} System creates a series of schedules that meet student's preferences.\\
+\textbf{Precondition:} User is logged in.\\
+\textbf{Summary:} System generates schedules that meet student's preferences, include courses that student requested, and further student's progress towards meeting the graduation requirements. \\
+\textbf{Trigger:} User indicates they wish to generate schedules.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User indicates they wish to generate schedules.
+\item System finds all possible schedules that meet user's preferences and incorporate user-selected classes.
+\item The generated schedules are presented to the user.
+\end{enumerate}
+\textbf{Postcondition:} The set of possible schedules are stored by the system in memory.\\
+\textbf{Difficulty:} 6\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Select schedule\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User selects one of the system-generated schedules to be their actual schedule.\\
+\textbf{Precondition:} User is logged in and has generated schedules.\\
+\textbf{Extends use cases:} Generate schedules\\
+\textbf{Summary:} User selects the schedule they find most desirable.\\
+\textbf{Trigger:} User selects and commits a schedule.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User generates schedules.
+\item User reviews schedules and selects one they find desirable.
+\item System stores the chosen scheduled and updates user's record.
+\end{enumerate}
+\textbf{Postcondition:} The selected schedule is stored in the system's database.\\
+\textbf{Difficulty:} 4\\
+\textbf{Importance:} 10\\
+
+
+\paragraph*{Use case:} Change language\\
+\textbf{Actors:} Student, program director\\
+\textbf{Goal:} User changes the website language to French or English.\\
+\textbf{Summary:} User selects a different language for the website's content to be delivered in.\\
+\textbf{Trigger:} User selects a different language.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a different language.
+\item System records language change and delivers website content in new language.
+\end{enumerate}
+\textbf{Postcondition:} The system records the user's language preferences and will deliver the website content in the user's chosen language.\\
+\textbf{Difficulty:} 8\\
+\textbf{Importance:} 3\\
+
+
+\paragraph*{Use case:} View professor profile\\
+\textbf{Actors:} Student\\
+\textbf{Goal:} User views a professor's profile on Rate-my-Professor to determine whether they want to take course taught by them.\\
+\textbf{Summary:} System will include easy access to a given professor's Rate-my-Professor profile.\\
+\textbf{Trigger:} User selects the professor who's profile they wish to view.\\
+\textbf{Basic course of events:}
+\begin{enumerate}
+\item User selects a professor.
+\item System accesses ratemyprofessor.com, fetches professor's profile, and displays it to user.
+\end{enumerate}
+\textbf{Difficulty:} 9\\
+\textbf{Importance:} 2\\
+
+Figure \ref{fig:use_case_diagram} graphically displays the above use cases and the relationships between them.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.4\textwidth, angle=-90]{use_case_diagram}
+\caption{Use case diagram for the Mytinerary scheduling system}
+\label{fig:use_case_diagram}
+\end{figure}
+
+\subsection{Domain Model}
+Figure \ref{fig:domain_model} illustrates a domain model for our system. The principal domain objects are the student, the course section, and the scheduler itself. Students, who are users, have preferences and an academic record and interact with the scheduler. The scheduler in turn consults the student's academic record and preferences, the requirements of the program the student is enrolled in, and the available course sections offered in each semester to generate a list of tentative schedules for the student to select. Course sections consist possibly of a tutorial section and a lab and are in turn instances of the more general course object. Finally there are program directors, who are users of the system with the privilege to view and modify student academic records and manage course details.
+
+\subsection{Constraints and Qualities}
+The non-functional requirements that Mytinerary will meet can be divided into three categories: security, performance, and usability.
+
+\subsubsection*{Security}
+\begin{itemize}
+    \item  Mytinerary shall ensure that login is protected using a strong hashing algorithm. This ensures that user data is kept safe if there is a partial database breach. The blowfish hashing function is provided by PHP’s hashing function 'password\_hash()' which generates a unique hash of a password. Unlike traditional md5 hash, hashing would produce two identical hashes if the same passwords was used. Using md5 would be valuable if a dictionary attack is performed.
+    \item Login timeouts will be implemented to discourage brute-force attempts at compromising a user's account. Specifically, Mytinerary will mandate a five minute wait if a user's password was incorrectly entered 10 times.
+    \item  Mytinerary shall ensure that data transactions between the application and server are secure by the blowfish encrypting algorithm. The scheduler is one page user interface which means that when passing serialized data of PHP objects they are vulnerable to changes if the client decides to alter the string. Thus encrypting the string would prevent any alternation and stay consistent.
+    \item  Forms are validated automatically through CodeIgniter’s form validation library. It filters html escape strings and cross site scripting (xss) attacks.
+    \item Server-client commmunication will be done using the HTTPS protocol.
+\end{itemize}
+
+\subsubsection*{Performance}
+\begin{itemize}
+    \item A page shall load in under a second, as tested on a Concordia computer using Concordia University's network.
+    \item The schedules shall be generated in under five seconds, as tested on a Concordia computer using Concordia University's network.
+\end{itemize}
+
+\subsubsection*{Usability}
+\begin{itemize}
+    \item  The web application should be cross-platform compatible usable through various mobile, tablet, and desktop systems. Various browsers support like the Google Chrome, Safari and edge by Microsoft. With the help of normalize it will render HTML and CSS consistent across all web browser. Mytinerary will be enable to support Legacy web browsers with the help of Modernizer. A library writing in JavaScript aids the browser with unsupported features.
+    \item There will be a minimum of ten preferences that a user can set in order to tailor the schedule generator to their individual needs.
+    \item There will be a maximum of three mouse clicks that a user will have to make in order to use any of the website's functions. This ensures that Mytinerary is easy to use for users of varying computer skills.
+\end{itemize}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.4\textwidth, angle=-90]{domain_model}
+\caption{Domain Model for the Mytinerary scheduling system}
+\label{fig:domain_model}
+\end{figure}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%
+                                            %   Resource Requirements   %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+\section{Resource Requirements}
+
+\subsection{Resource Evaluation}
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Laurendy Lam}}	\\ \hline \hline
+\textbf{Role}		&	Programing Full-Stack, Programming Leader, Co-Team Leader	\\ \hline
+\textbf{Strengths}	&	-- Web Design	\\
+			        &	-- User interface	\\
+			        &	-- Algorithm	\\
+					&	-- Team Work / Organization	\\
+					&	-- Database Design	\\
+					&	-- OOP	\\ \hline
+\textbf{Knowledge}	&	Java, C, C++, PHP, HTML5, CSS3, Javascript, SQL, Python, Ruby, Prolog, Lisp	\\ \hline
+\textbf{Experience}	&	-- Personal website developer	\\
+					&	-- Design/Developed a restaurant website 	\\ \hline
+\textbf{Availability}	&	10-12 hours /week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Alessandro Power}}	\\ \hline \hline
+\textbf{Role}		&	Documentation Leader , Team Leader	\\ \hline
+\textbf{Strengths}	&	-- Communication	\\
+					&	-- Team Work	\\
+					&	-- Object-oriented Programming	\\ \hline
+\textbf{Knowledge}	&	C++, Java, Python	\\ \hline
+\textbf{Experience}	&	Programming in Java for various class assignments.	\\ \hline
+\textbf{Availability}	&	7 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Anhkhoi Vu-Nguyen}}	\\ \hline \hline
+\textbf{Role}		&	Programming Back-End	\\ \hline
+\textbf{Strengths}	&	-- Object-oriented Programming	\\
+					&	-- Team Work	\\
+					&	-- Communication	\\ \hline
+\textbf{Knowledge}	&	Java, C++, HTML5, Prolog, PHP, Lisp, CSS3, Assembly , AspectJ	\\ \hline
+\textbf{Experience}	&	-- Programming in Java for various class assignments 	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Jacqueline Luo}}	\\ \hline \hline
+\textbf{Role}		&	Testing	\\ \hline
+\textbf{Strengths}	&	-- OOP with Java	\\
+					&	-- App development for Android devices	\\ \hline
+\textbf{Knowledge}	&	Java, C\#, HTML , CSS3, PHP, JavaScript	\\ \hline
+\textbf{Experience}	&	Developed an app on Google Play Store	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{James Talarico}}	\\ \hline \hline
+\textbf{Role}		&	Documentation	\\ \hline
+\textbf{Strengths}	&	-- Object-Oriented Design	\\
+					&	-- Communication and teamwork	\\
+					&	-- Document Writing	\\ \hline
+\textbf{Knowledge}	&	Java, C, C++ , Python , OCaml, HTML5, CSS3, MATLAB, Bash	\\ \hline
+\textbf{Experience}	&	-- Developed a cluster search algorithm to parse Fermi LAT data for uncatalogued VHE sources.	\\
+					&	-- Configured McPHAC to run on Calcul Quebec's super computers.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Kenny Nguyen}}	\\ \hline \hline
+\textbf{Role}		&	Documentation	\\ \hline
+\textbf{Strengths}	&	-- Object-oriented Programming	\\
+					&	-- Team Work	\\
+					&	-- Communication	\\ \hline
+\textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, MySQL, JavaScript 	\\ \hline
+\textbf{Experience}	&	-- Programmer at Industry Canada	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Michael Mescheder}}	\\ \hline \hline
+\textbf{Role}		&	Programming Full-Stack	\\ \hline
+\textbf{Strengths}	&	-- Client side	\\
+					&	-- Object-Oriented Programming	\\
+					&	-- Teamwork	\\ \hline
+\textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, JavaScript	\\ \hline
+\textbf{Experience}	&	-- Programming in Java for various class assignments.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Piratheeban Annamalai}}	\\ \hline \hline
+\textbf{Role}		&	Programming	\\ \hline
+\textbf{Strengths}	&	-- Server side	\\
+					&	-- Object-Oriented Programming	\\
+					&	-- Organization	\\ \hline
+\textbf{Knowledge}	&	Java, PHP, HTML5, CSS3, JavaScript	\\ \hline
+\textbf{Experience}	&	-- Various programming assignments for class assignments involving Java, and Php.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Pragas Velauthapillai}}	\\ \hline \hline
+\textbf{Role}		&	Testing	\\ \hline
+\textbf{Strengths}	&	-- OOP	\\
+					&	-- Team Work	\\ \hline
+\textbf{Knowledge}	&	Java, PHP, HTML, CSS, Javascript	\\ \hline
+\textbf{Experience}	&	-Programming in Java for various class assignments.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Ronnie Pang}}	\\ \hline \hline
+\textbf{Role}		&	Programming Full Stack	\\ \hline
+\textbf{Strengths}	&	-- OOP	\\
+					&	-- Team Work	\\ \hline
+\textbf{Knowledge}	&	Java, PHP, HTML, CSS, Javascript	\\ \hline
+\textbf{Experience}	&	-- Programming in Java for various class assignments.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Eric Payette}}	\\ \hline \hline
+\textbf{Role}		&	Programming Full-Stack	\\ \hline
+\textbf{Strengths}	&	-- Object-oriented programming	\\
+					&	-- Functional programming	\\
+					&	-- Logic programing	\\
+					&	-- Team Work	\\ \hline
+\textbf{Knowledge}	&	Java, PHP , HTML , CSS3, MySQL , JavaScript, Lisp, Prolog, AspectJ	\\ \hline
+\textbf{Experience}	&	-- Programming for various class assignment.	\\ \hline
+\textbf{Availability}	&	6 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\begin{center}
+\begin{tabular}{ p{2.7cm} | p{9cm} }
+\hline
+\textbf{Member Name}	&	\textit{\textbf{Andy Nguyen}}	\\ \hline \hline
+\textbf{Role}		&	Documentation	\\ \hline
+\textbf{Strengths}	&	-- Object-oriented Programming	\\
+					&	-- Team Work	\\ \hline
+\textbf{Knowledge}	&	Java, HTML5 , CSS3, JavaScript , PHP	\\ \hline
+\textbf{Experience}	&	-- Programming in Java for class assignments	\\
+					&	-- Developed a Real-Estate website for a class project	\\ \hline
+\textbf{Availability}	&	5 hours/week	\\ \hline
+\end{tabular}
+\end{center}
+%
+\vspace{3mm}
+%
+\subsection{Technical Resources}
+
+\subsubsection{Server}
+
+The web server used to host the developing project is the PHP built in web server provided by PHP which come with WAMP. It comes bundle of different other tools such as PHPmyAdmin, Apache and SQL buddy for local hosting.
+\subsubsection{Database}
+
+ The hosting service for the database on a remote server is Heroku. To manage the database we are using dbForge studio for MySQL or PHPMyAdmin version 4.5.3 used with WAMP to run the app to access the database remotely.
+
+\subsubsection{Hardware}
+
+ The average computer to host the working project is an Intel i5 or similar. 2 GB of ram and uses around 30 MB of storage space. 
+
+\subsubsection{System}
+
+The operating system used to operate the program as very portable as long as it has PHP, Apache and a MySQL server install installed.  Version and course control is handled by a private git repository. 
+
+\subsubsection{Programming Languages}
+The language used to develop this project is PHP, JavaScript, and CSS. The framework used to develop the project is CodeIgniter v3.03 along with other user interface frameworks such as JQuery v3.03, Bootstrap  4, Normalize v3.0.2  and Google Fonts. The editors to develop the project are: notepad++ or PHPStorm by JetBrains. Refer to section \ref{techInUse} for a more extensive list of the technologies in use.
+
+\subsubsection{Communication}
+
+We are using slack to communicate, Google drive to share files and documents. and GitHub to upload finished documents. bug reporting on git hub. For the documentation we are using LaTeX. We use this to produce a nice compilation of all the documents collected throughout the project.  
+
+\vfill
+\newpage
+\section{Scoping}
+Based on the resource constraints listed above, we will not be implementing the Rate-my-Professor integration unless time permits. Due to the lack of a publicly available API, integrating Mytinerary with Rate-my-Professor's services would be time-consuming to implement, and it is not essential to the project's success. Likewise, support for the French language will not be included. It can be safely assumed that any Concordia student can speak English sufficiently well to navigate an English-based program scheduler website.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                            %---------------------------%       
+                                            %     Solution Sketch       %
+                                            %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+\section{Solution Sketch}
+
+\subsection{Architecture}
+%
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.7\columnwidth]{MVCDiagram.png}
+\caption{Diagram of the Model View Controller which Mytinerary is based on. \label{MVC}}
+\end{figure}
+%
+Myitinerary is based off of the Model-View-Controller (MVC) architecture. We are using MVC because it encourages a clear separation between the data and the methods that manipulate the data. The gives our program the advantage of allowing a front-end and back-end developer to work on the project at the same time, which out having to worry about their respective code interfering with one another.
+
+As the name suggests, the Model-View-Controller pattern can be broken down into three layers: Model, View and Controller. These layers are what create an abstraction between components of the system as well as a layer of abstraction between the system and the user. A diagram of the interactions of the MVC can be seen in Figure \ref{MVC}. The three layers are described below.
+%
+\paragraph*{Model}~\\
+The Model is where the data used in the program is permanently stored. The model acts as a sort of bridge between the view and controller component. It updates the View on pertinent changes that have been made, and allows the Controller to manipulate it's data content. 
+\paragraph*{View}~\\
+The View is where the information requested from the Model layer can be viewed. In our system, this would correspond to Mytinerary's HTML page. The View does not receive any information from the Controller whatsoever. All data received by the View is given upon requesting it from the Model. This happens when a method from the Controller changes data in the Model. The Model then informs the View of these changes.
+%
+\paragraph*{Controller}~\\
+The job of the Controller is to take in any information that is passed by the user, and update the Model accordingly. The Controller does not interact with the View directly, but instead changes the data held by the Model. It is important to note that changes made by the Controller are initiated by user interactions.
+%
+\subsection{Technologies in Use} \label{techInUse}
+%
+%
+\subsubsection{Programming Languages} \label{languages}
+\paragraph*{PHP}~\\
+We decided to use PHP as the code base for Mytinerary. It is a quick and easy server side scripting language. PHP has a large community, which meant that most problems faced by developers would have preexisting solutions. Another important advantage is that PHP is part of the development platform WAMP, as described in section \ref{webanddata}, which made installation easy. We decided to use the most recent version, PHP 7.02.
+%
+\paragraph*{JavaScript}~\\
+JavaScript is a high-level, dynamic and untyped programming language. Since JavaScript is commonly used for web development, it is supported by most browsers, including: Internet Explorer, Chrome, Firefox and Safari. In order to transfer data, we will be using JSON (JavaScript Object Notation) in place of the more common XML. This choice was motivated by the fact that JSON is more lightweight, making network transmissions and read/writes faster. JSON is also far more human-readable compared to XML. We used the stable release version ECMAScript 6.
+%
+\paragraph*{HTML}~\\
+HTML (Hyper Text Markup Language) is a markup language used for creating web pages. It is by far the most commonly used markup language, and therefore has the most cross-platform support. We used the most recent version HTML5, which is quickly rising in popularity. 
+%
+\paragraph*{CSS}~\\
+CSS (Cascading Style Sheets) is a style sheet language used for creating a layout and styling a web page. Like JavaScript and HTML, CSS is one of the more common languages used in web development. CSS is used primarily to allow the separation of a web page's content from it's presentation; this makes code cleaner and more reusable. We are using CSS3, the most recent version.
+%
+\paragraph*{SQL}~\\
+SQL (Structured Query Language) is a special-purpose programming language used to access and manipulate databases. We will be using it to manage our MySQL database (described in section \ref{webanddata}, under MySQL). We chose SQL since it makes retrieving large amounts of records from databases quick and efficient it is the standard language for this task. We are using the most recent version, SQL:2011.
+%
+%
+%
+\subsubsection{Libraries and Frameworks}\label{framworks}
+\paragraph*{Bootstrap}~\\
+Bootstrap is a HTML, CSS, and JavaScript framework used for developing web pages. We chose Bootstrap as it is easy to use and has a large community with extensive documentation. Furthermore, Bootstrap supports the most popular browsers and as well as fixes some compatibility issues with CSS. We are using the most recent stable release, Bootstrap 3.3.6.
+%
+\paragraph*{CodeIgniter}~\\
+CodeIgniter is an open source PHP framework used in web development. It is loosely based on the Model-View-Controller pattern. We chose CodeIgniter as it is easy to use compared to other PHP frameworks and was the framework that our developers were most familiar with. We are using the most recent stable release, 3.0.4.
+%
+\paragraph*{AJAX}~\\
+AJAX (Asynchronous JavaScript and XML) is a set of client-side web development techniques used to create asynchronous Web applications. We chose AJAX over AJAJ (which uses JSON) for several reasons, the first being our programing team was more familiar with it. AJAJ also has a lack of documentation and is not able to perform two-way data transmission, so AJAX was the clear choice.
+%
+\paragraph*{jQuery}~\\
+jQuery is a JavaScript library which is designed to simplify client-side HTML. We chose jQuery as it is easy to use, especially compared to other JavaScript libraries. It is an extensive library that effortlessly supports AJAJ. We are using jQuery 1.12.0.
+%
+\paragraph*{Normalize.css}~\\
+Normalize.css is used to make built-in browser styling consistent across browsers. It also has a very extensive documentation and excellent support, which was very helpful for some of the members which were not familiar with the tool. We are using version 3.0.3.
+%
+\paragraph*{Moment.js}~\\
+Moment.js is a simple date and time library that enables us manipulate time and dates very easily. It comes with extensive documentation and a variety of features, unlike JavaScript's native date library.
+%
+%
+%
+\subsubsection{Web server and Databases} \label{webanddata}
+\paragraph*{Apache}~\\
+Apache is an open-source web server software. We chose it because it is currently the most popular web server software and is the one we were most familiar with. We will be using the stable release, 2.4.18, which is the most recent version.
+%
+\paragraph*{Heroku}~\\
+Heroku is a Platform-as-a-Service (PaaS), which allows it's users to host a database on a remote server. We chose Heroku because other web hosting services were not working properly with Mytinerary. Heroku was user-friendly and had extensive documentation making it easy to learn.
+%
+\paragraph*{MySQL}~\\
+MySQL is a Database Management system which uses relational databases. We chose MySQL as it is easy to use, very popular and has excellent support. We also chose it because our programming team was very familiar with it. We will be using the most recent stable release, 5.7.10.
+%
+\paragraph*{PHPMyAdmin}~\\
+PHPMyAdmin is a web based tool that works to help the user handle the administration of MySQL. We chose it because of it's simplicity and our familiarity with software. We are using the most recent stable release version, 4.5.4.1.
+%
+\paragraph*{dbForge Studio}~\\
+dbForge Studio is a windows tool that is made for management and development of an SQL server. We chose this tool because are our familiarity with it. We are using the most recent version, 5.1.178.
+%
+\paragraph*{WAMPServer}~\\
+WAMPServer is a windows development environment which uses Apache, MySQL, and PHP. Since we had already decided on using PHP, Apache and MySQL for our project, using this tool to simplify the setup of our server was the obvious choice. We are using the most recent stable release version, 4.5.4.1.
+%
+\subsubsection{IDEs}
+\paragraph*{Notepad++}~\\
+Notepad++ is a simple, lightweight text editor that has support for a large range of languages. We chose it because it is a very popular cross-platform text editor and our programming team was very familiar with it. We are using Notepad++ v6.8.8.
+%
+\paragraph*{PHPStorm}~\\
+PHPStorm is an IDE which handles PHP, HTML and JavaScript. We chose it because it is cross-platform and was the IDE our programming team was the most familiar with it. We are using version 10.0.3.
+%
+%
+%
+\subsubsection{Documentation and Collaboration Software}
+\paragraph*{Slack}~\\
+Slack is an online messaging application that can be used on mobile or PC. We chose to use Slack since it made communication and collaboration more convenient and organized.
+%
+\paragraph*{GitHub}~\\
+GitHub is an online Git repository service. It is currently the most popular Git based system, and it virtually essential for version control in large programming project. GitHub is an excellent tool for organizing and collaborating, and is an industry standard.
+%
+\paragraph*{ShareLaTeX}~\\
+ShareLaTeX is an online LaTeX editor and compiler. We chose to use LaTeX because it's capability of producing high typographical quality documentation. We chose ShareLaTeX since it allowed the documentation team to collaborate easily and it they were already quite familiar with it. 
+%
+\paragraph*{Gliffy}~\\
+Gliffy is an online web diagram editor with was used to make all UMLs and Domain Models in during the project. We chose it because it is easy to use and can produce high-quality diagrams.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                             %---------------------------%       
+                                             %           Plan            %
+                                             %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+\section{Plan}
+\subsection{Activities}
+The following are the main activities that have been or will be undertaken to reach
+the project goals.
+
+\subsection*{Planning Activities}
+\paragraph*{Division of Roles:}The purpose of this activity is to determine which team members will assigned to each of the project roles, which includes documentation, implementation, and testing. The result of this activity will be a list of proposed roles for each team member, which will be included in the first deliverable.
+
+\paragraph*{Survey:}A survey of Concordia Software Engineering students will be conducted to gauge user interest in proposed features. The results of the survey will be included in the second deliverable.
+
+\paragraph*{Setting Project Requirements:}The purpose of this activity is to fix the project requirements. These include mandatory features necessary to meet the minimum project requirements, as well as additionally features which would enhance Mytinerary's overall quality. These requirements will be collected to form a list of requirements, which if necessary will be scoped down.
+
+\paragraph*{Risk Analysis:}Risk analysis will be undertaken to identify those events and circumstances that will put the project's success in jeopardy should they occur. The purpose of risk analysis is to assist us in initiating proactive measures to reduce the probability that these events take place. The risk analysis will be included in the second deliverable.
+
+\subsection*{Design Activities}
+
+\paragraph*{Create Domain Model:}A domain model consists of high-level overview of the domain level objects, their attributes, and the associations between them. The purpose of creating a domain model is to assist the high-level organization of the project. The domain model will be included in the first deliverable
+
+\paragraph*{Specify Use Cases}The project's expected functional requirements will be organized into a series of use cases and graphically displayed in a use case diagram, which will be included in the second deliverable.
+
+\paragraph*{Specify Non-functional Requirements:}As an extension of the \emph{setting project requirements} activity and a complement to the \emph{specify use cases} activity, a list of non-functional requirements will be made and included in the second deliverable.
+
+\paragraph*{Resource Evaluation and Scoping:}The purpose of this activity is to determine the human and technical resources available to our project, which will be used to scope down the project goals if necessary. The resource evaluation and scoping will be included in the second deliverable.
+
+\paragraph*{Create Solution Sketch:}The solution sketch presents an overview of the how we chose to implement the project requirements. This includes both the high-level project architecture as well as the specific technologies what will be used. The solution sketch will be included in the second deliverable.
+
+\paragraph*{Plan:}The purpose of this activity is to create a schedule for the project to ensure that all requirements can be implemented in time for the final delivery date. The project plan will be included in the second deliverable.
+
+\subsection*{Implementation Activities}
+\paragraph*{Create GitHub Repository}The creation of a GitHub repository facilitates the integration of code and project documents that individual team members create.
+
+\paragraph*{Setup Website Server:}The initialization of a web server on Heroku to host our website is a necessary step in the creation of prototypes and eventually the final product.
+
+\paragraph*{Setup mySQL Database:}The system's database will have to be populated with course, student, and user information in order for the system to work effectively.
+
+\paragraph*{Create Architecture Design Diagrams:}Architecture design diagrams, including the 4+1 Architectural View and UML diagrams, will be created to facilitate the detailed design of the system. These diagrams will be included in the third deliverable.
+
+\paragraph*{Create and Test Prototypes 1, 2, and 3:}The system will be delivered in three prototypes, each adding increasing functionality. The delivery of a particular prototype will be followed by rigorous testing to ensure the prototypes meets the specified requirements. The third prototype will be tested with actual Concordia students (outside of our own group), and their feedback will be incorporated into the final delivery.
+
+\paragraph*{Create and Test Final Delivery:}After the third prototype has been completed and tested, the final delivery will be assembled and tested before being pushed into production.
+
+\subsection{Artifacts}
+The list of artifacts this project has and will produce are tabulated below. The target date for each artifact, as well as the team members responsible for its creation, are included as well. Note that cost has \emph{not} been included as each artifact should be free to produce, given that we are exclusively using free tools in our project.
+
+
+\begin{center}
+\begin{longtable}{| p{3cm} | p{7cm} | p{2.5cm} | p{3cm} |}
+\hline
+\textbf{Artifact}	&  \centering \textbf{Artifact Description} & \textbf{Target Date} & \textbf{Assigned to} \\ \hline \hline
+List of Proposed Roles          & Tentative list of the roles each team member has been assigned to.   & Jan. 8 \checkmark & All   \\ \hline
+Survey Results  & Results of survey conducted by Concordia Software Engineering students on their interest in proposed features. & Feb. 12 & A. Power \\ \hline
+Project Requirements  & Tentative list of requirements for the project. Will be refined in the use cases and non-functional requirements artifacts. & Jan. 15 \checkmark & All \\ \hline
+Risk Analysis  & List of possible events that would impede project progress, along with an estimate for their likelihood and projected severity. & Feb. 5 \checkmark & J. Talarico \\ \hline
+Domain Model & Domain model for project. & Jan. 10 \checkmark & L. Lam, A. Power, J. Talarico \\ \hline
+Deliverable 0  & System overview and team members document. & Jan. 13 \checkmark & L. Lam, A. Power, J. Talarico \\ \hline
+Use Cases and Use Case Diagram  &  Summary of functional requirements through use cases; graphical representation of the relationships between use cases through a use case diagram. & Feb. 2 \checkmark & A. Power \\ \hline
+Non-Functional Requirements  & Non-functional requirements to be implemented. & Feb. 6 \checkmark & K. Nguyen  \\ \hline
+Resource Evaluation & List of resources available -- both human and technical. Scoping down of project requirements based on resource limitations. & Feb. 6 \checkmark & A. Nguyen, A. Power \\ \hline
+ Solution Sketch & High-level overview of project implementation. Includes description of high-level system architecture and technologies used. & Feb. 2 \checkmark & J. Talarico \\ \hline
+Plan  & Project schedule. Includes artifacts to complete and target dates for their completion. & Feb. 7 \checkmark & A. Power \\ \hline
+Deliverable 1  & Project scope and plan document. & Feb. 10 \checkmark & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+GitHub repository  & Remote git repository for hosting project files. & Jan. 8 \checkmark & L. Lam \\ \hline
+Web Server on Heroku & Webserver for hosting content of our website. & Feb. 7 \checkmark & L. Lam, R. Pang \\ \hline
+mySQL Database  & Populated database with course, student, and user information. & Feb. 5 \checkmark & J. Luo, P. Velauthapillai  \\ \hline
+Architecture Design Diagrams & Architecture design diagrams include the 4+1 Architectural View and UML diagrams. & Mar. 2 & P. Annamalai, A. Vu-Nguyen \\ \hline
+Prototype 1 & First prototype. Features to include: student login, password hashing with blowfish algorithm, news feed, course searching, user setting of some preferences, student viewing of academic record, schedule generation, return to homepage by clicking Mytinerary logo. & Mar. 2 & P. Annamalai, L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai, A. Vu-Nguyen \\ \hline
+Deliverable 2  & Project design document. & Mar. 8 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+Prototype 2 & Second prototype. Features to include: program director login, ability for program director to modify courses, more preferences that student can set, full encryption of communication between server and client, ability of students to view academic progress. & Mar. 15 & P. Annamalai, L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai, A. Vu-Nguyen \\ \hline
+Deliverable 3  & Project implementation and testing document. & Mar. 21 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+Prototype 3 & Third prototype. Implement remaining features. & Mar. 25 & L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai \\ \hline
+Final delivery & Incorporate any missing features from prototype 3, as well as bugs and deficiencies revealed through testing of prototype 3. & Apr. 1 & L. Lam, J, Luo, M. Mescheder, R. Pang, E. Payette, P. Velauthapillai \\ \hline
+Final deliverable  & Combination of previous deliverables. & Apr. 3 & P. Annamalai, A. Nguyen, K. Nguyen, A. Power, J. Talarico, A. Vu-Nguyen \\ \hline
+\end{longtable}
+\end{center}
+
+
+
+%% RISK%%
+\subsection{Risk Analysis} 
+The perceived likelihood of the risks can be measured by Low, Medium or High. The effects of a risk can be broken up into four categories: insignificant, tolerable, serious and catastrophic.
+
+\begin{center}
+\begin{longtable}{| p{2cm} | p{9cm} | p{2cm} | p{2cm} |}
+\hline
+\textbf{Risk Type}	&  \centering \textbf{Risk Description} & \textbf{Probability} & \textbf{Effects} \\ \hline \hline
+People          & The group relies on one particular programmer to help with troubleshooting the more unfamiliar software. If he were to become seriously ill, or had to withdraw from the project due to personal reasons, the project's progress would slow dramatically.   & Medium & Catastrophic.    \\ \hline
+Estimation  & The project has been given 3 months to complete. The length of time allotted to each step must be properly estimated because if the deadline is not met, we will not be given an extension. & Medium & Catastrophic \\ \hline
+
+Technology		& Only one person is familiar with the CodeIgniter framework that is being used. Although it does not have a steep learning curve, it may take some programmers  time before becoming fully familiar with the tool. This can cause the project to take more time than expected. & High & Serious \\ \hline	 
+Technology		& Not all our programmers are familiar with PHP. This could result in result in the project taking longer than expected, since some members cannot contribute to that portion. & Low & Serious \\ 	\hline	
+Organization  & There are a large number of people collaborating in this project. If there is any hostility between members, the groups communication and cooperation may be negatively effected. & Low & Serious \\ \hline
+Security		&  Our scheduler site uses HTTP, which is not a secure protocol. This means that anyone could potential intercept data being transmitted. & Low & Serious \\ \hline
+
+Technology		&  Only two people in the documentation team are familiar with LaTeX. This may create a time bottle-neck since all of the writing done must be sent to two people, who can then properly format the documentation in LaTeX. & High & Tolerable\\ \hline
+Organization  &  Communication between members is key to a seamless project. Some members may not be reachable for period of time, due to an unwillingness to cooperate. & Medium & Tolerable\\ \hline
+Organization  &  If our scheduler receives an overwhelming number of requests users will experience high latency, which will negatively effect their experience. & Low & Tolerable\\ \hline
+Technology		&  Our programmers collaborate using GitHub. It the service goes down temporarily, our project comes to a halt as no one can access the source code. & Low & Tolerable\\ \hline
+
+Technology		&  All of our group communication is done through Slack. If the site goes down, members will not be able to communicate will one another. However, because there are many other communication platform, this is not serious. & Low & Insignificant \\ \hline
+Technology		& Our site is being hosted using Heroku. If the serivice were to go down, users would not have any way of accessing our scheduler. However, because there are many other hosting companies, this is not serious.  & Low & Insignificant \\ \hline
+
+
+
+\end{longtable}
+\end{center}
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                             %---------------------------%       
+                                             %       Prototyping         %
+                                             %---------------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vfill
+\newpage
+
+\section{Prototyping}
+The following sections describes the features that will be implemented for the first prototype. The current status of this prototype can be view at 
+http://myit.herokuapp.com; the reader is encouraged to view the website in its current state. A test user with the username "john\_smith" and password "password" can be used to explore the features of the site. The source code for the current prototype is included in Appendix A.
+
+Upon entering the website’s URL the user is presented with a login page. The login page features a brief description of the current situation. For instance, any course issues or service downtime would be displayed here. The users also have the ability to view courses in any given semester without needing to log in. The login system security is handled by hashing the entered username and password using the Blowfish algorithm and sent to the database for server side validation. 
+Once logged in, the users are sent to the default page with various options presented to them.  Additionally, there is also a section containing relevant news that will updated on a regular interval. This section is currently created by using JSON and the New York Times API (may be modified later on). 
+
+The first selectable option is the student profile. This page shows a record of the student. It indicates which courses have been completed and the GPA. Also, this page is used to determine which prerequisites and co-requisites have been completed before a student can register for a class that has those specific prerequisites and co-requisites.
+
+The second selectable option leads to the registration page. Here, students can search for courses in a selected semester in order to generate schedules. There is also an option to auto-generate schedules that is currently in development. Students can apply time preferences to generate their ideal schedule.  Up to five different schedules can be displayed on the same page using client side JavaScript and jQuery to dynamically generate the schedules as the user selects or edits information. The students can then select which schedule they would prefer to have by comparing all of them. Students can add courses to the courses tab. However, in the event that they lack the necessary prerequisites or co-requisites, they will not be able to add the course onto the registered tab. This validation is handled by dynamically checking the students registered courses within the database. The courses shown on the right-hand side represent what the students are involved with. If the course name is within a green rectangle, then the student will be currently registered for that class. If the course name is within a yellow rectangle, then the student will be on a waiting list for that class. Finally, if the course name is within a red rectangle, then it indicates that the student has removed that class from the current semester.
+
+At any time, users can click on the Mytinerary logo on the top left corner to be redirected to the home page. At the home page students can also view available courses as well as their current schedule. Mytinerary is cross-platform compatible in addition to featuring a responsive layout and automatic scaling. This is achieved using HTML5 and Bootstrap as the front-end framework. Any APIs to be used will also avoid being platform specific to ensure usability across all devices.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vfill
+\newpage
+\appendix
+\section{Source Code}
+% The important Source Code
+% the ones commented out give errors for some reason
+\lstinputlisting[language=php]{webroot/application/controllers/Courses.php}
+\lstinputlisting[language=php]{webroot/application/controllers/Home.php}
+\lstinputlisting[language=html]{webroot/application/controllers/index.html}
+\lstinputlisting[language=php]{webroot/application/controllers/Login.php}
+\lstinputlisting[language=php]{webroot/application/controllers/Students.php}
+\lstinputlisting[language=php]{webroot/application/models/Course.php}
+\lstinputlisting[language=html]{webroot/application/models/index.html}
+\lstinputlisting[language=php]{webroot/application/models/Scheduler.php}
+\lstinputlisting[language=php]{webroot/application/models/Section.php}
+\lstinputlisting[language=php]{webroot/application/models/Semester.php}
+\lstinputlisting[language=php]{webroot/application/models/Student.php}
+\lstinputlisting[language=php]{webroot/application/models/User.php}
+\lstinputlisting[language=html]{webroot/application/views/index.html}
+\lstinputlisting[language=php]{webroot/application/views/course/result.php}
+\lstinputlisting[language=php]{webroot/application/views/course/search.php}
+%\lstinputlisting[language=php]{webroot/application/views/layouts/footer.php}
+%\lstinputlisting[language=php]{webroot/application/views/layouts/header.php}
+\lstinputlisting[language=php]{webroot/application/views/login/index.php}
+%\lstinputlisting[language=php]{webroot/application/views/student/home.php}
+\lstinputlisting[language=php]{webroot/application/views/student/profile.php}
+\lstinputlisting[language=php]{webroot/application/views/student/scheduler.php}
+
+\end{document}

@@ -1,25 +1,25 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
 /**
-* 	TODO: complete description
+* 	Controls the profile page, the enroll page and the schedule page
 */
 class Students extends App_Base_Controller
 {
-	
-	function __construct()
+
+	public function __construct()
 	{
 		parent::__construct();
 	}
 
     /**
-     * loads the student profile page
+     * Loads the student profile page
      */
-	function profile()
+	public function profile()
     {
         $this->load->model('student');
 
         //Loading header
-        $data['info_bar'] = 'AND HIS NAME IS JOHN CENA';
+        $data['info_bar'] = 'Student Profile';
 		$this->load->view('layouts/header.php', $data);
 
         //Loading content
@@ -30,29 +30,31 @@ class Students extends App_Base_Controller
         $this->load->view('layouts/footer.php', $data);
 	}
 
-	function enroll($semester_url)
+	/**
+	 * Loads the student enroll page
+	 */
+	public function enroll($semester_url)
 	{
-		$semester_name = str_replace('-', ' ', $semester_url);
-
 		//Loading models
 		$this->load->model('semester');
 		$this->load->model('scheduler');
 
-
 		//Validating if semester name url exist. If not, redirect to main page.
-		if(!$semester_id = $this->semester->getIDByName($semester_name))
+		if(!$semester = $this->semester->getBySlug($semester_url))
 			redirect(base_url());
 
-		//If there the semester cookie already exists then load data from that of init a new scheduler object.
-		if($this->session->userdata($semester_url) == NULL || $this->session->userdata($semester_url) == 'Reset')
+		//If the semester cookie already exists then load data from the cookie or initialize a new scheduler cookie.
+		if($this->session->userdata($semester_url) == NULL)
 		{
-			//Initializing the scheduler because the cookie doesn't exist.
-			$this->scheduler->init($semester_id);
+			//Initializing the scheduler object
+			$this->scheduler->init($semester->id);
 
-			//After initializing the scheduler, it save the data into a session cookie.
+			//After initializing the scheduler, save the data into a session cookie.
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
-		$data['title'] = strtoupper(substr($semester_name, 0 , 1)) . substr($semester_name, 1);
+
+		//Preparing data for view
+		$data['title'] = $semester->name;
 		$data['info_bar'] = 'Register in three simple steps. 1. Pick your courses 2. Generate 3. Commit!';
 
 		$data['semester_name'] = $data['title'];
@@ -64,10 +66,19 @@ class Students extends App_Base_Controller
 		$this->load->view('layouts/footer.php', $data);
 	}
 
-	function ajax($semester_url, $action){
+	public function ajax($semester_url, $action){
+		//If the request is not an ajax request, it will redirect the user to the and error page.
+		if(!$this->input->is_ajax_request()){
+			$data['heading'] = '404 Page Not Found';
+			$data['message'] =  '<p>Access denied.</p>';
+			$this->load->view('errors/html/error_404.php', $data);
+			return;
+		}
+
+		//Loads the scheduler model
 		$this->load->model('scheduler');
 
-		//Continue work on the scheduler model
+		//Continue work on the scheduler model by extracting the data from the cookie
 		$this->scheduler = unserialize($this->session->userdata($semester_url));
 
 		//Actions that can be performed to the scheduler object start here with
@@ -78,21 +89,30 @@ class Students extends App_Base_Controller
 				echo $this->scheduler->getMainSchedule();
 			} break;
 
+			//Returns the course list to the user.
 			case 'search-list': {
 				echo $this->scheduler->searchCourseList();
 			} break;
 
+			//Adds a course the generator list. Empty string if successful
 			case 'add-course': {
 				$course = $this->input->post('input', TRUE);
 
 				echo $this->scheduler->add_course($course);
 			} break;
 
+			//Auto-picks one course for the user.
+			case 'auto-pick':{
+
+				echo $this->scheduler->auto_pick_course();
+
+			} break;
+
+			//Commits the new schedule to the database. 'x' is a dummy data to indicate the commit is successful.
 			case 'commit':{
 				$new_schedule = $this->input->post('input', TRUE);
-				$this->scheduler->apply_new_schedule($new_schedule);
-
-				echo $this->scheduler->getMainSchedule();
+				if($this->scheduler->apply_new_schedule($new_schedule))
+					echo 'x';
 			}break;
 
 			//Returns a list of possible schedules.
@@ -102,6 +122,7 @@ class Students extends App_Base_Controller
 				echo json_encode($schedules,  JSON_NUMERIC_CHECK);
 			} break;
 
+			//Drops the section from the schedule
 			case 'drop': {
 				$hash_id = $this->input->post('input', TRUE);
 				$section = $this->scheduler->drop($hash_id);
@@ -109,19 +130,29 @@ class Students extends App_Base_Controller
 				echo $section;
 			} break;
 
+			//Undos the drop of the section
 			case 'undo-drop': {
-				//TODO: Improve undo-drop mechanism
+
 				$section = $this->input->post('input');
 				$response = $this->scheduler->undo_drop($section);
 
 				echo ($response)? 'Re-added section to schedule': 'Failed at re-adding section to schedule';
 			} break;
 
+			//Resets the schedule by emptying the cookie.
 			case 'reset': {
 				$this->session->unset_userdata($semester_url);
 				return;
 			}
 
+			//Removes the course from the generator list.
+			case 'remove-course': {
+				$course_id = $this->input->post('input', TRUE);
+
+				echo $this->scheduler->remove_from_generator($course_id);
+			} break;
+
+			//Returns the full course list of registered and unregistered courses.
 			case 'course-list': {
 				echo $this->scheduler->get_course_list();
 			} break;
@@ -132,8 +163,41 @@ class Students extends App_Base_Controller
 		$this->session->set_userdata($semester_url, serialize($this->scheduler));
 	}
 
-	function schedule($semester){
+	/**
+	 * Viewing the schedule of a semester.
+	 *
+	 * @param $semester_url - the semester url slug id.
+	 */
+	public function view($semester_url)
+	{
+		$this->load->model('semester');
+		$this->load->model('scheduler');
 
+		//Validates if the slug exists. If not, redirects to the main page, ideally redirect to 404.
+		if(!$semester = $this->semester->getBySlug($semester_url))
+			redirect(base_url());
+
+		//If there the semester cookie already exists then load data from cookie or initialize a new scheduler cookie.
+		if($this->session->userdata($semester_url) == NULL)
+		{
+			//Initializing the scheduler object
+			$this->scheduler->init($semester->id);
+
+			//Saving scheduler object into cookie
+			$this->session->set_userdata($semester_url, serialize($this->scheduler));
+		}
+
+		$this->scheduler = unserialize($this->session->userdata($semester_url));
+
+		$data['info_bar'] = 'Schedule for '.$semester->name;
+		$data['title'] = 'Schedule of '.$semester->name;
+		$data['add_js'] = ['schedule.js', 'enroll.js'];
+
+		$data['schedule'] = $this->scheduler->getMainSchedule();
+
+		$this->load->view('layouts/header.php', $data);
+		$this->load->view('student/view_schedule.php', $data);
+		$this->load->view('layouts/footer.php', $data);
 	}
 
 }

@@ -1,4 +1,3 @@
-//Globals
 
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
@@ -86,7 +85,7 @@ $(function() {
                 data: {input: course},
                 success: function (output) {
                     if(output != ''){
-                        console.log(output);
+                        notify(false, output);
                     }
                     else{
                         load_course_list();
@@ -115,22 +114,43 @@ $(function() {
     });
 
     //Auto Pick
-    $auto_pick_btn = $('.auto-pick');
+    var $auto_pick_btn = $('.auto-pick');
     $auto_pick_btn.click(function () {
-        alert('Do something');
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/auto-pick',
+            data: {input: null},
+            success: function (output) {
+                if(output == ''){
+                    notify(true, 'Successfully added random course.');
+                    load_course_list();
+                }
+                else
+                    notify(false, output);
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
     });
 
     //Schedule Generation
-    $generate_btn = $('.generate');
-    $generate_div = $('.generated-schedules');
+    var $generate_btn = $('.generate');
+    var $generate_div = $('.generated-schedules');
 
     var generated_schedules = [];
     $generate_btn.click(function () {
-        //TODO: add confirmation of the undo capability and if there is no courses to add should not work.
         $.getJSON(
             controllerURL + '/generate',
             function (output) {
-                console.log("Generator found " + output.length + " results!");
+                generated_schedules = [];
+                $generate_div.empty();
+
+                if(output.length == 0)
+                    notify(false, 'Generator found 0 results! Try adding one course at a time.')
+                else
+                    notify(true, "Generator found " + output.length + " results!");
+
                 for (var i in output) {
                     var name = 'Schedule #' + (parseInt(i) + 1);
                     $generate_div.append('' +
@@ -187,7 +207,7 @@ $(function() {
     });
 
     //Commit Schedule //TODO: Confirmation dialogue box
-    $commit_btn = $('.scheduler-commit');
+    var $commit_btn = $('.scheduler-commit');
     $commit_btn.click(function () {
         if(selected_schedule != -1){
             var new_schedule = generated_schedules[selected_schedule].object;
@@ -197,7 +217,7 @@ $(function() {
                 data: {input: new_schedule},
                 success: function (output) {
                     if(output == ''){
-                        console.log('Failed at committing new schedule.');
+                        notify(false, 'Failed at committing new schedule.');
                     }
                     else{
                         load();
@@ -208,7 +228,7 @@ $(function() {
                         undo_drop_array = [];
                         $undo_btn.hide();
 
-                        console.log('Successfully committed new section.');
+                        notify(true, 'Successfully enrolled new section(s).');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -229,7 +249,7 @@ $(function() {
                 data: {input: hash},
                 success: function (output) {
                     if(output == ''){
-                        console.log('Failed at dropping section.');
+                        notify(false, 'Failed at dropping section.');
                     }
                     else{
                         load();
@@ -237,7 +257,7 @@ $(function() {
                         $generate_div.empty();
                         generated_schedules = [];
 
-                        console.log('Successfully dropped a section.')
+                        notify(true, 'Successfully dropped a section.');
                         undo_drop_array.push(output);
                     }
                     $undo_btn.show();
@@ -261,7 +281,7 @@ $(function() {
                     if(output != ''){
                         if(undo_drop_array.length == 0)
                             $undo_btn.hide();
-                        console.log('Successfully undo drop section.');
+                        notify(true, 'Successfully undo drop section.');
 
                         generated_schedules = [];
                         $generate_div.empty();
@@ -287,13 +307,31 @@ $(function() {
         });
     });
 
+    $(document).on('click','.generated-course-item',function(){
+        var course_id = $(this).data("courseId");
+        $.ajax({
+            method: 'POST',
+            url: controllerURL + '/remove-course',
+            data: {input: course_id},
+            success: function(output){
+                if(output == ''){
+                    notify(false, 'Failed to remove course. Reset Scheduler.')
+                }
+                else{
+                    load_course_list();
+                    notify(true, output);
+                }
+            }
+        });
+    });
+
     function load(){
         load_main_schedule();
         load_course_list();
     }
 
     var $reg_div = $('#scheduler-reg-course');
-    function load_course_list(){ //TODO: display no course to display info message
+    function load_course_list(){
         $.getJSON(controllerURL + '/course-list',
             function(course){
                 $reg_div.empty();
@@ -301,7 +339,7 @@ $(function() {
                     $reg_div.append('<div class="list-group-item scheduler-list-item">'+course['registered'][key]+'</div>');
                 }
                 for(var key in course['unregistered']){
-                    $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item">'+key+'<span class="badge">'+course['unregistered'][key]+'</span></div>');
+                    $reg_div.append('<div class="list-group-item list-group-item-warning scheduler-list-item generated-course-item" data-course-id="'+key+'">'+course['unregistered'][key]['name']+'<span class="badge">'+course['unregistered'][key]['count']+'</span></div>');
                 }
                 if(course['registered'].length == 0 && course['unregistered'].length == 0){
                     $reg_div.append('<div class="list-group-item scheduler-list-item">No Courses.</div>');
@@ -325,6 +363,16 @@ $(function() {
     load();
 
 });
+
+function notify(success, innerHTML){
+    var notify = $('#scheduler-notify-item');
+    notify.text(innerHTML);
+    if(success)
+        notify.css('background-color', ' #2ecc71');
+    else
+        notify.css('background-color', ' #f1c40f');
+    notify.stop().fadeIn(200).delay(3200).fadeOut(800);
+}
 
 /**
  * TODO: Updates the time preference UI

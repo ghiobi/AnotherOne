@@ -93,6 +93,17 @@ class Course extends CI_Model
             WHERE courses.id = '$course_id' LIMIT 1")->row();
     }
 
+    function getCourseName($course_id){
+        $course = $this->db->query("
+            SELECT
+               courses.code,
+               courses.number,
+               courses.name
+            FROM courses
+            WHERE courses.id = '$course_id' LIMIT 1")->row();
+        return $course->code.' '.$course->number.' '.$course->name;
+    }
+
     /**
      * Returns all courses and details about that course by semester id.
      *
@@ -137,7 +148,7 @@ class Course extends CI_Model
                 ON sections.semester_id = semesters.id
               INNER JOIN courses
                 ON sections.course_id = courses.id
-            WHERE semesters.id = '$semester_id' AND courses.code = '$subject_code' ")->result();
+            WHERE semesters.id = '$semester_id' AND courses.code = '$subject_code'")->result();
     }
 
     /**
@@ -199,4 +210,5 @@ class Course extends CI_Model
             FROM programsequence
             WHERE programsequence.program_id = '$program_id'")->result();
     }
+
 }

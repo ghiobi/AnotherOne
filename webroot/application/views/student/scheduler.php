@@ -1,6 +1,16 @@
+<div class="scheduler-notify">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div id="scheduler-notify-item" style="display: none">
 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <main class="container">
-		<div>
+		<div> <!--TODO: move this somewhere else-->
 			<button class="schedule-reset">RESET</button>
 			<button class="schedule-undo-drop" style="display: none">UNDO</button>
 		</div>
@@ -58,7 +68,7 @@
 			<div class="scheduler-row">
 				<div class="scheduler-full">
 					<div class="scheduler-commit text-center">
-						<h3 class="scheduler-header">COMMIT</h3>
+						<h3 class="scheduler-header">COMMIT & ENROLL</h3>
 					</div>
 				</div>
 			</div>

@@ -174,7 +174,7 @@ header{
 .scheduler-list-group{
 	margin: 0;
 	color:#2c3e50;
-	max-height: 275px;
+	max-height: 300px;
 	overflow: scroll;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -211,6 +211,12 @@ header{
 .scheduler-details > table{
 	margin-bottom: 0;
 }
+.scheduler-details > table> thead > tr > th{
+	border: none;
+}
+.scheduler-details > table > tbody{
+	background-color: #ffffff;
+}
 #schedule-div > table >tbody>tr>td{
 	padding: 0;
 }
@@ -219,6 +225,28 @@ header{
 }
 .yellow {
 	background-color: #ffff99;
+}
+.generated-course-item:hover{
+	cursor: pointer;
+	background-color: #f2dede;
+	color: #a94442;
+}
+.scheduler-notify{
+	position: fixed;
+	display: inline-block;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin-top: 130px;
+	z-index: 999;
+}
+#scheduler-notify-item{
+	font-size: 2em;
+	border-radius: 4px;
+	background-color: #2ecc71;
+	padding: 15px;
+	color: white;
+	box-shadow: 0px 0px 23px -3px rgba(0,0,0,0.75);
 }
 @media (max-width: 992px) {
 	.scheduler-app h3{
@@ -244,7 +272,7 @@ header{
 /******************************
 			Home Page
 *******************************/
-.front-menu{
+.front-menu, .front-menu:focus, .front-menu:hover{
 	display: block;
 	background-color: #34495e;
 	border-radius: 4px;
@@ -252,30 +280,28 @@ header{
 	font-size: 18px;
 	text-transform: uppercase;
 	padding: 10px 10px;
+	text-decoration: none;
 }
 .front-menu + .front-menu{
 	margin-top: 10px;
 }
 .front-menu:hover{
-	text-decoration: none;
 	background-color: white;
 	color: #34495e;
 }
 .front-dropdown{
-	border: 0;
-	margin: 0;
 	padding: 5px 5px;
 	width: 100%;
 	background-color: #16a085;
+	border-radius: 4px;
+	list-style-type: none;
 }
 .front-dropdown > li > a{
 	color: white;
-}
-.front-dropdown > li > a:hover{
-	background-color: transparent;
-}
-.front-menu:hover .front-dropdown{
 	display: block;
+}
+.front-dropdown > li{
+	padding: 2px 3px;
 }
 /******************************
 			Student Profile

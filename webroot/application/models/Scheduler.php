@@ -2,6 +2,7 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once 'Helper/Grade.php';
+include_once 'Helper/CourseAddException.php';
 
 include_once 'Helper/Schedule.php';
 include_once 'Helper/GroupSection.php';
@@ -160,7 +161,7 @@ class Scheduler extends CI_Model
 			$laboratory_id = 'NULL';
 
 		//Inserting record to database
-		$this->db->query(" INSERT INTO registered
+		$this->db->query("INSERT INTO registered
 			(student_id, section_id, tutorial_id, laboratory_id)
 				VALUES ('$this->student_id', '$section_id', $tutorial_id, $laboratory_id)");
 
@@ -180,7 +181,9 @@ class Scheduler extends CI_Model
 	public function apply_new_schedule($encrypted_schedule)
 	{
 		//Decrypting selected schedule and unserializing string.
-		$serialized_schedule = $this->encryption->decrypt($encrypted_schedule);
+		if(!$serialized_schedule = $this->encryption->decrypt($encrypted_schedule))
+			return FALSE;
+
 		$schedule = unserialize($serialized_schedule);
 
 		//getting unregistered sections and emptying list
@@ -199,11 +202,13 @@ class Scheduler extends CI_Model
 
 		$this->generator_course_list = [];
 		$this->registered_course_list = $this->main_schedule->getCourseList();
+
+		return TRUE;
 	}
 	
 	/**
 	 * Returns possible generated schedules.
-	 * //TODO: remove course list and replace with unregistered $adding_courses_list
+	 *
 	 * @param course_list - Courses to add
 	 * @return array
 	 */
@@ -305,44 +310,6 @@ class Scheduler extends CI_Model
 
 		return FALSE;
 	}
-
-	/**
-	 * TODO: Return true if course is a valid takable course.
-	 *
-	 * @param $course_id
-	 * @return bool
-	 */
-	public function is_takable($course_id)
-	{
-
-		//get course prerequisites
-		$pre_req = $this->course->getPrerequisites($course_id);
-		//get course corequisites
-		$co_req = $this->course->getCorequisites($course_id);
-		//if no course pre and co return true
-		if(! $pre_req && ! $co_req)
-			return TRUE;
-
-		//for each pre check complete
-		foreach($pre_req as $pre){
-
-			if(! $this->is_complete($pre->prerequisite_course_id))
-				throw new Exception('Prerequisite not complete: X');
-			//TODO: specify what id is not complete
-		}
-
-		//for each co check complete
-		foreach($co_req as $co){
-
-			if( ! $this->is_complete($co->corequisite_course_id)
-				&& ! (key_exists($co->corequisite_course_id, $this->registered_course_list)))
-				throw new Exception('Co-requisite not complete: X');
-			//TODO: specify what id is not complete
-		}
-
-		//return bool
-		return TRUE;
-	}
 	
 	/**
 	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
@@ -351,55 +318,114 @@ class Scheduler extends CI_Model
 	 */
 	public function auto_pick_course()
 	{
-		$possible_courses = $this->search_course_list();
+		$sequence = $this->db->query("
+			SELECT DISTINCT
+			  sections.course_id
+			FROM students
+			  INNER JOIN programsequence
+				ON students.program_id = programsequence.program_id
+			  INNER JOIN sections
+				ON programsequence.course_id = sections.course_id
+			  INNER JOIN semesters
+				ON sections.semester_id = semesters.id
+			WHERE students.id = '$this->student_id' AND semesters.id = '$this->semester_id'")->result();
 
-		//TODO: filter out those not in the program;
-		//TODO: filter out those that have already been completed;
-		//TODO: randomly pick a course;
+		do{
+			$try_again = false;
+			try{
+				$course = $sequence[array_rand($sequence)];
+				if($this->is_complete($course->course_id))
+					throw new CourseAlreadyListedException();
+				$this->add_to_generator($course->course_id);
+			} catch(RequisitesNotMetException $e){
+				$try_again = true;
+			} catch(CourseAlreadyListedException $e){
+				$try_again = true;
+			} catch (CourseAddException $e){
+				return 'Cannot add another course. '. $e->getMessage();
+			}
+		} while($try_again);
+
+		return NULL;
 	}
 
+	/**
+	 * This functions interacts with the user to add a course from an exncrypted course_id
+	 * @param $encrypted_course_id
+	 * @return null|string
+	 */
 	public function add_course($encrypted_course_id)
 	{
-		$course_id = $this->encryption->decrypt($encrypted_course_id);
+		if(! $course_id = $this->encryption->decrypt($encrypted_course_id))
+			return 'Course hash did not match.';
 
-		try{
+		try {
 			$this->add_to_generator($course_id);
-		} catch (Exception $e) {
+		} catch(PrerequisiteNotMetException $e) {
+			return $e->getMessage();
+		} catch (CorequisiteNotMetException $e) {
+			return $e->getMessage();
+		} catch (CourseAddException $e) {
 			return $e->getMessage();
 		}
 
 		return NULL;
 	}
-	//TODO: maybe create specific exception classes.
+
 	/**
 	 * Actions:
 	 * + Generates a possible section combinations of the course.
 	 * + Adds the course to the list;
 	 *
-	 * @param $course_id - the course_id;
-	 * @return int - number of possible sections.
+	 * @param $course_id
+	 * @throws Exception
 	 */
 	public function add_to_generator($course_id)
 	{
 		//Checking if course id already exists in current semester
 		if(array_key_exists($course_id, $this->registered_course_list))
-			throw new Exception('Course already registered.');
+			throw new CourseAlreadyInRegistered();
 
 		if(array_key_exists($course_id, $this->generator_course_list))
-			throw new Exception('Course already added to list.');
+			throw new CourseAlreadyAdded();
 
 		$num_combinations = 1;
 		foreach($this->generator_course_list as $course)
 			$num_combinations *= $course['count'];
 
 		if($num_combinations > 5000)
-			throw new Exception('Exceeds the maximum number of calculations please commit and then add more courses.');
+			throw new ExceedsMaxCombinationException();
 
 		$max_num_course = 5; //TODO: this must be located somewhere else
 		if(count($this->registered_course_list) + count($this->generator_course_list) >= $max_num_course)
-			throw new Exception('Exceeds the maximum number of courses per semester ('.$max_num_course.')');
+			throw new ExceedsMaxCoursesException(5);
 
-		$this->is_takable($course_id);
+		//get course prerequisites
+		$pre_req = $this->course->getPrerequisites($course_id);
+		//get course corequisites
+		$co_req = $this->course->getCorequisites($course_id);
+
+		//for each pre check complete
+		foreach($pre_req as $pre){
+
+			if(! $this->is_complete($pre->prerequisite_course_id)){
+
+				$course_name = $this->course->getCourseName($pre->prerequisite_course_id);
+				throw new PrerequisiteNotMetException($course_name);
+			}
+
+		}
+
+		//for each co check complete
+		foreach($co_req as $co){
+
+			if( ! $this->is_complete($co->corequisite_course_id)
+				&& ! (key_exists($co->corequisite_course_id, $this->registered_course_list))) {
+				$course_name = $this->course->getCourseName($co->prerequisite_course_id);
+				throw new CorequisiteNotMetException($course_name);
+			}
+
+		}
 
 		//Generates possible sections and adds course to section.
 		$possible_sections = $this->getPossibleGroups($course_id);
@@ -408,8 +434,6 @@ class Scheduler extends CI_Model
 			'name' => $possible_sections[0]->course_subject.' '.$possible_sections[0]->course_number.' '.$possible_sections[0]->course_name,
 			'sections' => $possible_sections,
 		];
-
-		return TRUE;
 	}
 
 	/**
@@ -422,22 +446,25 @@ class Scheduler extends CI_Model
 	{
 		if(array_key_exists($course_id, $this->generator_course_list)){
 			unset($this->generator_course_list[$course_id]);
-			return TRUE;
+			return 'Course removed from generator.';
 		}
 		return FALSE;
 	}
 
 	/**
-	 * TODO: Returns the formatted registered course_list and generator_course_list for the view
-	 * + This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 * This function is called every time there is an add, autopick, remove registered course, drop, and commit.
+	 *
 	 * @return json
 	 */
 	public function get_course_list()
 	{
 		$unreg_list = [];
-		foreach($this->generator_course_list as $course)
+		foreach($this->generator_course_list as $key => $course)
 		{
-			$unreg_list[$course['name']] = $course['count'];
+			$unreg_list[$key] = [
+				'count' => $course['count'],
+				'name' => $course['name']
+			];
 		}
 		$array = [
 			'registered' => $this->registered_course_list,
