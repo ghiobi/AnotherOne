@@ -30,10 +30,26 @@
 					
 				</table>
 			</div>
+			<?php
+			if(validation_errors() || isset($reset_msg)){
+				echo '<div class="alert alert-danger" role="alert">
+								<p><strong>Warning!</strong></p>';
+				if(validation_errors())
+					echo validation_errors();
+				if(isset($reset_msg))
+					echo '<p>'.$reset_msg.'</p>';
+				echo '</div>';
+			}
+			if(isset($reset_positive)){
+				echo '<div class="alert alert-success" role="alert">
+						<p><strong>Success!</strong></p>';
+					echo '<p>'.$reset_positive.'</p>';
+				echo '</div>';
+			}
+			?>
 			<div id="profile-changepwd-div" class="collapse">
-			
 				<h4 style="margin-top: 20px">Change Password</h4>
-				<form>
+				<form action="<?= site_url('students/update_password') ?>" method="post">
 					<div class="form-group">
 						<label for="old_password">Old Password</label>
 						<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password">

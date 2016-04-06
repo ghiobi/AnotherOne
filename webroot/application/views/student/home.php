@@ -59,7 +59,16 @@
 		</div>
 	</div>
 	<hr>
-	<h4 class="text-center" style="margin-bottom: 17px">Course Sequence for <?= $progress['program_name'] ?></h4>
+	<h4 style="margin-bottom: 17px">Course Sequence for <?= $progress['program_name'] ?>
+		<span class="pull-right">
+			<small>
+				<div style="height: 10px; width: 10px; display: inline-block; background-color: green"></div>
+				Completed or In Progress
+				<div style="height: 10px; width: 10px; display: inline-block; background-color: yellow"></div>
+				Can take
+			</small>
+		</span>
+	</h4>
 	<div class="row">
 		<?php
 			$sequence = $progress['progress'];

@@ -1,0 +1,196 @@
+Course Management subsystem
+
+The course management subsystem is responsible for any operations that
+are related to the courses as well as its impact on the schedule itself.
+Each section inherits a course to know all its information. Each course
+has at least one section. Also each course may have prerequisites which
+have to be met in order to be able to add it to the schedule. Each
+section for a specific course may have a tutorial and a laboratory
+component. Note that each section, tutorial and laboratory all have one
+or more room blocks. This is necessary because each of those classes may
+have different time and room allocations during the week. The roomBlock
+class inherits the timeBlock class to know at which time and during
+which semester the room is going to be occupied. The timeBlock class
+inherits the preferences to know which times are preferred by the user.
+The current schedule may have different sections for which the user is
+already registered to.
+
+\textbf{\emph{Schedule:}} is a views class that provides data about the
+courses the user wants to add.
+
+Attributes:
+
+\begin{itemize}
+\item
+  N/a
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  addSection(s : section) will temporarily add the section s, which is
+  the parameter, to the schedule.
+\item
+  removeSection(s : section) will remove the section s, which is the
+  parameter, from the schedule.
+\item
+  addTutorial(Tutorial) will add the tutorial that is associated to the
+  section (if any)
+\item
+  addLaboratory(Laboratory) will add the laboratory that is associated
+  to the section (if any)
+\end{itemize}
+
+\textbf{\emph{Section:}} is a views class for a specific course.
+Depending on the course, it may have one or more sections.
+
+Attributes:
+
+\begin{itemize}
+\item
+  instructor: string
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  getTutorials(): Tutorials{[}*{]} will return an array of tutorials for
+  a specific section of a course.
+\item
+  getLaboratories(): Laboratories{[}*{]} will return an array of
+  laboratories for a specific section of a course.
+\end{itemize}
+
+\textbf{\emph{Tutorial:}} is a views class which represents the tutorial
+for a specific section of a course (if applicable.
+
+Attributes:
+
+\begin{itemize}
+\item
+  TA: string
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  N/A
+\end{itemize}
+
+\textbf{\emph{Laboratory:}} is a views class which represents the
+laboratory for a specific section of a course (if applicable).
+
+Attributes:
+
+\begin{itemize}
+\item
+  Lab\_instructor: string
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  N/A
+\end{itemize}
+
+RoomBlock: is a views class which represents the room(s) in which a
+class is taking place.
+
+Attributes:
+
+\begin{itemize}
+\item
+  id: string
+\item
+  room: string
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  N/A
+\end{itemize}
+
+TimeBlock: is a views class that represents the time for which the room
+is needed.
+
+Attributes:
+
+\begin{itemize}
+\item
+  start: Date
+\item
+  end: Date
+\item
+  semester: int
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  overlaps(TimeBlock timeBlock): bool will look at timeBlock (which is
+  the parameter) and checks if there is any conflict in terms of time.
+  If there is a conflict, then the method will return true, otherwise
+  false.
+\end{itemize}
+
+Preference: is a views class which represents the user's desired options
+when generating a schedule.
+
+Attributes:
+
+\begin{itemize}
+\item
+  N/A
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  N/A
+\end{itemize}
+
+Course: is a views class which represents a subject that needs to be
+completed in order to graduate. It has at least one section.
+
+Attributes:
+
+\begin{itemize}
+\item
+  name: string
+\item
+  subject: string
+\item
+  courseNumber: int
+\item
+  credits: double
+\item
+  courseDescription: string
+\end{itemize}
+
+Methods:
+
+\begin{itemize}
+\item
+  getSections(): Section{[}*{]} will return an array of different
+  sections for a specific course.
+\item
+  isAvailable(string semester): bool will take a string semester as
+  parameter and check if the course is available for that semester. If
+  it is available, the method will return true, otherwise it will return
+  false.
+\item
+  getPrerequisites(): Course{[}*{]} will return an array of different
+  courses that are prerequisites for a specific course.
+\item
+  arePrerequisitesMet(): bool will check if the prerequisites are met
+  for a specific course. If the prerequisites are met, then the method
+  will return true, else it will return false.
+\end{itemize}

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>0</y>
+      <w>160</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Block
+--
++ startTime
++ endTime
++ weekday
+--
++ overlaps</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>350</y>
+      <w>190</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>LectureBlock
+-
++ instructor
++ letter
++ capacity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>180</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>PrefrenceBlock
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>350</y>
+      <w>190</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Tutorial Block</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>240</x>
+      <y>350</y>
+      <w>190</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>LaboratoryBlock
+--
++ instructor
++ letter
++ capacity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>180</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>RoomBlock
+--
++ id
++ room
+--
++ overlaps</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>290</y>
+      <w>220</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>290</y>
+      <w>270</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;250.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>330</x>
+      <y>290</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>130</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>130</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>870</x>
+      <y>30</y>
+      <w>310</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>GroupSection
+--
+
+ private $course_id: int
+ private $register_id:int
+ private $section_id: int
+
+ public $hash: string
+ public $course_name: string
+ public $course_subject: string
+ public $course_number: int
+
+ public $instructor: string
+ public $capacity: int
+ public $letter: string
+
+ public $lecture: LecutreBlock []
+ public $tutorial: TutorialBlock
+ public $laboratory: LaboratoryBlock
+
+--
++ getAllBlocks(): Block[]
++ overlaps(GroupSection groupsection): boolean
+ </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>540</y>
+      <w>200</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Schedule
+--
++ sections: GroupSections []
++ unregistered: GroupSections []
+--
++ addSection
++ addUnRegistered</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1000</x>
+      <y>390</y>
+      <w>30</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=*
+m2=1</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>520</y>
+      <w>760</w>
+      <h>540</h>
+    </coordinates>
+    <panel_attributes>Scheduler
+--
+private $semester_id: int
+private $student_id: int
+private $search_course_list: array
+private $course_sequence: array
+
+public $main_schedule: Schedule
+
+public $registered_course_list: array
+public $generator_course_list: array
+
+public $preference_blocks: PrefrenceBlock[]
+--
+public function init($semester_id)
+public function drop($hash_id)
+public function undo_drop($encrpyted_section)
+public function record_section($section_group)
+public function apply_new_schedule($encrypted_schedule)
+public function generateSchedules()
+private function generator($current_course, $num_courses, $current_schedule, &amp;$stack, $courses)
+public function searchCourseList()
+public function is_complete($course_id)
+public function auto_pick_course()
+public function add_course($encrypted_course_id)
+public function add_to_generator($course_id)
+public function remove_from_generator($course_id)
+public function get_course_list()
+public function addTimePreference($json_array)
+public function removeTimePreference($object_hashcode)
+public function getTimePreferences()
+public function buildGroupSection($register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
+public function getPossibleGroups($course_id)
+public function getMainSchedule()</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

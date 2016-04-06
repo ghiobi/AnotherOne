@@ -66,4 +66,28 @@ class User extends CI_Model
 		");
 		return $query->row();
 	}
+
+	function update_password($old_password, $new_password)
+	{
+		$user_id = $this->session->userdata('user_id');
+
+		$password_hash = $this->db->query("
+			SELECT
+			  users.password
+			FROM users
+			WHERE users.id = '$user_id'")->row()->password;
+
+		if(!password_verify($old_password, $password_hash)){
+			return FALSE;
+		}
+
+		$new_password_hash = password_hash($new_password, CRYPT_BLOWFISH);
+
+		$this->db->query(
+			"UPDATE users
+				SET password = '$new_password_hash'
+			WHERE id = '$user_id'");
+
+		return TRUE;
+	}
 }

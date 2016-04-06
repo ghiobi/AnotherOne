@@ -25,7 +25,7 @@ class Course extends CI_Model
             SELECT
               COUNT(sections.id) AS result
             FROM sections
-            WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id'")->row()->result;
+            WHERE sections.course_id = '$course_id' AND sections.semester_id = '$semester_id' LIMIT 1")->row()->result;
         return $result > 0;
     }
 
