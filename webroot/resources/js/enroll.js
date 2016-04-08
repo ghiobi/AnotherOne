@@ -7,21 +7,38 @@ var undo_drop_array = [];
 var selected_schedule = -1;
 
 $(function() {
+
+
+    var weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
     var main_schedule = null;
 
     //Get Preferences
     $('#scheduler-pref').collapse({show: true});
-    $prefrence_div = $('#scheduler-pref > div');
+    $preference_div = $('#scheduler-pref');
+
+    //Load preferences. This method empties the preference div, and prints all the preferences from the server.
     function load_preference(){
         $.getJSON( controllerURL + '/get-preference',
             function(preferences) {
+                //Empty Preference Div
+                $preference_div.empty();
+
+                //Print every preference retreived.
                 for(var key in preferences){
-                    $prefrence_div.append('<div><p></p></div>');
+                    console.log();
+                    $preference_div.append('<p data-prefhash='+key+'><span class="glyphicon glyphicon-ban-circle"></span>' +
+                        weekDay[preferences[key].weekday] + ' ' +
+                        preferences[key].start + ' - ' +
+                        preferences[key].end + ' ' +
+                        '</p>');
                 }
+
+                //If there are no preferences, then print this message.
                 if(preferences.length == 0){
-                    $prefrence_div.append('<div><p>No preferences</p></div>');
+                    $preference_div.append('<p data-prefhash="empty">No preferences</p>');
                 }
             }
         );
@@ -74,32 +91,25 @@ $(function() {
         });
     });
 
-
-    $('#scheduler-pref').on('click','#button_remove', function()
+    //Removing a preference.
+    $(document).on('click','#scheduler-pref > p', function()
     {
-        var removed_day = [];
-
-        console.log( $(this).closest('.drop_pref').children("#day").text());
-        removed_day.push(
-            {
-                "day":  $(this).closest('.drop_pref').children("#day").text(),
-                "starttime": $(this).closest('.drop_pref').children("#starttime").text(),
-                "endtime":$(this).closest('.drop_pref').children("#endtime").text()
-            }
-        );
-        console.log(removed_day);
-
-        $(this).closest('.drop_pref').remove();
-
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/remove-preference',
-            data: {input: removed_day},
-            success: function () {
-                console.log("Preferences removed")
-            }
-        });
-
+        //Getting the hash id of the preference.
+        var key = $(this).data('prefhash');
+        if(key !== "empty"){
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/remove-preference',
+                data: {input: key},
+                success: function (output) {
+                    if(output != '')
+                        notify(true, output);
+                    else
+                        notify(false, "Had a problem removing the preference.");
+                    load_preference();
+                }
+            });
+        }
     });
 
     //Search

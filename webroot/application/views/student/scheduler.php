@@ -27,8 +27,6 @@
 						<button data-toggle="modal" data-target="#scheduler-pref-modal"><i class="glyphicon glyphicon-plus fix-icon"></i></button>
 					</div>
 					<div class="collapsing app-container" id="scheduler-pref">
-						<div class="scheduler-pref-time">
-						</div>
 					</div>
 				</div>
 			</div>

@@ -52,6 +52,7 @@ class Students extends App_Base_Controller
 				return;
 			}
 
+			//If result is false due to incorrect password match, then an error message would appear.
 			if(!$result = $this->user->update_password($old_password, $new_password))
 				$data['reset_msg'] = 'The old password seems to be incorrect.';
 			else
