@@ -10,13 +10,14 @@
 	</div>
 </div>
 <main class="container">
-		<div> <!--TODO: move this somewhere else-->
-			<button class="schedule-reset">RESET</button>
-			<button class="schedule-undo-drop" style="display: none">UNDO</button>
-		</div>
+
 		<div class="scheduler-app">
 			<div class="scheduler-row">
 				<div class="scheduler-full scheduler-title">
+					<div class="pull-right" style="margin-top: 10px; margin-right: 10px">
+						<button class="btn schedule-reset">RESET</button>
+						<button class="btn schedule-undo-drop" style="display: none">UNDO DROP</button>
+					</div>
 					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> <?= strtoupper($semester_name) ?></h3>
 				</div>
 			</div>
