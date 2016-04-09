@@ -3,7 +3,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Laboratory
+ * Class Laboratory holds information of a laboratory section
  * @package Scheduler
  */
 class LaboratoryBlock extends RoomBlock

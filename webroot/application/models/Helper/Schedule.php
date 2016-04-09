@@ -4,7 +4,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Schedule
+ * Class Schedule - holds data of valid schedule.
  * @package Scheduler
  */
 class Schedule

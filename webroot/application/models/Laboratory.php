@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class Laboratory deals with gettings laboratory data from the database.
+ */
 class Laboratory extends CI_Model
 {
 
@@ -23,6 +26,12 @@ class Laboratory extends CI_Model
             WHERE section_id = '$section_id'")->result();
     }
 
+    /**
+     * Gets laboratory by id
+     *
+     * @param $lab_id
+     * @return mixed
+     */
     function getByID($lab_id)
     {
         return $this->db->query("

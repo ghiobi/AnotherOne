@@ -12,6 +12,7 @@
 				</a>
 				<div class="collapse" id="enroll">
 					<ul class="front-dropdown">
+						<!--Printing all available semesters-->
 						<?php foreach($semesters as $semester): ?>
 							<li><a href="<?= site_url('students/enroll/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
@@ -22,6 +23,7 @@
 					<i class="glyphicon glyphicon-calendar"></i> View Schedule</a>
 				<div class="collapse" id="view-schedule">
 					<ul class="front-dropdown">
+						<!--Printing all available semesters-->
 						<?php foreach($semesters as $semester): ?>
 							<li><a href="<?= site_url('students/view/'.$semester->slug) ?>"><?= $semester->name ?></a></li>
 						<?php endforeach; ?>
@@ -37,8 +39,6 @@
 				</div>
 				<div class="panel-body">
 					<div id="notice-slider" class="carousel slide sidebar-slider" data-interval="10000" data-ride="carousel">
-						<!-- Carousel indicators -->
-						<!-- Carousel items -->
 						<div class="carousel-inner">
 
 							<?php
@@ -69,34 +69,54 @@
 			</small>
 		</span>
 	</h4>
-	<div class="row">
 		<?php
-			$sequence = $progress['progress'];
-			$num_course = count($sequence);
-			$num_per_col = ceil($num_course / 3);
 
-			$current = 0;
-			for($col = 0; $col < $num_per_col && $current < $num_course; $col++)
-			{
-				echo '<div class="col-md-4">
+			$sequence = $progress['progress'];
+
+			//If the array sequence is greater then 0 then display the seq
+			if(count($sequence) > 0):
+				$semester = $sequence[0]['semester'];
+
+				$index = 0;
+				while($index < count($sequence)){
+
+					//This tries to format three semesters in one row
+					if(($semester - 1) % 3 == 0)
+						echo'<div class="row">';
+
+					echo '<div class="col-md-4">
+						<h5>Semester '.$semester.'</h5>
 						<ul class="list-group">';
-					for($i = 0; $i < $num_per_col; $i++)
-					{
-						if($current >= $num_course)
-							break;
+
+					//If the semester is the not the same semester then it will create a new list group.
+					while($semester == $sequence[$index]['semester']){
 
 						echo '<li class="list-group-item';
-						if($sequence[$current]['completed'])
+						if($sequence[$index]['completed'])
 							echo ' list-group-item-success';
-						else if($sequence[$current]['takable'])
+						else if($sequence[$index]['takable'])
 							echo ' list-group-item-warning';
-						echo '">' . $sequence[$current]['name'] . '</li>';
+						echo '">' . $sequence[$index]['name'] . '</li>';
 
-						$current++;
+						$index++;
+
 					}
-				echo '</ul>
+
+					echo '</ul>
 					</div>';
-			}
+
+					if(($semester) % 3 == 0)
+						echo'</div>';
+
+					//increments new semester from every new semester
+					$semester++;
+				}
+
+				//If the last semester was not closed by a div, then this will close it.
+				if($semester > 1 && ($semester - 1) % 3 != 0)
+					echo'</div>';
+
+			endif;
+
 		?>
-	</div>
 </main>

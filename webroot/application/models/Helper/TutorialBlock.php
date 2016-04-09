@@ -4,7 +4,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Tutorial
+ * Class Tutorial holds data of a tutorial section
  * @package Scheduler
  */
 class TutorialBlock extends RoomBlock

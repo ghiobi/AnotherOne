@@ -2,6 +2,11 @@
 namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class GroupSection holds section data which contains lectures, laboratory and tutorials.
+ *
+ * @package Scheduler
+ */
 class GroupSection
 {
     private $course_id;

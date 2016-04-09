@@ -3,7 +3,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Block takes care of location and time of blocks
+ * Class Block holds time data.
  *
  * @package Scheduler
  */
@@ -18,14 +18,13 @@ class Block
 
     /**
      * Block constructor.
-     * @param $id
-     * @param $room
      * @param $start
      * @param $end
      * @param $weekday
      */
     function __construct($start, $end, $weekday)
     {
+        //Formats the time from the database to 'HH:MM' instead of 'HH:MM:SS'
         $this->start = $this->formatFromDB($start);
         $this->end = $this->formatFromDB($end);
 
@@ -63,7 +62,7 @@ class Block
     }
 
     /**
-     * @param \DateTime $end_time
+     * @param end_time
      */
     public function setEnd($end_time)
     {
@@ -98,6 +97,12 @@ class Block
         return substr($time, 0, $colon);
     }
 
+    /**
+     * Converts time into minutes.
+     *
+     * @param $time
+     * @return string
+     */
     private function toMinutes($time)
     {
         $colon = strpos($time, ':');
