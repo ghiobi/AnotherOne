@@ -546,7 +546,7 @@ class Scheduler extends CI_Model
 		$bad_count = 0;
 		foreach($array_blocks as $block)
 		{
-			$time_block = new \Scheduler\PreferenceBlock($block['start'], $block['end'], $block['weekday']);
+			$time_block = new \Scheduler\PreferenceBlock($block->start, $block->end, $block->weekday);
 
 			//If the preference overlaps the main schedule then skip.
 			if(!$this->main_schedule->overlapsRegistered($time_block)){

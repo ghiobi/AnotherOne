@@ -45,48 +45,20 @@ $(function() {
     }
 	
 	$('#btnsubmit').on('click', function() {
-
-        var days = [];
-        var addeddays=[];
-        var starttime = ($('#starttime').val());
-        var endtime = ($('#endingtime').val());
-
-
-        $("input:checkbox[name=weekday]:checked").each(function()
-
-        {
-
-            if($("#time_all_day").is(':checked')) {
-                days.push({
-                    "day": $(this).val(),
-                    "starttime": '0:00',
-                    "endtime": '24:00'
-
-                });
+        var preference = [
+            {
+                start: '9:00:00',
+                end: '10:00:00',
+                weekday: 2
             }
-
-            else {
-                days.push({
-                    "day": $(this).val(),
-                    "starttime": starttime,
-                    "endtime": endtime
-
-                });
-            }
-        });
-
-        console.log(days);
-        $('#scheduler-pref').empty();
-
-        for(var i in days) {
-            $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="starttime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
-        }
+        ];
+        console.log(JSON.stringify(preference));
         $.ajax({
             method: 'POST',
             url: controllerURL + '/add-preference',
-            data: {input: days},
-            success: function () {
-                console.log("Preferences added")
+            data: {input: JSON.stringify(preference)},
+            success: function (output) {
+                load_preference();
             }
         });
     });
