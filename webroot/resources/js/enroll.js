@@ -42,6 +42,7 @@ $(function() {
             }
         );
     }
+<<<<<<< HEAD
 
 
 
@@ -120,6 +121,7 @@ $(function() {
 
             for(var i in days) {
                 $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
+
             }
             $.ajax({
                 method: 'POST',

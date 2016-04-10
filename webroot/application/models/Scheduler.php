@@ -14,6 +14,18 @@ include_once 'Helper/LectureBlock.php';
 include_once 'Helper/LaboratoryBlock.php';
 include_once 'Helper/TutorialBlock.php';
 
+/**
+ * Class Scheduler manages the student's schedule and enrollment process.
+ *
+ * This classes is divided into 7 parts:
+ * + Course Registration
+ * + Schedule Generation
+ * + Search
+ * + Course Management
+ * + Course List
+ * + Preferences
+ * + Factory
+ */
 class Scheduler extends CI_Model
 {
 	private $semester_id;
@@ -52,7 +64,7 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Initializes the schedule object
+	 * Initializes the schedule object by retrieving the current schedule of this semester.
 	 *
 	 * @param $semester_id
 	 */
@@ -82,6 +94,18 @@ class Scheduler extends CI_Model
 		$this->registered_course_list = $this->main_schedule->getCourseList();
 		$this->generator_course_list = [];
 	}
+
+	/**
+	 * Returns the encoded JSON string of a schedule Object
+	 *
+	 * @return string
+	 */
+	public function getMainSchedule()
+	{
+		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
+	}
+
+	/**************************************************** Course Registration ***********************************************************/
 
 	/**
 	 * Drops a section in the main schedule and in the database.
@@ -209,6 +233,8 @@ class Scheduler extends CI_Model
 
 		return TRUE;
 	}
+
+	/**************************************************** Schedule Generation ***********************************************************/
 	
 	/**
 	 * Returns possible generated schedules.
@@ -280,6 +306,13 @@ class Scheduler extends CI_Model
 		}
 	}
 
+	/**************************************************** Search ***********************************************************/
+
+	/**
+	 * Returns the search course list array to the client.
+	 *
+	 * @return string
+	 */
 	public function searchCourseList()
 	{
 		if(!$this->search_course_list){
@@ -297,6 +330,15 @@ class Scheduler extends CI_Model
 		return $this->search_course_list;
 	}
 
+	/**************************************************** Course Management ***********************************************************/
+
+	/**
+	 * Checks if the current student has completed the course.
+	 *
+	 * @param $course_id
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function is_complete($course_id){
 
 		$passing_grade = $this->course->getPassingGrade($course_id);
@@ -325,9 +367,7 @@ class Scheduler extends CI_Model
 		return FALSE;
 	}
 
-	/**
-	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
-	 * 
+	/*
 	 * Automatically adds one courses to the generator list.
 	 */
 	public function auto_pick_course()
@@ -467,6 +507,8 @@ class Scheduler extends CI_Model
 		return FALSE;
 	}
 
+	/**************************************************** Course List ***********************************************************/
+
 	/**
 	 * This function is called every time there is an add, autopick, remove registered course, drop, and commit.
 	 *
@@ -489,6 +531,8 @@ class Scheduler extends CI_Model
 		return json_encode($array, JSON_NUMERIC_CHECK);
 	}
 
+	/**************************************************** PREFERENCE ***********************************************************/
+
 	/**
 	 * Adds a time preference object to the preference_block list.
 	 *
@@ -502,7 +546,7 @@ class Scheduler extends CI_Model
 		$bad_count = 0;
 		foreach($array_blocks as $block)
 		{
-			$time_block = new \Scheduler\PreferenceBlock($block['start'], $block['end'], $block['weekday']);
+			$time_block = new \Scheduler\PreferenceBlock($block->start, $block->end, $block->weekday);
 
 			//If the preference overlaps the main schedule then skip.
 			if(!$this->main_schedule->overlapsRegistered($time_block)){
@@ -548,8 +592,11 @@ class Scheduler extends CI_Model
 		return json_encode($this->preference_blocks, JSON_NUMERIC_CHECK);
 	}
 
+	/****************************************************FACTORY***********************************************************/
+
 	/**
-	 * Used for initializing schedule. Returns the Objectified Group Section of a registered table.
+	 * Used for initializing schedules.
+	 * Returns the Objectified Group Section of a registered section row in the database.
 	 *
 	 * @param $course_id
 	 * @param $section_id
@@ -608,7 +655,7 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Returns an array of all section combination groups of section lectures, tutorials, and laboratories
+	 * Returns an array of all section combination groups containing lectures, tutorials, and laboratories of a course.
 	 *
 	 * @param $course_id
 	 * @return array|bool
@@ -670,7 +717,7 @@ class Scheduler extends CI_Model
 					array_push($laboratories, $obj);
 				}
 			}
-
+			//If there are laboratories and tutorials
 			if($laboratories && $tutorials)
 			{
 				foreach($laboratories as $laboratory)
@@ -692,6 +739,7 @@ class Scheduler extends CI_Model
 					}
 				}
 			}
+			//If there are tutorials but not laboratories
 			elseif($tutorials && !$laboratories)
 			{
 				foreach($tutorials as $tutorial)
@@ -710,6 +758,7 @@ class Scheduler extends CI_Model
 					array_push($combo, $group);
 				}
 			}
+			//If there are no tutorials but has laboratories
 			elseif(!$tutorials && $laboratories)
 			{
 				foreach($laboratories as $laboratory)
@@ -728,6 +777,7 @@ class Scheduler extends CI_Model
 					array_push($combo, $group);
 				}
 			}
+			//If there are not tutorials or laboraties.
 			else{
 				$group = new Scheduler\GroupSection(
 					NULL,
@@ -744,16 +794,6 @@ class Scheduler extends CI_Model
 		}
 
 		return $combo;
-	}
-
-	/**
-	 * Returns the encoded JSON string of a schedule Object
-	 *
-	 * @return string
-	 */
-	public function getMainSchedule()
-	{
-		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
 
 }

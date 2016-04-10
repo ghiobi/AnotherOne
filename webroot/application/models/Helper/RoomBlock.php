@@ -3,7 +3,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class RoomBlock takes care of location and time of blocks
+ * Class RoomBlock takes care of location and time
  *
  * @package Scheduler
  */
@@ -27,16 +27,28 @@ class RoomBlock extends Block
         $this->room = $room;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @param $id
+     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * Returns true it overlaps another block
+     *
+     * @param Block $block
+     * @return bool
+     */
     public function overlaps(Block $block)
     {
         if($this->room == 'Online' || $block->room == 'Online')

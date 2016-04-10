@@ -11,6 +11,9 @@ class Login extends CI_Controller
 		parent::__construct();
 	}
 
+	/**
+	 * Displays the login page.
+	 */
 	public function index()
 	{
 		//Redirects user to homepage if logged in
@@ -63,6 +66,9 @@ class Login extends CI_Controller
 		$this->load->view('login/index.php', $data);
 	}
 
+	/**
+	 *  Destroys session upon signout, and redirects the user to the main page.
+	 */
 	public function signout()
 	{
 		session_destroy();

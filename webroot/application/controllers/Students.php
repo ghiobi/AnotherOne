@@ -1,7 +1,8 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
 /**
-* 	Controls the profile page, the enroll page and the schedule page
+* 	Controls the profile page, the enroll page and the schedule page.
+* 	Everything that deals with the student, happens here.
 */
 class Students extends App_Base_Controller
 {
@@ -30,6 +31,9 @@ class Students extends App_Base_Controller
         $this->load->view('layouts/footer.php', $data);
 	}
 
+	/**
+	 * Processes the form to update user's password.
+	 */
 	public function update_password(){
 
 		if ($this->input->server('REQUEST_METHOD') == 'POST')
@@ -189,6 +193,7 @@ class Students extends App_Base_Controller
 				echo $this->scheduler->get_course_list();
 			} break;
 
+			//Adds a preference to the scheduler model
 			case 'add-preference': {
 				$json_input = $this->input->post('input', TRUE);
 				$message = $this->scheduler->addTimePreference($json_input);
@@ -196,6 +201,7 @@ class Students extends App_Base_Controller
 				echo $message;
 			} break;
 
+			//Removes preference depending on the hash code inputted.
 			case 'remove-preference': {
 				$hash_code = $this->input->post('input', TRUE);
 				$message = $this->scheduler->removeTimePreference($hash_code);
@@ -203,10 +209,12 @@ class Students extends App_Base_Controller
 				echo $message;
 			} break;
 
+			//Returns all preferences
 			case 'get-preference': {
 				echo $this->scheduler->getTimePreferences();
 			} break;
 
+			//Resets the whole session data of this semester.
 			case 'reset': {
 				$this->session->unset_userdata($semester_url);
 				return;
@@ -219,7 +227,7 @@ class Students extends App_Base_Controller
 	}
 
 	/**
-	 * Viewing the schedule of a semester.
+	 * Viewing the schedule of a semester. Works the same as the enroll page.
 	 *
 	 * @param $semester_url - the semester url slug id.
 	 */
@@ -242,11 +250,13 @@ class Students extends App_Base_Controller
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
 
+		//Unserializes the semester data to retrieve the scheduler object
 		$this->scheduler = unserialize($this->session->userdata($semester_url));
 
 		$data['info_bar'] = 'Schedule for '.$semester->name;
 		$data['title'] = 'Schedule of '.$semester->name;
 
+		//Gets the main schedule data.
 		$data['schedule'] = $this->scheduler->getMainSchedule();
 
 		$this->load->view('layouts/header.php', $data);

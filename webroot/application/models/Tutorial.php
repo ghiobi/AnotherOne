@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class Tutorial returns data from the database by section id or the tutorial id.
+ */
 class Tutorial extends CI_Model
 {
 
@@ -23,6 +26,12 @@ class Tutorial extends CI_Model
             WHERE section_id = '$section_id'")->result();
     }
 
+    /**
+     * Gets the tutorial by it's exact Id.
+     *
+     * @param $tutorial_id
+     * @return mixed
+     */
     function getByID($tutorial_id)
     {
         return $this->db->query("

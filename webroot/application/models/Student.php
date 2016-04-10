@@ -1,7 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
 include_once 'Helper/Grade.php';
 
+/**
+ * Class Student manages all data of the student.
+ */
 class Student extends CI_Model
 {
     private $user_id;
@@ -73,7 +75,7 @@ class Student extends CI_Model
     }
 
     /**
-     * Gets the record of this student.
+     * Gets the academic record of this student.
      *
      * @return associative array - returns an associative array, where the index is the semester name.
      */
@@ -171,7 +173,7 @@ class Student extends CI_Model
     /**
      * Returns array with info of course progress.
      *
-     * @return array - Returns an array that contains associative arrays with
+     * @return array - Returns an array that contains associative arrays with the program name and another array with
      *      - String => The course full name ex: 'SOEN 341 Software Process'
      *      - Boolean => Is completed course with a passing grade
      *      - Boolean => Can he take the course? (If course is already completed )
@@ -185,7 +187,8 @@ class Student extends CI_Model
               courses.id,
               courses.code,
               courses.number,
-              courses.name
+              courses.name,
+              programsequence.semester
             FROM programsequence
               INNER JOIN courses
                 ON programsequence.course_id = courses.id
@@ -196,7 +199,7 @@ class Student extends CI_Model
             array_push($course_list, $course->id);
         $course_list = implode(',', $course_list);
 
-        //Getting prerequisites
+        //Getting prerequisites of every course.
         $sql_reqs = $this->db->query("
             SELECT
               courseprequisites.course_id,
@@ -204,6 +207,7 @@ class Student extends CI_Model
             FROM courseprequisites
             WHERE courseprequisites.course_id IN ($course_list)")->result();
 
+        //Grouping the prerequisite into a two dimensional array by course id
         $prerequisites = [];
         if(! empty($sql_reqs))
         {
@@ -220,17 +224,21 @@ class Student extends CI_Model
             }
         }
 
+        //Retrieving all of the student's grades.
         $allGrades = $this->getStudentsGrades();
 
+        //Creating progress list and validating if student has completed the course.
         $progress = [];
         foreach($course_sequence as $value)
         {
             $progress[$value->id] =  [
                 'name' => $value->code ." ". $value->number." ".$value->name,
-                'completed' => $this->isCompleted($value->id, $allGrades)
+                'completed' => $this->isCompleted($value->id, $allGrades),
+                'semester' => $value->semester
             ];
         }
 
+        //Inserting takable attribute to the array
         foreach($progress as $key => $course) {
             $progress[$key]['takable'] = $this->isTakable($prerequisites[$key], $progress);
         }
@@ -241,10 +249,10 @@ class Student extends CI_Model
     /**
      * Determines if a course is completed with passing grade or going to be completed.
      *
-     * @param $course_id
-     * @param $allGrades
-     * @return bool
-     * @throws Exception
+     * @param $course_id - the course id to compare with.
+     * @param $allGrades - the lists of all grades with all courses.
+     * @return bool - returns true if he has completed the course.
+     * @throws Exception - Throws exception if invalid grade, shouldn't happen however.
      */
     private function isCompleted($course_id,$allGrades)
     {
@@ -252,6 +260,7 @@ class Student extends CI_Model
 
             if ($value->course_id == $course_id) {
 
+                //
                 $grade = new Grade($value->grade);
 
                 if ($grade->passed($value->passing_grade)) {
@@ -265,9 +274,9 @@ class Student extends CI_Model
     /**
      * Determines if this student can take a course.
      *
-     * @param $course_id
-     * @param $allGrades
-     * @return bool
+     * @param $prereqs - the course id
+     * @param $progress - the list of completed courses or not.
+     * @return bool - true if student can take the course
      */
     private function isTakable($prereqs, $progress)
     {
