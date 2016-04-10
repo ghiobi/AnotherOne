@@ -97,13 +97,12 @@
 							<div class="col-sm-10">
 									Select a Weekday
 									<br>
-									<input type="checkbox" name="weekday" value="monday">monday<br>
-									<input type="checkbox" name="weekday" value="tuesday">tuesday <br>
-									<input type="checkbox" name="weekday" value="wednesday">wednesday <br>
-									<input type="checkbox" name="weekday" value="thursday">thursday <br>
-									<input type="checkbox" name="weekday" value="friday">friday <br>
-									<input type="checkbox" name="weekday" value="saturday">saturday<br>
-									<input type="checkbox" name="weekday" value="sunday">sunday <br>
+									<input type="checkbox" name="weekday" value="1">monday<br>
+									<input type="checkbox" name="weekday" value="2">tuesday <br>
+									<input type="checkbox" name="weekday" value="3">wednesday <br>
+									<input type="checkbox" name="weekday" value="4">thursday <br>
+									<input type="checkbox" name="weekday" value="5">friday <br>
+
 
 									
 								

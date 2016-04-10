@@ -42,7 +42,7 @@ $(function() {
             }
         );
     }
-<<<<<<< HEAD
+
 
 
 
@@ -95,10 +95,6 @@ $(function() {
                         "endtime": '24:00'
 
                     });
-
-
-
-
                 }
 
                 else {
@@ -120,19 +116,33 @@ $(function() {
             $('#scheduler-pref').empty();
 
             for(var i in days) {
-                $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
+                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
 
             }
-            $.ajax({
-                method: 'POST',
-                url: controllerURL + '/add-preference',
-                data: {input: days},
-                success: function () {
-                    console.log("Preferences added");
-                    $('#scheduler-pref-modal').modal('hide');
 
+                for( var i in days) {
+
+                    var preference =
+                    {
+                        start: days[i].starttime,
+                        end: days[i].endtime,
+                        day:days[i].day
+
+
+                    }
+                    console.log(JSON.stringify(preference));
+
+                    $.ajax({
+                        method: 'POST',
+                        url: controllerURL + '/add-preference',
+                        data: {input: preference},
+                        success: function () {
+                            console.log("Preferences added");
+                            $('#scheduler-pref-modal').modal('hide');
+
+                        }
+                    });
                 }
-            });
 
     }
         });
@@ -146,7 +156,9 @@ $(function() {
             .find("input[type=checkbox], input[type=radio]").prop("checked", "")
             .end();
     });
-	
+
+
+
 
 
     //Removing a preference.
@@ -170,6 +182,19 @@ $(function() {
                 }
             });
         }
+
+        $("#scheduler-pref").on('click', "#button_remove",function()
+            {
+
+
+                $(this).parent().remove();
+
+
+            }
+        );
+
+
+
     });
 
     //Search
