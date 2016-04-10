@@ -2,7 +2,6 @@
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
-
 var undo_drop_array = [];
 var selected_schedule = -1;
 
@@ -43,53 +42,110 @@ $(function() {
             }
         );
     }
-	
-	$('#btnsubmit').on('click', function() {
 
-        var days = [];
-        var addeddays=[];
+
+
+    $(document).ready(function() {
+        var checkboxes = $("input[type='checkbox']")
         var starttime = ($('#starttime').val());
         var endtime = ($('#endingtime').val());
+        var checked = false;
+        $('#btnsubmit').attr('disabled', true);
 
+        checkboxes.click(function() {
+                $('#btnsubmit').attr('disabled', false);
+                ("disabled", !checkboxes.is(":checked"));
+            }
+        );
 
-        $("input:checkbox[name=weekday]:checked").each(function()
-
+        $("#time_all_day").change(function ()
         {
-
             if($("#time_all_day").is(':checked')) {
-                days.push({
-                    "day": $(this).val(),
-                    "starttime": '0:00',
-                    "endtime": '24:00'
+                $('#starttime').attr('disabled', true);
+                $('#endingtime').attr('disabled', true);
+            }
+            else
+            {
+                $('#starttime').attr('disabled', false);
+                $('#endingtime').attr('disabled', false);
 
-                });
+            }
+        });
+
+
+        $('#btnsubmit').on('click', function(e) {
+
+            var days = [];
+            var addeddays=[];
+            var starttime = ($('#starttime').val());
+            var endtime = ($('#endingtime').val());
+
+
+
+            $("input:checkbox[name=weekday]:checked").each(function()
+
+            {
+
+                if($("#time_all_day").is(':checked')) {
+                    console.log($(this).val());
+                    days.push({
+                        "day": $(this).val(),
+                        "starttime": '0:00',
+                        "endtime": '24:00'
+
+                    });
+
+
+
+
+                }
+
+                else {
+                    days.push({
+                        "day": $(this).val(),
+                        "starttime": starttime,
+                        "endtime": endtime
+
+                    });
+                }
+            });
+            if(endtime < starttime) {
+                alert("ENDTIME MUST BE LATER THAN STARTTIME");
+                e.preventDefault();
             }
 
             else {
-                days.push({
-                    "day": $(this).val(),
-                    "starttime": starttime,
-                    "endtime": endtime
+            console.log(days);
+            $('#scheduler-pref').empty();
 
-                });
+            for(var i in days) {
+                $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
             }
-        });
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/add-preference',
+                data: {input: days},
+                success: function () {
+                    console.log("Preferences added");
+                    $('#scheduler-pref-modal').modal('hide');
 
-        console.log(days);
-        $('#scheduler-pref').empty();
+                }
+            });
 
-        for(var i in days) {
-            $('#scheduler-pref').append('Day:' + '<div class = "drop_pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="starttime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
-        }
-        $.ajax({
-            method: 'POST',
-            url: controllerURL + '/add-preference',
-            data: {input: days},
-            success: function () {
-                console.log("Preferences added")
-            }
+    }
         });
+            });
+
+
+    $("#scheduler-pref-modal").on("hidden.bs.modal", function(){
+        $(this)
+            .find("input,textarea,select").val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]").prop("checked", "")
+            .end();
     });
+	
+
 
     //Removing a preference.
     $(document).on('click','#scheduler-pref > p', function()
@@ -102,8 +158,10 @@ $(function() {
                 url: controllerURL + '/remove-preference',
                 data: {input: key},
                 success: function (output) {
-                    if(output != '')
+                    if(output != '') {
+                        console.log("hello");
                         notify(true, output);
+                    }
                     else
                         notify(false, "Had a problem removing the preference.");
                     load_preference();
@@ -204,9 +262,9 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
-                    );
-                }
+                    new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
+                );
+            }
             }
         );
     });

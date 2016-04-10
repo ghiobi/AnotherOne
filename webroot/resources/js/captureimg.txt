@@ -14,7 +14,7 @@ cv::Mat_gray_image;
 cvtColor(frame, gray_image,CV_BGR2GRAY);
 
 bool pattern_found = cv::findChessboardCorners(gray_image,pattern_size,corners,cv,
-CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_THRESH |CALIB_CB_FAST_CHECK);
+CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_NORMALIZE_IMAGE + CALIB_CB_FAST_CHECK);
 
 
 if(pattern_found)
@@ -27,6 +27,31 @@ cv::termCriteria(CV_TERMCRIT_EPS|CV_TERMCRIT_ITER,30,0.1);
 
 cv::MAT dummy==frame;
 cv::drawChessboardCorners(dummy,pattern_size,cv::MAT(corners),pattern_found);
+cv::imshow("Processed image",dummy);
+
+while(true)
+{
+int key= cv::waitkey(0);
+switch(key)
+
+{
+
+case 13:
+corners.clear
+if(findCorresondeces(current_frame, corners))
+{
+
+sprintf(file_name,"calibration_image")
+
+}
+return true;
+
+case 8:
+return false;
+
+}
+
+}
 
 }
 
@@ -36,6 +61,38 @@ return false;
 
 }
 
+
+void calculateParameters(std::vector<std::vector<cv::Point2f>> const & calibration_corners)
+{
+
+int number_of_image = calibration_corners.size();
+
+std::vector<std::vector<cv::point2f >> all_objects_pints;
+
+for(int i = 0; i<number_of_images,i++)
+	{
+	std::vector<cv:Point3f>object_points;
+	
+	for(j=0;j<calibration_corners[i].size();j++)
+	
+	{
+	object_points.pushback(cv::Point3f(TILE_SIZE*float(j%NUM_TILES_X),
+	TILE_SIZE*float(j/NUM_TILES_X,0)
+	
+	)
+	
+	all_objects_points.push_back(object_points);
+	
+	}
+	
+	cv::calibrateCamera(all_objects_points,calibration_corners.image_size,camera_matrix,distortion)
+	
+	}
+	
+	}
+
+
+}
 void captureFrames()
 {
 
@@ -79,7 +136,12 @@ return;
 
 bool calibrate()
 {
-captureFrames();
-return true
+
+cv::size image_size;
+std::vector<std::vector <cv::point2f>> calibration_corners;
+captureFrames(image_size,calibration_corners);
+calculateParameters();
+
+return false;
 
 }
