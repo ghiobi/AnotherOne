@@ -135,7 +135,7 @@ $(function() {
                     $.ajax({
                         method: 'POST',
                         url: controllerURL + '/add-preference',
-                        data: {input: preference},
+                        data: {input:JSON.stringify(preference)},
                         success: function () {
                             console.log("Preferences added");
                             $('#scheduler-pref-modal').modal('hide');
