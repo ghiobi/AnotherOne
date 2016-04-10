@@ -116,7 +116,7 @@ $(function() {
             $('#scheduler-pref').empty();
 
             for(var i in days) {
-                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
+                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="weekday">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
 
             }
 
@@ -126,7 +126,7 @@ $(function() {
                     {
                         start: days[i].starttime,
                         end: days[i].endtime,
-                        day:days[i].day
+                        weekday:days[i].day
 
 
                     }
