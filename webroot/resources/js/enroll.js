@@ -116,33 +116,38 @@ $(function() {
             $('#scheduler-pref').empty();
 
             for(var i in days) {
-                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="weekday">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
+                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
 
             }
 
-                for( var i in days) {
+                var preference = [];
 
-                    var preference =
+
+                for( var i in days) {
+                    preference.push(
                     {
                         start: days[i].starttime,
                         end: days[i].endtime,
                         weekday:days[i].day
 
 
-                    }
-                    console.log(JSON.stringify(preference));
-
-                    $.ajax({
-                        method: 'POST',
-                        url: controllerURL + '/add-preference',
-                        data: {input:JSON.stringify(preference)},
-                        success: function () {
-                            console.log("Preferences added");
-                            $('#scheduler-pref-modal').modal('hide');
-
-                        }
                     });
+
+
                 }
+                console.log(JSON.stringify(preference));
+
+
+                $.ajax({
+                    method: 'POST',
+                    url: controllerURL + '/add-preference',
+                    data: {input:JSON.stringify(preference)},
+                    success: function () {
+                        console.log("Preferences added");
+                        $('#scheduler-pref-modal').modal('hide');
+
+                    }
+                });
 
     }
         });
@@ -153,7 +158,7 @@ $(function() {
         $(this)
             .find("input,textarea,select").val('')
             .end()
-            .find("input[type=checkbox], input[type=radio]").prop("checked", "")
+            .find("input[type=checkbox], input[type=radio]").prop("checked", "1")
             .end();
     });
 
