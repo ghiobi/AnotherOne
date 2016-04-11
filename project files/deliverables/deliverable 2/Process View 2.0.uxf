@@ -999,8 +999,8 @@ Options</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1090</x>
-      <y>870</y>
+      <x>1100</x>
+      <y>880</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -1010,8 +1010,8 @@ Options</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1090</x>
-      <y>730</y>
+      <x>1100</x>
+      <y>810</y>
       <w>100</w>
       <h>40</h>
     </coordinates>
@@ -1054,22 +1054,10 @@ Registeration</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>1090</x>
-      <y>800</y>
-      <w>100</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Course 
-Removed</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>1130</x>
-      <y>830</y>
+      <x>1140</x>
+      <y>840</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -1079,8 +1067,8 @@ Removed</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1130</x>
-      <y>760</y>
+      <x>1140</x>
+      <y>770</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -1101,13 +1089,13 @@ Removed</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1130</x>
-      <y>890</y>
+      <x>1140</x>
+      <y>900</y>
       <w>30</w>
-      <h>70</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -1467,13 +1455,13 @@ m1=[successful add]</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1050</x>
-      <y>740</y>
+      <x>1040</x>
+      <y>720</y>
       <w>60</w>
-      <h>220</h>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;200.0;10.0;10.0;40.0;10.0</additional_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0;40.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLObject</id>
@@ -1484,7 +1472,113 @@ m1=[successful add]</panel_attributes>
       <h>1290</h>
     </coordinates>
     <panel_attributes>Mytinerary System Process
-valign=top</panel_attributes>
+valign=top
+layer=-1</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1100</x>
+      <y>670</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Course 
+Removed</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1130</x>
+      <y>740</y>
+      <w>40</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>type=decision</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1140</x>
+      <y>700</y>
+      <w>60</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+[Yes]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1070</x>
+      <y>740</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+[No]</panel_attributes>
+    <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSyncBarVertical</id>
+    <coordinates>
+      <x>1070</x>
+      <y>670</y>
+      <w>20</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>template=txt
+title=titletext
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1070</x>
+      <y>680</y>
+      <w>50</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>610</x>
+      <y>860</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Remove Course 
+From Generator</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>900</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>900</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
