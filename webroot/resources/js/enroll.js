@@ -116,7 +116,7 @@ $(function() {
 
     $("#scheduler-pref-modal").on("hidden.bs.modal", function(){
         $(this)
-            .find("input,textarea,select").val('')
+            .find("input[name=input_time]").val('')
             .end()
             .find("input[type=checkbox], input[type=radio]").prop("checked", false)
             .end();
