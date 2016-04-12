@@ -44,127 +44,81 @@ $(function() {
     }
 
 
+    //Disable text for time if all day is checked
+    $("#time_all_day").change(function ()
+    {
+        if($("#time_all_day").is(':checked')) {
+            $('#starttime').attr('disabled', true);
+            $('#endingtime').attr('disabled', true);
+        }
+        else
+        {
+            $('#starttime').attr('disabled', false);
+            $('#endingtime').attr('disabled', false);
 
+        }
+    });
 
-    $(document).ready(function() {
-        var checkboxes = $("input[type='checkbox']")
+    $('#btnsubmit').on('click', function(e) {
+
+        var days = [];
+
         var starttime = ($('#starttime').val());
         var endtime = ($('#endingtime').val());
-        var checked = false;
-        $('#btnsubmit').attr('disabled', true);
 
-        checkboxes.click(function() {
-                $('#btnsubmit').attr('disabled', false);
-                ("disabled", !checkboxes.is(":checked"));
-            }
-        );
+        if(starttime.length == 0 || endtime.length == 0){
+            alert("ENTER TIME");
+            return;
+        }
 
-        $("#time_all_day").change(function ()
+        $("input:checkbox[name=weekday]:checked").each(function()
         {
             if($("#time_all_day").is(':checked')) {
-                $('#starttime').attr('disabled', true);
-                $('#endingtime').attr('disabled', true);
-            }
-            else
-            {
-                $('#starttime').attr('disabled', false);
-                $('#endingtime').attr('disabled', false);
+                days.push({
+                    weekday: $(this).val(),
+                    start: '0:00',
+                    end: '24:00'
 
-            }
-        });
-
-
-        $('#btnsubmit').on('click', function(e) {
-
-            var days = [];
-            var addeddays=[];
-            var starttime = ($('#starttime').val());
-            var endtime = ($('#endingtime').val());
-
-
-
-            $("input:checkbox[name=weekday]:checked").each(function()
-
-            {
-
-                if($("#time_all_day").is(':checked')) {
-                    console.log($(this).val());
-                    days.push({
-                        "day": $(this).val(),
-                        "starttime": '0:00',
-                        "endtime": '24:00'
-
-                    });
-                }
-
-                else {
-                    days.push({
-                        "day": $(this).val(),
-                        "starttime": starttime,
-                        "endtime": endtime
-
-                    });
-                }
-            });
-            if(endtime < starttime) {
-                alert("ENDTIME MUST BE LATER THAN STARTTIME");
-                e.preventDefault();
-            }
-
-            else {
-            console.log(days);
-            $('#scheduler-pref').empty();
-
-            /*for(var i in days) {
-                $('#scheduler-pref').append('Day:' + '<div class = "pref"  >' + '<div id ="day">' + days[i].day + '</div>'+ '&nbsp' + "Startime:"+ '<div id ="startingtime">'+ days[i].starttime +'</div>'+  '&nbsp' + "Endtime:"+ '<div id = "endtime">' + days[i].endtime +'</div> ' + '<button type="button" id="button_remove"  +  class="btn btn-danger">remove</button>' + '</div>');
-
-            }*/
-
-                var preference = [];
-
-
-                for( var i in days) {
-                    preference.push(
-                    {
-                        start: days[i].starttime,
-                        end: days[i].endtime,
-                        weekday:days[i].day
-
-
-                    });
-
-
-                }
-                console.log(JSON.stringify(preference));
-
-
-                $.ajax({
-                    method: 'POST',
-                    url: controllerURL + '/add-preference',
-                    data: {input:JSON.stringify(preference)},
-                    success: function () {
-                        console.log("Preferences added");
-                        $('#scheduler-pref-modal').modal('hide');
-                        load_preference();
-
-                    }
                 });
-
-    }
+            }
+            else {
+                days.push({
+                    weekday: $(this).val(),
+                    start: starttime,
+                    end: endtime
+                });
+            }
         });
+        if(endtime < starttime) {
+            alert("END TIME MUST BE LATER THAN START TIME");
+            e.preventDefault();
+        }
+        else if(days.length == 0){
+            alert("CHECK A DAY.");
+            e.preventDefault();
+        }
+        else {
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/add-preference',
+                data: {input:JSON.stringify(days)},
+                success: function () {
+                    $('#scheduler-pref-modal').modal('hide');
+                    load_preference();
+
+                }
             });
+        }
+    });
 
 
     $("#scheduler-pref-modal").on("hidden.bs.modal", function(){
         $(this)
             .find("input,textarea,select").val('')
             .end()
-            .find("input[type=checkbox], input[type=radio]").prop("checked", "1")
+            .find("input[type=checkbox], input[type=radio]").prop("checked", false)
             .end();
     });
-
-
-
 
 
     //Removing a preference.
@@ -178,29 +132,14 @@ $(function() {
                 url: controllerURL + '/remove-preference',
                 data: {input: key},
                 success: function (output) {
-                    if(output != '') {
-                        console.log("hello");
+                    if(output != '')
                         notify(true, output);
-                    }
                     else
                         notify(false, "Had a problem removing the preference.");
                     load_preference();
                 }
             });
         }
-
-        $("#scheduler-pref").on('click', "#button_remove",function()
-            {
-
-
-                $(this).parent().remove();
-
-
-            }
-        );
-
-
-
     });
 
     //Search

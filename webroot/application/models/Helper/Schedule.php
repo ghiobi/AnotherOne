@@ -179,5 +179,4 @@ class Schedule
         $this->sections = $sections;
     }
 
-
 }

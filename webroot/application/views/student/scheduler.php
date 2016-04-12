@@ -94,22 +94,45 @@
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<div class="col-sm-10">
-									Select a Weekday
-									<br>
-									<input type="checkbox" name="weekday" value="1">monday<br>
-									<input type="checkbox" name="weekday" value="2">tuesday <br>
-									<input type="checkbox" name="weekday" value="3">wednesday <br>
-									<input type="checkbox" name="weekday" value="4">thursday <br>
-									<input type="checkbox" name="weekday" value="5">friday <br>
-
-
-									
-								
+							<label class="col-sm-2 control-label">Select A Weekday:</label>
+							<div class="col-sm-5">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="1">
+										Monday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="2">
+										Tuesday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="3">
+										Wednesday
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="4">
+										Thursday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="5">
+										Friday
+									</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
+							<label class="col-sm-2 control-label">Whole Day:</label>
+							<div class="col-sm-10">
 								<div class="checkbox" style="padding: 0">
 									<label>
 										<input type="checkbox" id="time_all_day"> Restrict the whole day
