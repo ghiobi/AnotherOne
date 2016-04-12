@@ -66,7 +66,7 @@ $(function() {
         var starttime = ($('#starttime').val());
         var endtime = ($('#endingtime').val());
 
-        if(starttime.length == 0 || endtime.length == 0){
+        if(!$("#time_all_day").is(':checked') && (starttime.length == 0 || endtime.length == 0)){
             alert("ENTER TIME");
             return;
         }
@@ -102,10 +102,12 @@ $(function() {
                 method: 'POST',
                 url: controllerURL + '/add-preference',
                 data: {input:JSON.stringify(days)},
-                success: function () {
-                    $('#scheduler-pref-modal').modal('hide');
+                success: function (message) {
+                    if(message != '')
+                        alert(message);
+                    else
+                        $('#scheduler-pref-modal').modal('hide');
                     load_preference();
-
                 }
             });
         }

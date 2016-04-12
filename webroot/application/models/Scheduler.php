@@ -565,7 +565,7 @@ class Scheduler extends CI_Model
 		}
 
 		//If there were incompatible preferences then a message
-		return ($bad_count)? 'Could not add '.$bad_count.' preferences.' : '';
+		return ($bad_count)? 'Could not add '.$bad_count.' preferences. Incompatible with current schedule. Please adjust.' : '';
 	}
 
 	/**
