@@ -165,7 +165,7 @@ $(function() {
                         notify(false, output);
                     }
                     else{
-                        load_course_.list();
+                        load_course_list();
 
                         //Empty undo
                         undo_drop_array = [];
