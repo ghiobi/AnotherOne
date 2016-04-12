@@ -118,7 +118,7 @@ $(function() {
         $(this)
             .find("input[name=input_time]").val('')
             .end()
-            .find("input[type=checkbox], input[type=radio]").prop("checked", false)
+            .find("input:checkbox[name=weekday]").prop("checked", false)
             .end();
     });
 
