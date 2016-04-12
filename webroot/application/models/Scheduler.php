@@ -8,15 +8,30 @@ include_once 'Helper/Schedule.php';
 include_once 'Helper/GroupSection.php';
 
 include_once 'Helper/Block.php';
+include_once 'Helper/PreferenceBlock.php';
+include_once 'Helper/RoomBlock.php';
 include_once 'Helper/LectureBlock.php';
 include_once 'Helper/LaboratoryBlock.php';
 include_once 'Helper/TutorialBlock.php';
 
+/**
+ * Class Scheduler manages the student's schedule and enrollment process.
+ *
+ * This classes is divided into 7 parts:
+ * + Course Registration
+ * + Schedule Generation
+ * + Search
+ * + Course Management
+ * + Course List
+ * + Preferences
+ * + Factory
+ */
 class Scheduler extends CI_Model
 {
 	private $semester_id;
 	private $student_id;
 	private $search_course_list;
+	private $course_sequence;
 
 	//Main Schedule;
 	public $main_schedule;
@@ -26,7 +41,7 @@ class Scheduler extends CI_Model
 	public $generator_course_list;
 
 	//Preferences
-	public $preferences;
+	public $preference_blocks;
 
 	public function __construct()
 	{
@@ -49,7 +64,7 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Initializes the schedule object
+	 * Initializes the schedule object by retrieving the current schedule of this semester.
 	 *
 	 * @param $semester_id
 	 */
@@ -74,10 +89,23 @@ class Scheduler extends CI_Model
 		$this->main_schedule = new Scheduler\Schedule($sectionGroups, []);
 
 		$this->search_course_list = [];
+		$this->preference_blocks = [];
 
 		$this->registered_course_list = $this->main_schedule->getCourseList();
 		$this->generator_course_list = [];
 	}
+
+	/**
+	 * Returns the encoded JSON string of a schedule Object
+	 *
+	 * @return string
+	 */
+	public function getMainSchedule()
+	{
+		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
+	}
+
+	/**************************************************** Course Registration ***********************************************************/
 
 	/**
 	 * Drops a section in the main schedule and in the database.
@@ -205,6 +233,8 @@ class Scheduler extends CI_Model
 
 		return TRUE;
 	}
+
+	/**************************************************** Schedule Generation ***********************************************************/
 	
 	/**
 	 * Returns possible generated schedules.
@@ -243,29 +273,46 @@ class Scheduler extends CI_Model
 		for ($i = 0; $i < count($courses[$current_course]); $i++)
 		{
 			//Clone the current schedule
-			$clone = clone $current_schedule;
+			$schedule = clone $current_schedule;
 
 			//If current_course is not end index of the number of courses to add, recurse if successful group add.
 			if($current_course != $num_courses)
 			{
-				if($clone->addUnregistered($courses[$current_course][$i]))
+				if($schedule->addUnregistered($courses[$current_course][$i]))
 				{
-					$this->generator($current_course + 1, $num_courses, $clone, $stack, $courses);
+					$this->generator($current_course + 1, $num_courses, $schedule, $stack, $courses);
 				}
 			}
 			else //If this is the last course, and successful in adding group in last course, push to stack.
 			{
-				if($clone->addUnregistered($courses[$current_course][$i]))
+				if($schedule->addUnregistered($courses[$current_course][$i]))
 				{
-					$serialize = serialize($clone);
-					$ciphered = $this->encryption->encrypt($serialize);
+					//If a preference overlaps, skip the addition.
+					foreach($this->preference_blocks as $pref_block)
+					{
+						if($schedule->overlapsUnregistered($pref_block)){
+							goto skip_add;
+						}
+					}
 
-					array_push($stack, [$clone , $ciphered]);
+					//Addes the schedule to the stack if successful
+					$serialize = serialize($schedule);
+					$ciphered = $this->encryption->encrypt($serialize);
+					array_push($stack, [$schedule , $ciphered]);
+
+					skip_add:
 				}
 			}
 		}
 	}
 
+	/**************************************************** Search ***********************************************************/
+
+	/**
+	 * Returns the search course list array to the client.
+	 *
+	 * @return string
+	 */
 	public function searchCourseList()
 	{
 		if(!$this->search_course_list){
@@ -283,6 +330,15 @@ class Scheduler extends CI_Model
 		return $this->search_course_list;
 	}
 
+	/**************************************************** Course Management ***********************************************************/
+
+	/**
+	 * Checks if the current student has completed the course.
+	 *
+	 * @param $course_id
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function is_complete($course_id){
 
 		$passing_grade = $this->course->getPassingGrade($course_id);
@@ -310,15 +366,14 @@ class Scheduler extends CI_Model
 
 		return FALSE;
 	}
-	
-	/**
-	 * TODO: Auto-picks possible course, thus fills the generated_course automatically.
-	 * 
+
+	/*
 	 * Automatically adds one courses to the generator list.
 	 */
 	public function auto_pick_course()
 	{
-		$sequence = $this->db->query("
+		if($this->course_sequence == NULL){
+			$this->course_sequence = $this->db->query("
 			SELECT DISTINCT
 			  sections.course_id
 			FROM students
@@ -329,11 +384,12 @@ class Scheduler extends CI_Model
 			  INNER JOIN semesters
 				ON sections.semester_id = semesters.id
 			WHERE students.id = '$this->student_id' AND semesters.id = '$this->semester_id'")->result();
+		}
 
 		do{
 			$try_again = false;
 			try{
-				$course = $sequence[array_rand($sequence)];
+				$course = $this->course_sequence[array_rand($this->course_sequence)];
 				if($this->is_complete($course->course_id))
 					throw new CourseAlreadyListedException();
 				$this->add_to_generator($course->course_id);
@@ -451,6 +507,8 @@ class Scheduler extends CI_Model
 		return FALSE;
 	}
 
+	/**************************************************** Course List ***********************************************************/
+
 	/**
 	 * This function is called every time there is an add, autopick, remove registered course, drop, and commit.
 	 *
@@ -473,8 +531,72 @@ class Scheduler extends CI_Model
 		return json_encode($array, JSON_NUMERIC_CHECK);
 	}
 
+	/**************************************************** PREFERENCE ***********************************************************/
+
 	/**
-	 * Used for initializing schedule. Returns the Objectified Group Section of a registered table.
+	 * Adds a time preference object to the preference_block list.
+	 *
+	 * @param $json_array - an array of prefrences in JSON format
+	 * @return string - returns empty string if success
+	 */
+	public function addTimePreference($json_array)
+	{
+		$array_blocks = json_decode($json_array);
+
+		$bad_count = 0;
+		foreach($array_blocks as $block)
+		{
+			$time_block = new \Scheduler\PreferenceBlock($block->start.':00', $block->end.':00', $block->weekday);
+
+			//If the preference overlaps the main schedule then skip.
+			if(!$this->main_schedule->overlapsRegistered($time_block)){
+
+				//If a preference overlaps another preference then skip
+				foreach($this->preference_blocks as $pref_block){
+					if($pref_block->overlaps($time_block))
+						goto end;
+				}
+
+				//generates a unique identifier and then addes it the array.
+				$this->preference_blocks[spl_object_hash($time_block)] = $time_block;
+				continue;
+			}
+			end: $bad_count++;
+		}
+
+		//If there were incompatible preferences then a message
+		return ($bad_count)? 'Could not add '.$bad_count.' preferences.' : '';
+	}
+
+	/**
+	 * Removes a time preference by the inputted object hash code
+	 *
+	 * @param $object_hashcode
+	 * @return null|string - returns a message if successful
+	 */
+	public function removeTimePreference($object_hashcode){
+		if(array_key_exists($object_hashcode, $this->preference_blocks)){
+			unset($this->preference_blocks[$object_hashcode]);
+			return 'Successfully removed time block';
+		}
+		return NULL;
+	}
+
+	/**
+	 * Returns all the preferences in JSON
+	 *
+	 * @return string
+	 */
+	public function getTimePreferences()
+	{
+		return json_encode($this->preference_blocks, JSON_NUMERIC_CHECK);
+	}
+
+	/****************************************************FACTORY***********************************************************/
+
+	/**
+	 * Used for initializing schedules.
+	 * Returns the Objectified Group Section of a registered section row in the database.
 	 *
 	 * @param $course_id
 	 * @param $section_id
@@ -533,7 +655,7 @@ class Scheduler extends CI_Model
 	}
 
 	/**
-	 * Returns an array of all section combination groups of section lectures, tutorials, and laboratories
+	 * Returns an array of all section combination groups containing lectures, tutorials, and laboratories of a course.
 	 *
 	 * @param $course_id
 	 * @return array|bool
@@ -595,7 +717,7 @@ class Scheduler extends CI_Model
 					array_push($laboratories, $obj);
 				}
 			}
-
+			//If there are laboratories and tutorials
 			if($laboratories && $tutorials)
 			{
 				foreach($laboratories as $laboratory)
@@ -617,6 +739,7 @@ class Scheduler extends CI_Model
 					}
 				}
 			}
+			//If there are tutorials but not laboratories
 			elseif($tutorials && !$laboratories)
 			{
 				foreach($tutorials as $tutorial)
@@ -635,6 +758,7 @@ class Scheduler extends CI_Model
 					array_push($combo, $group);
 				}
 			}
+			//If there are no tutorials but has laboratories
 			elseif(!$tutorials && $laboratories)
 			{
 				foreach($laboratories as $laboratory)
@@ -653,6 +777,7 @@ class Scheduler extends CI_Model
 					array_push($combo, $group);
 				}
 			}
+			//If there are not tutorials or laboraties.
 			else{
 				$group = new Scheduler\GroupSection(
 					NULL,
@@ -669,16 +794,6 @@ class Scheduler extends CI_Model
 		}
 
 		return $combo;
-	}
-
-	/**
-	 * Returns the encoded JSON string of a schedule Object
-	 *
-	 * @return string
-	 */
-	public function getMainSchedule()
-	{
-		return json_encode($this->main_schedule, JSON_NUMERIC_CHECK);
 	}
 
 }

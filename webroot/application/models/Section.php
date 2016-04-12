@@ -1,7 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- *  The section model deals with providing information about a sections in course
+ *  The section model deals with providing information about a sections in course.
  */
 class Section extends CI_Model
 {

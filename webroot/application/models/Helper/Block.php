@@ -3,14 +3,12 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Block takes care of location and time of blocks
+ * Class Block holds time data.
  *
  * @package Scheduler
  */
 class Block
 {
-    private $id;
-    public $room;
     public $start;
     public $end;
     public $weekday;
@@ -20,16 +18,13 @@ class Block
 
     /**
      * Block constructor.
-     * @param $id
-     * @param $room
      * @param $start
      * @param $end
      * @param $weekday
      */
-    function __construct($id, $room, $start, $end, $weekday)
+    function __construct($start, $end, $weekday)
     {
-        $this->id = $id;
-        $this->room = $room;
+        //Formats the time from the database to 'HH:MM' instead of 'HH:MM:SS'
         $this->start = $this->formatFromDB($start);
         $this->end = $this->formatFromDB($end);
 
@@ -42,39 +37,6 @@ class Block
             throw new \InvalidArgumentException('TimeBlock: Invalid Weekday');
         $this->weekday = $weekday;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoom()
-    {
-        return $this->room;
-    }
-
-    /**
-     * @param mixed $room
-     */
-    public function setRoom($room)
-    {
-        $this->room = $room;
-    }
-
     /**
      * @return \DateTime
      */
@@ -100,7 +62,7 @@ class Block
     }
 
     /**
-     * @param \DateTime $end_time
+     * @param end_time
      */
     public function setEnd($end_time)
     {
@@ -135,6 +97,12 @@ class Block
         return substr($time, 0, $colon);
     }
 
+    /**
+     * Converts time into minutes.
+     *
+     * @param $time
+     * @return string
+     */
     private function toMinutes($time)
     {
         $colon = strpos($time, ':');
@@ -153,8 +121,6 @@ class Block
      */
     public function overlaps(Block $block)
     {
-        if($this->room == 'Online' || $block->room == 'Online')
-            return FALSE;
         if($this->weekday != $block->weekday)
             return FALSE;
         if($this->intStart <= $block->intStart && $block->intStart <= $this->intEnd)

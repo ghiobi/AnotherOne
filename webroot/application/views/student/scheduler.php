@@ -10,13 +10,14 @@
 	</div>
 </div>
 <main class="container">
-		<div> <!--TODO: move this somewhere else-->
-			<button class="schedule-reset">RESET</button>
-			<button class="schedule-undo-drop" style="display: none">UNDO</button>
-		</div>
+
 		<div class="scheduler-app">
 			<div class="scheduler-row">
 				<div class="scheduler-full scheduler-title">
+					<div class="pull-right" style="margin-top: 10px; margin-right: 10px">
+						<button class="btn schedule-reset">RESET</button>
+						<button class="btn schedule-undo-drop" style="display: none">UNDO DROP</button>
+					</div>
 					<h3 class="scheduler-header"><i class="glyphicon glyphicon-triangle-right fix-icon"></i> <?= strtoupper($semester_name) ?></h3>
 				</div>
 			</div>
@@ -27,8 +28,6 @@
 						<button data-toggle="modal" data-target="#scheduler-pref-modal"><i class="glyphicon glyphicon-plus fix-icon"></i></button>
 					</div>
 					<div class="collapsing app-container" id="scheduler-pref">
-						<div class="scheduler-pref-time">
-						</div>
 					</div>
 				</div>
 			</div>
@@ -95,22 +94,45 @@
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Weekday:</label>
-							<div class="col-sm-10">
-								<select class="form-control">
-									<option>Select a Weekday</option>
-									<option value="1">Monday</option>
-									<option value="2">Tuesday</option>
-									<option value="3">Wednesday</option>
-									<option value="4">Thursday</option>
-									<option value="5">Friday</option>
-									<option value="6">Saturday</option>
-									<option value="0">Sunday</option>
-								</select>
+							<label class="col-sm-2 control-label">Select A Weekday:</label>
+							<div class="col-sm-5">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="1">
+										Monday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="2">
+										Tuesday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="3">
+										Wednesday
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="4">
+										Thursday
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="weekday" value="5">
+										Friday
+									</label>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
+							<label class="col-sm-2 control-label">Whole Day:</label>
+							<div class="col-sm-10">
 								<div class="checkbox" style="padding: 0">
 									<label>
 										<input type="checkbox" id="time_all_day"> Restrict the whole day
@@ -121,11 +143,11 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Interval:</label>
 							<div class="col-sm-5">
-								<input type="time" class="form-control time_interval" step="300"/>
+								<input type="time" id = "starttime" class="form-control time_interval" step="300"/>
 								<div class="help-block">Starting time.</div>
 							</div>
 							<div class="col-sm-5">
-								<input type="time" class="form-control time_interval" step="300"/>
+								<input type="time" id ="endingtime" class="form-control time_interval" step="300"/>
 								<div class="help-block">Ending time.</div>
 							</div>
 						</div>
@@ -133,7 +155,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary time_add">Save</button>
+					<button type="button" id = "btnsubmit" class="btn btn-primary time_add">Save</button>
 				</div>
 			</div>
 		</div>

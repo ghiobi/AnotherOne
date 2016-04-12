@@ -122,12 +122,12 @@ header{
 	background-color: #ecf0f1;
 	overflow: hidden;
 }
-.scheduler-pref-time p{
+#scheduler-pref p{
 	padding: 0;
 	margin: 15px 15px;
 	text-transform: uppercase;
 }
-.scheduler-pref-time p:hover{
+#scheduler-pref p:hover{
 	cursor: pointer;
 	text-decoration:line-through;
 }

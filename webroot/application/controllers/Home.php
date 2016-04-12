@@ -1,6 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 /**
-* Controls the student's home page.
+ * 	This controller controls the home page.
+ *
+ *  It displays the according homepage depending on the user. This allows the user to be a student
+ *  and admin at the same time.
 */
 class Home extends App_Base_Controller
 {
@@ -11,23 +14,27 @@ class Home extends App_Base_Controller
 	}
 
 	/**
-	 * loads the home page
+	 * Loads the home page
 	 */
 	public function index()
 	{
+		//Displays the title, info bar, and welcome message.
 		$data['title'] = 'Homepage';
 		$data['info_bar'] = '<i class="glyphicon glyphicon-info-sign"></i> Select an option!';
 		$data['name'] = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');
 
+		//Requesting world news from the New York Times API
 		error_reporting(0);
 		if(! $json = file_get_contents('http://api.nytimes.com/svc/topstories/v1/world.json?api-key=8d1c8aa8bc26b5bb7a282ac1029df999:11:74126097'))
 			$data['news'] = FALSE;
 		else
 			$data['news'] = json_decode($json, TRUE)['results'];
 
+		//Getting active semesters.
 		$this->load->model('semester');
 		$data['semesters'] = $this->semester->getActiveSemesters();
 
+		//If this is a student get their academic progress.
 		$this->load->model('student');
 		$data['progress'] = $this->student->getProgress();
 
@@ -36,6 +43,8 @@ class Home extends App_Base_Controller
 		$this->load->view('layouts/footer.php');
 	}
 
+/*
+	This was used to copy data of a semester semesters into other semesters.
 	public function copy()
 	{
 		$semester_id = [1,2,3,4,5,6,9,10];
@@ -92,7 +101,7 @@ class Home extends App_Base_Controller
 			}
 
 		}
-	}
+	}*/
 
 }
 ?>

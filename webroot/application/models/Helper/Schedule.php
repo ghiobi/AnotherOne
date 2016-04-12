@@ -4,7 +4,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Schedule
+ * Class Schedule - holds data of valid schedule.
  * @package Scheduler
  */
 class Schedule
@@ -111,6 +111,42 @@ class Schedule
         return $course_list;
     }
 
+    public function overlapsUnregistered(PreferenceBlock $preference)
+    {
+        $all_blocks = [];
+
+        foreach($this->unregistered as $current){
+            $blocks = $current->getTimeBlocks();
+            $all_blocks = array_merge($all_blocks, $blocks);
+        }
+
+        foreach($all_blocks as $block){
+            if($preference->overlaps($block)){
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function overlapsRegistered(PreferenceBlock $preference){
+        $all_blocks = [];
+
+        foreach($this->sections as $current){
+            $blocks = $current->getTimeBlocks();
+            $all_blocks = array_merge($all_blocks, $blocks);
+        }
+
+
+        foreach($all_blocks as $block){
+            if($preference->overlaps($block)){
+                return TRUE;
+            }
+        }
+
+        return FALSE;
+    }
+
     /**
      * @return mixed
      */
@@ -142,6 +178,5 @@ class Schedule
     {
         $this->sections = $sections;
     }
-
 
 }

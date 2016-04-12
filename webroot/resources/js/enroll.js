@@ -2,69 +2,144 @@
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
-
 var undo_drop_array = [];
 var selected_schedule = -1;
 
 $(function() {
+
+
+    var weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
-
     var main_schedule = null;
 
-    var num_time_pref = 0;
-    $time_pref_div = $('.scheduler-pref-time');
-    updateTimePref($time_pref_div, num_time_pref);
+    //Get Preferences
+    $('#scheduler-pref').collapse({show: true});
+    $preference_div = $('#scheduler-pref');
 
-    /**
-     * Time Preferences and Modal
-     *
-     * + Time blocks should be tagged in the server so it could know which time block to remove from the scheduler object.
-     */
-    $(document).on('click', '.remove-time-block', function () {
-        $(this).remove();
+    //Load preferences. This method empties the preference div, and prints all the preferences from the server.
+    function load_preference(){
+        $.getJSON( controllerURL + '/get-preference',
+            function(preferences) {
+                //Empty Preference Div
+                $preference_div.empty();
 
-        //TODO: remove preference from scheduler object in cookie
-        num_time_pref--;
-        updateTimePref($time_pref_div, num_time_pref);
+                //Print every preference retreived.
+                for(var key in preferences){
+                    console.log();
+                    $preference_div.append('<p data-prefhash='+key+'><span class="glyphicon glyphicon-ban-circle"></span>' +
+                        weekDay[preferences[key].weekday] + ' ' +
+                        preferences[key].start + ' - ' +
+                        preferences[key].end + ' ' +
+                        '</p>');
+                }
+
+                //If there are no preferences, then print this message.
+                if(preferences.length == 0){
+                    $preference_div.append('<p data-prefhash="empty">No preferences</p>');
+                }
+            }
+        );
+    }
+
+
+    //Disable text for time if all day is checked
+    $("#time_all_day").change(function ()
+    {
+        if($("#time_all_day").is(':checked')) {
+            $('#starttime').attr('disabled', true);
+            $('#endingtime').attr('disabled', true);
+        }
+        else
+        {
+            $('#starttime').attr('disabled', false);
+            $('#endingtime').attr('disabled', false);
+
+        }
     });
 
-    $('.time_add').click(function () {
-        var is_complete = true;
-        $time_pref_div.append('<p class="remove-time-block">'
-            + '<i class="glyphicon glyphicon-ban-circle fix-icon"></i> Monday: 9:00am to 10:00am</p>');
+    $('#btnsubmit').on('click', function(e) {
 
-        num_time_pref++;
-        updateTimePref($time_pref_div, num_time_pref);
+        var days = [];
 
-        /* TODO: valid the preference by sending to server and adding preference to scheduler object
-         * + The server should send back a confirmation to if the preference is valid.
-         *      + Success or failure bool
-         *      + Should come with a tag identifier of this preference 'hash code'
-         */
+        var starttime = ($('#starttime').val());
+        var endtime = ($('#endingtime').val());
 
-        if (!is_complete) {
-            //TODO: If server response is not valid. Display error message.
+        if(starttime.length == 0 || endtime.length == 0){
+            alert("ENTER TIME");
+            return;
         }
 
-        if (is_complete) {
-            $('#scheduler-pref-modal').modal({show: false});
+        $("input:checkbox[name=weekday]:checked").each(function()
+        {
+            if($("#time_all_day").is(':checked')) {
+                days.push({
+                    weekday: $(this).val(),
+                    start: '0:00',
+                    end: '24:00'
 
-            //TODO: Incollapse the time preference to show the user he has added.
+                });
+            }
+            else {
+                days.push({
+                    weekday: $(this).val(),
+                    start: starttime,
+                    end: endtime
+                });
+            }
+        });
+        if(endtime < starttime) {
+            alert("END TIME MUST BE LATER THAN START TIME");
+            e.preventDefault();
+        }
+        else if(days.length == 0){
+            alert("CHECK A DAY.");
+            e.preventDefault();
+        }
+        else {
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/add-preference',
+                data: {input:JSON.stringify(days)},
+                success: function () {
+                    $('#scheduler-pref-modal').modal('hide');
+                    load_preference();
 
-            //TODO: Add message of success!
-            //TODO: Empty inputs
+                }
+            });
         }
     });
 
-    $('.time_interval').first().keyup(function () {
+
+    $("#scheduler-pref-modal").on("hidden.bs.modal", function(){
+        $(this)
+            .find("input,textarea,select").val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]").prop("checked", false)
+            .end();
     });
 
-    $('.time_remove').click(function () {
-    });
 
-    $('#time_all_day').change(function () {
-        $('.time_interval').prop('disabled', !$('.time_interval').prop('disabled'));
+    //Removing a preference.
+    $(document).on('click','#scheduler-pref > p', function()
+    {
+        //Getting the hash id of the preference.
+        var key = $(this).data('prefhash');
+        if(key !== "empty"){
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/remove-preference',
+                data: {input: key},
+                success: function (output) {
+                    if(output != '')
+                        notify(true, output);
+                    else
+                        notify(false, "Had a problem removing the preference.");
+                    load_preference();
+                }
+            });
+        }
     });
 
     //Search
@@ -88,7 +163,7 @@ $(function() {
                         notify(false, output);
                     }
                     else{
-                        load_course_list();
+                        load_course_.list();
 
                         //Empty undo
                         undo_drop_array = [];
@@ -159,9 +234,9 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
-                    );
-                }
+                    new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
+                );
+            }
             }
         );
     });
@@ -328,6 +403,7 @@ $(function() {
     function load(){
         load_main_schedule();
         load_course_list();
+        load_preference();
     }
 
     var $reg_div = $('#scheduler-reg-course');
@@ -372,16 +448,4 @@ function notify(success, innerHTML){
     else
         notify.css('background-color', ' #f1c40f');
     notify.stop().fadeIn(200).delay(3200).fadeOut(800);
-}
-
-/**
- * TODO: Updates the time preference UI
- * @param $prefcontainer
- * @param num_time_pref
- */
-function updateTimePref($prefcontainer, num_time_pref) {
-    if(num_time_pref == 0)
-        $prefcontainer.append('<p class="no-blocks">No Time Preferences!</p>');
-    else
-        $('.no-blocks').remove();
 }
