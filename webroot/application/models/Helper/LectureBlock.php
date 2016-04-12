@@ -3,7 +3,8 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Lecture
+ * Class Lecture holds data of lecture section
+ *
  * @package Scheduler
  */
 class LectureBlock extends RoomBlock

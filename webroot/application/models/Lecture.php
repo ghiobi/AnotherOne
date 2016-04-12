@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class Lecture deals with getting lecture data from the database
+ */
 class Lecture extends CI_Model
 {
 
@@ -24,6 +27,12 @@ class Lecture extends CI_Model
             WHERE section_id = '$section_id'")->result();
     }
 
+    /**
+     * Gets the lecture by id
+     *
+     * @param $lecture_id
+     * @return mixed
+     */
     function getByID($lecture_id)
     {
         return $this->db->query("

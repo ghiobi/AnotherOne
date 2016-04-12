@@ -1,7 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-*  Works with the login controller to authenticates users and retrieve user data
+*  Works with the login controller to authenticates users and retrieve user data.
 */
 class User extends CI_Model
 {
@@ -26,6 +26,7 @@ class User extends CI_Model
 		$this->db->limit(1);
 		$query = $this->db->get();
 
+		//Verifies if there was one user and checks with password_verify (provided by PHP)
 		if($query->num_rows() == 1 && password_verify($password, $query->row()->password))
 		{
 			return $query->row();
@@ -50,6 +51,8 @@ class User extends CI_Model
 	}
 
 	/**
+	 * Returns the user's information.
+	 *
 	 * @param $user_id
 	 * @return object - Returns the following variables login_name, firstname, lastname, email
 	 */
@@ -65,5 +68,38 @@ class User extends CI_Model
 		WHERE users.id = 1 LIMIT 1
 		");
 		return $query->row();
+	}
+
+	/**
+	 * Updates the password
+	 *
+	 * @param $old_password
+	 * @param $new_password
+	 * @return bool - returns true if attempt was successful
+	 */
+	function update_password($old_password, $new_password)
+	{
+		$user_id = $this->session->userdata('user_id');
+
+		$password_hash = $this->db->query("
+			SELECT
+			  users.password
+			FROM users
+			WHERE users.id = '$user_id'")->row()->password;
+
+		//If the old password is incorrect return false.
+		if(!password_verify($old_password, $password_hash)){
+			return FALSE;
+		}
+
+		//Generates the new password with the blowfish hashing algorithm.
+		$new_password_hash = password_hash($new_password, CRYPT_BLOWFISH);
+
+		$this->db->query(
+			"UPDATE users
+				SET password = '$new_password_hash'
+			WHERE id = '$user_id'");
+
+		return TRUE;
 	}
 }

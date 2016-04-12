@@ -4,7 +4,7 @@ namespace Scheduler;
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Class Schedule
+ * Class Schedule - holds data of valid schedule.
  * @package Scheduler
  */
 class Schedule
@@ -41,7 +41,7 @@ class Schedule
 
         foreach($this->sections as $current)
         {
-            if($section->overlapsRoom($current)) //If the section overlaps one of the current sections, return false.
+            if($section->overlaps($current)) //If the section overlaps one of the current sections, return false.
                 return FALSE;
         }
 
@@ -178,6 +178,5 @@ class Schedule
     {
         $this->sections = $sections;
     }
-
 
 }

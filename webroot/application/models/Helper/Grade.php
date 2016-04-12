@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Grade Deals with evaluating grades.
+ */
 class Grade
 {
 

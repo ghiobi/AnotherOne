@@ -1,7 +1,8 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
 /**
-* 	Controls the profile page, the enroll page and the schedule page
+* 	Controls the profile page, the enroll page and the schedule page.
+* 	Everything that deals with the student, happens here.
 */
 class Students extends App_Base_Controller
 {
@@ -14,7 +15,7 @@ class Students extends App_Base_Controller
     /**
      * Loads the student profile page
      */
-	public function profile()
+	public function profile($data = NULL)
     {
         $this->load->model('student');
 
@@ -28,6 +29,41 @@ class Students extends App_Base_Controller
 		$this->load->view('student/profile.php',$data);
 
         $this->load->view('layouts/footer.php', $data);
+	}
+
+	/**
+	 * Processes the form to update user's password.
+	 */
+	public function update_password(){
+
+		if ($this->input->server('REQUEST_METHOD') == 'POST')
+		{
+
+			$this->load->model('user');
+
+			$old_password = $this->input->post('old_password', TRUE);
+			$new_password = $this->input->post('new_password', TRUE);
+			$confirm_password = $this->input->post('confirm_password', TRUE);
+
+			//Validating and cleaning data
+			$this->form_validation->set_rules('old_password', 'Login ID', 'trim|required');
+			$this->form_validation->set_rules('new_password', 'Password', 'trim|required|min_length[8]');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[new_password]');
+
+			if($this->form_validation->run() === FALSE)
+			{
+				$this->profile();
+				return;
+			}
+
+			//If result is false due to incorrect password match, then an error message would appear.
+			if(!$result = $this->user->update_password($old_password, $new_password))
+				$data['reset_msg'] = 'The old password seems to be incorrect.';
+			else
+				$data['reset_positive'] = 'Successfully updated the password!';
+
+			$this->profile($data);
+		}
 	}
 
 	/**
@@ -139,7 +175,6 @@ class Students extends App_Base_Controller
 				echo ($response)? 'Re-added section to schedule': 'Failed at re-adding section to schedule';
 			} break;
 
-
 			//Resets the schedule by emptying the cookie.
 			case 'reset': {
 				$this->session->unset_userdata($semester_url);
@@ -158,6 +193,7 @@ class Students extends App_Base_Controller
 				echo $this->scheduler->get_course_list();
 			} break;
 
+			//Adds a preference to the scheduler model
 			case 'add-preference': {
 				$json_input = $this->input->post('input', TRUE);
 				$message = $this->scheduler->addTimePreference($json_input);
@@ -165,6 +201,7 @@ class Students extends App_Base_Controller
 				echo $message;
 			} break;
 
+			//Removes preference depending on the hash code inputted.
 			case 'remove-preference': {
 				$hash_code = $this->input->post('input', TRUE);
 				$message = $this->scheduler->removeTimePreference($hash_code);
@@ -172,10 +209,12 @@ class Students extends App_Base_Controller
 				echo $message;
 			} break;
 
+			//Returns all preferences
 			case 'get-preference': {
 				echo $this->scheduler->getTimePreferences();
 			} break;
 
+			//Resets the whole session data of this semester.
 			case 'reset': {
 				$this->session->unset_userdata($semester_url);
 				return;
@@ -188,7 +227,7 @@ class Students extends App_Base_Controller
 	}
 
 	/**
-	 * Viewing the schedule of a semester.
+	 * Viewing the schedule of a semester. Works the same as the enroll page.
 	 *
 	 * @param $semester_url - the semester url slug id.
 	 */
@@ -211,11 +250,13 @@ class Students extends App_Base_Controller
 			$this->session->set_userdata($semester_url, serialize($this->scheduler));
 		}
 
+		//Unserializes the semester data to retrieve the scheduler object
 		$this->scheduler = unserialize($this->session->userdata($semester_url));
 
 		$data['info_bar'] = 'Schedule for '.$semester->name;
 		$data['title'] = 'Schedule of '.$semester->name;
 
+		//Gets the main schedule data.
 		$data['schedule'] = $this->scheduler->getMainSchedule();
 
 		$this->load->view('layouts/header.php', $data);

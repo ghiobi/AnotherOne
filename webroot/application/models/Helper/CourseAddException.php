@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class CourseAddException the parent of all the adding courses exceptions.
+ */
 class CourseAddException extends \Exception{
     public function __construct($message)
     {

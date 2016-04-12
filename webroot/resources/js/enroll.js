@@ -2,35 +2,147 @@
 var schedule_container = document.getElementById('schedule-div');
 var schedule_title = document.getElementById('schedule-name');
 var schedule_panel = document.getElementById('schedule-detail');
-
 var undo_drop_array = [];
 var selected_schedule = -1;
 
 $(function() {
+
+
+    var weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
     //Scheduler config
     var controllerURL = $('#info-controller').data('controllerUrl');
     var main_schedule = null;
 
     //Get Preferences
     $('#scheduler-pref').collapse({show: true});
-    $prefrence_div = $('#scheduler-pref > div');
+    $preference_div = $('#scheduler-pref');
+
+    //Load preferences. This method empties the preference div, and prints all the preferences from the server.
     function load_preference(){
         $.getJSON( controllerURL + '/get-preference',
             function(preferences) {
+                //Empty Preference Div
+                $preference_div.empty();
+
+                //Print every preference retreived.
                 for(var key in preferences){
-                    $prefrence_div.append('<div><p></p></div>');
+                    console.log();
+                    $preference_div.append('<p data-prefhash='+key+'><span class="glyphicon glyphicon-ban-circle"></span>' +
+                        weekDay[preferences[key].weekday] + ' ' +
+                        preferences[key].start + ' - ' +
+                        preferences[key].end + ' ' +
+                        '</p>');
                 }
+
+                //If there are no preferences, then print this message.
                 if(preferences.length == 0){
-                    $prefrence_div.append('<div><p>No preferences</p></div>');
+                    $preference_div.append('<p data-prefhash="empty">No preferences</p>');
                 }
             }
         );
     }
 
-    // TODO: Add Preference
 
-    // TODO: DeletePreference
-    //$(document).on(click, class, function)
+    //Disable text for time if all day is checked
+    $("#time_all_day").change(function ()
+    {
+        if($("#time_all_day").is(':checked')) {
+            $('#starttime').attr('disabled', true);
+            $('#endingtime').attr('disabled', true);
+        }
+        else
+        {
+            $('#starttime').attr('disabled', false);
+            $('#endingtime').attr('disabled', false);
+
+        }
+    });
+
+    $('#btnsubmit').on('click', function(e) {
+
+        var days = [];
+
+        var starttime = ($('#starttime').val());
+        var endtime = ($('#endingtime').val());
+
+        if(!$("#time_all_day").is(':checked') && (starttime.length == 0 || endtime.length == 0)){
+            alert("ENTER TIME");
+            return;
+        }
+
+        $("input:checkbox[name=weekday]:checked").each(function()
+        {
+            if($("#time_all_day").is(':checked')) {
+                days.push({
+                    weekday: $(this).val(),
+                    start: '0:00',
+                    end: '24:00'
+
+                });
+            }
+            else {
+                days.push({
+                    weekday: $(this).val(),
+                    start: starttime,
+                    end: endtime
+                });
+            }
+        });
+        if(endtime < starttime) {
+            alert("END TIME MUST BE LATER THAN START TIME");
+            e.preventDefault();
+        }
+        else if(days.length == 0){
+            alert("CHECK A DAY.");
+            e.preventDefault();
+        }
+        else {
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/add-preference',
+                data: {input:JSON.stringify(days)},
+                success: function (message) {
+                    if(message != '')
+                        alert(message);
+                    else
+                        $('#scheduler-pref-modal').modal('hide');
+                    load_preference();
+                }
+            });
+        }
+    });
+
+
+    $("#scheduler-pref-modal").on("hidden.bs.modal", function(){
+        $(this)
+            .find("input[name=input_time]").val('')
+            .end()
+            .find("input:checkbox[name=weekday]").prop("checked", false)
+            .end();
+    });
+
+
+    //Removing a preference.
+    $(document).on('click','#scheduler-pref > p', function()
+    {
+        //Getting the hash id of the preference.
+        var key = $(this).data('prefhash');
+        if(key !== "empty"){
+            $.ajax({
+                method: 'POST',
+                url: controllerURL + '/remove-preference',
+                data: {input: key},
+                success: function (output) {
+                    if(output != '')
+                        notify(true, output);
+                    else
+                        notify(false, "Had a problem removing the preference.");
+                    load_preference();
+                }
+            });
+        }
+    });
 
     //Search
     var $srch_input = $('#scheduler-search');
@@ -124,9 +236,9 @@ $(function() {
                         + name + '</div>');
 
                     generated_schedules.push(
-                        new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
-                    );
-                }
+                    new Schedule(schedule_container, schedule_title, schedule_panel,name, output[i][0], output[i][1], true)
+                );
+            }
             }
         );
     });

@@ -1,0 +1,30 @@
+<html>
+<head>
+
+</head>
+<body>
+
+<div id="element">
+
+</div>
+</body>
+<script src="schedule.original.js"></script>
+<script>
+    var input_data = {"sections":[{"hash":"37c328efc69fa71b2505be0eb04c9410","course_name":"Engineering Management Principles and Economics","course_subject":"ENGR","course_number":301,"instructor":"Gerard Gouw","capacity":100,"letter":"SS","lecture":[{"room":"H 553","start":"17:45","end":"20:15","weekday":1}],"tutorial":{"instructor":"Gerard Gouw","letter":"SA","capacity":25,"room":"EV 1.162","start":"17:45","end":"18:35","weekday":4},"laboratory":null},{"hash":"97a8bd4123f9fb7b874ae844ddf1ef9b","course_name":"Applied Advanced Calculus","course_subject":"ENGR","course_number":233,"instructor":"Dmitry Korotkin","capacity":120,"letter":"J","lecture":[{"room":"H 531","start":"16:15","end":"17:30","weekday":1},{"room":"H 531","start":"16:15","end":"17:30","weekday":3}],"tutorial":{"instructor":"Dmitry Korotkin","letter":"JC","capacity":40,"room":"H 603-1","start":"13:15","end":"15:05","weekday":1},"laboratory":null},{"hash":"0af56deee3268d1b3d65f7bb4faa95a5","course_name":"Sustainable Development and Environmental Stewardship","course_subject":"ENGR","course_number":202,"instructor":"John Hadjinicolaou","capacity":200,"letter":"R","lecture":[{"room":"H 937","start":"16:15","end":"17:30","weekday":4}],"tutorial":null,"laboratory":null},{"hash":"0d80a6e4a48aa5a27474ebae53230491","course_name":"Numerical Methods in Engineering","course_subject":"ENGR","course_number":391,"instructor":"Rahim Tadayon\t","capacity":100,"letter":"V","lecture":[{"room":"H 415","start":"13:15","end":"14:30","weekday":2},{"room":"H 415","start":"13:15","end":"14:30","weekday":4}],"tutorial":{"instructor":"Rahim Tadayon","letter":"VA","capacity":50,"room":"H 629","start":"11:45","end":"12:35","weekday":5},"laboratory":null}],"unregistered":[]};
+    var element = document.getElementById('element');
+
+    var expected_html = '<table class="table table-bordered table-condensed" style="color: black"><tr><td>Time</td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td></tr><tr><td>11:30</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>11:45</td><td></td><td></td><td></td><td></td><td class="scheduler-cells green"" rowspan="4">ENGR 391<br>TUT VA<br>11:45 - 12:35<br>H 629</td></tr><tr><td>12:00</td><td></td><td></td><td></td><td></td></tr><tr><td>12:15</td><td></td><td></td><td></td><td></td></tr><tr><td>12:30</td><td></td><td></td><td></td><td></td></tr><tr><td>12:45</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>13:00</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>13:15</td><td class="scheduler-cells green"" rowspan="8">ENGR 233<br>TUT JC<br>13:15 - 15:05<br>H 603-1</td><td class="scheduler-cells green"" rowspan="5">ENGR 391<br>LECT V<br>13:15 - 14:30<br>H 415</td><td></td><td class="scheduler-cells green"" rowspan="5">ENGR 391<br>LECT V<br>13:15 - 14:30<br>H 415</td><td></td></tr><tr><td>13:30</td><td></td><td></td></tr><tr><td>13:45</td><td></td><td></td></tr><tr><td>14:00</td><td></td><td></td></tr><tr><td>14:15</td><td></td><td></td></tr><tr><td>14:30</td><td></td><td></td><td></td><td></td></tr><tr><td>14:45</td><td></td><td></td><td></td><td></td></tr><tr><td>15:00</td><td></td><td></td><td></td><td></td></tr><tr><td>15:15</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>15:30</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>15:45</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>16:00</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>16:15</td><td class="scheduler-cells green"" rowspan="5">ENGR 233<br>LECT J<br>16:15 - 17:30<br>H 531</td><td></td><td class="scheduler-cells green"" rowspan="5">ENGR 233<br>LECT J<br>16:15 - 17:30<br>H 531</td><td class="scheduler-cells green"" rowspan="5">ENGR 202<br>LECT R<br>16:15 - 17:30<br>H 937</td><td></td></tr><tr><td>16:30</td><td></td><td></td></tr><tr><td>16:45</td><td></td><td></td></tr><tr><td>17:00</td><td></td><td></td></tr><tr><td>17:15</td><td></td><td></td></tr><tr><td>17:30</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>17:45</td><td class="scheduler-cells green"" rowspan="10">ENGR 301<br>LECT SS<br>17:45 - 20:15<br>H 553</td><td></td><td></td><td class="scheduler-cells green"" rowspan="4">ENGR 301<br>TUT SA<br>17:45 - 18:35<br>EV 1.162</td><td></td></tr><tr><td>18:00</td><td></td><td></td><td></td></tr><tr><td>18:15</td><td></td><td></td><td></td></tr><tr><td>18:30</td><td></td><td></td><td></td></tr><tr><td>18:45</td><td></td><td></td><td></td><td></td></tr><tr><td>19:00</td><td></td><td></td><td></td><td></td></tr><tr><td>19:15</td><td></td><td></td><td></td><td></td></tr><tr><td>19:30</td><td></td><td></td><td></td><td></td></tr><tr><td>19:45</td><td></td><td></td><td></td><td></td></tr><tr><td>20:00</td><td></td><td></td><td></td><td></td></tr><tr><td>20:15</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>20:30</td><td></td><td></td><td></td><td></td><td></td></tr></table>';
+
+    var num_errors = 0;
+    for(var num_test = 0; num_test < 9000; num_test++)
+    {
+        var schedule = new Schedule(element, null, null, 'Test Schedule', input_data, null, false);
+        schedule.render();
+        var testing_table = schedule.htmlTable;
+        if(expected_html !== testing_table){
+            num_errors++;
+        }
+    }
+    console.log("Number of errors that have occurred: " + num_errors);
+</script>
+</html>

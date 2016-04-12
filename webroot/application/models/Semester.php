@@ -1,7 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * The Semester model deals with getting data from the database.
+ * The Semester model deals with getting semester data from the database.
  */
 class Semester extends CI_Model{
 

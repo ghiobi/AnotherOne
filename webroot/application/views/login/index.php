@@ -176,9 +176,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/michael.jpg') ?>" alt="">
 			<h3>Michael Mescheder
-				<small>Job Title</small>
+				<small><br />Software Documentation</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Diagrams & descriptions. Expert speedrunner.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/theebz.jpg') ?>" alt="">

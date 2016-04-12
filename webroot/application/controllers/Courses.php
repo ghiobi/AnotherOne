@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  *  The courses controller deals with viewing courses/sections and courses.
+ *
+ *  This class extends directly from the CI_Controller which means it can be accessed without logging in.
  */
 class Courses extends CI_Controller
 {
@@ -12,7 +14,7 @@ class Courses extends CI_Controller
 
     public function sections($SEMESTER = NULL, $COURSECODE = NULL, $NUMBER = NULL)
     {
-        //Loading header
+        //Loading header and models
         if($SEMESTER != NULL || $COURSECODE != NULL || $NUMBER != NULL)
             $data['info_bar'] = '<a href="'.site_url('courses/sections').'"><i class="glyphicon glyphicon-info-sign"></i> New Search</a>';
         else
@@ -23,6 +25,7 @@ class Courses extends CI_Controller
         $this->load->model('section');
         $this->load->model('semester');
 
+        //Parameters being inputted into the url, if none are inputted then display the search page.
         if($SEMESTER == NULL && $COURSECODE == NULL && $NUMBER == NULL)
         {
             //Get form input info, semester, course code, and course number
@@ -32,6 +35,7 @@ class Courses extends CI_Controller
                 $course_code = $this->input->post('course_code', TRUE);
                 $course_number = $this->input->post('course_number', TRUE);
 
+                //Validating form.
                 $this->form_validation->set_rules('semester', 'Semester', 'trim|required');
                 $this->form_validation->set_rules('course_code', 'Course Code', ($course_number)?'trim|required':'trim');
                 $this->form_validation->set_rules('course_number', 'Course Number', 'trim');
@@ -41,7 +45,7 @@ class Courses extends CI_Controller
                     goto search;
                 }
 
-                //If the parameters are filled refresh to ;
+                //If the parameters are filled refresh this same controller which will pass into the else block
                 redirect("courses/sections/".$semester."/$course_code/$course_number", 'refresh');
 
                 return;
@@ -49,10 +53,11 @@ class Courses extends CI_Controller
 
         }
         else{
-
+            //Slug is the url format of the semester name, if not found go back to search.
             if(!$semester = $this->semester->getBySlug($SEMESTER))
                 goto search;
 
+            //Fetching all results according to input.
             $results = $this->section->getAllSections($semester->id, $COURSECODE, $NUMBER);
 
             if($results == FALSE) {
@@ -60,6 +65,7 @@ class Courses extends CI_Controller
                 goto search;
             }
 
+            //If results are found lost the result page with the data.
             $data['results'] = $results;
             $this->load->view('course/result.php', $data);
 
