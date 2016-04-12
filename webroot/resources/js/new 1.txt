@@ -1,4 +1,0 @@
-COMP 498 PASSWORD
-
-user: comp_vision
-pass:W_2016
