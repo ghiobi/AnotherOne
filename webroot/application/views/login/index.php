@@ -132,6 +132,14 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			<h2 class="page-header">Our Team</h2>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
+			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/alex.jpg') ?>" alt="">
+			<h3>Alessandro Power
+				<small>Team Leader</small>
+			</h3>
+			<p>With power comes a great leader!</p>
+		</div>
+
+		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/laurendy.jpg') ?>">
 			<h3>Laurendy Lam
 				<small>Lead Engineer</small>
@@ -139,25 +147,18 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			<p>Designs the user experience and loves baking cakes.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
-			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/alex.jpg') ?>" alt="">
-			<h3>Alessandro Power
-				<small>Job Title</small>
-			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
-		</div>
-		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/anhkhoi.jpg') ?>" alt="">
 			<h3>Anhkhoi Vu-Nguyen
 				<small>Consultant</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Anhkhoi manages what features should be included. He is also a keylogger expert.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/pragas.jpg') ?>" alt="">
 			<h3>Pragas Velauthapillai
-				<small>Job Title</small>
+				<small>Database</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Database and Test Unit Leader!</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/andy.jpg') ?>" alt="">
@@ -171,7 +172,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 			<h3>Jacqueline Luo
 				<small>Database</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>She updates the database and does testing. She is stuck in rogue-lite hell.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/michael.jpg') ?>" alt="">
@@ -183,9 +184,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/theebz.jpg') ?>" alt="">
 			<h3>Piratheeban Annamalai
-				<small>Job Title</small>
+				<small>Documenter</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Script writer. Passionate Rapper. Scripts with hip.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/eric.jpg') ?>" alt="">
@@ -197,23 +198,23 @@ defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/ronnie.jpg') ?>" alt="">
 			<h3>Ronnie Pang
-				<small>Job Title</small>
+				<small>Software Developer</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Ronnie helps with the front end development in the registration. </p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/kenny.jpg') ?>" alt="">
 			<h3>Kenny Nguyen
-				<small>Job Title</small>
+				<small>Data Analyst</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>Passion with data, Kenny likes to design how data models with OOP.</p>
 		</div>
 		<div class="col-lg-4 col-sm-6 text-center">
 			<img class="img-circle img-responsive img-center" src="<?= base_url('resources/img/james.jpg') ?>" alt="">
 			<h3>James Talarico
-				<small>Job Title</small>
+				<small>Documentation Editor</small>
 			</h3>
-			<p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
+			<p>James is the head of editor. He makes sure everything makes sense.</p>
 		</div>
 	</div>
 </div>
