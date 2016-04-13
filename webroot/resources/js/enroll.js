@@ -283,11 +283,13 @@ $(function() {
         }
     });
 
-    //Commit Schedule //TODO: Confirmation dialogue box
     var $commit_btn = $('.scheduler-commit');
     $commit_btn.click(function () {
-        if(confirm('Are you sure?')){
-            if(selected_schedule != -1){
+        if(selected_schedule == -1){
+            alert('Generate and select some schedules.');
+        }
+        if(selected_schedule != -1){
+            if(confirm('Are you sure?')){
                 var new_schedule = generated_schedules[selected_schedule].object;
                 $.ajax({
                     method: 'POST',
