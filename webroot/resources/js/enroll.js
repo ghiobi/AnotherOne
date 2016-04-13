@@ -286,32 +286,34 @@ $(function() {
     //Commit Schedule //TODO: Confirmation dialogue box
     var $commit_btn = $('.scheduler-commit');
     $commit_btn.click(function () {
-        if(selected_schedule != -1){
-            var new_schedule = generated_schedules[selected_schedule].object;
-            $.ajax({
-                method: 'POST',
-                url: controllerURL + '/commit',
-                data: {input: new_schedule},
-                success: function (output) {
-                    if(output == ''){
-                        notify(false, 'Failed at committing new schedule.');
+        if(confirm('Are you sure?')){
+            if(selected_schedule != -1){
+                var new_schedule = generated_schedules[selected_schedule].object;
+                $.ajax({
+                    method: 'POST',
+                    url: controllerURL + '/commit',
+                    data: {input: new_schedule},
+                    success: function (output) {
+                        if(output == ''){
+                            notify(false, 'Failed at committing new schedule.');
+                        }
+                        else{
+                            load();
+
+                            $generate_div.empty();
+                            generated_schedules = [];
+
+                            undo_drop_array = [];
+                            $undo_btn.hide();
+
+                            notify(true, 'Successfully enrolled new section(s).');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
                     }
-                    else{
-                        load();
-
-                        $generate_div.empty();
-                        generated_schedules = [];
-
-                        undo_drop_array = [];
-                        $undo_btn.hide();
-
-                        notify(true, 'Successfully enrolled new section(s).');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert(xhr.responseText);
-                }
-            });
+                });
+            }
         }
     });
 
