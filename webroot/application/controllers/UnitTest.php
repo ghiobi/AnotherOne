@@ -22,7 +22,7 @@ class UnitTest extends CI_Controller
 
     public function BlockTest()
     {
-        include ('C:\Users\TheChosenOne\Desktop\AnotherOne\webroot\application\models\Helper\Block.php');
+        include (APPPATH.'\models\Helper\Block.php');
 
         //Test 1
         $block_1 = new Scheduler\Block('12:00:00', '13:00:00', 1);
@@ -61,7 +61,7 @@ class UnitTest extends CI_Controller
 
     public function GradeTest()
     {
-        include ('C:\Users\TheChosenOne\Desktop\AnotherOne\webroot\application\models\Helper\Grade.php');
+        include (APPPATH.'models\Helper\Grade.php');
 
         //Test 1
         $grade_1 = new Grade('A+');
@@ -90,10 +90,5 @@ class UnitTest extends CI_Controller
 
         echo $this->unit->report();
 
-    }
-
-    public function ()
-    {
-        
     }
 }
