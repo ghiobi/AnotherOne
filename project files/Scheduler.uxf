@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
+      <x>420</x>
       <y>0</y>
       <w>160</w>
       <h>140</h>
@@ -21,7 +21,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
+      <x>30</x>
       <y>350</y>
       <w>190</w>
       <h>140</h>
@@ -36,7 +36,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>540</x>
+      <x>530</x>
       <y>180</y>
       <w>200</w>
       <h>120</h>
@@ -48,18 +48,22 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
+      <x>470</x>
       <y>350</y>
       <w>190</w>
       <h>140</h>
     </coordinates>
-    <panel_attributes>Tutorial Block</panel_attributes>
+    <panel_attributes>Tutorial Block
+--
++ instructor
++ letter
++ capacity</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>240</x>
+      <x>250</x>
       <y>350</y>
       <w>190</w>
       <h>140</h>
@@ -74,7 +78,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>230</x>
+      <x>220</x>
       <y>180</y>
       <w>200</w>
       <h>120</h>
@@ -90,29 +94,29 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>290</y>
-      <w>220</w>
-      <h>80</h>
+      <x>110</x>
+      <y>270</y>
+      <w>130</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>200.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
-      <y>290</y>
-      <w>270</w>
-      <h>80</h>
+      <x>410</x>
+      <y>270</y>
+      <w>90</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;250.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0;70.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
+      <x>320</x>
       <y>290</y>
       <w>30</w>
       <h>80</h>
@@ -123,52 +127,52 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>130</y>
-      <w>200</w>
-      <h>70</h>
+      <x>330</x>
+      <y>90</y>
+      <w>110</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>180.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>520</x>
-      <y>130</y>
-      <w>140</w>
-      <h>70</h>
+      <x>570</x>
+      <y>90</y>
+      <w>80</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>870</x>
-      <y>30</y>
+      <x>210</x>
+      <y>570</y>
       <w>310</w>
       <h>370</h>
     </coordinates>
     <panel_attributes>GroupSection
 --
 
- private $course_id: int
- private $register_id:int
- private $section_id: int
+- course_id: int
+- register_id:int
+- section_id: int
 
- public $hash: string
- public $course_name: string
- public $course_subject: string
- public $course_number: int
++ hash: string
++ course_name: string
++ course_subject: string
++ course_number: int
 
- public $instructor: string
- public $capacity: int
- public $letter: string
++ instructor: string
++ capacity: int
++ letter: string
 
- public $lecture: LecutreBlock []
- public $tutorial: TutorialBlock
- public $laboratory: LaboratoryBlock
++ lecture: LecutreBlock []
++ tutorial: TutorialBlock
++ laboratory: LaboratoryBlock
 
 --
 + getAllBlocks(): Block[]
@@ -179,8 +183,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>900</x>
-      <y>540</y>
+      <x>630</x>
+      <y>590</y>
       <w>200</w>
       <h>120</h>
     </coordinates>
@@ -189,65 +193,131 @@
 + sections: GroupSections []
 + unregistered: GroupSections []
 --
-+ addSection
-+ addUnRegistered</panel_attributes>
++ addSection: boolean
++ addUnRegistered: boolean
++ overlapsBlock(Block block): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1000</x>
-      <y>390</y>
-      <w>30</w>
-      <h>170</h>
+      <x>510</x>
+      <y>650</y>
+      <w>140</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=*
 m2=1</panel_attributes>
-    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>520</y>
+      <x>960</x>
+      <y>180</y>
       <w>760</w>
       <h>540</h>
     </coordinates>
     <panel_attributes>Scheduler
 --
-private $semester_id: int
-private $student_id: int
-private $search_course_list: array
-private $course_sequence: array
+- semester_id: int
+- student_id: int
+- search_course_list: array
+- course_sequence: array
 
-public $main_schedule: Schedule
++ main_schedule: Schedule
 
-public $registered_course_list: array
-public $generator_course_list: array
++ registered_course_list: array
++ generator_course_list: array
 
-public $preference_blocks: PrefrenceBlock[]
++ preference_blocks: PrefrenceBlock[]
 --
-public function init($semester_id)
-public function drop($hash_id)
-public function undo_drop($encrpyted_section)
-public function record_section($section_group)
-public function apply_new_schedule($encrypted_schedule)
-public function generateSchedules()
-private function generator($current_course, $num_courses, $current_schedule, &amp;$stack, $courses)
-public function searchCourseList()
-public function is_complete($course_id)
-public function auto_pick_course()
-public function add_course($encrypted_course_id)
-public function add_to_generator($course_id)
-public function remove_from_generator($course_id)
-public function get_course_list()
-public function addTimePreference($json_array)
-public function removeTimePreference($object_hashcode)
-public function getTimePreferences()
-public function buildGroupSection($register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
-public function getPossibleGroups($course_id)
-public function getMainSchedule()</panel_attributes>
++ init(semester_id)
++ drop(hash_id)
++ undo_drop(string encrpyted_section)
++ record_section(GroupSection section_group)
++ apply_new_schedule(string encrypted_schedule)
++ generateSchedules()
+- generator(int current_course,int num_courses,Schedule current_schedule,Schedule[] stack, int courses)
++ searchCourseList()
++ is_complete(course_id)
++ auto_pick_course()
++ add_course(encrypted_course_id)
++ add_to_generator(course_id)
++ remove_from_generator(course_id)
++ get_course_list()
++ addTimePreference(json_array)
++ removeTimePreference(object_hashcode)
++ getTimePreferences()
++ buildGroupSection(register_id, $course_id, $section_id, $tutorial_id = NULL, $laboratory_id = NULL)
++ getPossibleGroups(course_id)
++ getMainSchedule()</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>450</x>
+      <y>480</y>
+      <w>160</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;60.0;120.0;60.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>350</x>
+      <y>480</y>
+      <w>50</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>100</x>
+      <y>480</y>
+      <w>160</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1..2</panel_attributes>
+    <additional_attributes>140.0;90.0;140.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>820</x>
+      <y>650</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1..*</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>240</y>
+      <w>260</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
